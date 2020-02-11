@@ -1,7 +1,7 @@
 name = "GeoRegions"
 uuid = "b001f823-fa75-4bff-bf55-6610c8f3688a"
 authors = ["natgeo-wong <natgeo.wong@outlook.com>"]
-version = "0.1.0"
+version = "1.0.0"
 
 [compat]
 julia = "1"
