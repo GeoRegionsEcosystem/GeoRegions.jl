@@ -1,0 +1,26 @@
+#(1)RegID (2)RegParent (3)N (4)W (5)S (6)E (7)Description
+GLB,GLB,90,0,-90,360,Global
+TRP,GLB,30,0,-30,360,Tropical Belt
+ISM,GLB,45,35,-15,105,Indian Summer Monsoon Region
+EAM,GLB,50,90,0,150,East Asian Monsoon Region
+
+SEA,TRP,20,90,-15,165,Southeast Asia / Maritime Continent
+MLD,SEA,20,93,0,110,Mainland Southeast Asia
+SGP,SEA,3,101.5,0,106,Singapore / Johor
+SMT,SEA,6,95,-6,107,Sumatra
+JAV,SEA,-5,104,-10,116,Java
+BRN,SEA,8,108,-5,120,Borneo
+MLY,SEA,8,99,0,105,Peninsular Malaysia
+PHI,SEA,5,117,19,127,Philippines
+IDC,SEA,20,102,7,110,Indochina
+PNG,SEA,0,130,-11,154,Papua New Guinea
+
+ESO,TRP,30,150,-30,250,ENSO Region
+
+IND,ISM,35,60,0,105,Indian Subcontinent
+NPL,IND,31,79,26,89,Nepal
+BGD,IND,27,87,20,93,Bangladesh
+MYN,IND,29,90,9,103,Myanmar / Burma
+BOB,IND,25,80,5,95,Bay of Bengal
+
+CHN,EAM,50,90,15,130,China
