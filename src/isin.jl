@@ -16,13 +16,14 @@ function ispointinregion(
 
     rW = mod(minimum(rlon),360); rS = minimum(rlat);
     rE = mod(maximum(rlon),360); rN = maximum(rlat);
-    tlon = abs((rlon[2]-rlon[1])/2); tlat = abs((rlat[2]-rlat[1])/2);
+    tlon = abs((rlon[2]-rlon[1])*3/4);
+    tlat = abs((rlat[2]-rlat[1])*3/4);
 
     if (rW < rE && (plon < (rW-tlon) || plon > (rE+tlon))) ||
         (rW > rE && (plon < (rE-tlon) && plon > (rW+tlon))) ||
         plat < (rS-tlat) || plat > (rN+tlat)
 
-          error("Requested coordinates are not within the specified longitude and/or latitude.")
+          error("Requested coordinates [$(plon),$(plat)] are not within the specified longitude and/or latitude.")
 
     end
 
@@ -35,7 +36,7 @@ function ispointinregion(plon::Real,plat::Real,regionbounds::Vector{<:Real})
     if (rW < rE && (plon < rW || plon > rE)) || (rW > rE && (plon < rE && plon > rW)) ||
         plat < S || plat > N
 
-          error("Requested coordinates are not within the specified region boundaries.")
+          error("Requested coordinates [$(plon),$(plat)] are not within the specified region boundaries.")
     end
 
 end
@@ -45,13 +46,14 @@ function ispointinregion(pcoord::Vector{<:Real},rlon::Vector{<:Real},rlat::Vecto
     plon,plat = pcoord;
     rW = mod(minimum(rlon),360); rS = minimum(rlat);
     rE = mod(maximum(rlon),360); rN = maximum(rlat);
-    tlon = abs((rlon[2]-rlon[1])/2); tlat = abs((rlat[2]-rlat[1])/2);
+    tlon = abs((rlon[2]-rlon[1])*3/4);
+    tlat = abs((rlat[2]-rlat[1])*3/4);
 
     if (rW < rE && (plon < (rW-tlon) || plon > (rE+tlon))) ||
         (rW > rE && (plon < (rE-tlon) && plon > (rW+tlon))) ||
         plat < (rS-tlat) || plat > (rN+tlat)
 
-          error("Requested coordinates are not within the specified longitude and/or latitude.")
+          error("Requested coordinates [$(plon),$(plat)] are not within the specified longitude and/or latitude.")
 
     end
 
@@ -65,7 +67,7 @@ function ispointinregion(pcoord::Vector{<:Real},regionbounds::Vector{<:Real})
     if (rW < rE && (plon < rW || plon > rE)) || (rW > rE && (plon < rE && plon > rW)) ||
         plat < S || plat > N
 
-          error("Requested coordinates are not within the specified region boundaries.")
+          error("Requested coordinates [$(plon),$(plat)] are not within the specified region boundaries.")
 
     end
 
@@ -82,7 +84,7 @@ function isgridinregion(gridbounds::Vector{<:Real},regionbounds::Vector{<:Real})
         (rW < rE && (W < rW || W > rE)) || (rW > rE && (W < rE && W > rW)) ||
         N < rS || N > rN || S < rS || S > rN
 
-          error("Requested grid points are not within the specified region boundaries.")
+          error("Requested grid points [$(gridbounds)] are not within the specified region boundaries.")
 
     end
 
@@ -96,7 +98,8 @@ function isgridinregion(
     N,S,E,W = gridbounds; E = mod(E,360); W = mod(W,360);
     rE = mod(maximum(rlon),360); rN = maximum(rlat);
     rW = mod(minimum(rlon),360); rS = minimum(rlat);
-    tlon = abs((rlon[2]-rlon[1])/2); tlat = abs((rlat[2]-rlat[1])/2);
+    tlon = abs((rlon[2]-rlon[1])*3/4);
+    tlat = abs((rlat[2]-rlat[1])*3/4);
 
     if (rW < rE && (E < (rW-tlon) || E > (rE+tlon))) ||
         (rW > rE && (E < (rE-tlon) && E > (rW+tlon))) ||
@@ -105,7 +108,7 @@ function isgridinregion(
         N < (rS-tlat) || N > (rN+tlat) ||
         S < (rS-tlat) || S > (rN+tlat)
 
-          error("Requested grid points are not within the specified longitude and/or latitude.")
+          error("Requested grid points [$(gridbounds)] are not within the specified longitude and/or latitude.")
 
     end
 
