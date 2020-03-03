@@ -7,9 +7,9 @@ A Julia Package that
 These boundaries can be specified either using `N,S,E,W` coordinates, or by `longitude` and
 `latitude` vectors.
 
-`GeoRegions.jl` has not been added to the JuliaRegistry yet.  Please install using
+`GeoRegions.jl` has been added to the JuliaRegistry yet.  Please install using
 ```
-] add https://github.com/natgeo-wong/GeoRegions.jl
+] add GeoRegions
 ```
 
 ## GeoRegions
