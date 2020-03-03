@@ -1,7 +1,8 @@
 module GeoRegions
 
 ## Modules Used
-using Dates, DelimitedFiles
+using Logging, Dates
+using DelimitedFiles
 
 ## Exporting the following functions:
 export
