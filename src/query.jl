@@ -8,20 +8,30 @@ list of region bounds (known as GeoRegions).  This includes the following functi
 
 """
 
-## GeoRegion Information and Attributes
+## Load GeoRegion Information and Attributes
 
-function gregioncopy()
+function gregioncopy(;overwrite::Bool=false)
+
+    jfol = joinpath(DEPOT_PATH[1],"files/GeoRegions/"); mkpath(jfol);
     ftem = joinpath(@__DIR__,"gregionstemplate.txt")
-    freg = joinpath(@__DIR__,"gregions.txt")
-    if !isfile(freg)
-        @debug "$(Dates.now()) - Unable to find gregions.txt, copying data from gregionstemplate.txt ..."
+    freg = joinpath(jfol,"gregions.txt")
+
+    if !overwrite
+        if !isfile(freg)
+            @debug "$(Dates.now()) - Unable to find gregions.txt, copying data from gregionstemplate.txt ..."
+            cp(ftem,freg,force=true);
+        end
+    else
         cp(ftem,freg,force=true);
     end
+
+    return freg
+
 end
 
 function gregioninfoload()
     @debug "$(Dates.now()) - Loading information on possible GeoRegions ..."
-    gregioncopy(); return readdlm(joinpath(@__DIR__,"gregions.txt"),',',comments=true);
+    return readdlm(gregioncopy(),',',comments=true);
 end
 
 function gregioninfodisplay(gregioninfo::AbstractArray)
@@ -36,21 +46,99 @@ function gregioninfoall()
     pretty_table(rinfo,head,alignment=:c);
 end
 
-function gregioninfoadd(;
-    ID::AbstractString,parent::AbstractString,
-    N::Integer,S::Integer,E::Integer,W::Integer,
-    name::AbstractString
-)
+function isgeoregion(greg::AbstractString;throw::Bool=true)
 
-    freg = joinpath(@__DIR__,"gregions.txt"); rinfo = gregioninfoload();
-    gregID = rinfo[:,1]; gregparent = rinfo[:,2]; gregname = rinfo[:,7];
-
-    if sum(gregID.==ID) > 0
-        error("$(Dates.now()) - GeoRegion ID already exists.  Please choose a new ID.")
+    rinfo = gregioninfoload(); gregID = rinfo[:,1];
+    if sum(gregID.==greg) == 0
+        if throw
+            error("$(Dates.now()) - $(greg) is not a valid GeoRegion.  If this is not a typo, then use gregioninfoadd() to gregions.txt.")
+        else
+            @warn "$(Dates.now()) - The GeoRegion ID $(greg) has not been added to gregions.txt."
+            return false
+        end
+    else;   return true
     end
 
-    open(freg,"a") do io
-        writedlm(io,[ID parent N S E W name],',')
+end
+
+function isgeoregion(greg::AbstractString,gregioninfo::AbstractArray;throw::Bool=true)
+
+    gregID = gregioninfo[:,1];
+    if sum(gregID.==greg) == 0
+        if throw
+            error("$(Dates.now()) - $(greg) is not a valid GeoRegion.  If this is not a typo, then use gregioninfoadd() to gregions.txt.")
+        else
+            @warn "$(Dates.now()) - The GeoRegion ID $(greg) has not been added to gregions.txt."
+            return false
+        end
+    else;   return true
+    end
+
+end
+
+
+## Manipulation of GeoRegion Data
+
+function gregioninfoadd(;
+    ID::AbstractString, parent::AbstractString,
+    N::Integer, S::Integer, E::Integer, W::Integer,
+    name::AbstractString, note::AbstractString="",
+    throw::Bool=true
+)
+
+    note = "$(note).  Added to gregions.txt on $(Dates.now()).";
+
+    freg = gregioncopy(); rinfo = gregioninfoload();
+    gregID = rinfo[:,1]; gregparent = rinfo[:,2]; gregname = rinfo[:,7];
+
+    if isgeoregion(ID,rinfo;throw=false)
+
+        if sum(gregparent.==parent) == 0
+
+            error("$(Dates.now()) - The GeoRegion $(parent) was defined to be the parent GeoRegion of $(ID), but the GeoRegion ID $(parent) cannot be found.  Please define the GeoRegion $(parent) and its properties.")
+
+        else
+
+            open(freg,"a") do io
+                writedlm(io,[ID parent N S E W name note],',')
+            end
+
+        end
+
+    else
+
+        if throw
+            error("$(Dates.now()) - The GeoRegion ID $(ID) is already in use.  Please choose a new GeoRegion ID.")
+        else
+            @info "$(Dates.now()) - GeoRegion ID $(ID) has already been added to gregions.txt in $(freg)"
+        end
+
+    end
+
+end
+
+function gregioninfoadd(fadd::AbstractString)
+
+    if !isfile(fadd); error("$(Dates.now()) - The file $(fadd) does not exist."); end
+    ainfo = readdlm(fadd,',',comments=true); agregID = ainfo[:,1]; nadd = length(agregID);
+    lprop = size(ainfo,2);
+
+    if lprop == 8
+
+        for iadd = 1 : nadd
+            gregioninfoadd(ID=ainfo[iadd,1],parent=ainfo[iadd,2],
+                           N=ainfo[iadd,3],S=ainfo[iadd,5],W=ainfo[iadd,4],E=ainfo[iadd,6],
+                           unit=ainfo[iadd,7],throw=false,note=ainfo[iadd,8]);
+        end
+
+    elseif lprop == 7
+
+        for iadd = 1 : nadd
+            gregioninfoadd(ID=ainfo[iadd,1],parent=ainfo[iadd,2],
+                           N=ainfo[iadd,3],S=ainfo[iadd,5],W=ainfo[iadd,4],E=ainfo[iadd,6],
+                           unit=ainfo[iadd,7],throw=false);
+        end
+
     end
 
 end
@@ -87,12 +175,12 @@ end
 
 function gregionparent(gregID::AbstractString)
     greginfo = gregioninfoload(); gregions = greginfo[:,1]; ID = (gregions .== gregID);
-    return greginfo[ID,2][1];
+    preg = greginfo[ID,2][1]; if isgeoregion(preg,greginfo); return greginfo[ID,2][1]; end
 end
 
 function gregionparent(gregID::AbstractString,greginfo::AbstractArray)
     ggregions = greginfo[:,1]; ID = (gregions .== gregID);
-    return greginfo[ID,2][1];
+    preg = greginfo[ID,2][1]; if isgeoregion(preg,greginfo); return greginfo[ID,2][1]; end
 end
 
 ## Find GeoRegion Children
