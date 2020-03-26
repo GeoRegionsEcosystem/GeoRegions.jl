@@ -146,14 +146,15 @@ end
 ## Find GeoRegion Bounds
 
 function gregionbounds(gregID::AbstractString)
-    greginfo = gregioninfoload(); gregions = greginfo[:,1]; ID = (gregions .== gregID);
+    greginfo = gregioninfoload(); gregions = greginfo[:,1];
+    if isgeoregion(reg,greginfo); ID = (gregions .== gregID); end
     N,S,E,W = greginfo[ID,[3,5,6,4]];
     @debug "$(Dates.now()) - The bounds of the GeoRegion are, in [N,S,E,W] format, [$(N),$(S),$(E),$(W)]."
     return [N,S,E,W]
 end
 
 function gregionbounds(gregID::AbstractString,greginfo::AbstractArray)
-    gregions = greginfo[:,1]; ID = (gregions .== gregID);
+    gregions = greginfo[:,1]; if isgeoregion(reg,greginfo); ID = (gregions .== gregID); end
     N,S,E,W = greginfo[ID,[3,5,6,4]];
     @debug "$(Dates.now()) - The bounds of the GeoRegion are, in [N,S,E,W] format, [$(N),$(S),$(E),$(W)]."
     return [N,S,E,W]
@@ -162,25 +163,28 @@ end
 ## Find Full GeoRegion Name
 
 function gregionfullname(gregID::AbstractString)
-    greginfo = gregioninfoload(); gregions = greginfo[:,1]; ID = (gregions .== gregID);
+    greginfo = gregioninfoload(); gregions = greginfo[:,1];
+    if isgeoregion(reg,greginfo); ID = (gregions .== gregID); end
     return greginfo[ID,7][1];
 end
 
 function gregionfullname(gregID::AbstractString,greginfo::AbstractArray)
-    gregions = greginfo[:,1]; ID = (gregions .== gregID);
+    gregions = greginfo[:,1];
+    if isgeoregion(reg,greginfo); ID = (gregions .== gregID); end
     return greginfo[ID,7][1];
 end
 
 ## Find GeoRegion Parent
 
 function gregionparent(gregID::AbstractString)
-    greginfo = gregioninfoload(); gregions = greginfo[:,1]; ID = (gregions .== gregID);
-    preg = greginfo[ID,2][1]; if isgeoregion(preg,greginfo); return greginfo[ID,2][1]; end
+    greginfo = gregioninfoload(); gregions = greginfo[:,1];
+    if isgeoregion(reg,greginfo); ID = (gregions .== gregID); end
+    preg = greginfo[ID,2][1]; if isgeoregion(preg,greginfo); return preg; end
 end
 
 function gregionparent(gregID::AbstractString,greginfo::AbstractArray)
-    ggregions = greginfo[:,1]; ID = (gregions .== gregID);
-    preg = greginfo[ID,2][1]; if isgeoregion(preg,greginfo); return greginfo[ID,2][1]; end
+    gregions = greginfo[:,1]; if isgeoregion(reg,greginfo); ID = (gregions .== gregID); end
+    preg = greginfo[ID,2][1]; if isgeoregion(preg,greginfo); return preg; end
 end
 
 ## Find GeoRegion Children
