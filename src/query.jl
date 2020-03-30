@@ -22,6 +22,7 @@ function gregioncopy(;overwrite::Bool=false)
             cp(ftem,freg,force=true);
         end
     else
+        @warn "$(Dates.now()) - Overwriting gregions.txt in $jfol ..."
         cp(ftem,freg,force=true);
     end
 
@@ -42,7 +43,8 @@ end
 function gregioninfoall()
     @info "$(Dates.now()) - The following GeoRegions and their properties are offered in the GeoRegions.jl"
 
-    greginfo = gregioninfoload(); head = ["ID","Parent","N","W","S","E","Full Name"];
+    greginfo = gregioninfoload();
+    head = ["ID","Parent","N","W","S","E","Full Name","Notes"];
     pretty_table(rinfo,head,alignment=:c);
 end
 
@@ -128,7 +130,7 @@ function gregioninfoadd(fadd::AbstractString)
         for iadd = 1 : nadd
             gregioninfoadd(ID=ainfo[iadd,1],parent=ainfo[iadd,2],
                            N=ainfo[iadd,3],S=ainfo[iadd,5],W=ainfo[iadd,4],E=ainfo[iadd,6],
-                           unit=ainfo[iadd,7],throw=false,note=ainfo[iadd,8]);
+                           name=ainfo[iadd,7],throw=false,note=ainfo[iadd,8]);
         end
 
     elseif lprop == 7
@@ -136,7 +138,7 @@ function gregioninfoadd(fadd::AbstractString)
         for iadd = 1 : nadd
             gregioninfoadd(ID=ainfo[iadd,1],parent=ainfo[iadd,2],
                            N=ainfo[iadd,3],S=ainfo[iadd,5],W=ainfo[iadd,4],E=ainfo[iadd,6],
-                           unit=ainfo[iadd,7],throw=false);
+                           name=ainfo[iadd,7],throw=false);
         end
 
     end
@@ -205,7 +207,7 @@ end
 
 function gregiongridvec(reg::AbstractString,lon::Vector{<:Real},lat::Vector{<:Real})
 
-    @debug "$(Dates.now()) - Determining indices of longitude and latitude boundaries in the parent GeoRegion dataset ..."
+    @debug "$(Dates.now()) - Determining indices of longitude and latitude boundaries in the given dataset ..."
     bounds = gregionbounds(reg); igrid = regiongrid(bounds,lon,lat);
     iN = igrid[1]; iS = igrid[2]; iE = igrid[3]; iW = igrid[4];
 
