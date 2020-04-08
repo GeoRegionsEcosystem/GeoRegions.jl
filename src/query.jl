@@ -149,14 +149,15 @@ end
 
 function gregionbounds(gregID::AbstractString)
     greginfo = gregioninfoload(); gregions = greginfo[:,1];
-    if isgeoregion(reg,greginfo); ID = (gregions .== gregID); end
+    if isgeoregion(gregID,greginfo); ID = (gregions .== gregID); end
     N,S,E,W = greginfo[ID,[3,5,6,4]];
     @debug "$(Dates.now()) - The bounds of the GeoRegion are, in [N,S,E,W] format, [$(N),$(S),$(E),$(W)]."
     return [N,S,E,W]
 end
 
 function gregionbounds(gregID::AbstractString,greginfo::AbstractArray)
-    gregions = greginfo[:,1]; if isgeoregion(reg,greginfo); ID = (gregions .== gregID); end
+    gregions = greginfo[:,1];
+    if isgeoregion(gregID,greginfo); ID = (gregions .== gregID); end
     N,S,E,W = greginfo[ID,[3,5,6,4]];
     @debug "$(Dates.now()) - The bounds of the GeoRegion are, in [N,S,E,W] format, [$(N),$(S),$(E),$(W)]."
     return [N,S,E,W]
@@ -166,13 +167,13 @@ end
 
 function gregionfullname(gregID::AbstractString)
     greginfo = gregioninfoload(); gregions = greginfo[:,1];
-    if isgeoregion(reg,greginfo); ID = (gregions .== gregID); end
+    if isgeoregion(gregID,greginfo); ID = (gregions .== gregID); end
     return greginfo[ID,7][1];
 end
 
 function gregionfullname(gregID::AbstractString,greginfo::AbstractArray)
     gregions = greginfo[:,1];
-    if isgeoregion(reg,greginfo); ID = (gregions .== gregID); end
+    if isgeoregion(gregID,greginfo); ID = (gregions .== gregID); end
     return greginfo[ID,7][1];
 end
 
