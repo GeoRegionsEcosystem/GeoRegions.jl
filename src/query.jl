@@ -45,7 +45,7 @@ function gregioninfoall()
 
     greginfo = gregioninfoload();
     head = ["ID","Parent","N","W","S","E","Full Name","Notes"];
-    pretty_table(rinfo,head,alignment=:c);
+    pretty_table(greginfo,head,alignment=:c);
 end
 
 function isgeoregion(greg::AbstractString;throw::Bool=true)
@@ -179,15 +179,22 @@ end
 
 ## Find GeoRegion Parent
 
-function gregionparent(gregID::AbstractString)
+function gregionparent(gregID::AbstractString;levels=1)
     greginfo = gregioninfoload(); gregions = greginfo[:,1];
-    if isgeoregion(reg,greginfo); ID = (gregions .== gregID); end
-    preg = greginfo[ID,2][1]; if isgeoregion(preg,greginfo); return preg; end
+    for ilvl = 1 : levels
+        if isgeoregion(gregID,greginfo); ID = (gregions .== gregID); end
+        gregID = greginfo[ID,2][1];
+    end
+    if isgeoregion(gregID,greginfo); return gregID; end
 end
 
-function gregionparent(gregID::AbstractString,greginfo::AbstractArray)
-    gregions = greginfo[:,1]; if isgeoregion(reg,greginfo); ID = (gregions .== gregID); end
-    preg = greginfo[ID,2][1]; if isgeoregion(preg,greginfo); return preg; end
+function gregionparent(gregID::AbstractString,greginfo::AbstractArray;levels=1)
+    gregions = greginfo[:,1];
+    for ilvl = 1 : levels
+        if isgeoregion(gregID,greginfo); ID = (gregions .== gregID); end
+        gregID = greginfo[ID,2][1];
+    end
+    if isgeoregion(gregID,greginfo); return gregID; end
 end
 
 ## Find GeoRegion Children

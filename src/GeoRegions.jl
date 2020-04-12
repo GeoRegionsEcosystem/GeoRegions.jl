@@ -3,6 +3,7 @@ module GeoRegions
 ## Modules Used
 using Logging, Dates
 using DelimitedFiles
+using PrettyTables
 
 ## Exporting the following functions:
 export
