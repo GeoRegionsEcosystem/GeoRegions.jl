@@ -179,7 +179,7 @@ end
 
 ## Find GeoRegion Parent
 
-function gregionparent(gregID::AbstractString;levels=1)
+function gregionparent(gregID::AbstractString;levels::Integer=1)
     greginfo = gregioninfoload(); gregions = greginfo[:,1];
     for ilvl = 1 : levels
         if isgeoregion(gregID,greginfo); ID = (gregions .== gregID); end
@@ -188,7 +188,7 @@ function gregionparent(gregID::AbstractString;levels=1)
     if isgeoregion(gregID,greginfo); return gregID; end
 end
 
-function gregionparent(gregID::AbstractString,greginfo::AbstractArray;levels=1)
+function gregionparent(gregID::AbstractString,greginfo::AbstractArray;levels::Integer=1)
     gregions = greginfo[:,1];
     for ilvl = 1 : levels
         if isgeoregion(gregID,greginfo); ID = (gregions .== gregID); end
