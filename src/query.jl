@@ -93,7 +93,7 @@ function gregioninfoadd(;
     freg = gregioncopy(); rinfo = gregioninfoload();
     gregID = rinfo[:,1]; gregparent = rinfo[:,2]; gregname = rinfo[:,7];
 
-    if isgeoregion(ID,rinfo;throw=false)
+    if !isgeoregion(ID,rinfo;throw=false)
 
         if sum(gregparent.==parent) == 0
 
@@ -102,7 +102,7 @@ function gregioninfoadd(;
         else
 
             open(freg,"a") do io
-                writedlm(io,[ID parent N S E W name note],',')
+                writedlm(io,[ID parent N W S E name note],',')
             end
 
         end
@@ -128,17 +128,22 @@ function gregioninfoadd(fadd::AbstractString)
     if lprop == 8
 
         for iadd = 1 : nadd
-            gregioninfoadd(ID=ainfo[iadd,1],parent=ainfo[iadd,2],
-                           N=ainfo[iadd,3],S=ainfo[iadd,5],W=ainfo[iadd,4],E=ainfo[iadd,6],
-                           name=ainfo[iadd,7],throw=false,note=ainfo[iadd,8]);
+            gregioninfoadd(
+                ID=ainfo[iadd,1],parent=ainfo[iadd,2],
+                N=ainfo[iadd,3],S=ainfo[iadd,5],W=ainfo[iadd,4],E=ainfo[iadd,6],
+                name=ainfo[iadd,7],throw=false,note=ainfo[iadd,8]
+            );
         end
 
     elseif lprop == 7
 
         for iadd = 1 : nadd
-            gregioninfoadd(ID=ainfo[iadd,1],parent=ainfo[iadd,2],
-                           N=ainfo[iadd,3],S=ainfo[iadd,5],W=ainfo[iadd,4],E=ainfo[iadd,6],
-                           name=ainfo[iadd,7],throw=false);
+            gregioninfoadd(
+                ID=ainfo[iadd,1],parent=ainfo[iadd,2],
+                N=ainfo[iadd,3],S=ainfo[iadd,5],W=ainfo[iadd,4],E=ainfo[iadd,6],
+                name=ainfo[iadd,7],throw=false,
+                note="Custom User-Defined GeoRegion"
+            );
         end
 
     end
