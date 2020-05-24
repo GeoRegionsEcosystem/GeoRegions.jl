@@ -1,5 +1,28 @@
 # **<div align="center">GeoRegions.jl</div>**
 
+<p align="center">
+  <a href="https://www.repostatus.org/#active">
+    <img alt="Repo Status" src="https://www.repostatus.org/badges/latest/active.svg?style=flat-square" />
+  </a>
+  <a href="https://travis-ci.com/github/JuliaClimate/GeoRegions.jl">
+    <img alt="Travis CI" src="https://travis-ci.com/JuliaClimate/GeoRegions.jl.svg?branch=master&style=flat-square">
+  </a>
+  <a href="https://github.com/JuliaClimate/GeoRegions.jl/actions?query=workflow%3ADocumentation">
+    <img alt="Documentation Build" src="https://github.com/JuliaClimate/GeoRegions.jl/workflows/Documentation/badge.svg">
+  </a>
+  <br>
+  <a href="https://mit-license.org">
+    <img alt="MIT License" src="https://img.shields.io/badge/License-MIT-blue.svg?style=flat-square">
+  </a>
+	<img alt="MIT License" src="https://img.shields.io/github/v/release/JuliaClimate/GeoRegions.jl.svg?style=flat-square">
+  <a href="https://juliaclimate.github.io/GeoRegions.jl/stable/">
+    <img alt="Latest Documentation" src="https://img.shields.io/badge/docs-stable-blue.svg?style=flat-square">
+  </a>
+  <a href="https://juliaclimate.github.io/GeoRegions.jl/dev/">
+    <img alt="Latest Documentation" src="https://img.shields.io/badge/docs-latest-blue.svg?style=flat-square">
+  </a>
+</p>
+
 **Created By:** Nathanael Wong (nathanaelwong@fas.harvard.edu)
 
 ## **Introduction**
@@ -89,8 +112,3 @@ Suppose we are given gridded data `rdata` spanning longitude `rlon` and latitude
  2. `regionextractgrid(rdata,rinfo)` will return the data `gdata` for the GeoRegion `greg`
 
 Therefore we can call `regionextractgrid()` multiple times in loops for the same region `greg` without needing to reextract region information, thus saving time.  This is particularly useful when dealing with data over many timesteps.
-<!--stackedit_data:
-eyJoaXN0b3J5IjpbLTIwMzEwNDk1MjQsMTI4NDg4MDk4NywxOT
-I1MTM2ODUwLDk2MjY3MDM0OSwtMTA3MzAxNDY2NSw4NjczNjc1
-MTUsLTEwMjEyMzM4OTVdfQ==
--->
