@@ -11,13 +11,14 @@ makedocs(
     authors  = "Nathanael Wong",
     sitename = "GeoRegions.jl",
     pages    = [
-        "Home"      => "index.md",
-        "Tutorials" => [
-            "GeoRegions List"   => "tutorials/list.md",
+        "Home"            => "index.md",
+        "GeoRegions List" => "list.md",
+        "Tutorials"       => [
             "IsIn Region?"      => "tutorials/isin.md",
             # "GeoRegion Query"   => "tutorials/query.md",
             # "GeoRegion Extract" => "tutorials/extract.md"
-        ]
+        ],
+        "APIs" => "api.md",
     ]
 )
 
