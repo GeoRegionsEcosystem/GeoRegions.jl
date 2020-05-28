@@ -15,7 +15,7 @@ makedocs(
         "GeoRegions List" => "list.md",
         "Tutorials"       => [
             "IsIn Region?"      => "tutorials/isin.md",
-            # "GeoRegion Query"   => "tutorials/query.md",
+            "GeoRegions"   => "tutorials/georegions.md",
             # "GeoRegion Extract" => "tutorials/extract.md"
         ],
         "APIs" => "api.md",
