@@ -13,16 +13,18 @@ list of region bounds (known as GeoRegions).  This includes the following functi
 function gregioncopy(;overwrite::Bool=false)
 
     jfol = joinpath(DEPOT_PATH[1],"files/GeoRegions/"); mkpath(jfol);
-    ftem = joinpath(@__DIR__,"gregionstemplate.txt")
+    ftem = joinpath(@__DIR__,"gregionslist.txt")
     freg = joinpath(jfol,"gregions.txt")
 
     if !overwrite
         if !isfile(freg)
-            @debug "$(Dates.now()) - Unable to find gregions.txt, copying data from gregionstemplate.txt ..."
+            @debug "$(Dates.now()) - Unable to find gregions.txt, copying data from gregionslist.txt ..."
             cp(ftem,freg,force=true);
         end
     else
-        @warn "$(Dates.now()) - Overwriting gregions.txt in $jfol ..."
+        if isfile(freg)
+            @warn "$(Dates.now()) - Overwriting gregions.txt in $jfol ..."
+        end
         cp(ftem,freg,force=true);
     end
 
@@ -41,11 +43,18 @@ function gregioninfodisplay(gregioninfo::AbstractArray)
 end
 
 function gregioninfoall()
+
     @info "$(Dates.now()) - The following GeoRegions and their properties are offered in the GeoRegions.jl"
 
     greginfo = gregioninfoload();
-    head = ["ID","Parent","N","W","S","E","Full Name","Notes"];
-    pretty_table(greginfo,head,alignment=:c);
+    head = ["ID","pID","N","W","S","E","Full Name","Notes"];
+
+    pretty_table(
+        greginfo,head,
+        alignment=[:c,:c,:c,:c,:c,:c,:l,:l],
+        tf=compact
+    );
+
 end
 
 function isgeoregion(greg::AbstractString;throw::Bool=true)
@@ -80,6 +89,20 @@ end
 
 
 ## Manipulation of GeoRegion Data
+
+function gregiontemplate(fdir::AbstractString="")
+
+    if fdir == ""; fdir = pwd(); end
+
+    jfol = joinpath(DEPOT_PATH[1],"files/GeoRegions/"); mkpath(jfol);
+    ftem = joinpath(@__DIR__,"gregionstemplate.txt")
+    freg = joinpath(fdir,"gregionsadd.txt")
+
+    cp(ftem,freg,force=true);
+
+    return freg
+
+end
 
 function gregioninfoadd(;
     ID::AbstractString, parent::AbstractString,
@@ -204,16 +227,40 @@ end
 
 ## Find GeoRegion Children
 
-function gregionchild(gregID::AbstractString)
+function gregionchild(gregID::AbstractString;throw=true)
+
     greginfo = gregioninfoload(); gregions = greginfo[:,2]; ID = (gregions .== gregID);
-    cregions = greginfo[ID,:]; head = ["ID","Parent","N","W","S","E","Full Name"];
-    pretty_table(cregions,head,alignment=:c);
+
+    if sum(ID) != 0
+        cregions = greginfo[ID,:]; head = ["ID","pID","N","W","S","E","Full Name","Notes"];
+        pretty_table(cregions,head,alignment=[:c,:c,:c,:c,:c,:c,:l,:l],tf=compact);
+        return cregions[:,1];
+    else
+        if throw
+            error("$(Dates.now()) - The GeoRegion $(gregID) has no child GeoRegion defined.")
+        else
+            @warn "$(Dates.now()) - The GeoRegion $(gregID) has no child GeoRegion defined."
+        end
+    end
+
 end
 
-function gregionchild(gregID::AbstractString,greginfo::AbstractArray)
+function gregionchild(gregID::AbstractString,greginfo::AbstractArray;throw=true)
+
     gregions = greginfo[:,2]; ID = (gregions .== gregID);
-    cregions = greginfo[ID,:]; head = ["ID","Parent","N","W","S","E","Full Name"];
-    pretty_table(cregions,head,alignment=:c);
+
+    if sum(ID) != 0
+        cregions = greginfo[ID,:]; head = ["ID","pID","N","W","S","E","Full Name","Notes"];
+        pretty_table(cregions,head,alignment=[:c,:c,:c,:c,:c,:c,:l,:l],tf=compact);
+        return cregions[:,1];
+    else
+        if throw
+            error("$(Dates.now()) - The GeoRegion $(gregID) has no child GeoRegion defined.")
+        else
+            @warn "$(Dates.now()) - The GeoRegion $(gregID) has no child GeoRegion defined."
+        end
+    end
+
 end
 
 ##

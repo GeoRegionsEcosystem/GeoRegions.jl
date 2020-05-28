@@ -10,7 +10,8 @@ export
        ispointinregion, isgridinregion, isgeoregion, from0360to180, from180to0360,
        regionpoint, regiongrid, regiongridvec,
        regionextract, regionextractpoint, regionextractgrid, regionextractgrid!,
-       gregioncopy, gregioninfoload, gregioninfodisplay, gregioninfoall, gregioninfoadd,
+       gregioncopy, gregiontemplate,
+       gregioninfoload, gregioninfodisplay, gregioninfoall, gregioninfoadd,
        gregionbounds, gregionfullname, gregionparent, gregionchild, gregiongridvec
 
 ## Including other files in the module
