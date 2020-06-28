@@ -114,11 +114,11 @@ function gregioninfoadd(;
     note = "$(note).  Added to gregions.txt on $(Dates.now()).";
 
     freg = gregioncopy(); rinfo = gregioninfoload();
-    gregID = rinfo[:,1]; gregparent = rinfo[:,2]; gregname = rinfo[:,7];
+    gregID = rinfo[:,1]; gregname = rinfo[:,7];
 
     if !isgeoregion(ID,rinfo;throw=false)
 
-        if sum(gregparent.==parent) == 0
+        if sum(gregID.==parent) == 0
 
             error("$(Dates.now()) - The GeoRegion $(parent) was defined to be the parent GeoRegion of $(ID), but the GeoRegion ID $(parent) cannot be found.  Please define the GeoRegion $(parent) and its properties.")
 
@@ -173,8 +173,56 @@ function gregioninfoadd(fadd::AbstractString)
 
 end
 
+function gregioninfoaddclean(;
+    ID::AbstractString, parent::AbstractString,
+    N::Integer, S::Integer, E::Integer, W::Integer,
+    name::AbstractString, note::AbstractString="",
+    throw::Bool=true
+)
+
+    freg = gregioncopy(); open(freg,"a") do io
+        writedlm(io,[ID parent N W S E name note],',')
+    end
+
+end
+
+function gregioninform(ID::AbstractString)
+
+    freg = gregioncopy(); rinfo = gregioninfoload();
+
+    if isgeoregion(ID,rinfo;throw=false)
+
+        rID = rinfo[:,1]; ninfo = rinfo[rID.!=ID,:]; nadd = size(ninfo,1)
+        freg = gregioncopy();
+        open(freg,"w") do io
+            write(io,"# (1)ID,(2)pID,(3)N,(4)W,(5)S,(6)E,(7)Description,(8)Notes")
+        end
+
+        for iadd = 1 : nadd
+            gregioninfoaddclean(
+                ID=ninfo[iadd,1],parent=ninfo[iadd,2],
+                N=ninfo[iadd,3],S=ninfo[iadd,5],W=ninfo[iadd,4],E=ninfo[iadd,6],
+                name=ninfo[iadd,7],throw=false,note=ninfo[iadd,8]
+            );
+        end
+
+        @info "$(Dates.now()) - The GeoRegion ID $(ID) has been succesfully removed from gregions.txt in $(freg)."
+
+    else
+
+        @warn "$(Dates.now()) - The GeoRegion ID $(ID) that you want to remove does not exist in gregions.txt in $(freg)."
+
+    end
+
+end
+
 ## Find GeoRegion Bounds
 
+"""
+    gregionbounds(ID) -> Vector{Int64}
+
+Finds the bounds of a given `GeoRegion` represented by `ID`.  If `ID` is not valid, then the function throws an error.
+"""
 function gregionbounds(gregID::AbstractString)
     greginfo = gregioninfoload(); gregions = greginfo[:,1];
     if isgeoregion(gregID,greginfo); ID = (gregions .== gregID); end

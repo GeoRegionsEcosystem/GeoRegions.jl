@@ -11,7 +11,8 @@ export
        regionpoint, regiongrid, regiongridvec,
        regionextract, regionextractpoint, regionextractgrid, regionextractgrid!,
        gregioncopy, gregiontemplate,
-       gregioninfoload, gregioninfodisplay, gregioninfoall, gregioninfoadd,
+       gregioninfoload, gregioninfodisplay, gregioninfoall,
+       gregioninfoadd, gregioninform,
        gregionbounds, gregionfullname, gregionparent, gregionchild, gregiongridvec
 
 ## Including other files in the module
