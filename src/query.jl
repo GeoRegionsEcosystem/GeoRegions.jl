@@ -10,11 +10,22 @@ list of region bounds (known as GeoRegions).  This includes the following functi
 
 ## Load GeoRegion Information and Attributes
 
+"""
+    gregioncopy(; overwrite=false) -> String
+
+Check if a `gregions.txt` file exists in the directory `JULIA_DEPOT_PATH/files/GeoRegions/`.  If the file does not exist, copy a template from the default list in `GeoRegions.txt`. Alternatively, if one wants to override an existing `gregions.txt` file, use the `overwrite` keyword.
+
+Keyword Arguments:
+* `overwrite` : if set to `true`, overwrite any existing `gregions.txt` file.
+"""
 function gregioncopy(;overwrite::Bool=false)
 
     jfol = joinpath(DEPOT_PATH[1],"files/GeoRegions/"); mkpath(jfol);
     ftem = joinpath(@__DIR__,"gregionslist.txt")
     freg = joinpath(jfol,"gregions.txt")
+
+    info = readdlm(ftem,',',comments=true);
+    nadd = size(info,1)
 
     if !overwrite
         if !isfile(freg)
@@ -22,26 +33,54 @@ function gregioncopy(;overwrite::Bool=false)
             cp(ftem,freg,force=true);
         end
     else
+
         if isfile(freg)
             @warn "$(Dates.now()) - Overwriting gregions.txt in $jfol ..."
         end
-        cp(ftem,freg,force=true);
+
+        open(freg,"w") do io
+            write(io,"# (1)ID,(2)pID,(3)N,(4)W,(5)S,(6)E,(7)Description,(8)Notes")
+        end
+
+        for iadd = 1 : nadd
+            gregioninfoaddclean(
+                ID=info[iadd,1],parent=info[iadd,2],
+                N=info[iadd,3],S=info[iadd,5],W=info[iadd,4],E=info[iadd,6],
+                name=info[iadd,7],throw=false,note=info[iadd,8]
+            );
+        end
+
     end
 
     return freg
 
 end
 
+"""
+    gregioninfoload() -> Array{Any,2}
+
+Load information on existing `GeoRegion`s and export into an Array.
+"""
 function gregioninfoload()
     @debug "$(Dates.now()) - Loading information on possible GeoRegions ..."
     return readdlm(gregioncopy(),',',comments=true);
 end
 
+"""
+    gregioninfodisplay(gregioninfo) -> nothing
+
+Takes an Array containing information on existing `GeoRegion`s (the output from `gregioninfoload()`) and print into `@info` statements.
+"""
 function gregioninfodisplay(gregioninfo::AbstractArray)
     @info "$(Dates.now()) - The following GeoRegions are offered in the GeoRegions.jl"
     for ii = 1 : size(gregioninfo,1); @info "$(Dates.now()) - $(ii)) $(gregioninfo[ii,7])" end
 end
 
+"""
+    gregioninfoall() -> nothing
+
+Load information on existing `GeoRegions` and print in REPL using PrettyTables backends.  Does not return anything else.
+"""
 function gregioninfoall()
 
     @info "$(Dates.now()) - The following GeoRegions and their properties are offered in the GeoRegions.jl"
@@ -57,6 +96,11 @@ function gregioninfoall()
 
 end
 
+"""
+    isgeoregion(ID; throw=true) -> Bool
+
+Checks if `ID` is a valid `GeoRegion` identifier.
+"""
 function isgeoregion(greg::AbstractString;throw::Bool=true)
 
     rinfo = gregioninfoload(); gregID = rinfo[:,1];
@@ -72,6 +116,11 @@ function isgeoregion(greg::AbstractString;throw::Bool=true)
 
 end
 
+"""
+    isgeoregion(ID, gregioninfo; throw=true) -> Bool
+
+Checks if `ID` is a valid `GeoRegion` identifier based on the Array of information provided by `gregioninfo`.
+"""
 function isgeoregion(greg::AbstractString,gregioninfo::AbstractArray;throw::Bool=true)
 
     gregID = gregioninfo[:,1];
@@ -231,6 +280,11 @@ function gregionbounds(gregID::AbstractString)
     return [N,S,E,W]
 end
 
+"""
+    gregionbounds(ID, gregioninfo) -> Vector{Int64}
+
+Finds the bounds of a given `GeoRegion` represented by `ID`, using the info provided in `gregioninfo()`.  If `ID` is not valid, then the function throws an error.
+"""
 function gregionbounds(gregID::AbstractString,greginfo::AbstractArray)
     gregions = greginfo[:,1];
     if isgeoregion(gregID,greginfo); ID = (gregions .== gregID); end
@@ -241,12 +295,22 @@ end
 
 ## Find Full GeoRegion Name
 
+"""
+    gregionfullname(ID) -> String
+
+Finds the full name description of a given `GeoRegion` represented by `ID`.  If `ID` is not valid, then the function throws an error.
+"""
 function gregionfullname(gregID::AbstractString)
     greginfo = gregioninfoload(); gregions = greginfo[:,1];
     if isgeoregion(gregID,greginfo); ID = (gregions .== gregID); end
     return greginfo[ID,7][1];
 end
 
+"""
+    gregionfullname(ID, gregioninfo) -> String
+
+Finds the full name description of a given `GeoRegion` represented by `ID`, using the info provided in `gregioninfo()`.  If `ID` is not valid, then the function throws an error.
+"""
 function gregionfullname(gregID::AbstractString,greginfo::AbstractArray)
     gregions = greginfo[:,1];
     if isgeoregion(gregID,greginfo); ID = (gregions .== gregID); end
@@ -255,6 +319,11 @@ end
 
 ## Find GeoRegion Parent
 
+"""
+    gregionparent(ID; levels=1) -> String
+
+Finds the Parent ID `pID` of a given `GeoRegion` represented by `ID`.  If `ID` is not valid, then the function throws an error.
+"""
 function gregionparent(gregID::AbstractString;levels::Integer=1)
     greginfo = gregioninfoload(); gregions = greginfo[:,1];
     for ilvl = 1 : levels
@@ -264,6 +333,11 @@ function gregionparent(gregID::AbstractString;levels::Integer=1)
     if isgeoregion(gregID,greginfo); return gregID; end
 end
 
+"""
+    gregionparent(ID, gregioninfo; levels=1) -> String
+
+Finds the Parent ID `pID` of a given `GeoRegion` represented by `ID`, using the info provided in `gregioninfo()`.  If `ID` is not valid, then the function throws an error.
+"""
 function gregionparent(gregID::AbstractString,greginfo::AbstractArray;levels::Integer=1)
     gregions = greginfo[:,1];
     for ilvl = 1 : levels
