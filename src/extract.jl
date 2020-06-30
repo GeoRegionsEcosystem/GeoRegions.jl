@@ -134,7 +134,7 @@ function regionextractgrid(
     gridbounds::Vector{<:Real}, rlon::Vector{<:Real}, rlat::Vector{<:Real}
 )
 
-    nlon = length(lon); ndim = ndims(data); igrid  = regiongrid(gridbounds,rlon,rlat);
+    nlon = length(rlon); ndim = ndims(rdata); igrid  = regiongrid(gridbounds,rlon,rlat);
     iN = igrid[1]; iS = igrid[2]; iE = igrid[3]; iW = igrid[4];
 
     if     iN < iS; iNS = iN : iS
@@ -143,7 +143,8 @@ function regionextractgrid(
 
     if iW > iE; iWE = 1 : (iE + nlon + 1 - iW); rdata = circshift(rdata,1-iW);
           gdata = regionextract(rdata,[iWE,iNS],ndim)
-    else; gdata = regionextract(rdata,[iWE,iNS],ndim)
+    else; iWE = iW : iE;
+          gdata = regionextract(rdata,[iWE,iNS],ndim)
 
     end
 
@@ -157,7 +158,7 @@ function regionextractgrid!(
     tmp::Array{<:Real}
 )
 
-    nlon = length(lon); ndim = ndims(data); igrid  = regiongrid(gridbounds,rlon,rlat);
+    nlon = length(rlon); ndim = ndims(rdata); igrid  = regiongrid(gridbounds,rlon,rlat);
     iN = igrid[1]; iS = igrid[2]; iE = igrid[3]; iW = igrid[4];
 
     if     iN < iS; iNS = iN : iS
@@ -166,7 +167,8 @@ function regionextractgrid!(
 
     if iW > iE; iWE = 1 : (iE + nlon + 1 - iW); circshift!(tmp,data,1-iW);
           gdata = regionextract(tmp,[iWE,iNS],ndim)
-    else; gdata = regionextract(rdata,[iWE,iNS],ndim)
+    else; iWE = iW : iE;
+          gdata = regionextract(rdata,[iWE,iNS],ndim)
 
     end
 
