@@ -408,7 +408,10 @@ function gregiongridvec(reg::AbstractString,lon::Vector{<:Real},lat::Vector{<:Re
         iWE = iW;
     end
 
-    reginfo = Dict("boundsID"=>igrid,"IDvec"=>[iWE,iNS],"fullname"=>gregionfullname(reg))
+    reginfo = Dict(
+        "gridindices"=>igrid, "lonlatindices"=>[iWE,iNS],
+        "fullname"=>gregionfullname(reg)
+    )
 
     return lon[iWE],lat[iNS],reginfo
 
