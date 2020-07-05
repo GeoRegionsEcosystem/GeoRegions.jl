@@ -333,7 +333,7 @@ function checkgrid(
     if (rW < rE && (gE < (rW-tlon) || gE > (rE+tlon))) ||
         (rW > rE && (gE < (rW-tlon) && gE > (rE+tlon))) ||
         (rW < rE && (gW < (rW-tlon) || gW > (rE+tlon))) ||
-        (rW > rE && (gW < (rW-tlon) && gW > (rWE+tlon))) ||
+        (rW > rE && (gW < (rW-tlon) && gW > (rE+tlon))) ||
         gN < (rS-tlat) || gN > (rN+tlat) ||
         gS < (rS-tlat) || gS > (rN+tlat)
 
