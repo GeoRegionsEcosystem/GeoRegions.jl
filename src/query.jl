@@ -39,7 +39,7 @@ function gregioncopy(;overwrite::Bool=false)
         end
 
         open(freg,"w") do io
-            write(io,"# (1)ID,(2)pID,(3)N,(4)W,(5)S,(6)E,(7)Description,(8)Notes")
+            write(io,"# (1)ID,(2)pID,(3)N,(4)W,(5)S,(6)E,(7)Description,(8)Notes\n")
         end
 
         for iadd = 1 : nadd

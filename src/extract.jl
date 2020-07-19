@@ -121,8 +121,8 @@ function regionextractgrid(
     iW = reginfo["gridindices"][4]; iE = reginfo["gridindices"][3];
 
     if iW > iE; rdata = circshift(rdata,1-iW);
-          gdata = regionextract(rdata,reginfo["IDvec"]);
-    else; gdata = regionextract(rdata,reginfo["IDvec"]);
+          gdata = regionextract(rdata,reginfo["lonlatindices"]);
+    else; gdata = regionextract(rdata,reginfo["lonlatindices"]);
     end
 
     return gdata
