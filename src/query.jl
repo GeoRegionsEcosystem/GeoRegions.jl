@@ -29,8 +29,21 @@ function gregioncopy(;overwrite::Bool=false)
 
     if !overwrite
         if !isfile(freg)
+
             @debug "$(Dates.now()) - Unable to find gregions.txt, copying data from gregionslist.txt ..."
-            cp(ftem,freg,force=true);
+
+            open(freg,"w") do io
+                write(io,"# (1)ID,(2)pID,(3)N,(4)W,(5)S,(6)E,(7)Description,(8)Notes\n")
+            end
+
+            for iadd = 1 : nadd
+                gregioninfoaddclean(
+                    ID=info[iadd,1],parent=info[iadd,2],
+                    N=info[iadd,3],S=info[iadd,5],W=info[iadd,4],E=info[iadd,6],
+                    name=info[iadd,7],throw=false,note=info[iadd,8]
+                );
+            end
+            
         end
     else
 
