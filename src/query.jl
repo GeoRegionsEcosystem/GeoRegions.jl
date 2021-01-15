@@ -33,34 +33,31 @@ function gregioncopy(;overwrite::Bool=false)
             @debug "$(Dates.now()) - Unable to find gregions.txt, copying data from gregionslist.txt ..."
 
             open(freg,"w") do io
-                write(io,"# (1)ID,(2)pID,(3)N,(4)W,(5)S,(6)E,(7)Description,(8)Notes\n")
+                open(ftem) do f
+                    for line in readlines(f)
+                        write(io,"$line\n")
+                    end
+                end
             end
 
-            for iadd = 1 : nadd
-                gregioninfoaddclean(
-                    ID=info[iadd,1],parent=info[iadd,2],
-                    N=info[iadd,3],S=info[iadd,5],W=info[iadd,4],E=info[iadd,6],
-                    name=info[iadd,7],throw=false,note=info[iadd,8]
-                );
-            end
-            
         end
     else
 
         if isfile(freg)
             @warn "$(Dates.now()) - Overwriting gregions.txt in $jfol ..."
+            rm(freg,force=true)
         end
 
         open(freg,"w") do io
             write(io,"# (1)ID,(2)pID,(3)N,(4)W,(5)S,(6)E,(7)Description,(8)Notes\n")
         end
 
-        for iadd = 1 : nadd
-            gregioninfoaddclean(
-                ID=info[iadd,1],parent=info[iadd,2],
-                N=info[iadd,3],S=info[iadd,5],W=info[iadd,4],E=info[iadd,6],
-                name=info[iadd,7],throw=false,note=info[iadd,8]
-            );
+        open(freg,"w") do io
+            open(ftem) do f
+                for line in readlines(f)
+                    write(io,"$line\n")
+                end
+            end
         end
 
     end
@@ -405,6 +402,7 @@ function gregiongridvec(reg::AbstractString,lon::Vector{<:Real},lat::Vector{<:Re
     @debug "$(Dates.now()) - Determining indices of longitude and latitude boundaries in the given dataset ..."
     bounds = gregionbounds(reg); igrid = regiongrid(bounds,lon,lat);
     iN = igrid[1]; iS = igrid[2]; iE = igrid[3]; iW = igrid[4];
+    nlon = deepcopy(lon)
 
     @debug "$(Dates.now()) - Creating vector of latitude indices to extract ..."
     if     iN < iS; iNS = iN : iS
@@ -415,8 +413,8 @@ function gregiongridvec(reg::AbstractString,lon::Vector{<:Real},lat::Vector{<:Re
     @debug "$(Dates.now()) - Creating vector of longitude indices to extract ..."
     if     iW < iE; iWE = iW : iE
     elseif iW > iE || (iW == iE && bounds[3] != bounds[4])
-        iWE = 1 : (iE + length(lon) + 1 - iW);
-        lon[1:(iW-1)] = lon[1:(iW-1)] .+ 360; lon = circshift(lon,1-iW);
+        iWE = 1 : (iE + length(nlon) + 1 - iW);
+        nlon[1:(iW-1)] = nlon[1:(iW-1)] .+ 360; nlon = circshift(nlon,1-iW);
     else
         iWE = iW;
     end
@@ -426,6 +424,6 @@ function gregiongridvec(reg::AbstractString,lon::Vector{<:Real},lat::Vector{<:Re
         "fullname"=>gregionfullname(reg)
     )
 
-    return lon[iWE],lat[iNS],reginfo
+    return nlon[iWE],lat[iNS],reginfo
 
 end

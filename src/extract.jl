@@ -42,6 +42,7 @@ end
 function regiongridvec(gridbounds::Vector{<:Real},rlon::Vector{<:Real},rlat::Vector{<:Real})
 
     iN,iS,iE,iW = regiongrid(gridbounds,rlon,rlat);
+    nlon = deepcopy(rlon)
 
     if     iN < iS; iNS = iN : iS
     elseif iS < iN; iNS = iS : iN
@@ -50,16 +51,15 @@ function regiongridvec(gridbounds::Vector{<:Real},rlon::Vector{<:Real},rlat::Vec
 
     if     iW < iE; iWE = iW : iE
     elseif iW > iE || (iW == iE && gridbounds[3] != gridbounds[4])
-        iWE = 1 : (iE + length(rlon) + 1 - iW);
-        rlon[1:(iW-1)] = rlon[1:(iW-1)] .+ 360; rlon = circshift(rlon,1-iW);
+        iWE = 1 : (iE + length(nlon) + 1 - iW);
+        nlon[1:(iW-1)] = nlon[1:(iW-1)] .+ 360; nlon = circshift(nlon,1-iW);
     else
         iWE = iW;
     end
 
     reginfo = Dict("gridindices"=>[iN,iS,iE,iW],"lonlatindices"=>[iWE,iNS]);
 
-    glon = rlon[iWE]; #while glon[end] > 360; glon = glon .- 360; end
-    glon = mod.(glon,360)
+    glon = nlon[iWE]; #while glon[end] > 360; glon = glon .- 360; end
 
     return glon,rlat[iNS],reginfo
 
