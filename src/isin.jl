@@ -152,34 +152,6 @@ function ispointinregion(
 end
 
 """
-    ispointinregion(pcoord, gregID; tlon=0, tlat=0, throw=true) -> Bool
-
-Check if a point with coordinates `pcoord = [plon,plat]` is found within a predefined `GeoRegion`.
-
-Arguments:
-* `pcoord::Vector{<:Real}` : Vector defining coordinates of point in `[plon,plat]`
-* `gregID::AbstractString` : `GeoRegion` `ID`
-
-Keyword Arguments:
-* `tlon::Real` : Threshold for longitude bounds in °.  If set to 0, means that there is no leniency for the point to fall outside the longitude bounds
-* `tlat::Real` : Threshold for latitude bounds in °.  If set to 0, means that there is no leniency for the point to fall outside the latitude bounds
-* `throw::Bool` : If `throw=true`, then if (`plon`,`plat`) is not within the region, an error is thrown and the program stops running.
-"""
-function ispointinregion(
-    pcoord::Vector{<:Real},
-    gregID::AbstractString;
-    tlon::Real=0, tlat::Real=0,
-    throw::Bool=true
-)
-
-    plon,plat = pcoord; rN,rS,rE,rW = gregionbounds(gregID);
-    rW = mod(rW,360); rE = mod(rE,360);
-
-    return checkpoint(plon,plat,rN,rS,rE,rW,tlon,tlat,throw)
-
-end
-
-"""
     checkpoint(plon, plat, rN, rS, rE, rW, tlon, tlat, throw) -> Bool
 
 Check if a point with longitude and latitude coordinates `plon` and `plat` is found within a region defined by the bounds [`rN`,`rS`,`rE`,`rW`] format, with `tlon` and `tlat` being the threshold/margin of error for the longitude and latitude respectively.
@@ -272,34 +244,6 @@ function isgridinregion(
     rW = mod(minimum(rlon),360); rS = minimum(rlat);
     tlon = abs((rlon[2]-rlon[1])*3/4);
     tlat = abs((rlat[2]-rlat[1])*3/4);
-
-    return checkgrid(N,S,E,W,rN,rS,rE,rW,tlon,tlat,throw)
-
-end
-
-"""
-    isgridinregion(gridbounds, gregID; tlon=0, tlat=0, throw=true) -> Bool
-
-Check if a grid defined by `gridbounds = [gN,gS,gE,gW]` is found within a predefined `GeoRegion`.
-
-Arguments:
-* `gridbounds::Vector{<:Real}` : Vector defining the [North,South,East,West] bounds of the grid in question.
-* `gregID::AbstractString` : `GeoRegion` `ID`
-
-Keyword Arguments:
-* `tlon::Real` : Threshold for longitude bounds in °.  If set to 0, means that there is no leniency for the point to fall outside the longitude bounds
-* `tlat::Real` : Threshold for latitude bounds in °.  If set to 0, means that there is no leniency for the point to fall outside the latitude bounds
-* `throw::Bool` : If `throw=true`, then if (`plon`,`plat`) is not within the region, an error is thrown and the program stops running.
-"""
-function isgridinregion(
-    gridbounds::Vector{<:Real},
-    gregID::AbstractString;
-    tlon::Real=0, tlat::Real=0,
-    throw::Bool=true
-)
-
-    N,S,E,W = gridbounds; rN,rS,rE,rW = gregionbounds(gregID);
-    E = mod(E,360); rE = mod(rE,360); W = mod(W,360); rW = mod(rW,360);
 
     return checkgrid(N,S,E,W,rN,rS,rE,rW,tlon,tlat,throw)
 
