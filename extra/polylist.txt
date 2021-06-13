@@ -1,0 +1,3 @@
+# PolyRegion
+# List of PolyRegion GeoRegions
+# (RegID, ParID, Name), X, Y
