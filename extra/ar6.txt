@@ -1,0 +1,235 @@
+# PolyRegion
+# GeoRegions adapted from AR6 Regions (Iturbide et al., 2020; ESSD)
+# (RegID, ParID, Name), X, Y
+
+  RegID AR6_GIC, GLB, Greenland/Iceland
+  RegX  -10.0, -38.0, -42.0, -50.0, -82.0, -10.0
+  RegY  62.0, 62.0, 58.0, 58.0, 85.0, 85.0
+
+  RegID AR6_NWN, GLB, Northwest-North-America
+  RegX  -105.0, -130.0, -143.0, -168.0, -168.0, -129.0, -125.0, -105.0
+  RegY  50.0, 50.0, 58.0, 52.5, 72.6, 72.6, 77.6, 81.0
+
+  RegID AR6_NEN, GLB, Northeast-North-America
+  RegX  -50.0, -50.0, -82.0, -105.0, -105.0
+  RegY  50.0, 58.0, 85.0, 81.0, 50.0
+
+  RegID AR6_WNA, GLB, Western-North-America
+  RegX  -130.0, -122.5, -105.0, -105.0
+  RegY  50.0, 33.8, 33.8, 50.0
+
+  RegID AR6_CNA, GLB, Central-North-America
+  RegX  -90.0, -90.0, -105.0, -105.0
+  RegY  50.0, 25.0, 33.8, 50.0
+
+  RegID AR6_ENA, GLB, Eastern-North-America
+  RegX  -70.0, -90.0, -90.0, -50.0, -77.0
+  RegY  25.0, 25.0, 50.0, 50.0, 31.0
+
+  RegID AR6_NCA, GLB, Northern-Central-America
+  RegX  -90.0, -104.5, -122.5, -105.0
+  RegY  25.0, 16.0, 33.8, 33.8
+
+  RegID AR6_SCA, GLB, Southern-Central-America
+  RegX  -75.0, -83.4, -104.5, -90.0
+  RegY  12.0, 2.2, 16.0, 25.0
+
+  RegID AR6_CAR, GLB, Caribbean
+  RegX  -75.0, -90.0, -70.0, -55.0
+  RegY  12.0, 25.0, 25.0, 12.0
+
+  RegID AR6_NWS, GLB, Northwest-South-America
+  RegX  -75.0, -83.4, -83.4, -79.0, -72.0, -72.0
+  RegY  12.0, 2.2, -10.0, -15.0, -15.0, 12.0
+
+  RegID AR6_NSA, GLB, Northern-South-America
+  RegX  -72.0, -72.0, -50.0, -50, -55.0
+  RegY  12.0, -8.0, -8.0, 7.6, 12.0
+
+  RegID AR6_NES, GLB, Northeast-South-America
+  RegX  -34.0, -50.0, -50.0, -34.0
+  RegY  -20.0, -20.0, 0.0, 0.0
+
+  RegID AR6_SAM, GLB, South-American-Monsoon
+  RegX  -66.4, -72.0, -72.0, -50.0, -50.0
+  RegY  -20.0, -15.0, -8.0, -8.0, -20.0
+
+  RegID AR6_SWS, GLB, Southwest-South-America
+  RegX  -72.0, -66.4, -71.5, -79.0, -74.6, -79.0
+  RegY  -15.0, -20.0, -47.0, -47.0, -20.0, -15.0
+
+  RegID AR6_SES, GLB, Southeast-South-America
+  RegX  -34.0, -56.0, -70.2, -66.4
+  RegY  -20.0, -40.0, -40.0, -20.0
+
+  RegID AR6_SSA, GLB, Southern-South-America
+  RegX  -79.0, -79.0, -71.5, -70.2, -56.0, -56.0
+  RegY  -56.0, -47.0, -47.0, -40.0, -40, -56.0
+
+  RegID AR6_NEU, GLB, Northern-Europe
+  RegX  -10.0, -10.0, 40.0, 40.0
+  RegY  48.0, 72.6, 72.6, 61.3
+
+  RegID AR6_WCE, GLB, West-and-Central-Europe
+  RegX  -10.0, -10.0, 40.0, 40.0
+  RegY  45.0, 48.0, 61.3, 45.0
+
+  RegID AR6_EEU, GLB, Eastern-Europe
+  RegX  40.0, 40.0, 60.0, 60.0
+  RegY  45.0, 65.0, 65.0, 45.0
+
+  RegID AR6_MED, GLB, Mediterranean
+  RegX  -10.0, -10.0, 40.0, 40.0
+  RegY  30.0, 45.0, 45.0, 30.0
+
+  RegID AR6_SAH, GLB, Sahara
+  RegX  -20.0, -20.0, 33.0, 42.1
+  RegY  14.7, 30.0, 30.0, 14.7
+
+  RegID AR6_WAF, GLB, Western-Africa
+  RegX  -20.0, -20.0, 15.0, 8.0
+  RegY  7.6, 14.7, 14.7, 0.0
+
+  RegID AR6_CAF, GLB, Central-Africa
+  RegX  8, 8, 15.0, 27.0, 27.0
+  RegY  -10.0, 0, 14.7, 14.7, -10.0
+
+  RegID AR6_NEAF, GLB, Northern-East-Africa
+  RegX  27.0, 27.0, 42.1, 43.7, 53.0, 53.0, 46.5
+  RegY  2.3, 14.7, 14.7, 12.0, 15.0, 7, 2.3
+
+  RegID AR6_SEAF, GLB, Southern-East-Africa
+  RegX  27.0, 27.0, 46.5, 46.5
+  RegY  -10, 2.3, 2.3, -10
+
+  RegID AR6_WSAF, GLB, Western-South-Africa
+  RegX  8.0, 8.0, 25.0, 25.0
+  RegY  -36.0, -10, -10, -36.0
+
+  RegID AR6_ESAF, GLB, Eastern-South-Africa
+  RegX  25.0, 25.0, 31.0, 46.5
+  RegY  -10.0, -36, -36, -10.0
+
+  RegID AR6_MDG, GLB, Madagascar
+  RegX  36.2, 46.5, 53.0, 53.0
+  RegY  -27.0, -10.0, -10.0, -27.0
+
+  RegID AR6_RAR, GLB, Arctic-Russia
+  RegX  40.0, 40.0, 94.0, 192.0, 192.0
+  RegY  65.0, 72.6, 82.0, 73.8, 65.0
+
+  RegID AR6_WSB, GLB, Western-Siberia
+  RegX  60.0, 60.0, 90.0, 90.0
+  RegY  45.0, 65.0, 65.0, 45.0
+
+  RegID AR6_ESB, GLB, Eastern-Siberia
+  RegX  90.0, 90.0, 130.0, 130.0
+  RegY  45.0, 65.0, 65.0, 45.0
+
+  RegID AR6_RFE, GLB, Far-East-Russia
+  RegX  130.0, 130.0, 180.0, 180.0, 157.0, 152.0
+  RegY  45.0, 65.0, 65.0, 59.9, 50.0, 45.0
+
+  RegID AR6_WCA, GLB, Western-Central-Africa
+  RegX  40.0, 40.0, 75.0, 75.0, 60.0, 60.0, 47.6
+  RegY  30.0, 45.0, 45.0, 30.0, 30.0, 23.5, 30.0
+
+  RegID AR6_ECA, GLB, Eastern-Central-Africa
+  RegX  75.0, 75.0, 117.0, 108.0
+  RegY  37.0, 45.0, 45.0, 37.0
+
+  RegID AR6_TIB, GLB, Tibetian-Plateau
+  RegX  75.0, 75.0, 100.0, 100.0, 88.0
+  RegY  30.0, 37.0, 37.0, 30.0, 26.0
+
+  RegID AR6_EAS, GLB, East-Asia
+  RegX  100.0, 100.0, 108.0, 117.0, 152.0, 132.0, 132.0
+  RegY  19.5, 37.0, 37.0, 45.0, 45.0, 25.0, 19.5
+
+  RegID AR6_ARP, GLB, Arabian-Peninsular
+  RegX  33.0, 47.6, 60.0, 60.0, 53.0, 43.7
+  RegY  30.0, 30.0, 23.5, 19.5, 15.0, 12.0
+
+  RegID AR6_SAS, GLB, South-Asia
+  RegX  60.0, 60.0, 75.0, 88.0, 100.0, 100.0, 95.0, 87.0, 79.0, 76.0, 70.0, 66.5
+  RegY  23.5, 30.0, 30.0, 26.0, 30.0, 19.5, 19.5, 19.5, 7.0, 7.0, 19.5, 23.5
+
+  RegID AR6_SEA, GLB, Southeast-Asia
+  RegX  93.0, 93.0, 132.0, 132.0, 155.0
+  RegY  -10.0, 19.5, 19.5, 5.0, -10.0
+
+  RegID AR6_NAU, GLB, Northern-Australia
+  RegX  110.0, 110.0, 155.0, 155.0
+  RegY  -20.0, -10.0, -10.0, -20.0
+
+  RegID AR6_CAU, GLB, Central-Australia
+  RegX  110.0, 110.0, 145.5, 145.5, 140.0
+  RegY  -30.0, -20.0, -20.0, -32.9, -30.0
+
+  RegID AR6_EAU, GLB, Eastern-Australia
+  RegX  145.5, 145.5, 155.0, 155.0
+  RegY  -32.9, -20.0, -20.0, -38.0
+
+  RegID AR6_SAU, GLB, Southern-Australia
+  RegX  110.0, 110.0, 140.0, 155.0, 155.0
+  RegY  -36.0, -30.0, -30.0, -38.0, -50.0
+
+  RegID AR6_NZ, GLB, New-Zealand
+  RegX  155.0, 155.0, 180.0, 180.0
+  RegY  -50.0, -30.0, -30.0, -50.0
+
+  RegID AR6_EAN, GLB, East-Antarctica
+  RegX  -180.0, -180.0, -56.0, -56.0, -25.0, 5.0, 180.0, 180.0
+  RegY  -90.0, -83.0, -83.0, -75.0, -75.0, -64.0, -64.0, -90.0
+
+  RegID AR6_WAN, GLB, West-Antarctica
+  RegX  -180.0, -180.0, -80.0, -65.0, -56.0, -56.0
+  RegY  -83.0, -70.0, -70.0, -62.0, -62.0, -83.0
+
+  RegID AR6_ARO, GLB, Arctic-Ocean
+  RegX  -180.0, -180.0, -168.0, -129.0, -125.0, -82.0, -10.0, -10.0, 40.0, 94.0, 180.0, 180.0
+  RegY  90.0, 73.8, 72.6, 72.6, 77.6, 85.0, 85.0, 72.6, 72.6, 82.0, 73.8, 90.0
+
+  RegID AR6_NPO, GLB, Northern-Pacific-Ocean
+  RegX  132.0, 132.0, 157.0, 180.0, 180.0, 192.0, 192.0, 217, 230, 237.5, 255.5, 268.3
+  RegY  7.6, 25.0, 50.0, 59.9, 65.0, 65.0, 52.5, 58.0, 50.0, 33.8, 16.0, 7.6
+
+  RegID AR6_EPO, GLB, Equatorial-Pacific-Ocean
+  RegX  155.0, 132.0, 132.0, 180.0, 268.3, 276.6, 276.6
+  RegY  -10.0, 5.0, 7.6, 7.6, 7.6, 2.2, -10.0
+
+  RegID AR6_SPO, GLB, Southern-Pacific-Ocean
+  RegX  155.0, 155.0, 180.0, 276.6, 285.4, 281.0, 281.0, 180.0, 180.0
+  RegY  -30.0, -10.0, -10.0, -10.0, -20.0, -47.0, -56.0, -56.0, -30.0
+
+  RegID AR6_NAO, GLB, Northern-Atlantic-Ocean
+  RegX  -50.0, -77.0, -50.0, -50.0, -42.0, -38.0, -10.0, -10.0, -20.0, -20.0
+  RegY  7.6, 31.0, 50.0, 58.0, 58.0, 62.0, 62.0, 30.0, 30.0, 7.6
+
+  RegID AR6_EAO, GLB, Equatorial-Atlantic-Ocean
+  RegX  -34.0, -34.0, -50.0, -50, -20.0, 8.0, 8
+  RegY  -10.0, 0.0, 0.0, 7.6, 7.6, 0.0, -10.0
+
+  RegID AR6_SAO, GLB, Southern-Atlantic-Ocean
+  RegX  -56.0, -56.0, -34.0, -34.0, 8.0, 8
+  RegY  -56.0, -40.0, -20.0, -10.0, -10, -36.0
+
+  RegID AR6_ARS, GLB, Arabian-Sea
+  RegX  53.0, 53.0, 60.0, 60, 66.5, 70.0, 76.0
+  RegY  7.0, 15.0, 19.5, 23.5, 23.5, 19.5, 7.0
+
+  RegID AR6_BOB, GLB, Bay-of-Bengal
+  RegX  79.0, 87.0, 93.0, 93.0
+  RegY  7.0, 19.5, 19.5, 7.0
+
+  RegID AR6_EIO, GLB, Equatorial-Indian-Ocean
+  RegX  46.5, 46.5, 53.0, 93.0, 93.0
+  RegY  -10, 2.3, 7.0, 7.0, -10.0
+
+  RegID AR6_SIO, GLB, Southern-Indian-Ocean
+  RegX  36.2, 53.0, 53.0, 110.0, 110.0, 31.0
+  RegY  -27, -27, -10, -10.0, -36.0, -36.0
+
+  RegID AR6_SOO, GLB, Southern-Ocean
+  RegX  -180.0, -180.0, -80.0, -65.0, -56.0, -56.0, -25.0, 5.0, 180.0, 180.0, 155.0, 110.0, 8, -56.0
+  RegY  -56.0, -70.0, -70.0, -62.0, -62.0, -75.0, -75.0, -64.0, -64.0, -50.0, -50, -36.0, -36.0, -56.0
