@@ -4,7 +4,7 @@ function GeoRegion(
     FT = Float64
 )
 
-    regvec,filevec,typevec = listgeoregions(); isgeoregion(RegID,regvec)
+    regvec,filevec,typevec = listGeoRegions(); isgeoregion(RegID,regvec)
     ind = findall(RegID.==regvec)[1]
     return getgeoregion(
         RegID,
@@ -79,6 +79,84 @@ function RectRegion(
         regN,regS,regE,regW,
         is180,is360
     )
+
+end
+
+function templateGeoRegions(;
+    path      :: AbstractString=pwd(),
+    overwrite :: Bool=false
+)
+
+    if !isdir(path); mkpath(path) end
+    for fname in ["recttemplate.txt","polytemplate.txt"]
+
+        ftem = joinpath(@__DIR__,"..","extra",fname)
+        freg = joinpath(path,fname)
+
+        if !overwrite
+            if !isfile(freg)
+
+                @debug "$(now()) - Unable to find $freg, copying data from $ftem ..."
+
+                open(freg,"w") do io
+                    open(ftem) do f
+                        for line in readlines(f)
+                            write(io,"$line\n")
+                        end
+                    end
+                end
+
+            end
+        else
+
+            if isfile(freg)
+                @warn "$(now()) - Overwriting $freg with original file in $ftem ..."
+                rm(freg,force=true)
+            end
+
+            open(freg,"w") do io
+                open(ftem) do f
+                    for line in readlines(f)
+                        write(io,"$line\n")
+                    end
+                end
+            end
+
+        end
+
+    end
+
+    return
+
+end
+
+function listGeoRegions()
+
+    flist   = ["rectlist.txt","polylist.txt","giorgi.txt","srex.txt","ar6.txt"]
+    regvec  = []
+    filevec = []
+    typevec = []
+
+    for fname in flist
+        copygeoregions(fname)
+        rvec,rtype = listgeoregions(joinpath(DEPOT_PATH[1],"files","GeoRegions",fname))
+        regvec = vcat(regvec,rvec)
+        nreg = length(rvec)
+        fvec = fill(fname,nreg); filevec = vcat(filevec,fvec)
+        tvec = fill(rtype,nreg); typevec = vcat(typevec,tvec)
+    end
+
+    return regvec,filevec,typevec
+
+end
+
+function resetGeoRegions()
+
+    for fname in ["rectlist.txt","polylist.txt","giorgi.txt","srex.txt","ar6.txt"]
+        copygeoregions(fname,overwrite=true)
+    end
+
+    return
 
 end
 
@@ -194,84 +272,6 @@ function copygeoregions(
 
 end
 
-function templategeoregion(;
-    path      :: AbstractString=pwd(),
-    overwrite :: Bool=false
-)
-
-    if !isdir(path); mkpath(path) end
-    for fname in ["recttemplate.txt","polytemplate.txt"]
-
-        ftem = joinpath(@__DIR__,"..","extra",fname)
-        freg = joinpath(path,fname)
-
-        if !overwrite
-            if !isfile(freg)
-
-                @debug "$(now()) - Unable to find $freg, copying data from $ftem ..."
-
-                open(freg,"w") do io
-                    open(ftem) do f
-                        for line in readlines(f)
-                            write(io,"$line\n")
-                        end
-                    end
-                end
-
-            end
-        else
-
-            if isfile(freg)
-                @warn "$(now()) - Overwriting $freg with original file in $ftem ..."
-                rm(freg,force=true)
-            end
-
-            open(freg,"w") do io
-                open(ftem) do f
-                    for line in readlines(f)
-                        write(io,"$line\n")
-                    end
-                end
-            end
-
-        end
-
-    end
-
-    return
-
-end
-
-function listgeoregions()
-
-    flist   = ["rectlist.txt","polylist.txt","giorgi.txt","srex.txt","ar6.txt"]
-    regvec  = []
-    filevec = []
-    typevec = []
-
-    for fname in flist
-        copygeoregions(fname)
-        rvec,rtype = listgeoregions(joinpath(DEPOT_PATH[1],"files","GeoRegions",fname))
-        regvec = vcat(regvec,rvec)
-        nreg = length(rvec)
-        fvec = fill(fname,nreg); filevec = vcat(filevec,fvec)
-        tvec = fill(rtype,nreg); typevec = vcat(typevec,tvec)
-    end
-
-    return regvec,filevec,typevec
-
-end
-
-function resetgeoregions()
-
-    for fname in ["rectlist.txt","polylist.txt"]
-        copygeoregions(fname,overwrite=true)
-    end
-
-    return
-
-end
-
 function listgeoregions(fname::AbstractString)
 
     gtype = readlines(fname)[1]
@@ -328,7 +328,7 @@ end
 
 function isgeoregion(RegID::AbstractString;throw::Bool=true)
 
-    regvec,filevec,typevec = listgeoregions()
+    regvec,filevec,typevec = listGeoRegions()
     return isgeoregion(RegID,regvec;throw=throw)
 
 end

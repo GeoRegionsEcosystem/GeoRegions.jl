@@ -5,13 +5,18 @@ using Dates
 using DelimitedFiles
 using GeometryBasics
 using Logging
+using PolygonOps
 using PrettyTables
 
 import Base: show, read
 
 ## Exporting the following functions:
 export
-        GeoRegion, RectRegion, PolyRegion
+        GeoRegion, RectRegion, PolyRegion, GeoRegionInfo,
+        resetGeoRegions, templateGeoRegions, listGeoRegions, removeGeoRegion,
+        coordGeoRegion,
+        isPointinGeoRegion,
+        Point2
 
 ## Abstract types
 """
@@ -56,11 +61,49 @@ struct PolyRegion{ST<:AbstractString, FT<:Real} <: GeoRegion
     is360 :: Bool
 end
 
+"""
+    GeoRegion
+
+Abstract supertype for geographical regions.
+"""
+abstract type RegionInfo end
+
+"""
+    RectRegion{ST<:AbstractString, FT<:Real}
+
+Structure containing information on regions that are rectilinear (i.e. rectangular shape) on a lon-lat grid with string elements of type `ST` and numeric elements of type `FT`.
+"""
+struct RectInfo{FT<:Real} <: RegionInfo
+    igrid :: Vector{Int}
+    ilon  :: Vector{Int}
+    ilat  :: Vector{Int}
+    glon  :: Vector{FT}
+    glat  :: Vector{FT}
+end
+
+"""
+    PolyRegion{ST<:AbstractString, FT<:Real}
+
+Structure containing information on regions that have a polygonal (and non-rectangular) shape on a lon-lat grid, with string elements of type `ST`, numeric elements of type `FT`, and points on a 2D plane of type Point2D{FT}.
+"""
+struct PolyInfo{FT<:Real} <: RegionInfo
+    igrid :: Vector{Int}
+    ilon  :: Vector{Int}
+    ilat  :: Vector{Int}
+    glon  :: Vector{FT}
+    glat  :: Vector{FT}
+    mask  :: Array{FT,2}
+end
+
 ## Including other files in the module
 # include("isin.jl")
 # include("query.jl")
 # include("extract.jl")
 include("Read.jl")
 include("Create.jl")
+include("Query.jl")
+include("IsIn.jl")
+include("IsInGeoRegion.jl")
+include("Extract.jl")
 
 end # module

@@ -64,7 +64,7 @@ function PolyRegion(
 
 end
 
-function removegeoregion(
+function removeGeoRegion(
     RegID :: AbstractString
 )
 
@@ -72,7 +72,7 @@ function removegeoregion(
         error("$(now()) - The Global GeoRegion \"GLB\" is an integral part of the GeoRegions.jl package and cannot be removed.")
     end
 
-    regvec,filevec,typevec = listgeoregions(); isgeoregion(RegID,regvec)
+    regvec,filevec,typevec = listGeoRegions(); isgeoregion(RegID,regvec)
     ind = findall(RegID.==regvec)[1]
     geo = getgeoregion(RegID,filevec[ind],typevec[ind])
     removegeoregion(geo,filevec[ind])
