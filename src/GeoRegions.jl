@@ -69,9 +69,9 @@ Abstract supertype for geographical regions.
 abstract type RegionInfo end
 
 """
-    RectRegion{ST<:AbstractString, FT<:Real}
+    RectInfo{FT<:Real}
 
-Structure containing information on regions that are rectilinear (i.e. rectangular shape) on a lon-lat grid with string elements of type `ST` and numeric elements of type `FT`.
+Structure containing information needed to extract data from a given lon-lat grid for a given RectRegion with numeric elements of type `FT`.
 """
 struct RectInfo{FT<:Real} <: RegionInfo
     igrid :: Vector{Int}
@@ -82,9 +82,9 @@ struct RectInfo{FT<:Real} <: RegionInfo
 end
 
 """
-    PolyRegion{ST<:AbstractString, FT<:Real}
+    PolyInfo{FT<:Real}
 
-Structure containing information on regions that have a polygonal (and non-rectangular) shape on a lon-lat grid, with string elements of type `ST`, numeric elements of type `FT`, and points on a 2D plane of type Point2D{FT}.
+Structure containing information needed to extract data from a given lon-lat grid for a given PolyRegion with numeric elements of type `FT`. In addition to the information stored by the RectInfo type, it also has a `mask` that allows for non-rectilinear shape extraction.
 """
 struct PolyInfo{FT<:Real} <: RegionInfo
     igrid :: Vector{Int}
@@ -92,7 +92,7 @@ struct PolyInfo{FT<:Real} <: RegionInfo
     ilat  :: Vector{Int}
     glon  :: Vector{FT}
     glat  :: Vector{FT}
-    mask  :: Array{FT,2}
+    mask  :: Array{Bool,2}
 end
 
 ## Including other files in the module
