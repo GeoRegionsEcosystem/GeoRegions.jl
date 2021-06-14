@@ -67,34 +67,6 @@ function ispointinregion(
 end
 
 """
-    ispointinregion(plon, plat, gregID; tlon=0, tlat=0, throw=true) -> Bool
-
-Check if a point with coordinates `pcoord = [plon,plat]` is found within a predefined `GeoRegion`.
-
-Arguments:
-* `plon::Real` : Longitude of the point in question.
-* `plat::Real` : Latitude of the point in question.
-* `gregID::AbstractString` : `GeoRegion` `ID`
-
-Keyword Arguments:
-* `tlon::Real` : Threshold for longitude bounds in °.  If set to 0, means that there is no leniency for the point to fall outside the longitude bounds
-* `tlat::Real` : Threshold for latitude bounds in °.  If set to 0, means that there is no leniency for the point to fall outside the latitude bounds
-* `throw::Bool` : If `throw=true`, then if (`plon`,`plat`) is not within the region, an error is thrown and the program stops running.
-"""
-function ispointinregion(
-    plon::Real, plat::Real,
-    gregID::AbstractString;
-    tlon::Real=0, tlat::Real=0,
-    throw::Bool=true
-)
-
-    rN,rS,rE,rW = gregionbounds(gregID); rW = mod(rW,360); rE = mod(rE,360);
-
-    return checkpoint(plon,plat,rN,rS,rE,rW,tlon,tlat,throw)
-
-end
-
-"""
     ispointinregion(pcoord, rlon, rlat; throw=true) -> Bool
 
 Check if a point with coordinates `pcoord = [plon,plat]` is found within a region defined by the longitude and latitude vectors `rlon` and `rlat`.
