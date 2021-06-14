@@ -22,10 +22,8 @@ function GeoRegionInfo(
     @debug "$(Dates.now()) - Creating vector of longitude indices to extract ..."
     if     iW < iE; iWE = vcat(iW:iE)
     elseif iW > iE || (iW == iE && bounds[3] != bounds[4])
-        iWE = vcat(iW:length(lon),1:iE)
-        lon[1:(iW-1)] .+= 360
-    else
-        iWE = [iW];
+          iWE = vcat(iW:length(lon),1:iE); lon[1:(iW-1)] .+= 360
+    else; iWE = [iW];
     end
 
     while lon[end] > 360; lon .-= 360 end
@@ -60,10 +58,8 @@ function GeoRegionInfo(
     @debug "$(Dates.now()) - Creating vector of longitude indices to extract ..."
     if     iW < iE; iWE = vcat(iW:iE)
     elseif iW > iE || (iW == iE && bounds[3] != bounds[4])
-        iWE = vcat(iW:length(lon),1:iE)
-        lon[1:(iW-1)] .+= 360
-    else
-        iWE = [iW];
+          iWE = vcat(iW:length(lon),1:iE); lon[1:(iW-1)] .+= 360
+    else; iWE = [iW];
     end
 
     while lon[end] > 360; lon .-= 360 end
@@ -122,10 +118,8 @@ function regioninfo(gridbounds::Vector{<:Real},rlon::Vector{<:Real},rlat::Vector
 
     if     iW < iE; iWE = vcat(iW:iE)
     elseif iW > iE || (iW == iE && bounds[3] != bounds[4])
-        iWE = vcat(iW:length(lon),1:iE)
-        lon[1:(iW-1)] .+= 360
-    else
-        iWE = [iW];
+          iWE = vcat(iW:length(lon),1:iE); lon[1:(iW-1)] .+= 360
+    else; iWE = [iW];
     end
 
     while lon[end] > 360; lon .-= 360 end
