@@ -163,3 +163,97 @@ function isPointinGeoRegion(
 
 
 end
+
+"""
+    isGeoRegioninGeoRegion(Child, GeoReg::PolyRegion; domask=false, throw=true) -> Bool
+
+Check if a point with coordinates (`plon`,`plat`) is found within a region defined by the longitude and latitude vectors `rlon` and `rlat`
+
+Arguments:
+* `plon::Real` : Longitude of the point in question.
+* `plat::Real` : Latitude of the point in question.
+* `rlon::Vector{<:Real}` : Longitude vector spanning the region.  Points should be evenly spaced.
+* `rlat::Vector{<:Real}` : Latitude vector spanning the region.  Points should be evenly spaced.
+
+Keyword Arguments:
+* `throw::Bool` : If `throw=true`, then if (`plon`,`plat`) is not within the region, an error is thrown and the program stops running.
+"""
+function isGeoRegioninGeoRegion(
+    Child  :: GeoRegion,
+    GeoReg :: PolyRegion;
+    domask :: Bool = false,
+    throw  :: Bool = true
+)
+
+    N = Child.N
+    S = Child.S
+    E = Child.E
+    W = Child.W
+
+    lon = range(W,E,step=0.01); nlon = length(lon)
+    lat = range(S,N,step=0.01); nlat = length(lat)
+
+    mask = zeros(Bool,nlon,nlat)
+
+    for ilat in 1 : nlat, ilon = 1 : nlon
+        if isPointinGeoRegion(Point2(lon[ilon],lat[ilat]),Child,throw=false)
+            if !isPointinGeoRegion(Point2(lon[ilon],lat[ilat]),GeoReg,throw=false)
+                mask[ilon,ilat] = 1
+            end
+        end
+    end
+
+    if sum(mask) > 0
+
+        if throw
+            error("The GeoRegion $(Child.regID) ($(Child.name)) is not a subset of the GeoRegion $(GeoReg.regID) ($(GeoReg.name))")
+        else
+            if domask
+                  return mask
+            else; return false
+            end
+        end
+
+    else; return true
+    end
+
+end
+
+"""
+    isGeoRegioninGeoRegion(Child, GeoReg::RectRegion; throw=true) -> Bool
+
+Check if a point with coordinates (`plon`,`plat`) is found within a region defined by the longitude and latitude vectors `rlon` and `rlat`
+
+Arguments:
+* `plon::Real` : Longitude of the point in question.
+* `plat::Real` : Latitude of the point in question.
+* `rlon::Vector{<:Real}` : Longitude vector spanning the region.  Points should be evenly spaced.
+* `rlat::Vector{<:Real}` : Latitude vector spanning the region.  Points should be evenly spaced.
+
+Keyword Arguments:
+* `throw::Bool` : If `throw=true`, then if (`plon`,`plat`) is not within the region, an error is thrown and the program stops running.
+"""
+function isGeoRegioninGeoRegion(
+    Child  :: GeoRegion,
+    GeoReg :: RectRegion;
+    throw  :: Bool = true
+)
+
+    isin = isgridinregion(
+        [Child.N,Child.S,Child.E,Child,W],
+        [GeoReg.N,GeoReg.S,GeoReg.E,GeoReg,W],
+        throw=false
+    )
+
+    if isin
+
+        if throw
+            error("The GeoRegion $(Child.regID) ($(Child.name)) is not a subset of the GeoRegion $(GeoReg.regID) ($(GeoReg.name))")
+        else
+            return false
+        end
+
+    else; return true
+    end
+
+end

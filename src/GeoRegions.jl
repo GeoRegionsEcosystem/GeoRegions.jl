@@ -15,7 +15,7 @@ export
         GeoRegion, RectRegion, PolyRegion, GeoRegionInfo,
         resetGeoRegions, templateGeoRegions, listGeoRegions, removeGeoRegion,
         coordGeoRegion,
-        isPointinGeoRegion,
+        isPointinGeoRegion, isGeoRegioninGeoRegion
         Point2
 
 ## Abstract types
