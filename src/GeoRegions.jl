@@ -12,7 +12,7 @@ import Base: show, read
 
 ## Exporting the following functions:
 export
-        GeoRegion, RectRegion, PolyRegion, GeoRegionInfo,
+        GeoRegion, RectRegion, PolyRegion, GeoRegionInfo, RegionInfo, RectInfo, PolyInfo,
         resetGeoRegions, templateGeoRegions, listGeoRegions, removeGeoRegion,
         coordGeoRegion,
         isPointinGeoRegion, isGeoRegioninGeoRegion
