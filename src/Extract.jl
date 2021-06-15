@@ -66,7 +66,7 @@ function GeoRegionInfo(
 
     nlon = lon[iWE]
     nlat = lat[iNS]
-    mask = Array{Bool,2}(Int,length(nlon),length(nlat))
+    mask = Array{Bool,2}(undef,length(nlon),length(nlat))
     for ilat = 1 : length(nlat), ilon = 1 : length(nlon)
         ipnt = Point2(nlon[ilon],nlat[ilat])
         mask[ilon,ilat] = isPointinGeoRegion(ipnt,GeoReg,throw=false) * 1

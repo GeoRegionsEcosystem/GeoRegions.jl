@@ -150,9 +150,14 @@ function listGeoRegions()
 
 end
 
-function resetGeoRegions()
+function resetGeoRegions(;allfiles=false)
 
-    for fname in ["rectlist.txt","polylist.txt","giorgi.txt","srex.txt","ar6.txt"]
+    if allfiles
+          flist = ["rectlist.txt","polylist.txt","giorgi.txt","srex.txt","ar6.txt"]
+    else; flist = ["rectlist.txt","polylist.txt"]
+    end
+
+    for fname in flist
         copygeoregions(fname,overwrite=true)
     end
 

@@ -1,4 +1,5 @@
 function coordGeoRegion(GeoReg::PolyRegion)
+
     shape = GeoReg.shape
     npnt  = length(shape)
     lon   = zeros(npnt)
@@ -9,7 +10,13 @@ function coordGeoRegion(GeoReg::PolyRegion)
         lat[ipnt] = shape[ipnt][2]
     end
 
-    return lon,lat
+    N = GeoReg.N
+    S = GeoReg.S
+    E = GeoReg.E
+    W = GeoReg.W
+
+    return [W,E,E,W,W],[N,N,S,S,N],lon,lat
+
 end
 
 function coordGeoRegion(GeoReg::RectRegion)
