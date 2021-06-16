@@ -1,14 +1,14 @@
-function GeoRegionInfo(
-    GeoReg :: RectRegion{ST,FT},
+function RegionGrid(
+    geo :: RectRegion{ST,FT},
     lon    :: Vector{<:Real},
     lat    :: Vector{<:Real}
 ) where {FT <: Real, ST <: AbstractString}
 
     @debug "$(Dates.now()) - Determining indices of longitude and latitude boundaries in the given dataset ..."
-    N = GeoReg.N
-    S = GeoReg.S
-    E = GeoReg.E
-    W = GeoReg.W
+    N = geo.N
+    S = geo.S
+    E = geo.E
+    W = geo.W
 
     igrid = regiongrid([N,S,E,W],lon,lat);
     iN = igrid[1]; iS = igrid[2]; iE = igrid[3]; iW = igrid[4]
@@ -30,21 +30,21 @@ function GeoRegionInfo(
     nlon = lon[iWE]
     nlat = lat[iNS]
 
-    return RectInfo{FT}(igrid,iWE,iNS,nlon,nlat)
+    return RectGrid{FT}(igrid,iWE,iNS,nlon,nlat)
 
 end
 
-function GeoRegionInfo(
-    GeoReg :: PolyRegion{ST,FT},
+function RegionGrid(
+    geo :: PolyRegion{ST,FT},
     lon    :: Vector{<:Real},
     lat    :: Vector{<:Real}
 ) where {FT <: Real, ST <: AbstractString}
 
     @debug "$(Dates.now()) - Determining indices of longitude and latitude boundaries in the given dataset ..."
-    N = GeoReg.N
-    S = GeoReg.S
-    E = GeoReg.E
-    W = GeoReg.W
+    N = geo.N
+    S = geo.S
+    E = geo.E
+    W = geo.W
 
     igrid = regiongrid([N,S,E,W],lon,lat);
     iN = igrid[1]; iS = igrid[2]; iE = igrid[3]; iW = igrid[4]
@@ -69,10 +69,10 @@ function GeoRegionInfo(
     mask = Array{Bool,2}(undef,length(nlon),length(nlat))
     for ilat = 1 : length(nlat), ilon = 1 : length(nlon)
         ipnt = Point2(nlon[ilon],nlat[ilat])
-        mask[ilon,ilat] = isPointinGeoRegion(ipnt,GeoReg,throw=false) * 1
+        mask[ilon,ilat] = isPointingeoion(ipnt,geo,throw=false) * 1
     end
 
-    return PolyInfo{FT}(igrid,iWE,iNS,nlon,nlat,mask)
+    return PolyGrid{FT}(igrid,iWE,iNS,nlon,nlat,mask)
 
 end
 
@@ -126,6 +126,6 @@ function regioninfo(gridbounds::Vector{<:Real},rlon::Vector{<:Real},rlat::Vector
     nlon = lon[iWE]
     nlat = lat[iNS]
 
-    return RectInfo{FT}(igrid,iWE,iNS,nlon,nlat)
+    return RectGrid{FT}(igrid,iWE,iNS,nlon,nlat)
 
 end

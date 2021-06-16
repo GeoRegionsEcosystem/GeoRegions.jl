@@ -1,3 +1,25 @@
+"""
+    RectRegion(
+        RegID :: AbstractString,
+        ParID :: AbstractString,
+        name  :: AbstractString,
+        bound :: Vector{<:Real},
+        ST = String,
+        FT = Float64
+    )
+
+Creates a rectilinear GeoRegion `RegID`.
+
+Arguments
+=========
+
+- `RegID` : The keyword ID that will be used to identify the GeoRegion.
+            If the ID is already in use, then an error will be thrown.
+
+- `ParID` : The ID of the parent GeoRegion where information can be extracted from
+- `name`  : A name for the GeoRegion (meta information, can be used in Logging)
+- `bound` : The [N,S,E,W] coordinates defining the region
+"""
 function RectRegion(
     RegID :: AbstractString,
     ParID :: AbstractString,
@@ -9,9 +31,11 @@ function RectRegion(
 
     if isgeoregion(RegID,throw=false)
         error("$(now()) - The GeoRegion $(RegID) has already been defined.  Please use another identifier.")
+    else
+        @info "$(now()) - Adding the GeoRegion $(RegID) to the list."
     end
 
-    if !isgeoregion(ParID)
+    if !isgeoregion(ParID,throw=false)
         error("$(now()) - The GeoRegion $(ParID) was defined to be the parent GeoRegion of $(RegID), but the GeoRegion $(ParID) is not defined.  Please define the GeoRegion $(ParID) and its properties.")
     end
 
@@ -25,6 +49,33 @@ function RectRegion(
 
 end
 
+"""
+    PolyRegion(
+        RegID :: AbstractString,
+        ParID :: AbstractString,
+        name  :: AbstractString,
+        lonpt :: Vector{<:Real},
+        latpt :: Vector{<:Real},
+        ST = String,
+        FT = Float64
+    )
+
+Creates a rectilinear GeoRegion `RegID`.
+
+Arguments
+=========
+
+- `RegID` : The keyword ID that will be used to identify the GeoRegion.
+            If the ID is already in use, then an error will be thrown.
+
+- `ParID` : The ID of the parent GeoRegion where information can be extracted from
+- `name`  : A name for the GeoRegion (meta information, can be used in Logging)
+- `lonpt` : A vector containing the longitude points
+- `latpt` : A vector containing the latitude points
+
+!!! info "Start and End Points"
+    The 1st and last elements of `lonpt` and `latpt` must be equal.
+"""
 function PolyRegion(
     RegID :: AbstractString,
     ParID :: AbstractString,
@@ -37,10 +88,20 @@ function PolyRegion(
 
     if isgeoregion(RegID,throw=false)
         error("$(now()) - The GeoRegion $(RegID) has already been defined.  Please use another identifier.")
+    else
+        @info "$(now()) - Adding the GeoRegion $(RegID) to the list."
     end
 
     if !isgeoregion(ParID)
         error("$(now()) - The GeoRegion $(ParID) was defined to be the parent GeoRegion of $(RegID), but the GeoRegion $(ParID) is not defined.  Please define the GeoRegion $(ParID) and its properties.")
+    end
+
+    if lonpt[1] != lonpt[end]
+        error("$(now()) - The first and last points of the vector of longitude coordinates must be the same")
+    end
+
+    if latpt[1] != latpt[end]
+        error("$(now()) - The first and last points of the vector of latitude coordinates must be the same")
     end
 
     N = maximum(latpt); S = minimum(latpt)
@@ -64,17 +125,34 @@ function PolyRegion(
 
 end
 
+"""
+    removeGeoRegion(RegID::AbstractString)
+
+Creates the GeoRegion associated with the ID `RegID`.
+
+Arguments
+=========
+
+- `RegID` : The keyword ID that will be used to identify the GeoRegion.
+            If the ID is not valid (i.e. not being used), then an error will be thrown.
+"""
 function removeGeoRegion(
     RegID :: AbstractString
 )
 
     if RegID == "GLB"
         error("$(now()) - The Global GeoRegion \"GLB\" is an integral part of the GeoRegions.jl package and cannot be removed.")
+    else
+        @info "$(now()) - Removing the GeoRegion $(RegID) ..."
     end
 
     regvec,filevec,typevec = listGeoRegions(); isgeoregion(RegID,regvec)
     ind = findall(RegID.==regvec)[1]
-    geo = getgeoregion(RegID,filevec[ind],typevec[ind])
+    geo = getgeoregion(
+        RegID,
+        joinpath(DEPOT_PATH[1],"files","GeoRegions",filevec[ind]),
+        typevec[ind]
+    )
     removegeoregion(geo,filevec[ind])
 
 end
@@ -101,6 +179,8 @@ function removegeoregion(
 
     mv("tmp.txt",joinpath(DEPOT_PATH[1],"files","GeoRegions",fgeo),force=true)
 
+    return nothing
+
 end
 
 function removegeoregion(
@@ -120,5 +200,7 @@ function removegeoregion(
     end
 
     mv("tmp.txt",joinpath(DEPOT_PATH[1],"files","GeoRegions",fgeo),force=true)
+
+    return nothing
 
 end

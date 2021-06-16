@@ -8,7 +8,7 @@ function GeoRegion(
     ind = findall(RegID.==regvec)[1]
     return getgeoregion(
         RegID,
-        filevec[ind],
+        joinpath(DEPOT_PATH[1],"files","GeoRegions",filevec[ind]),
         typevec[ind],
         ST,FT
     )
@@ -37,11 +37,11 @@ function PolyRegion(
     FT = Float64
 )
 
-    rvec = listpolyregions(joinpath(DEPOT_PATH[1],"files","GeoRegions",fname))
+    rvec = listpolyregions(fname)
     ind  = findall(rvec.==RegID)[1]
     ind  = (ind) * 4 + 1
 
-    flines = readlines(joinpath(DEPOT_PATH[1],"files","GeoRegions",fname))
+    flines = readlines(fname)
     IDinfo = flines[ind];   ParID,RegName = getpolymeta(IDinfo)
     regIDX = flines[ind+1]; X = getpolyx(regIDX)
     regIDY = flines[ind+2]; Y = getpolyy(regIDY)
@@ -63,14 +63,13 @@ function RectRegion(
     FT = Float64
 )
 
-    rvec = listrectregions(joinpath(DEPOT_PATH[1],"files","GeoRegions",fname))
+    rvec = listrectregions(fname)
     ind  = findall(rvec.==RegID)[1]
 
-    IDinfo = readdlm(
-        joinpath(DEPOT_PATH[1],"files","GeoRegions",fname),',',
-        comments=true,comment_char='#'
-    )[ind,:]
+    IDinfo = readdlm(fname,',',comments=true,comment_char='#')[ind,:]
     ParID,RegName,regN,regS,regE,regW = IDinfo[[2,7,3,5,6,4]]
+    ParID = replace(ParID," "=>"")
+    RegName = replace(RegName," "=>"")
 
     is180,is360 = checkbounds(regN,regS,regE,regW)
 
@@ -162,6 +161,26 @@ function resetGeoRegions(;allfiles=false)
     end
 
     return
+
+end
+
+function addGeoRegions(fname::AbstractString)
+
+    rvec,rtype = listgeoregions(fname)
+    for reg in rvec
+        if !isgeoregion(reg,throw=false)
+            g = getgeoregion(reg,fname,rtype)
+            if rtype == "PolyRegion"
+                  _,_,lon,lat = coordGeoRegion(g)
+                  return PolyRegion(g.regID,g.parID,g.name,lon,lat)
+            else; return RectRegion(g.regID,g.parID,g.name,[g.N,g.S,g.E,g.W])
+            end
+        else
+            @warn "$(now()) - The GeoRegion ID $reg is already in use. Please use a different ID, or you can remove the ID using removeGeoRegion()."
+        end
+    end
+
+    return nothing
 
 end
 
@@ -321,9 +340,9 @@ function isgeoregion(RegID::AbstractString,regvec::AbstractArray;throw::Bool=tru
 
     if sum(regvec.==RegID) == 0
         if throw
-            error("$(now()) - $(RegID) is not a valid GeoRegion.  Use addgeoregion() to add this GeoRegion to the list.")
+            error("$(now()) - $(RegID) is not a valid GeoRegion.  Use either RectRegion() or PolyRegion() to add this GeoRegion to the list.")
         else
-            @warn "$(now()) - $(RegID) is not a valid GeoRegion.  Use addgeoregion() to add this GeoRegion to the list."
+            @warn "$(now()) - $(RegID) is not a valid GeoRegion.  Use either RectRegion() or PolyRegion() to add this GeoRegion to the list."
             return false
         end
     else;   return true
