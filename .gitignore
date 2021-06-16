@@ -17,7 +17,6 @@ docs/src/generated
 *.jld2
 
 # Plots
-*.png
 *.gif
 *.mp4
 

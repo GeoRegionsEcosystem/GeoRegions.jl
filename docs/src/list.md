@@ -8,15 +8,6 @@ The default GeoRegion covers the global domain |  identified as `GLB`
 | :--: | :---: | :-: | :-: | :-: | :-: | :--- |
 | GLB  |  GLB  | 90  |  0  | -90 | 360 | Global |
 
-## Predefined in GeoRegions
-
-|  ID  |  pID  |  N  |  W  |  S  |  E  | Name | Ver |
-| :--: | :---: | :-: | :-: | :-: | :-: | :--- | :-: |
-| TRP  |  GLB  | 30  |  0  | -30 | 360 | Tropical Belt         | ≥1.0 |
-| ISM  |  GLB  | 45  | 35  | -15 | 105 | Indian Summer Monsoon | ≥1.0 |
-| EAM  |  GLB  | 50  | 90  |  0  | 150 | East Asian Monsoon    | ≥1.0 |
-| SEA  |  TRP  | 20  | 90  | -15 | 165 | Southeast Asia        | ≥1.0 |
-
 ## Adapted from Giorgi & Francisco [2000]
 
 !!! compat "GeoRegions > 1.1"

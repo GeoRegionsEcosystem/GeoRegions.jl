@@ -155,3 +155,7 @@ julia> gregioncopy(overwrite=true)
 
 !!! note "Just a note:"
     `gregioncopy()` will also return the path of the file `gregions.txt`.
+
+```@docs
+gregioncopy
+```

@@ -1,30 +1,34 @@
 # GeoRegions.jl
-*Extract Point/Gridded Data from a Regional Dataset*
+*Extract Regional Data from a Gridded Dataset*
 
 `GeoRegions.jl` is a Julia package that aims to streamline the following processes:
 * query if a point / grid is within a specified boundary
 * extract point data (given coordinates) from a given region
-* extract gridded data (given grid bounds) from a larger (parent) region (grid must be entirely within parent region)
+* extract regional data from a gridded dataset, or from a parent region dataset
 
-## Installation
-`GeoRegions.jl` can be installed using Julia's built-in package manager as follows:
+The new core functionality of GeoRegions.jl (newly developed in v2), are the `GeoRegion` and `RegionInfo` supertypes, which contains information
+* `GeoRegion`: regarding the shape and bounds of a given GeoRegion
+* `RegionGrid`: needed to extract information from a lon-lat grid typical of climate datasets, such as Reanalysis data, GCM model output, satellite observations, etc.
 
+## Installation Instructions
+
+The latest version of GeoRegions can be installed using the Julia package manager (accessed by pressing `]` in the Julia command prompt)
 ```
 julia> ]
-(@v1.4) pkg> add GeoRegions
+(@v1.6) pkg> add GeoRegions
 ```
 
 You can update `GeoRegions.jl` to the latest version using
 ```
-(@v1.4) pkg> update GeoRegions
+(@v1.6) pkg> update GeoRegions
 ```
 
-And if you want to get the latest release without waiting for me to update the Julia Registry (although this generally isn't necessary since I make a point to release patch versions as soon as I find bugs or add new working features), you may fix the version to the `master` branch of the GitHub repository:
+And if you want to get the latest release without waiting for me to update the Julia Registry (although this generally isn't necessary since I make a point to release patch versions as soon as I find bugs or add new working features), you may fix the version to the `main` branch of the GitHub repository:
 ```
-(@v1.4) pkg> add GeoRegions#master
+(@v1.6) pkg> add GeoRegions#main
 ```
 
-## Documentation
+## Documentation Overview
 
 The documentation for `GeoRegions.jl` is divided into three components:
 1. Tutorials - meant as an introduction to the package
