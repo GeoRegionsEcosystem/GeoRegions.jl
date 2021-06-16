@@ -28,4 +28,5 @@ makedocs(
 
 deploydocs(
     repo = "github.com/JuliaClimate/GeoRegions.jl.git",
+    devbranch = "main"
 )
