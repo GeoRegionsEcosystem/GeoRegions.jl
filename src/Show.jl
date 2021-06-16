@@ -5,7 +5,7 @@ function show(io::IO, geo::RectRegion)
 		"    Region ID     : ", geo.regID, '\n',
 		"    Parent ID     : ", geo.parID, '\n',
 		"    Name          : ", geo.name, '\n',
-		"    Bounds        : [",geo.N,geo.S,geo.E,geo.W,"]\n",
+		"    Bounds        : ",[geo.N,geo.S,geo.E,geo.W], '\n',
         "    (is180,is360) : ",(geo.is180,geo.is360),"\n",
 	)
 end
