@@ -12,16 +12,18 @@ makedocs(
     sitename = "GeoRegions.jl",
     pages    = [
         "Home"       => "index.md",
-        "GeoRegions" => [
+        "GeoRegion Basics" => [
             "What is a GeoRegion?"  => "georegions/intro.md",
             "Creating GeoRegions"   => "georegions/create.md",
             "Retrieving GeoRegions" => "georegions/read.md",
+            "Predefined GeoRegions" => "georegions/predefined.md",
         ],
-        "Tutorials"  => [
-            "IsIn Region?"      => "tutorials/isin.md",
-            "GeoRegions"        => "tutorials/georegions.md",
-            # "GeoRegion Extract" => "tutorials/extract.md"
+        "Using GeoRegions" => [
+            "Is it in a GeoRegion?" => "using/isin.md",
+            # "RegionInfo Basics"     => "using/regioninfo.md",
+            # "Extract Gridded Data"  => "using/extract.md"
         ],
+        # "An Example Application" => "example.md",
         "APIs" => "api.md",
     ]
 )

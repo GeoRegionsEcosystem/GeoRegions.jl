@@ -40,6 +40,7 @@ function RectRegion(
     end
 
     N,S,E,W = bound; is180,is360 = checkbounds(N,S,E,W)
+    name = replace(name," "=>"-")
 
     open(joinpath(DEPOT_PATH[1],"files","GeoRegions","rectlist.txt"),"a") do io
         write(io,"$RegID, $ParID, $N, $W, $S, $E, $name\n")

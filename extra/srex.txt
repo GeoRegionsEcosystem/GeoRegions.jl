@@ -1,8 +1,8 @@
 # PolyRegion
-# GeoRegions adapted from SREX Regions from Seneviratne et al., 2012)
+# GeoRegions adapted from SREX Regions from Seneviratne et al. [2012]
 # (RegID, ParID, Name), X, Y
 
-  RegID SRX_ALA, GLB, Alaska/N.W. Canada
+  RegID SRX_ALA, GLB, Alaska/N.W.-Canada
   RegX  -105, -168, -168, -105, 105
   RegY  60, 60, 72.6, 72.6, 60
 
@@ -10,7 +10,7 @@
   RegX  -66.4, -79.7, -68.8, -50, -50, -66.4
   RegY  -20, -1.2, 11.4, 11.4, -20, -20
 
-  RegID SRX_CAM, GLB, Central America/Mexico
+  RegID SRX_CAM, GLB, Central-America/Mexico
   RegX  -68.8, -79.7, -118.3, -90.3, -68.8
   RegY  11.4, -1.2, 28.6, 28.6, 11.4
 
@@ -18,11 +18,11 @@
   RegX  -68.8, -85.8, -60, -60, -68.8
   RegY  11.4, 25, 25, 11.4, 11.4
 
-  RegID SRX_CAS, GLB, Central Asia
+  RegID SRX_CAS, GLB, Central-Asia
   RegX  60, 60, 75, 75, 60
   RegY  30, 50, 50, 30, 30
 
-  RegID SRX_CEU, GLB, Central Europe
+  RegID SRX_CEU, GLB, Central-Europe
   RegX  -10, -10, 40, 40, -10
   RegY  45, 48, 61.3, 45, 45
 
@@ -30,43 +30,43 @@
   RegX  -10, -105, -105, -10, -10
   RegY  50, 50, 85, 85, 50
 
-  RegID SRX_CNA, GLB, Central North America
+  RegID SRX_CNA, GLB, Central-North-America
   RegX  -85, -85, -105, -105, -85
   RegY  50, 28.6, 28.6, 50, 50
 
-  RegID SRX_EAF, GLB, East Africa
+  RegID SRX_EAF, GLB, East-Africa
   RegX  25, 25, 52, 52, 25
   RegY  -11.4, 15, 15, -11.4, -11.4
 
-  RegID SRX_EAS, GLB, East Asia
+  RegID SRX_EAS, GLB, East-Asia
   RegX  100, 100, 145, 145, 100
   RegY  20, 50, 50, 20, 20
 
-  RegID SRX_ENA, GLB, East North America
+  RegID SRX_ENA, GLB, East-North-America
   RegX  -60, -85, -85, -60, -60
   RegY  25, 25, 50, 50, 25
 
-  RegID SRX_MED, GLB, South Europe/Mediterranean
+  RegID SRX_MED, GLB, South-Europe/Mediterranean
   RegX  -10, -10, 40, 40, -10
   RegY  30, 45, 45, 30, 30
 
-  RegID SRX_NAS, GLB, North Asia
+  RegID SRX_NAS, GLB, North-Asia
   RegX  40, 40, 180, 180, 40
   RegY  50, 70, 70, 50, 50
 
-  RegID SRX_NAU, GLB, North Australia
+  RegID SRX_NAU, GLB, North-Australia
   RegX  110, 110, 155, 155, 110
   RegY  -30, -10, -10, -30, -30
 
-  RegID SRX_NEB, GLB, North-East Brazil
+  RegID SRX_NEB, GLB, Northeast-Brazil
   RegX  -34, -50, -50, -34, -34
   RegY  -20, -20, 0, 0, -20
 
-  RegID SRX_NEU, GLB, North Europe
+  RegID SRX_NEU, GLB, North-Europe
   RegX  -10, -10, 40, 40, -10
   RegY  48, 75, 75, 61.3, 48
 
-  RegID SRX_SAF, GLB, Southern Africa
+  RegID SRX_SAF, GLB, Southern-Africa
   RegX  -10, -10, 52, 52, -10
   RegY  -35, -11.4, -11.4, -35, -35
 
@@ -74,39 +74,39 @@
   RegX  -20, -20, 40, 40, -20
   RegY  15, 30, 30, 15, 15
 
-  RegID SRX_SAS, GLB, South Asia
+  RegID SRX_SAS, GLB, South-Asia
   RegX  60, 60, 100, 100, 95, 95, 60
   RegY  5, 30, 30, 20, 20, 5, 5
 
-  RegID SRX_SAU, GLB, South Australia/New Zealand
+  RegID SRX_SAU, GLB, South-Australia/New Zealand
   RegX  110, 110, 180, 180, 110
   RegY  -50, -30, -30, -50, -50
 
-  RegID SRX_SEA, GLB, Southeast Asia
+  RegID SRX_SEA, GLB, Southeast-Asia
   RegX  95, 95, 155, 155, 95
   RegY  -10, 20, 20, -10, -10
 
-  RegID SRX_SSA, GLB, Southeastern South America
+  RegID SRX_SSA, GLB, Southeastern-South-America
   RegX  -39.4, -39.4, -67.3, -72.1, -66.4, -39.4
   RegY  -20, -56.7, -56.7, -50, -20, -20
 
-  RegID SRX_TIB, GLB, Tibetan Plateau
+  RegID SRX_TIB, GLB, Tibetan-Plateau
   RegX  75, 75, 100, 100, 75
   RegY  30, 50, 50, 30, 30
 
-  RegID SRX_WAF, GLB, West Africa
+  RegID SRX_WAF, GLB, West-Africa
   RegX  -20, -20, 25, 25, -20
   RegY  -11.4, 15, 15, -11.4, -11.4
 
-  RegID SRX_WAS, GLB, West Asia
+  RegID SRX_WAS, GLB, West-Asia
   RegX  40, 40, 60, 60, 40
   RegY  15, 50, 50, 15, 15
 
-  RegID SRX_WNA, GLB, West North America
+  RegID SRX_WNA, GLB, Northwest-America
   RegX  -105, -130, -130, -105, -105
   RegY  28.6, 28.6, 60, 60, 28.6
 
-  RegID SRX_WSA, GLB, West Coast South America
+  RegID SRX_WSA, GLB, West-Coast-South-America
   RegX  -79.7, -66.4, -72.1, -67.3, -82, -82, 79.7
   RegY  -1.2, -20, -50, -56.7, -56.7, 0.5, -1.2
 
@@ -118,18 +118,18 @@
   RegX  -180, -180, 180, 180, -180
   RegY  67.5, 90, 90, 67.5, 67.5
 
-  RegID SRX_NTP, GLB, Pacific Islands
+  RegID SRX_NTP, GLB, Pacific-Islands
   RegX  155, 155, 210, 210, 155
   RegY  5, 25, 25, 5, 5
 
-  RegID SRX_STP, GLB, Southern Tropical Pacific
+  RegID SRX_STP, GLB, Southern-Tropical-Pacific
   RegX  155, 155, 230, 230, 155
   RegY  -25, -5, -5, -25, -25
 
-  RegID SRX_ETP, GLB, Eastern Tropical Pacific
+  RegID SRX_ETP, GLB, Eastern-Tropical-Pacific
   RegX  155, 155, 210, 210, 155
   RegY  -5, 5, 5, -5, -5
 
-  RegID SRX_WIO, GLB, West Indian Ocean
+  RegID SRX_WIO, GLB, West-Indian-Ocean
   RegX  52, 75, 75, 52, 52
   RegY  5, 5, -25, -25, 5

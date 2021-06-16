@@ -190,8 +190,8 @@ function isGeoRegioninGeoRegion(
     E = Child.E
     W = Child.W
 
-    lon = range(W,E,step=0.01); nlon = length(lon)
-    lat = range(S,N,step=0.01); nlat = length(lat)
+    lon = range(W,E,length=10001); nlon = length(lon)
+    lat = range(S,N,length=10001); nlat = length(lat)
 
     mask = zeros(Bool,nlon,nlat)
 

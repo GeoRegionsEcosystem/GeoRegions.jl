@@ -70,6 +70,7 @@ function RectRegion(
     ParID,RegName,regN,regS,regE,regW = IDinfo[[2,7,3,5,6,4]]
     ParID = replace(ParID," "=>"")
     RegName = replace(RegName," "=>"")
+    RegName = replace(RegName,"-"=>" ")
 
     is180,is360 = checkbounds(regN,regS,regE,regW)
 
