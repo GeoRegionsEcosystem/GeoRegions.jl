@@ -2,4 +2,4 @@
 # List of RectRegion GeoRegions
 # (1)ID, (2)pID, (3)N, (4)W, (5)S, (6)E, (7)Description, (8)Notes
 
-GLB, GLB, 90, 0, -95, 360, Globe
+GLB, GLB, 90, 0, -90, 360, Globe
