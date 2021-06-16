@@ -53,10 +53,10 @@ function PolyRegion(
     open(joinpath(DEPOT_PATH[1],"files","GeoRegions","polylist.txt"),"a") do io
         write(io,"\n  RegID $(RegID), $(ParID), $name\n")
         write(io,"  RegX  $(lonpt[1])")
-        for ipt = 1 : npt; write(io,", $(lonpt[ipt])") end
+        for ipt = 2 : npt; write(io,", $(lonpt[ipt])") end
         write(io,"\n")
         write(io,"  RegY  $(latpt[1])")
-        for ipt = 1 : npt; write(io,", $(latpt[ipt])") end
+        for ipt = 2 : npt; write(io,", $(latpt[ipt])") end
         write(io,"\n")
     end
 
