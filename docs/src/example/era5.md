@@ -85,14 +85,12 @@ The Polygonal Grid has the following properties:
 
 Next, using the info in the `PolyGrid` variable `ginfo`, we extract out the precipitable water vapour data for the region into a new variable `newpwv`.  Although `newpwv` is gridded and thus rectilinear, with the aid of `ginfo.mask` we can set the pwv information outside the `PolyRegion` to `NaN`.
 ```julia
-mask  = ginfo.mask * 1.0; mask[iszero.(mask)] .= NaN
 blon,blat,slon,slat = coordGeoRegion(geo)
-
 glon = ginfo.glon; nglon = length(glon); ilon = ginfo.ilon
 glat = ginfo.glat; nglat = length(glat); ilat = ginfo.ilat
 newpwv = zeros(nglon,nglat)
 for iglat = 1 : nglat, iglon = 1 : nglon
-    newpwv[iglon,iglat] = pwv[ilon[iglon],ilat[iglat]] * mask[iglon,iglat]
+    newpwv[iglon,iglat] = pwv[ilon[iglon],ilat[iglat]] * ginfo.mask[iglon,iglat]
 end
 ```
 

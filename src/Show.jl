@@ -26,6 +26,7 @@ end
 function show(io::IO, grd::PolyGrid)
 	nlon = length(grd.ilon)
 	nlat = length(grd.ilat)
+	mask = grd.mask
     print(
 		io,
 		"The Polygonal Grid has the following properties:\n",
@@ -35,7 +36,7 @@ function show(io::IO, grd::PolyGrid)
 		"    Longitude Points   (glon) : ", grd.glon,  '\n',
 		"    Latitude Points    (glat) : ", grd.glat,  '\n',
 		"    Region Size (nlon * nlat) : $(nlon) lon points x $(nlat) lat points\n",
-		"    Region Mask (sum(mask) / (nlon * nlat)) : $(sum(grd.mask)) / $(nlon*nlat)\n"
+		"    Region Mask (sum(mask) / (nlon * nlat)) : $(sum(isone.(mask))) / $(nlon*nlat)\n"
 	)
 end
 

@@ -98,10 +98,13 @@ function RegionGrid(
 
     nlon = lon[iWE]
     nlat = lat[iNS]
-    mask = Array{Bool,2}(undef,length(nlon),length(nlat))
+    mask = Array{FT,2}(undef,length(nlon),length(nlat))
     for ilat = 1 : length(nlat), ilon = 1 : length(nlon)
         ipnt = Point2(nlon[ilon],nlat[ilat])
-        mask[ilon,ilat] = isPointinGeoRegion(ipnt,geo,throw=false) * 1
+        if isPointinGeoRegion(ipnt,geo,throw=false)
+              mask[ilon,ilat] = 1
+        else; mask[ilon,ilat] = NaN
+        end
     end
 
     return PolyGrid{FT}(igrid,iWE,iNS,nlon,nlat,mask)

@@ -96,7 +96,7 @@ struct PolyGrid{FT<:Real} <: RegionGrid
     ilat  :: Vector{Int}
     glon  :: Vector{FT}
     glat  :: Vector{FT}
-    mask  :: Array{Bool,2}
+    mask  :: Array{FT,2}
 end
 
 ## Including other files in the module
