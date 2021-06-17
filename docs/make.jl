@@ -20,7 +20,7 @@ makedocs(
         ],
         "Using GeoRegions" => [
             "Is it in a GeoRegion?" => "using/isin.md",
-            # "RegionInfo Basics"     => "using/regioninfo.md",
+            "RegionInfo Basics"     => "using/regiongrid.md",
             # "Extract Gridded Data"  => "using/extract.md"
         ],
         # "An Example Application" => "example.md",

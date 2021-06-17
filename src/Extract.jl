@@ -69,7 +69,7 @@ function RegionGrid(
     mask = Array{Bool,2}(undef,length(nlon),length(nlat))
     for ilat = 1 : length(nlat), ilon = 1 : length(nlon)
         ipnt = Point2(nlon[ilon],nlat[ilat])
-        mask[ilon,ilat] = isPointingeoion(ipnt,geo,throw=false) * 1
+        mask[ilon,ilat] = isPointinGeoRegion(ipnt,geo,throw=false) * 1
     end
 
     return PolyGrid{FT}(igrid,iWE,iNS,nlon,nlat,mask)
