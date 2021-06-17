@@ -1,3 +1,19 @@
+"""
+    GeoRegion(RegID::AbstractString) -> geo::GeoRegion
+
+Extracts information of the GeoRegion with the ID `RegID`.  If no GeoRegion with this ID exists, an error is thrown.
+
+Arguments
+=========
+
+- `RegID` : The keyword ID that will be used to identify the GeoRegion.
+            If the ID is not valid (i.e. not being used), then an error will be thrown.
+
+Returns
+=======
+
+- `geo` : A GeoRegion
+"""
 function GeoRegion(
     RegID::AbstractString,
     ST = String,
@@ -82,6 +98,17 @@ function RectRegion(
 
 end
 
+"""
+    templateGeoRegions(; path::AbstractString, overwrite::Bool=false)
+
+Copies the template files for defining GeoRegions in textfiles, that can then be added as a batch using addGeoRegions()
+
+Keyword Arguments
+=================
+
+- `path`      : The folder to copy the files to
+- `overwrite` : If template files exist in this folder, overwrite?
+"""
 function templateGeoRegions(;
     path      :: AbstractString=pwd(),
     overwrite :: Bool=false
@@ -126,10 +153,22 @@ function templateGeoRegions(;
 
     end
 
-    return
+    return nothing
 
 end
 
+"""
+    listGeoRegions()
+
+List all GeoRegions, files the data are stored in, and the `Type` of `GeoRegion` they are.
+
+Output
+======
+
+- `geovec`  : List of all the GeoRegion IDs
+- `filevec` : List of the files that the GeoRegion information is stored in
+- `typevec` : List of the `Type` of the `GeoRegion` corresponding to the `geovec` ID list
+"""
 function listGeoRegions()
 
     flist   = ["rectlist.txt","polylist.txt","giorgi.txt","srex.txt","ar6.txt"]
@@ -150,6 +189,16 @@ function listGeoRegions()
 
 end
 
+"""
+    resetGeoRegions(; allfiles::Bool = false)
+
+Reset all the files containing GeoRegion information back to the default.
+
+Arguments
+=========
+
+- `allfiles` : If `true`, reset the GeoRegions defined in Giorgi & Francisco [2000], AR6 Regions (Iturbide et al., 2020; ESSD) and Seneviratne et al. [2012] as well.  If `false`, only reset the custom GeoRegions.
+"""
 function resetGeoRegions(;allfiles=false)
 
     if allfiles
@@ -165,6 +214,16 @@ function resetGeoRegions(;allfiles=false)
 
 end
 
+"""
+    addGeoRegions(fname::AbstractString)
+
+Extracts information of the GeoRegion with the ID `RegID`.  If no GeoRegion with this ID exists, an error is thrown.
+
+Arguments
+=========
+
+- `fname` : name + path of the file containing GeoRegion information
+"""
 function addGeoRegions(fname::AbstractString)
 
     rvec,rtype = listgeoregions(fname)

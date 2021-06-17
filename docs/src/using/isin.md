@@ -22,6 +22,10 @@ isPointinGeoRegion(Point2(340,5),GeoRegion("AR6_EAO"),throw=false) # Point A
 isPointinGeoRegion(Point2(30,15),GeoRegion("AR6_EAO"),throw=false) # Point B
 ```
 
+```@docs
+isPointinGeoRegion
+```
+
 ## Is a GeoRegion inside a GeoRegion?
 
 Since any arbitrary geographic region can be defined as a `GeoRegion`, the natural extension now is to determine if a GeoRegion is wholly within another GeoRegion.
@@ -68,13 +72,10 @@ t4  = GeoRegion("TS4"); isGeoRegioninGeoRegion(t4,geo,throw=false)
 
 And we see that this is indeed the case.
 
+```@docs
+isGeoRegioninGeoRegion
+```
+
 ## How does `isGeoRegioninGeoRegion` work?
 
 Test
-
-## API
-
-```@repl
-using GeoRegions
-resetGeoRegions()
-```

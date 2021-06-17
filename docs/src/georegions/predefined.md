@@ -4,9 +4,10 @@ This page contains a list of the GeoRegions that are currently available in `Geo
 
 The default GeoRegion covers the global domain identified as `GLB`
 
-|  ID  |  pID  |  N  |  W  |  S  |  E  | Name |
-| :--: | :---: | :-: | :-: | :-: | :-: | :--- |
-| GLB  |  GLB  | 90  |  0  | -90 | 360 | Global |
+```@repl
+using GeoRegions
+GeoRegion("GLB")
+```
 
 ## Adapted from Giorgi & Francisco [2000]
 

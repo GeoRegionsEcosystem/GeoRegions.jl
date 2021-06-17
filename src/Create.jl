@@ -6,7 +6,7 @@
         bound :: Vector{<:Real},
         ST = String,
         FT = Float64
-    )
+    ) -> RectRegion{ST,FT}
 
 Creates a rectilinear GeoRegion `RegID`.
 
@@ -40,13 +40,14 @@ function RectRegion(
     end
 
     N,S,E,W = bound; is180,is360 = checkbounds(N,S,E,W)
+    geo  = RectRegion{ST,FT}(RegID,ParID,name,N,S,E,W,is180,is360)
     name = replace(name," "=>"-")
 
     open(joinpath(DEPOT_PATH[1],"files","GeoRegions","rectlist.txt"),"a") do io
         write(io,"$RegID, $ParID, $N, $W, $S, $E, $name\n")
     end
 
-    return RectRegion{ST,FT}(RegID,ParID,name,N,S,E,W,is180,is360)
+    return geo
 
 end
 
@@ -59,7 +60,7 @@ end
         latpt :: Vector{<:Real},
         ST = String,
         FT = Float64
-    )
+    ) -> PolyRegion{ST,FT}
 
 Creates a rectilinear GeoRegion `RegID`.
 
@@ -109,6 +110,7 @@ function PolyRegion(
     E = maximum(lonpt); W = minimum(lonpt)
     is180,is360 = checkbounds(N,S,E,W)
     shape = Point2.(lonpt,latpt)
+    geo   = PolyRegion{ST,FT}(RegID,ParID,name,N,S,E,W,shape,is180,is360)
     name  = replace(name," "=>"-")
 
     npt = length(lonpt)
@@ -122,7 +124,7 @@ function PolyRegion(
         write(io,"\n")
     end
 
-    return PolyRegion{ST,FT}(RegID,ParID,name,N,S,E,W,shape,is180,is360)
+    return geo
 
 end
 

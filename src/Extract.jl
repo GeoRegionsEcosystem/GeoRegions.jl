@@ -1,7 +1,23 @@
+"""
+    RegionGrid(
+        geo :: RectRegion{ST,FT},
+        lon :: Vector{<:Real},
+        lat :: Vector{<:Real}
+    ) -> RectGrid{FT}
+
+Creates a rectilinear GeoRegion `RegID`.
+
+Arguments
+=========
+
+- `geo` : A RectRegion struct type
+- `lon` : A vector containing the longitude points
+- `lat` : A vector containing the latitude points
+"""
 function RegionGrid(
     geo :: RectRegion{ST,FT},
-    lon    :: Vector{<:Real},
-    lat    :: Vector{<:Real}
+    lon :: Vector{<:Real},
+    lat :: Vector{<:Real}
 ) where {FT <: Real, ST <: AbstractString}
 
     @debug "$(Dates.now()) - Determining indices of longitude and latitude boundaries in the given dataset ..."
@@ -34,10 +50,26 @@ function RegionGrid(
 
 end
 
+"""
+    RegionGrid(
+        geo :: PolyRegion{ST,FT},
+        lon :: Vector{<:Real},
+        lat :: Vector{<:Real}
+    ) -> PolyGrid{FT}
+
+Creates a rectilinear GeoRegion `RegID`.
+
+Arguments
+=========
+
+- `geo` : A PolyRegion struct type
+- `lon` : A vector containing the longitude points
+- `lat` : A vector containing the latitude points
+"""
 function RegionGrid(
     geo :: PolyRegion{ST,FT},
-    lon    :: Vector{<:Real},
-    lat    :: Vector{<:Real}
+    lon :: Vector{<:Real},
+    lat :: Vector{<:Real}
 ) where {FT <: Real, ST <: AbstractString}
 
     @debug "$(Dates.now()) - Determining indices of longitude and latitude boundaries in the given dataset ..."

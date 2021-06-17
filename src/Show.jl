@@ -5,7 +5,7 @@ function show(io::IO, geo::RectRegion)
 		"    Region ID (regID) : ", geo.regID, '\n',
 		"    Parent ID (parID) : ", geo.parID, '\n',
 		"    Name      (name)  : ", geo.name, '\n',
-		"    Bounds    (bound) : ",[geo.N,geo.S,geo.E,geo.W], '\n',
+		"    Bounds  (N,S,E,W) : ",[geo.N,geo.S,geo.E,geo.W], '\n',
         "        (is180,is360) : ",(geo.is180,geo.is360),"\n",
 	)
 end
@@ -17,7 +17,7 @@ function show(io::IO, geo::PolyRegion)
 		"    Region ID (regID) : ", geo.regID, '\n',
 		"    Parent ID (parID) : ", geo.parID, '\n',
 		"    Name       (name) : ", geo.name,  '\n',
-		"    Bounds    (bound) : ",[geo.N,geo.S,geo.E,geo.W], '\n',
+		"    Bounds  (N,S,E,W) : ",[geo.N,geo.S,geo.E,geo.W], '\n',
 		"    Shape     (shape) : ", geo.shape, '\n',
         "        (is180,is360) : ",(geo.is180,geo.is360),"\n",
 	)

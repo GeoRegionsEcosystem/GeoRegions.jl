@@ -6,6 +6,42 @@ But how do we go from defining a GeoRegion, to **extracting data** for that GeoR
 
 However, the basic uses of `RectGrid` and `PolyGrid` are the same, and as such their differences are largely transparent to the user, except for one field found in `PolyGrid`, the `mask`, which will be elaborated upon later.
 
+```@docs
+RegionGrid
+RectGrid{FT}
+PolyGrid{FT}
+```
+
+## `RectGrid` Example
+```@repl
+using GeoRegions
+geo   = GeoRegion("GF_SSA")
+lon   = collect(-180:5:180)[1:(end-1)];
+lat   = collect(-90:5:90);
+ginfo = RegionGrid(geo,lon,lat)
+```
+
+```@docs
+RegionGrid(::RectRegion,::Vector{<:Real},::Vector{<:Real})
+```
+
+## `PolyGrid` Example
+```@repl
+using GeoRegions
+geo   = GeoRegion("AR6_NWS")
+lon   = collect(-180:5:180)[1:(end-1)];
+lat   = collect(-90:5:90);
+ginfo = RegionGrid(geo,lon,lat)
+```
+
+```@docs
+RegionGrid(::PolyRegion,::Vector{<:Real},::Vector{<:Real})
+```
+
+## The Mask of a `PolyGrid`
+
+The `PolyGrid` type derived from a `PolyRegion` allows us to apply a mask to filter out data that is within the `shape` of a `PolyRegion` on a rectilinear lon-lat grid defined by the `bound` of a PolyRegion.  We consider the following example of an AR6 region over South Asia:
+
 ```@repl
 using GeoRegions
 geo   = GeoRegion("AR6_SAS")

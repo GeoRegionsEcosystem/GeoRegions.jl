@@ -8,19 +8,33 @@ We use the functions `RectRegion` and `PolyRegion` to define rectilinear and pol
 ```@repl
 using GeoRegions
 RectRegion("TRC","GLB","Test Rectangle Region",[30,20,50,10])
+PolyRegion("TPL","GLB","Test Polygonal Region",[30,40,50,40,30],[20,30,20,10,20])
 ```
+
+!!! note "Defining PolyRegions"
+    When defining `PolyRegion`s, the first and last set of (lon,lat) coordinates must be the same (i.e. a **closed** polygon must be defined)
 
 The GeoRegions will be automatically added to the following files in `joinpath(DEPOT_PATH[1],"files","GeoRegions")`:
 * RectRegions will be added to `rectlist.txt`
 * PolyRegions will be added to `polylist.txt`
-
-## Removing an existing GeoRegion
 
 If the GeoRegion ID `TRC` already exists, however, this will throw an error
 ```@repl
 using GeoRegions
 RectRegion("TRC","GLB","Test Rectangle Region2",[40,20,52,10])
 ```
+```@docs
+RectRegion(
+    ::AbstractString,::AbstractString,::AbstractString,
+    ::Vector{<:Real}
+)
+PolyRegion(
+    ::AbstractString,::AbstractString,::AbstractString,
+    ::Vector{<:Real},::Vector{<:Real}
+)
+```
+
+## Removing an existing GeoRegion
 
 To remove an existing GeoRegion, we can use the function `removeGeoRegion`
 ```@repl
@@ -33,6 +47,19 @@ removeGeoRegion("TRC")
 ```@repl
 using GeoRegions
 removeGeoRegion("GLB")
+```
+
+```@docs
+removeGeoRegion(::AbstractString)
+```
+
+## List of All GeoRegions
+
+If you want to check the list of all GeoRegions that have been defined, use the function `listGeoRegions()`
+```@repl
+using GeoRegions
+geovec,filevec,typevec = listGeoRegions();
+geovec
 ```
 
 ## Reset the list of GeoRegions
@@ -49,16 +76,6 @@ using GeoRegions
 resetGeoRegions(allfiles=true)
 ```
 
-## APIs
-
 ```@docs
-RectRegion(
-    ::AbstractString,::AbstractString,::AbstractString,
-    ::Vector{<:Real}
-)
-PolyRegion(
-    ::AbstractString,::AbstractString,::AbstractString,
-    ::Vector{<:Real},::Vector{<:Real}
-)
-removeGeoRegion(::AbstractString)
+listGeoRegions
 ```

@@ -15,13 +15,13 @@ makedocs(
         "GeoRegion Basics" => [
             "What is a GeoRegion?"  => "georegions/intro.md",
             "Creating GeoRegions"   => "georegions/create.md",
-            "Retrieving GeoRegions" => "georegions/read.md",
             "Predefined GeoRegions" => "georegions/predefined.md",
+            "Retrieving GeoRegions" => "georegions/read.md",
         ],
         "Using GeoRegions" => [
             "Is it in a GeoRegion?" => "using/isin.md",
             "RegionInfo Basics"     => "using/regiongrid.md",
-            # "Extract Gridded Data"  => "using/extract.md"
+            "Custom GeoRegions"     => "using/custom.md",
         ],
         # "An Example Application" => "example.md",
         "APIs" => "api.md",

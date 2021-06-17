@@ -10,18 +10,28 @@ Other additional features include:
 ## Is Point in GeoRegion?
 
 """
-    isPointinGeoRegion(plon, plat, rlon, rlat; throw=true) -> Bool
+    isPointinGeoRegion(
+        Point  :: Point2{<:Real},
+        geo    :: GeoRegion;
+        tlon   :: Real = 0,
+        tlat   :: Real = 0,
+        throw  :: Bool = true
+    ) -> Bool
 
-Check if a point with coordinates (`plon`,`plat`) is found within a region defined by the longitude and latitude vectors `rlon` and `rlat`
+Check if a geographical point `Point` is within a GeoRegion defined by `geo`.
 
-Arguments:
-* `plon::Real` : Longitude of the point in question.
-* `plat::Real` : Latitude of the point in question.
-* `rlon::Vector{<:Real}` : Longitude vector spanning the region.  Points should be evenly spaced.
-* `rlat::Vector{<:Real}` : Latitude vector spanning the region.  Points should be evenly spaced.
+Arguments
+=========
 
-Keyword Arguments:
-* `throw::Bool` : If `throw=true`, then if (`plon`,`plat`) is not within the region, an error is thrown and the program stops running.
+- `Point` : A geographical point of Type `Point2`.  Pass `Point2(plon,plat)`, where `plon` and `plat` are the longitude and latitudes of the point.
+- `geo`   : The GeoRegion struct container
+
+Keyword Arguments
+=================
+
+- `tlon`  : Threshold for the longitude bound
+- `tlat`  : Threshold for the latitude bound
+- `throw` : If `true`, then if `Point` is not within `geo`, an error is thrown and the program stops running.
 """
 function isPointinGeoRegion(
     Point  :: Point2{<:Real},
@@ -84,20 +94,6 @@ function isPointinGeoRegion(
 
 end
 
-"""
-    isPointinGeoRegion(plon, plat, rlon, rlat; throw=true) -> Bool
-
-Check if a point with coordinates (`plon`,`plat`) is found within a region defined by the longitude and latitude vectors `rlon` and `rlat`
-
-Arguments:
-* `plon::Real` : Longitude of the point in question.
-* `plat::Real` : Latitude of the point in question.
-* `rlon::Vector{<:Real}` : Longitude vector spanning the region.  Points should be evenly spaced.
-* `rlat::Vector{<:Real}` : Latitude vector spanning the region.  Points should be evenly spaced.
-
-Keyword Arguments:
-* `throw::Bool` : If `throw=true`, then if (`plon`,`plat`) is not within the region, an error is thrown and the program stops running.
-"""
 function isPointinGeoRegion(
     Point  :: Point2{<:Real},
     GeoReg :: PolyRegion;
@@ -165,18 +161,26 @@ function isPointinGeoRegion(
 end
 
 """
-    isGeoRegioninGeoRegion(Child, GeoReg::PolyRegion; domask=false, throw=true) -> Bool
+    isGeoRegioninGeoRegion(
+        Child  :: GeoRegion,
+        polyG  :: PolyRegion;
+        domask :: Bool = false,
+        throw  :: Bool = true
+    ) -> Bool
 
-Check if a point with coordinates (`plon`,`plat`) is found within a region defined by the longitude and latitude vectors `rlon` and `rlat`
+Check if a child GeoRegion defined by `Child` is within a PolyRegion `polyG`.
 
-Arguments:
-* `plon::Real` : Longitude of the point in question.
-* `plat::Real` : Latitude of the point in question.
-* `rlon::Vector{<:Real}` : Longitude vector spanning the region.  Points should be evenly spaced.
-* `rlat::Vector{<:Real}` : Latitude vector spanning the region.  Points should be evenly spaced.
+Arguments
+=========
 
-Keyword Arguments:
-* `throw::Bool` : If `throw=true`, then if (`plon`,`plat`) is not within the region, an error is thrown and the program stops running.
+- `Child` : A GeoRegion that we postulate to be a "child", or a subset of the GeoRegion defined by `polyG`
+- `polyG` : A GeoRegion that we postulate to be a "parent", or containing the GeoRegion defined by `Child`
+
+Keyword Arguments
+=================
+
+- `throw`  : If `true`, then if `Child` is not within `polyG`, an error is thrown and the program stops running
+- `domask` : If `throw` is `false` and `domask` is `true`, return a mask (with bounds defined by the `Child` GeoRegion) showing the region where `Child` and `polyG` do not overlap
 """
 function isGeoRegioninGeoRegion(
     Child  :: GeoRegion,
@@ -220,18 +224,24 @@ function isGeoRegioninGeoRegion(
 end
 
 """
-    isGeoRegioninGeoRegion(Child, GeoReg::RectRegion; throw=true) -> Bool
+    isGeoRegioninGeoRegion(
+        Child  :: GeoRegion,
+        rectG  :: RectRegion;
+        throw  :: Bool = true
+    ) -> Bool
 
-Check if a point with coordinates (`plon`,`plat`) is found within a region defined by the longitude and latitude vectors `rlon` and `rlat`
+Check if a child GeoRegion defined by `Child` is within a RectRegion `rectG`.
 
-Arguments:
-* `plon::Real` : Longitude of the point in question.
-* `plat::Real` : Latitude of the point in question.
-* `rlon::Vector{<:Real}` : Longitude vector spanning the region.  Points should be evenly spaced.
-* `rlat::Vector{<:Real}` : Latitude vector spanning the region.  Points should be evenly spaced.
+Arguments
+=========
 
-Keyword Arguments:
-* `throw::Bool` : If `throw=true`, then if (`plon`,`plat`) is not within the region, an error is thrown and the program stops running.
+- `Child` : A GeoRegion that we postulate to be a "child", or a subset of the GeoRegion defined by `polyG`
+- `polyG` : A GeoRegion that we postulate to be a "parent", or containing the GeoRegion defined by `Child`
+
+Keyword Arguments
+=================
+
+- `throw`  : If `true`, then if `Child` is not within `polyG`, an error is thrown and the program stops running
 """
 function isGeoRegioninGeoRegion(
     Child  :: GeoRegion,
