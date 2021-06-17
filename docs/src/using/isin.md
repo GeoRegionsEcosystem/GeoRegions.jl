@@ -75,7 +75,3 @@ And we see that this is indeed the case.
 ```@docs
 isGeoRegioninGeoRegion
 ```
-
-## How does `isGeoRegioninGeoRegion` work?
-
-Test

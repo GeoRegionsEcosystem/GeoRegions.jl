@@ -23,8 +23,7 @@ makedocs(
             "RegionInfo Basics"     => "using/regiongrid.md",
             "Custom GeoRegions"     => "using/custom.md",
         ],
-        # "An Example Application" => "example.md",
-        "APIs" => "api.md",
+        "An Example with ERA5" => "example/era5.md"
     ]
 )
 
