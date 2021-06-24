@@ -200,8 +200,8 @@ function isinGeoRegion(
     mask = zeros(Bool,nlon,nlat)
 
     for ilat in 1 : nlat, ilon = 1 : nlon
-        if isPointinGeoRegion(Point2(lon[ilon],lat[ilat]),Child,throw=false)
-            if !isPointinGeoRegion(Point2(lon[ilon],lat[ilat]),GeoReg,throw=false)
+        if isinGeoRegion(Point2(lon[ilon],lat[ilat]),Child,throw=false)
+            if !isinGeoRegion(Point2(lon[ilon],lat[ilat]),GeoReg,throw=false)
                 mask[ilon,ilat] = 1
             end
         end
@@ -251,7 +251,7 @@ function isinGeoRegion(
 
     isin = isgridinregion(
         [Child.N,Child.S,Child.E,Child.W],
-        [GeoReg.N,GeoReg.S,GeoReg.E,GeoReg,W],
+        [GeoReg.N,GeoReg.S,GeoReg.E,GeoReg.W],
         throw=false
     )
 

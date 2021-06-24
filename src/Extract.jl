@@ -101,7 +101,7 @@ function RegionGrid(
     mask = Array{FT,2}(undef,length(nlon),length(nlat))
     for ilat = 1 : length(nlat), ilon = 1 : length(nlon)
         ipnt = Point2(nlon[ilon],nlat[ilat])
-        if isPointinGeoRegion(ipnt,geo,throw=false)
+        if isinGeoRegion(ipnt,geo,throw=false)
               mask[ilon,ilat] = 1
         else; mask[ilon,ilat] = NaN
         end
