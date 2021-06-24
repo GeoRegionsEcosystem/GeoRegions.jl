@@ -33,7 +33,7 @@ Keyword Arguments
 - `tlat`  : Threshold for the latitude bound
 - `throw` : If `true`, then if `Point` is not within `geo`, an error is thrown and the program stops running.
 """
-function isPointinGeoRegion(
+function isinGeoRegion(
     Point  :: Point2{<:Real},
     GeoReg :: RectRegion;
     tlon   :: Real = 0,
@@ -94,7 +94,7 @@ function isPointinGeoRegion(
 
 end
 
-function isPointinGeoRegion(
+function isinGeoRegion(
     Point  :: Point2{<:Real},
     GeoReg :: PolyRegion;
     tlon   :: Real = 0,
@@ -182,7 +182,7 @@ Keyword Arguments
 - `throw`  : If `true`, then if `Child` is not within `polyG`, an error is thrown and the program stops running
 - `domask` : If `throw` is `false` and `domask` is `true`, return a mask (with bounds defined by the `Child` GeoRegion) showing the region where `Child` and `polyG` do not overlap
 """
-function isGeoRegioninGeoRegion(
+function isinGeoRegion(
     Child  :: GeoRegion,
     GeoReg :: PolyRegion;
     domask :: Bool = false,
@@ -243,7 +243,7 @@ Keyword Arguments
 
 - `throw`  : If `true`, then if `Child` is not within `polyG`, an error is thrown and the program stops running
 """
-function isGeoRegioninGeoRegion(
+function isinGeoRegion(
     Child  :: GeoRegion,
     GeoReg :: RectRegion;
     throw  :: Bool = true

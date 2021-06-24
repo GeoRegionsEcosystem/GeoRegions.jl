@@ -14,8 +14,7 @@ import Base: show, read
 export
         GeoRegion, RectRegion, PolyRegion, RegionGrid, RectGrid, PolyGrid,
         resetGeoRegions, templateGeoRegions, listGeoRegions, addGeoRegions,
-        removeGeoRegion, coordGeoRegion,
-        isPointinGeoRegion, isGeoRegioninGeoRegion,
+        removeGeoRegion, coordGeoRegion, isinGeoRegion,
         Point2
 
 ## Abstract types
