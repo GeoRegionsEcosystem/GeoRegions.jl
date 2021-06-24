@@ -1,13 +1,13 @@
 # Is it in a GeoRegion?
 
-When dealing with geographic data, we often wish to check if a point or region is inside another region.  GeoRegions.jl allows you to perform this check easily with the functions `isPointinGeoRegion` and `isGeoRegioninGeoRegion`.
+When dealing with geographic data, we often wish to check if a point or region is inside another region.  GeoRegions.jl allows you to perform this check easily with the function `isinGeoRegion`.
 
 !!! note "Point Type"
     We use the `Point2` Type from the package GeometryBasics.jl, which is reexported by GeoRegions.jl, as an easy way to denote points.  This also allows us to use the package PolygonOps.jl to determine if a point is inside a region.
 
 ## Is a Point in a GeoRegion?
 
-To determine if a point is in a region, we use the `isPointinGeoRegion` function.  Take the below points in the globe:
+Let us test if a point is in a given GeoRegion.  For example, take the below points in the globe:
 * Point *A* at coordinates (-20,-5)
 * Point *B* at coordinates (30,15)
 
@@ -17,13 +17,16 @@ Let us test if they are in the region `AR6_EAO`, defined in the blue bounding bo
 
 ```@repl
 using GeoRegions
-isPointinGeoRegion(Point2(-20,5),GeoRegion("AR6_EAO"),throw=false) # Point A
-isPointinGeoRegion(Point2(340,5),GeoRegion("AR6_EAO"),throw=false) # Point A
-isPointinGeoRegion(Point2(30,15),GeoRegion("AR6_EAO"),throw=false) # Point B
+isinGeoRegion(Point2(-20,5),GeoRegion("AR6_EAO"),throw=false) # Point A
+isinGeoRegion(Point2(340,5),GeoRegion("AR6_EAO"),throw=false) # Point A
+isinGeoRegion(Point2(30,15),GeoRegion("AR6_EAO"),throw=false) # Point B
 ```
 
 ```@docs
-isPointinGeoRegion
+isinGeoRegion(
+    Point  :: Point2{<:Real},
+    geo    :: RectRegion;
+)
 ```
 
 ## Is a GeoRegion inside a GeoRegion?
@@ -58,20 +61,21 @@ And we plot the bounds (dotted) and the shape (solid) of the GeoRegions below:
 
 ![isgeoregioningeoregion](isgeoregioningeoregion.png)
 
-We see by eye that GeoRegion `TS2` and `TS4` are in the `BIG` region, but the other GeoRegions are not.  Now let us verify this with `isGeoRegioninGeoRegion`
+We see by eye that GeoRegion `TS2` and `TS4` are in the `BIG` region, but the other GeoRegions are not.  Now let us verify this with `isinGeoRegion`
 
 ```@repl
 using GeoRegions
 
 geo = GeoRegion("BIG");
-t1  = GeoRegion("TS1"); isGeoRegioninGeoRegion(t1,geo,throw=false)
-t2  = GeoRegion("TS2"); isGeoRegioninGeoRegion(t2,geo,throw=false)
-t3  = GeoRegion("TS3"); isGeoRegioninGeoRegion(t3,geo,throw=false)
-t4  = GeoRegion("TS4"); isGeoRegioninGeoRegion(t4,geo,throw=false)
+t1  = GeoRegion("TS1"); isinGeoRegion(t1,geo,throw=false)
+t2  = GeoRegion("TS2"); isinGeoRegion(t2,geo,throw=false)
+t3  = GeoRegion("TS3"); isinGeoRegion(t3,geo,throw=false)
+t4  = GeoRegion("TS4"); isinGeoRegion(t4,geo,throw=false)
 ```
 
 And we see that this is indeed the case.
 
 ```@docs
-isGeoRegioninGeoRegion
+isinGeoRegion(::GeoRegion,::RectRegion)
+isinGeoRegion(::GeoRegion,::PolyRegion)
 ```

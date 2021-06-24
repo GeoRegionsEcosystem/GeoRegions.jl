@@ -10,7 +10,7 @@ Other additional features include:
 ## Is Point in GeoRegion?
 
 """
-    isPointinGeoRegion(
+    isinGeoRegion(
         Point  :: Point2{<:Real},
         geo    :: GeoRegion;
         tlon   :: Real = 0,
@@ -161,7 +161,7 @@ function isinGeoRegion(
 end
 
 """
-    isGeoRegioninGeoRegion(
+    isinGeoRegion(
         Child  :: GeoRegion,
         polyG  :: PolyRegion;
         domask :: Bool = false,
@@ -224,7 +224,7 @@ function isinGeoRegion(
 end
 
 """
-    isGeoRegioninGeoRegion(
+    isinGeoRegion(
         Child  :: GeoRegion,
         rectG  :: RectRegion;
         throw  :: Bool = true
