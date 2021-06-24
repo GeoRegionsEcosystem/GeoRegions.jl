@@ -250,7 +250,7 @@ function isinGeoRegion(
 )
 
     isin = isgridinregion(
-        [Child.N,Child.S,Child.E,Child,W],
+        [Child.N,Child.S,Child.E,Child.W],
         [GeoReg.N,GeoReg.S,GeoReg.E,GeoReg,W],
         throw=false
     )
