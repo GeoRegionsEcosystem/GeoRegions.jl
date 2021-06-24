@@ -254,7 +254,7 @@ function checkgrid(
         gS < (rS-tlat) || gS > (rN+tlat)
 
         if throw
-             error("Requested grid points [$(gridbounds)] are not within the specified region boundaries.")
+             error("Requested grid points [$gN,$gS,$gE,$gW] are not within the specified region boundaries.")
         else return false
         end
 
