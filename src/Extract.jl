@@ -43,7 +43,7 @@ function RegionGrid(
     else; iWE = [iW];
     end
 
-    while nlon[end] > 360; nlon .-= 360 end
+    while maximum(nlon) > 360; nlon .-= 360 end
     nlon = nlon[iWE]
     nlat =  lat[iNS]
 
@@ -96,7 +96,7 @@ function RegionGrid(
     else; iWE = [iW];
     end
 
-    while nlon[end] > 360; nlon .-= 360 end
+    while maximum(nlon) > 360; nlon .-= 360 end
 
     nlon = nlon[iWE]
     nlat =  lat[iNS]
@@ -159,7 +159,7 @@ function regioninfo(gridbounds::Vector{<:Real},rlon::Vector{<:Real},rlat::Vector
     else; iWE = [iW];
     end
 
-    while nlon[end] > 360; nlon .-= 360 end
+    while maximum(nlon); nlon .-= 360 end
     nlon = nlon[iWE]
     nlat =  lat[iNS]
 
