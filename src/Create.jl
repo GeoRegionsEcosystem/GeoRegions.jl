@@ -41,7 +41,7 @@ function RectRegion(
 
     N,S,E,W = bound; is180,is360 = checkbounds(N,S,E,W)
     geo  = RectRegion{ST,FT}(RegID,ParID,name,N,S,E,W,is180,is360)
-    par  = GeoRegion(parID); isinGeoRegion(geo,par)
+    par  = GeoRegion(ParID); isinGeoRegion(geo,par)
     name = replace(name," "=>"-")
 
     open(joinpath(DEPOT_PATH[1],"files","GeoRegions","rectlist.txt"),"a") do io
@@ -112,7 +112,7 @@ function PolyRegion(
     is180,is360 = checkbounds(N,S,E,W)
     shape = Point2.(lonpt,latpt)
     geo   = PolyRegion{ST,FT}(RegID,ParID,name,N,S,E,W,shape,is180,is360)
-    par   = GeoRegion(parID); isinGeoRegion(geo,par)
+    par   = GeoRegion(ParID); isinGeoRegion(geo,par)
     name  = replace(name," "=>"-")
 
     npt = length(lonpt)
