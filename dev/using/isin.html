@@ -14,70 +14,64 @@ false</code></pre><article class="docstring"><header><a class="docstring-binding
     tlon   :: Real = 0,
     tlat   :: Real = 0,
     throw  :: Bool = true
-) -&gt; Bool</code></pre><p>Check if a geographical point <code>Point</code> is within a GeoRegion defined by <code>geo</code>.</p><p><strong>Arguments</strong></p><ul><li><code>Point</code> : A geographical point of Type <code>Point2</code>.  Pass <code>Point2(plon,plat)</code>, where <code>plon</code> and <code>plat</code> are the longitude and latitudes of the point.</li><li><code>geo</code>   : The GeoRegion struct container</li></ul><p><strong>Keyword Arguments</strong></p><ul><li><code>tlon</code>  : Threshold for the longitude bound</li><li><code>tlat</code>  : Threshold for the latitude bound</li><li><code>throw</code> : If <code>true</code>, then if <code>Point</code> is not within <code>geo</code>, an error is thrown and the program stops running.</li></ul></div><a class="docs-sourcelink" target="_blank" href="https://github.com/JuliaClimate/GeoRegions.jl/blob/ad01c8419a41cce33dca30cafa4cb76166b8ddd1/src/IsInGeoRegion.jl#L12-L35">source</a></section></article><h2 id="Is-a-GeoRegion-inside-a-GeoRegion?"><a class="docs-heading-anchor" href="#Is-a-GeoRegion-inside-a-GeoRegion?">Is a GeoRegion inside a GeoRegion?</a><a id="Is-a-GeoRegion-inside-a-GeoRegion?-1"></a><a class="docs-heading-anchor-permalink" href="#Is-a-GeoRegion-inside-a-GeoRegion?" title="Permalink"></a></h2><p>Since any arbitrary geographic region can be defined as a <code>GeoRegion</code>, the natural extension now is to determine if a GeoRegion is wholly within another GeoRegion.</p><p>Let us consider an arbitrary GeoRegion <code>BIG</code>, and other smaller GeoRegions <code>TS1-4</code> as defined below</p><pre><code class="language-julia-repl">julia&gt; using GeoRegions
+) -&gt; Bool</code></pre><p>Check if a geographical point <code>Point</code> is within a GeoRegion defined by <code>geo</code>.</p><p><strong>Arguments</strong></p><ul><li><code>Point</code> : A geographical point of Type <code>Point2</code>.  Pass <code>Point2(plon,plat)</code>, where <code>plon</code> and <code>plat</code> are the longitude and latitudes of the point.</li><li><code>geo</code>   : The GeoRegion struct container</li></ul><p><strong>Keyword Arguments</strong></p><ul><li><code>tlon</code>  : Threshold for the longitude bound</li><li><code>tlat</code>  : Threshold for the latitude bound</li><li><code>throw</code> : If <code>true</code>, then if <code>Point</code> is not within <code>geo</code>, an error is thrown and the program stops running.</li></ul></div><a class="docs-sourcelink" target="_blank" href="https://github.com/JuliaClimate/GeoRegions.jl/blob/cafc0f0b0549252cc2fe9ca8b6e0e175076794d6/src/IsInGeoRegion.jl#L12-L35">source</a></section></article><h2 id="Is-a-GeoRegion-inside-a-GeoRegion?"><a class="docs-heading-anchor" href="#Is-a-GeoRegion-inside-a-GeoRegion?">Is a GeoRegion inside a GeoRegion?</a><a id="Is-a-GeoRegion-inside-a-GeoRegion?-1"></a><a class="docs-heading-anchor-permalink" href="#Is-a-GeoRegion-inside-a-GeoRegion?" title="Permalink"></a></h2><p>Since any arbitrary geographic region can be defined as a <code>GeoRegion</code>, the natural extension now is to determine if a GeoRegion is wholly within another GeoRegion.</p><p>Let us consider an arbitrary GeoRegion <code>BIG</code>, and other smaller GeoRegions <code>TS1-4</code> as defined below</p><pre><code class="language-julia-repl">julia&gt; using GeoRegions
 
 julia&gt; PolyRegion(
            &quot;BIG&quot;,&quot;GLB&quot;,&quot;A Big Region&quot;,
            [-120,-100,-100,-80,-30,15,45,75,90,115,120,105,85,45,20,-5,-45,-80,-120],
            [0,10,30,50,40,50,55,44,32,30,12,8,5,0,-10,-30,-40,-43,0]
        );
-┌ Warning: 2021-06-25T19:06:51.245 - BIG is not a valid GeoRegion.  Use either RectRegion() or PolyRegion() to add this GeoRegion to the list.
+┌ Warning: 2021-06-25T19:09:51.329 - BIG is not a valid GeoRegion.  Use either RectRegion() or PolyRegion() to add this GeoRegion to the list.
 └ @ GeoRegions ~/work/GeoRegions.jl/GeoRegions.jl/src/Read.jl:405
-[ Info: 2021-06-25T19:06:51.245 - Adding the GeoRegion BIG to the list.
-ERROR: The GeoRegion BIG (A Big Region) is not a subset of the GeoRegion GLB (Globe)
+[ Info: 2021-06-25T19:09:51.329 - Adding the GeoRegion BIG to the list.
 
 julia&gt; RectRegion(&quot;TS1&quot;,&quot;GLB&quot;,&quot;Test Region 1&quot;,[45,20,20,-70]);
-┌ Warning: 2021-06-25T19:06:51.249 - TS1 is not a valid GeoRegion.  Use either RectRegion() or PolyRegion() to add this GeoRegion to the list.
+┌ Warning: 2021-06-25T19:09:51.333 - TS1 is not a valid GeoRegion.  Use either RectRegion() or PolyRegion() to add this GeoRegion to the list.
 └ @ GeoRegions ~/work/GeoRegions.jl/GeoRegions.jl/src/Read.jl:405
-[ Info: 2021-06-25T19:06:51.249 - Adding the GeoRegion TS1 to the list.
-ERROR: The GeoRegion TS1 (Test Region 1) is not a subset of the GeoRegion GLB (Globe)
+[ Info: 2021-06-25T19:09:51.333 - Adding the GeoRegion TS1 to the list.
 
 julia&gt; PolyRegion(&quot;TS2&quot;,&quot;GLB&quot;,&quot;Test Region 2&quot;,[60,90,110,90,60],[20,25,20,15,20]);
-┌ Warning: 2021-06-25T19:06:51.253 - TS2 is not a valid GeoRegion.  Use either RectRegion() or PolyRegion() to add this GeoRegion to the list.
+┌ Warning: 2021-06-25T19:09:51.336 - TS2 is not a valid GeoRegion.  Use either RectRegion() or PolyRegion() to add this GeoRegion to the list.
 └ @ GeoRegions ~/work/GeoRegions.jl/GeoRegions.jl/src/Read.jl:405
-[ Info: 2021-06-25T19:06:51.253 - Adding the GeoRegion TS2 to the list.
-ERROR: The GeoRegion TS2 (Test Region 2) is not a subset of the GeoRegion GLB (Globe)
+[ Info: 2021-06-25T19:09:51.336 - Adding the GeoRegion TS2 to the list.
 
 julia&gt; PolyRegion(
            &quot;TS3&quot;,&quot;GLB&quot;,&quot;Test Region 3&quot;,
            [-110,-98,-95,-90,-80,-100,-110,-110],
            [0,10,20,15,5,0,-20,0]
        );
-┌ Warning: 2021-06-25T19:06:51.256 - TS3 is not a valid GeoRegion.  Use either RectRegion() or PolyRegion() to add this GeoRegion to the list.
+┌ Warning: 2021-06-25T19:09:51.340 - TS3 is not a valid GeoRegion.  Use either RectRegion() or PolyRegion() to add this GeoRegion to the list.
 └ @ GeoRegions ~/work/GeoRegions.jl/GeoRegions.jl/src/Read.jl:405
-[ Info: 2021-06-25T19:06:51.256 - Adding the GeoRegion TS3 to the list.
-ERROR: The GeoRegion TS3 (Test Region 3) is not a subset of the GeoRegion GLB (Globe)
+[ Info: 2021-06-25T19:09:51.340 - Adding the GeoRegion TS3 to the list.
 
 julia&gt; PolyRegion(
            &quot;TS4&quot;,&quot;GLB&quot;,&quot;Test Region 4&quot;,
            [300,325,330,355,330,325,320,300],
            [-10,-5,0,-10,-30,-35,-20,-10]
        );
-┌ Warning: 2021-06-25T19:06:51.260 - TS4 is not a valid GeoRegion.  Use either RectRegion() or PolyRegion() to add this GeoRegion to the list.
+┌ Warning: 2021-06-25T19:09:51.343 - TS4 is not a valid GeoRegion.  Use either RectRegion() or PolyRegion() to add this GeoRegion to the list.
 └ @ GeoRegions ~/work/GeoRegions.jl/GeoRegions.jl/src/Read.jl:405
-[ Info: 2021-06-25T19:06:51.260 - Adding the GeoRegion TS4 to the list.
-ERROR: The GeoRegion TS4 (Test Region 4) is not a subset of the GeoRegion GLB (Globe)</code></pre><p>And we plot the bounds (dotted) and the shape (solid) of the GeoRegions below:</p><p><img src="isgeoregioningeoregion.png" alt="isgeoregioningeoregion"/></p><p>We see by eye that GeoRegion <code>TS2</code> and <code>TS4</code> are in the <code>BIG</code> region, but the other GeoRegions are not.  Now let us verify this with <code>isinGeoRegion</code></p><pre><code class="language-julia-repl">julia&gt; using GeoRegions
+[ Info: 2021-06-25T19:09:51.343 - Adding the GeoRegion TS4 to the list.</code></pre><p>And we plot the bounds (dotted) and the shape (solid) of the GeoRegions below:</p><p><img src="isgeoregioningeoregion.png" alt="isgeoregioningeoregion"/></p><p>We see by eye that GeoRegion <code>TS2</code> and <code>TS4</code> are in the <code>BIG</code> region, but the other GeoRegions are not.  Now let us verify this with <code>isinGeoRegion</code></p><pre><code class="language-julia-repl">julia&gt; using GeoRegions
 
 julia&gt; geo = GeoRegion(&quot;BIG&quot;);
-ERROR: 2021-06-25T19:06:51.265 - BIG is not a valid GeoRegion.  Use either RectRegion() or PolyRegion() to add this GeoRegion to the list.
 
 julia&gt; t1  = GeoRegion(&quot;TS1&quot;); isinGeoRegion(t1,geo,throw=false)
-ERROR: 2021-06-25T19:06:51.266 - TS1 is not a valid GeoRegion.  Use either RectRegion() or PolyRegion() to add this GeoRegion to the list.
+false
 
 julia&gt; t2  = GeoRegion(&quot;TS2&quot;); isinGeoRegion(t2,geo,throw=false)
-ERROR: 2021-06-25T19:06:51.268 - TS2 is not a valid GeoRegion.  Use either RectRegion() or PolyRegion() to add this GeoRegion to the list.
+true
 
 julia&gt; t3  = GeoRegion(&quot;TS3&quot;); isinGeoRegion(t3,geo,throw=false)
-ERROR: 2021-06-25T19:06:51.270 - TS3 is not a valid GeoRegion.  Use either RectRegion() or PolyRegion() to add this GeoRegion to the list.
+false
 
 julia&gt; t4  = GeoRegion(&quot;TS4&quot;); isinGeoRegion(t4,geo,throw=false)
-ERROR: 2021-06-25T19:06:51.271 - TS4 is not a valid GeoRegion.  Use either RectRegion() or PolyRegion() to add this GeoRegion to the list.</code></pre><p>And we see that this is indeed the case.</p><article class="docstring"><header><a class="docstring-binding" id="GeoRegions.isinGeoRegion-Tuple{GeoRegion, RectRegion}" href="#GeoRegions.isinGeoRegion-Tuple{GeoRegion, RectRegion}"><code>GeoRegions.isinGeoRegion</code></a> — <span class="docstring-category">Method</span></header><section><div><pre><code class="language-julia">isinGeoRegion(
+true</code></pre><p>And we see that this is indeed the case.</p><article class="docstring"><header><a class="docstring-binding" id="GeoRegions.isinGeoRegion-Tuple{GeoRegion, RectRegion}" href="#GeoRegions.isinGeoRegion-Tuple{GeoRegion, RectRegion}"><code>GeoRegions.isinGeoRegion</code></a> — <span class="docstring-category">Method</span></header><section><div><pre><code class="language-julia">isinGeoRegion(
     Child  :: GeoRegion,
     rectG  :: RectRegion;
     throw  :: Bool = true
-) -&gt; Bool</code></pre><p>Check if a child GeoRegion defined by <code>Child</code> is within a RectRegion <code>rectG</code>.</p><p><strong>Arguments</strong></p><ul><li><code>Child</code> : A GeoRegion that we postulate to be a &quot;child&quot;, or a subset of the GeoRegion defined by <code>polyG</code></li><li><code>polyG</code> : A GeoRegion that we postulate to be a &quot;parent&quot;, or containing the GeoRegion defined by <code>Child</code></li></ul><p><strong>Keyword Arguments</strong></p><ul><li><code>throw</code>  : If <code>true</code>, then if <code>Child</code> is not within <code>polyG</code>, an error is thrown and the program stops running</li></ul></div><a class="docs-sourcelink" target="_blank" href="https://github.com/JuliaClimate/GeoRegions.jl/blob/ad01c8419a41cce33dca30cafa4cb76166b8ddd1/src/IsInGeoRegion.jl#L226-L245">source</a></section></article><article class="docstring"><header><a class="docstring-binding" id="GeoRegions.isinGeoRegion-Tuple{GeoRegion, PolyRegion}" href="#GeoRegions.isinGeoRegion-Tuple{GeoRegion, PolyRegion}"><code>GeoRegions.isinGeoRegion</code></a> — <span class="docstring-category">Method</span></header><section><div><pre><code class="language-julia">isinGeoRegion(
+) -&gt; Bool</code></pre><p>Check if a child GeoRegion defined by <code>Child</code> is within a RectRegion <code>rectG</code>.</p><p><strong>Arguments</strong></p><ul><li><code>Child</code> : A GeoRegion that we postulate to be a &quot;child&quot;, or a subset of the GeoRegion defined by <code>polyG</code></li><li><code>polyG</code> : A GeoRegion that we postulate to be a &quot;parent&quot;, or containing the GeoRegion defined by <code>Child</code></li></ul><p><strong>Keyword Arguments</strong></p><ul><li><code>throw</code>  : If <code>true</code>, then if <code>Child</code> is not within <code>polyG</code>, an error is thrown and the program stops running</li></ul></div><a class="docs-sourcelink" target="_blank" href="https://github.com/JuliaClimate/GeoRegions.jl/blob/cafc0f0b0549252cc2fe9ca8b6e0e175076794d6/src/IsInGeoRegion.jl#L226-L245">source</a></section></article><article class="docstring"><header><a class="docstring-binding" id="GeoRegions.isinGeoRegion-Tuple{GeoRegion, PolyRegion}" href="#GeoRegions.isinGeoRegion-Tuple{GeoRegion, PolyRegion}"><code>GeoRegions.isinGeoRegion</code></a> — <span class="docstring-category">Method</span></header><section><div><pre><code class="language-julia">isinGeoRegion(
     Child  :: GeoRegion,
     polyG  :: PolyRegion;
     domask :: Bool = false,
     throw  :: Bool = true
-) -&gt; Bool</code></pre><p>Check if a child GeoRegion defined by <code>Child</code> is within a PolyRegion <code>polyG</code>.</p><p><strong>Arguments</strong></p><ul><li><code>Child</code> : A GeoRegion that we postulate to be a &quot;child&quot;, or a subset of the GeoRegion defined by <code>polyG</code></li><li><code>polyG</code> : A GeoRegion that we postulate to be a &quot;parent&quot;, or containing the GeoRegion defined by <code>Child</code></li></ul><p><strong>Keyword Arguments</strong></p><ul><li><code>throw</code>  : If <code>true</code>, then if <code>Child</code> is not within <code>polyG</code>, an error is thrown and the program stops running</li><li><code>domask</code> : If <code>throw</code> is <code>false</code> and <code>domask</code> is <code>true</code>, return a mask (with bounds defined by the <code>Child</code> GeoRegion) showing the region where <code>Child</code> and <code>polyG</code> do not overlap</li></ul></div><a class="docs-sourcelink" target="_blank" href="https://github.com/JuliaClimate/GeoRegions.jl/blob/ad01c8419a41cce33dca30cafa4cb76166b8ddd1/src/IsInGeoRegion.jl#L163-L184">source</a></section></article></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="../georegions/read.html">« Retrieving GeoRegions</a><a class="docs-footer-nextpage" href="regiongrid.html">RegionInfo Basics »</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> on <span class="colophon-date" title="Friday 25 June 2021 19:07">Friday 25 June 2021</span>. Using Julia version 1.6.1.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
+) -&gt; Bool</code></pre><p>Check if a child GeoRegion defined by <code>Child</code> is within a PolyRegion <code>polyG</code>.</p><p><strong>Arguments</strong></p><ul><li><code>Child</code> : A GeoRegion that we postulate to be a &quot;child&quot;, or a subset of the GeoRegion defined by <code>polyG</code></li><li><code>polyG</code> : A GeoRegion that we postulate to be a &quot;parent&quot;, or containing the GeoRegion defined by <code>Child</code></li></ul><p><strong>Keyword Arguments</strong></p><ul><li><code>throw</code>  : If <code>true</code>, then if <code>Child</code> is not within <code>polyG</code>, an error is thrown and the program stops running</li><li><code>domask</code> : If <code>throw</code> is <code>false</code> and <code>domask</code> is <code>true</code>, return a mask (with bounds defined by the <code>Child</code> GeoRegion) showing the region where <code>Child</code> and <code>polyG</code> do not overlap</li></ul></div><a class="docs-sourcelink" target="_blank" href="https://github.com/JuliaClimate/GeoRegions.jl/blob/cafc0f0b0549252cc2fe9ca8b6e0e175076794d6/src/IsInGeoRegion.jl#L163-L184">source</a></section></article></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="../georegions/read.html">« Retrieving GeoRegions</a><a class="docs-footer-nextpage" href="regiongrid.html">RegionInfo Basics »</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> on <span class="colophon-date" title="Friday 25 June 2021 19:10">Friday 25 June 2021</span>. Using Julia version 1.6.1.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
