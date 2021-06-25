@@ -255,7 +255,7 @@ function isinGeoRegion(
         throw=false
     )
 
-    if isin
+    if !isin
 
         if throw
             error("The GeoRegion $(Child.regID) ($(Child.name)) is not a subset of the GeoRegion $(GeoReg.regID) ($(GeoReg.name))")
