@@ -28,6 +28,7 @@ function RegionGrid(
 
     igrid = regiongrid([N,S,E,W],lon,lat);
     iN = igrid[1]; iS = igrid[2]; iE = igrid[3]; iW = igrid[4]
+    nlon = deepcopy(lon)
 
     @debug "$(Dates.now()) - Creating vector of latitude indices to extract ..."
     if     iN < iS; iNS = iN : iS
@@ -38,13 +39,13 @@ function RegionGrid(
     @debug "$(Dates.now()) - Creating vector of longitude indices to extract ..."
     if     iW < iE; iWE = vcat(iW:iE)
     elseif iW > iE || (iW == iE && bounds[3] != bounds[4])
-          iWE = vcat(iW:length(lon),1:iE); lon[1:(iW-1)] .+= 360
+          iWE = vcat(iW:length(lon),1:iE); nlon[1:(iW-1)] .+= 360
     else; iWE = [iW];
     end
 
-    while lon[end] > 360; lon .-= 360 end
-    nlon = lon[iWE]
-    nlat = lat[iNS]
+    while nlon[end] > 360; nlon .-= 360 end
+    nlon = nlon[iWE]
+    nlat =  lat[iNS]
 
     return RectGrid{FT}(igrid,iWE,iNS,nlon,nlat)
 
@@ -80,6 +81,7 @@ function RegionGrid(
 
     igrid = regiongrid([N,S,E,W],lon,lat);
     iN = igrid[1]; iS = igrid[2]; iE = igrid[3]; iW = igrid[4]
+    nlon = deepcopy(lon)
 
     @debug "$(Dates.now()) - Creating vector of latitude indices to extract ..."
     if     iN < iS; iNS = vcat(iN:iS)
@@ -90,14 +92,14 @@ function RegionGrid(
     @debug "$(Dates.now()) - Creating vector of longitude indices to extract ..."
     if     iW < iE; iWE = vcat(iW:iE)
     elseif iW > iE || (iW == iE && bounds[3] != bounds[4])
-          iWE = vcat(iW:length(lon),1:iE); lon[1:(iW-1)] .+= 360
+          iWE = vcat(iW:length(lon),1:iE); nlon[1:(iW-1)] .+= 360
     else; iWE = [iW];
     end
 
-    while lon[end] > 360; lon .-= 360 end
+    while nlon[end] > 360; nlon .-= 360 end
 
-    nlon = lon[iWE]
-    nlat = lat[iNS]
+    nlon = nlon[iWE]
+    nlat =  lat[iNS]
     mask = Array{FT,2}(undef,length(nlon),length(nlat))
     for ilat = 1 : length(nlat), ilon = 1 : length(nlon)
         ipnt = Point2(nlon[ilon],nlat[ilat])
@@ -127,14 +129,14 @@ function regiongrid(gridbounds::Vector{<:Real},rlon::Vector{<:Real},rlat::Vector
 
     N,S,E,W = gridbounds; isgridinregion(gridbounds,rlon,rlat)
 
-    E = mod(E,360); W = mod(W,360); rlon = mod.(rlon,360);
-    iN = argmin(abs.(rlat.-N)); iS = argmin(abs.(rlat.-S)); iW = argmin(abs.(rlon.-W));
+    E = mod(E,360); W = mod(W,360); nlon = mod.(rlon,360);
+    iN = argmin(abs.(rlat.-N)); iS = argmin(abs.(rlat.-S)); iW = argmin(abs.(nlon.-W));
     if E == W;
         if gridbounds[3] != gridbounds[4]
-              if iW != 1; iE = iW - 1; else; iE = length(rlon); end
+              if iW != 1; iE = iW - 1; else; iE = length(nlon); end
         else; iE = iW
         end
-    else; iE = argmin(abs.(rlon.-E));
+    else; iE = argmin(abs.(nlon.-E));
     end
 
     return [iN,iS,iE,iW]
@@ -153,13 +155,13 @@ function regioninfo(gridbounds::Vector{<:Real},rlon::Vector{<:Real},rlat::Vector
 
     if     iW < iE; iWE = vcat(iW:iE)
     elseif iW > iE || (iW == iE && bounds[3] != bounds[4])
-          iWE = vcat(iW:length(lon),1:iE); lon[1:(iW-1)] .+= 360
+          iWE = vcat(iW:length(lon),1:iE); nlon[1:(iW-1)] .+= 360
     else; iWE = [iW];
     end
 
-    while lon[end] > 360; lon .-= 360 end
-    nlon = lon[iWE]
-    nlat = lat[iNS]
+    while nlon[end] > 360; nlon .-= 360 end
+    nlon = nlon[iWE]
+    nlat =  lat[iNS]
 
     return RectGrid{FT}(igrid,iWE,iNS,nlon,nlat)
 
