@@ -232,8 +232,8 @@ function addGeoRegions(fname::AbstractString)
             g = getgeoregion(reg,fname,rtype)
             if rtype == "PolyRegion"
                   _,_,lon,lat = coordGeoRegion(g)
-                  return PolyRegion(g.regID,g.parID,g.name,lon,lat)
-            else; return RectRegion(g.regID,g.parID,g.name,[g.N,g.S,g.E,g.W])
+                  PolyRegion(g.regID,g.parID,g.name,lon,lat)
+            else; RectRegion(g.regID,g.parID,g.name,[g.N,g.S,g.E,g.W])
             end
         else
             @warn "$(now()) - The GeoRegion ID $reg is already in use. Please use a different ID, or you can remove the ID using removeGeoRegion()."
