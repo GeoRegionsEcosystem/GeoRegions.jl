@@ -41,6 +41,10 @@ function isinGeoRegion(
     throw  :: Bool = true
 )
 
+    if throw
+        @info "$(now()) - GeoRegions.jl - Performing a check to determine if the coordinates $(Point2(plon,plat)) are within the specified region boundaries."
+    end
+
     N = GeoReg.N
     S = GeoReg.S
     E = GeoReg.E
@@ -84,10 +88,13 @@ function isinGeoRegion(
 
     if !isin
         if throw
-             error("Requested coordinates $(Point2(plon,plat)) are not within the specified region boundaries.")
+             error("$(now()) - GeoRegions.jl - The requested coordinates $(Point2(plon,plat)) are not within the specified region boundaries.")
         else return false
         end
     else
+        if throw
+            @info "$(now()) - GeoRegions.jl - The requested coordinates $(Point2(plon,plat)) are within the specified region boundaries."
+        end
         return true
     end
 
@@ -101,6 +108,10 @@ function isinGeoRegion(
     tlat   :: Real = 0,
     throw  :: Bool = true
 )
+
+    if throw
+        @info "$(now()) - GeoRegions.jl - Performing a check to determine if the coordinates $(Point2(plon,plat)) are within the specified region boundaries."
+    end
 
     N = GeoReg.N
     S = GeoReg.S
@@ -150,10 +161,14 @@ function isinGeoRegion(
 
     if !isin
         if throw
-             error("Requested coordinates $(Point2(plon,plat)) are not within the specified region boundaries.")
-        else return false
+            error("$(now()) - GeoRegions.jl - The requested coordinates $(Point2(plon,plat)) are not within the specified region boundaries.")
+        else
+            return false
         end
     else
+        if throw
+            @info "$(now()) - GeoRegions.jl - The requested coordinates $(Point2(plon,plat)) are within the specified region boundaries."
+        end
         return true
     end
 
@@ -184,10 +199,12 @@ Keyword Arguments
 """
 function isinGeoRegion(
     Child  :: GeoRegion,
-    GeoReg :: PolyRegion;
+    polyG  :: PolyRegion;
     domask :: Bool = false,
     throw  :: Bool = true
 )
+
+    @info "$(now()) - GeoRegions.jl - Performing a check to determine if the $(Child.name) GeoRegion ($(Child.regID)) is inside the $(polyG.name) GeoRegion ($(polyG.regID))"
 
     N = Child.N
     S = Child.S
@@ -201,7 +218,7 @@ function isinGeoRegion(
 
     for ilat in 1 : nlat, ilon = 1 : nlon
         if isinGeoRegion(Point2(lon[ilon],lat[ilat]),Child,throw=false)
-            if !isinGeoRegion(Point2(lon[ilon],lat[ilat]),GeoReg,throw=false)
+            if !isinGeoRegion(Point2(lon[ilon],lat[ilat]),polyG,throw=false)
                 mask[ilon,ilat] = 1
             end
         end
@@ -210,15 +227,20 @@ function isinGeoRegion(
     if sum(mask) > 0
 
         if throw
-            error("The GeoRegion $(Child.regID) ($(Child.name)) is not a subset of the GeoRegion $(GeoReg.regID) ($(GeoReg.name))")
+            error("$(now()) - GeoRegions.jl - The GeoRegion $(Child.regID) ($(Child.name)) is not a subset of the GeoRegion $(polyG.regID) ($(polyG.name))")
         else
             if domask
-                  return mask
-            else; return false
+                @warn "$(now()) - GeoRegions.jl - The GeoRegion $(Child.regID) ($(Child.name)) is not a subset of the GeoRegion $(polyG.regID) ($(polyG.name)), returning a mask to show which regions do not intersect"
+                return mask
+            else
+                @warn "$(now()) - GeoRegions.jl - The GeoRegion $(Child.regID) ($(Child.name)) is not a subset of the GeoRegion $(polyG.regID) ($(polyG.name))"
+                return false
             end
         end
 
-    else; return true
+    else
+        @info "$(now()) - GeoRegions.jl - The GeoRegion $(Child.regID) ($(Child.name)) is indeed a subset of the GeoRegion $(polyG.regID) ($(polyG.name))"
+        return true
     end
 
 end
@@ -244,26 +266,31 @@ Keyword Arguments
 - `throw`  : If `true`, then if `Child` is not within `polyG`, an error is thrown and the program stops running
 """
 function isinGeoRegion(
-    Child  :: GeoRegion,
-    GeoReg :: RectRegion;
-    throw  :: Bool = true
+    Child :: GeoRegion,
+    rectG :: RectRegion;
+    throw :: Bool = true
 )
+
+    @info "$(now()) - GeoRegions.jl - Performing a check to determine if the $(Child.name) GeoRegion ($(Child.regID)) is inside the $(rectG.name) GeoRegion ($(rectG.regID))"
 
     isin = isgridinregion(
         [Child.N,Child.S,Child.E,Child.W],
-        [GeoReg.N,GeoReg.S,GeoReg.E,GeoReg.W],
+        [rectG.N,rectG.S,rectG.E,rectG.W],
         throw=false
     )
 
     if !isin
 
         if throw
-            error("The GeoRegion $(Child.regID) ($(Child.name)) is not a subset of the GeoRegion $(GeoReg.regID) ($(GeoReg.name))")
+            error("$(now()) - GeoRegions.jl - The GeoRegion $(Child.regID) ($(Child.name)) is not a subset of the GeoRegion $(rectG.regID) ($(rectG.name))")
         else
+            @warn "$(now()) - GeoRegions.jl - The GeoRegion $(Child.regID) ($(Child.name)) is not a subset of the GeoRegion $(rectG.regID) ($(rectG.name))"
             return false
         end
 
-    else; return true
+    else
+        @info "$(now()) - GeoRegions.jl - The GeoRegion $(Child.regID) ($(Child.name)) is indeed a subset of the GeoRegion $(rectG.regID) ($(rectG.name))"
+        return true
     end
 
 end

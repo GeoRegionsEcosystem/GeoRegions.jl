@@ -1,4 +1,4 @@
-# GeoRegions.jl
+# [GeoRegions.jl](https://github.com/JuliaClimate/GeoRegions.jl)
 *Extract Regional Data from a Gridded Dataset*
 
 `GeoRegions.jl` is a Julia package that aims to streamline the following processes:
