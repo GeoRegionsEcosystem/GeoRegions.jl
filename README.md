@@ -1,3 +1,7 @@
+<p align="center">
+<img alt="NASAPrecipitation.jl Logo" src=https://raw.githubusercontent.com/JuliaClimate/GeoRegions.jl/main/src/logosmall.png />
+</p>
+
 # **<div align="center">GeoRegions.jl</div>**
 
 <p align="center">
