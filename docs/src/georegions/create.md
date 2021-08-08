@@ -34,6 +34,22 @@ PolyRegion(
 )
 ```
 
+## Is it already a GeoRegion?
+
+Sometimes we would like to independently check if an `ID` has already been used.  We can use the function `isGeoRegion()` to perform this check`
+If the GeoRegion ID `TRC` already exists, however, this will throw an error
+
+```@docs
+isGeoRegion
+```
+
+```@repl
+using GeoRegions
+isGeoRegion("AR6_SEA")
+isGeoRegion("RND",throw=false)
+isGeoRegion("RND")
+```
+
 ## Removing an existing GeoRegion
 
 To remove an existing GeoRegion, we can use the function `removeGeoRegion`

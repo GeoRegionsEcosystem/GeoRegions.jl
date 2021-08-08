@@ -29,13 +29,13 @@ function RectRegion(
     FT = Float64
 )
 
-    if isgeoregion(RegID,throw=false)
+    if isGeoRegion(RegID,throw=false)
         error("$(now()) - GeoRegions.jl - The GeoRegion $(RegID) has already been defined.  Please use another identifier.")
     else
         @info "$(now()) - GeoRegions.jl - Adding the GeoRegion $(RegID) to the list."
     end
 
-    if !isgeoregion(ParID,throw=false)
+    if !isGeoRegion(ParID,throw=false)
         error("$(now()) - GeoRegions.jl - The GeoRegion $(ParID) was defined to be the parent GeoRegion of $(RegID), but the GeoRegion $(ParID) is not defined.  Please define the GeoRegion $(ParID) and its properties.")
     end
 
@@ -89,13 +89,13 @@ function PolyRegion(
     FT = Float64
 )
 
-    if isgeoregion(RegID,throw=false)
+    if isGeoRegion(RegID,throw=false)
         error("$(now()) - GeoRegions.jl - The GeoRegion $(RegID) has already been defined.  Please use another identifier.")
     else
         @info "$(now()) - GeoRegions.jl - Adding the GeoRegion $(RegID) to the list."
     end
 
-    if !isgeoregion(ParID)
+    if !isGeoRegion(ParID)
         error("$(now()) - GeoRegions.jl - The GeoRegion $(ParID) was defined to be the parent GeoRegion of $(RegID), but the GeoRegion $(ParID) is not defined.  Please define the GeoRegion $(ParID) and its properties.")
     end
 
@@ -209,3 +209,4 @@ function removegeoregion(
     return nothing
 
 end
+isGeoRegion

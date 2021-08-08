@@ -236,7 +236,7 @@ function addGeoRegions(fname::AbstractString)
 
     rvec,rtype = listgeoregions(fname)
     for reg in rvec
-        if !isgeoregion(reg,throw=false)
+        if !isGeoRegion(reg,throw=false)
             g = getgeoregion(reg,fname,rtype)
             if rtype == "PolyRegion"
                   _,_,lon,lat = coordGeoRegion(g)
@@ -249,6 +249,33 @@ function addGeoRegions(fname::AbstractString)
     end
 
     return nothing
+
+end
+
+"""
+    isGeoRegion(
+        RegID :: AbstractString;
+        throw :: Bool = true
+    ) -> tf :: Bool
+
+Extracts information of the GeoRegion with the ID `RegID`.  If no GeoRegion with this ID exists, an error is thrown.
+
+Arguments
+=========
+
+- `RegID` : The keyword ID that will be used to identify the GeoRegion.
+        If the ID is not valid (i.e. not being used), then an error will be thrown.
+- `throw` : If `true`, then throws an error if `RegID` is not a valid `GeoRegion` identifier instead of returning the Boolean `tf`
+
+Returns
+=======
+
+- `tf` : True / False
+"""
+function isGeoRegion(RegID::AbstractString;throw::Bool=true)
+
+    regvec,filevec,typevec = listGeoRegions()
+    return isgeoregion(RegID,regvec;throw=throw)
 
 end
 
@@ -419,12 +446,5 @@ function isgeoregion(RegID::AbstractString,regvec::AbstractArray;throw::Bool=tru
         @info "$(now()) - GeoRegions.jl - The ID $RegID is already in use"
         return true
     end
-
-end
-
-function isgeoregion(RegID::AbstractString;throw::Bool=true)
-
-    regvec,filevec,typevec = listGeoRegions()
-    return isgeoregion(RegID,regvec;throw=throw)
 
 end
