@@ -209,4 +209,3 @@ function removegeoregion(
     return nothing
 
 end
-isGeoRegion

@@ -10,6 +10,7 @@ Manifest.toml
 docs/build
 docs/site
 docs/src/generated
+docs/extra
 
 # Data Files
 *.dat
