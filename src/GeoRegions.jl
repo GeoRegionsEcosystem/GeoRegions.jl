@@ -98,6 +98,20 @@ struct PolyGrid{FT<:Real} <: RegionGrid
     mask  :: Array{FT,2}
 end
 
+modulelog() = "$(now()) - GeoRegions.jl"
+
+function __init__()
+    jfol = joinpath(DEPOT_PATH[1],"files","GeoRegions"); mkpath(jfol);
+    flist   = ["rectlist.txt","polylist.txt","giorgi.txt","srex.txt","ar6.txt"]
+
+    for fname in flist
+        if !isfile(joinpath(jfol,fname))
+            copygeoregions(fname)
+            @info "$(modulelog()) - $(fname) does not exist in $(jfol), copying ..."
+        end
+    end
+end
+
 ## Including other files in the module
 include("Read.jl")
 include("Create.jl")

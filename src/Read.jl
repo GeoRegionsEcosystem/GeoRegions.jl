@@ -20,7 +20,7 @@ function GeoRegion(
     FT = Float64
 )
 
-    @info "$(now()) - GeoRegions.jl - Retrieving information for the GeoRegion defined by the ID $RegID"
+    @info "$(modulelog()) - Retrieving information for the GeoRegion defined by the ID $RegID"
 
     regvec,filevec,typevec = listGeoRegions(); isgeoregion(RegID,regvec)
     ind = findall(RegID.==regvec)[1]
@@ -125,7 +125,7 @@ function templateGeoRegions(;
         if !overwrite
             if !isfile(freg)
 
-                @debug "$(now()) - GeoRegions.jl - Unable to find $freg, copying data from $ftem ..."
+                @debug "$(modulelog()) - Unable to find $freg, copying data from $ftem ..."
 
                 open(freg,"w") do io
                     open(ftem) do f
@@ -139,7 +139,7 @@ function templateGeoRegions(;
         else
 
             if isfile(freg)
-                @warn "$(now()) - GeoRegions.jl - Overwriting $freg with original file in $ftem ..."
+                @warn "$(modulelog()) - Overwriting $freg with original file in $ftem ..."
                 rm(freg,force=true)
             end
 
@@ -205,10 +205,10 @@ function resetGeoRegions(;allfiles=false)
 
     if allfiles
 
-        @info "$(now()) - GeoRegions.jl - Resetting both the master and custom lists of GeoRegions back to the default"
+        @info "$(modulelog()) - Resetting both the master and custom lists of GeoRegions back to the default"
         flist = ["rectlist.txt","polylist.txt","giorgi.txt","srex.txt","ar6.txt"]
     else
-        @info "$(now()) - GeoRegions.jl - Resetting the custom lists of GeoRegions back to the default"
+        @info "$(modulelog()) - Resetting the custom lists of GeoRegions back to the default"
         flist = ["rectlist.txt","polylist.txt"]
     end
 
@@ -232,7 +232,7 @@ Arguments
 """
 function addGeoRegions(fname::AbstractString)
 
-    @info "$(now()) - GeoRegions.jl - Importing user-defined GeoRegions from the file $fname directly into the custom lists"
+    @info "$(modulelog()) - Importing user-defined GeoRegions from the file $fname directly into the custom lists"
 
     rvec,rtype = listgeoregions(fname)
     for reg in rvec
@@ -244,7 +244,7 @@ function addGeoRegions(fname::AbstractString)
             else; RectRegion(g.regID,g.parID,g.name,[g.N,g.S,g.E,g.W])
             end
         else
-            @warn "$(now()) - GeoRegions.jl - The GeoRegion ID $reg is already in use. Please use a different ID, or you can remove the ID using removeGeoRegion()."
+            @warn "$(modulelog()) - The GeoRegion ID $reg is already in use. Please use a different ID, or you can remove the ID using removeGeoRegion()."
         end
     end
 
@@ -312,31 +312,31 @@ function checkbounds(
 )
 
     if (regN>90) || (regN<-90)
-        error("$(now()) - GeoRegions.jl - The latitude of the GeoRegion's northern bound at $regN is not valid.")
+        error("$(modulelog()) - The latitude of the GeoRegion's northern bound at $regN is not valid.")
     end
 
     if (regS>90) || (regS<-90)
-        error("$(now()) - GeoRegions.jl - The latitude of the GeoRegion's southern bound at $regS is not valid.")
+        error("$(modulelog()) - The latitude of the GeoRegion's southern bound at $regS is not valid.")
     end
 
     if (regE>360) || (regE<-180)
-        error("$(now()) - GeoRegions.jl - The longitude of the GeoRegion's eastern bound at $regE is not valid.")
+        error("$(modulelog()) - The longitude of the GeoRegion's eastern bound at $regE is not valid.")
     end
 
     if (regW>360) || (regW<-180)
-        error("$(now()) - GeoRegions.jl - The longitude of the GeoRegion's western bound at $regW is not valid.")
+        error("$(modulelog()) - The longitude of the GeoRegion's western bound at $regW is not valid.")
     end
 
     if (regE - regW) > 360
-        error("$(now()) - GeoRegions.jl - The GeoRegion cannot be more than 360º in Longitude.")
+        error("$(modulelog()) - The GeoRegion cannot be more than 360º in Longitude.")
     end
 
     if regE < regW
-        error("$(now()) - GeoRegions.jl - The eastern bound of the GeoRegion cannot be west of the western bound.")
+        error("$(modulelog()) - The eastern bound of the GeoRegion cannot be west of the western bound.")
     end
 
     if regN < regS
-        error("$(now()) - GeoRegions.jl - The northern bound of the GeoRegion cannot be south of the southern bound.")
+        error("$(modulelog()) - The northern bound of the GeoRegion cannot be south of the southern bound.")
     end
 
     if regE > 180; is360 = true; else is360 = false end
@@ -359,7 +359,7 @@ function copygeoregions(
     if !overwrite
         if !isfile(freg)
 
-            @debug "$(now()) - GeoRegions.jl - Unable to find $freg, copying data from $ftem ..."
+            @debug "$(modulelog()) - Unable to find $freg, copying data from $ftem ..."
 
             open(freg,"w") do io
                 open(ftem) do f
@@ -373,7 +373,7 @@ function copygeoregions(
     else
 
         if isfile(freg)
-            @warn "$(now()) - GeoRegions.jl - Overwriting $freg with original file in $ftem ..."
+            @warn "$(modulelog()) - Overwriting $freg with original file in $ftem ..."
             rm(freg,force=true)
         end
 
@@ -433,17 +433,17 @@ end
 
 function isgeoregion(RegID::AbstractString,regvec::AbstractArray;throw::Bool=true)
 
-    @info "$(now()) - GeoRegions.jl - Checking to see if the ID $RegID is in use"
+    @info "$(modulelog()) - Checking to see if the ID $RegID is in use"
 
     if sum(regvec.==RegID) == 0
         if throw
-            error("$(now()) - GeoRegions.jl - $(RegID) is not a valid GeoRegion identifier, use either RectRegion() or PolyRegion() to add this GeoRegion to the list.")
+            error("$(modulelog()) - $(RegID) is not a valid GeoRegion identifier, use either RectRegion() or PolyRegion() to add this GeoRegion to the list.")
         else
-            @warn "$(now()) - GeoRegions.jl - $(RegID) is not a valid GeoRegion identifier, use either RectRegion() or PolyRegion() to add this GeoRegion to the list."
+            @warn "$(modulelog()) - $(RegID) is not a valid GeoRegion identifier, use either RectRegion() or PolyRegion() to add this GeoRegion to the list."
             return false
         end
     else
-        @info "$(now()) - GeoRegions.jl - The ID $RegID is already in use"
+        @info "$(modulelog()) - The ID $RegID is already in use"
         return true
     end
 

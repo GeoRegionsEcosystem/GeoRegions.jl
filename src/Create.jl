@@ -30,13 +30,13 @@ function RectRegion(
 )
 
     if isGeoRegion(RegID,throw=false)
-        error("$(now()) - GeoRegions.jl - The GeoRegion $(RegID) has already been defined.  Please use another identifier.")
+        error("$(modulelog()) - The GeoRegion $(RegID) has already been defined.  Please use another identifier.")
     else
-        @info "$(now()) - GeoRegions.jl - Adding the GeoRegion $(RegID) to the list."
+        @info "$(modulelog()) - Adding the GeoRegion $(RegID) to the list."
     end
 
     if !isGeoRegion(ParID,throw=false)
-        error("$(now()) - GeoRegions.jl - The GeoRegion $(ParID) was defined to be the parent GeoRegion of $(RegID), but the GeoRegion $(ParID) is not defined.  Please define the GeoRegion $(ParID) and its properties.")
+        error("$(modulelog()) - The GeoRegion $(ParID) was defined to be the parent GeoRegion of $(RegID), but the GeoRegion $(ParID) is not defined.  Please define the GeoRegion $(ParID) and its properties.")
     end
 
     N,S,E,W = bound; is180,is360 = checkbounds(N,S,E,W)
@@ -90,21 +90,21 @@ function PolyRegion(
 )
 
     if isGeoRegion(RegID,throw=false)
-        error("$(now()) - GeoRegions.jl - The GeoRegion $(RegID) has already been defined.  Please use another identifier.")
+        error("$(modulelog()) - The GeoRegion $(RegID) has already been defined.  Please use another identifier.")
     else
-        @info "$(now()) - GeoRegions.jl - Adding the GeoRegion $(RegID) to the list."
+        @info "$(modulelog()) - Adding the GeoRegion $(RegID) to the list."
     end
 
     if !isGeoRegion(ParID)
-        error("$(now()) - GeoRegions.jl - The GeoRegion $(ParID) was defined to be the parent GeoRegion of $(RegID), but the GeoRegion $(ParID) is not defined.  Please define the GeoRegion $(ParID) and its properties.")
+        error("$(modulelog()) - The GeoRegion $(ParID) was defined to be the parent GeoRegion of $(RegID), but the GeoRegion $(ParID) is not defined.  Please define the GeoRegion $(ParID) and its properties.")
     end
 
     if lonpt[1] != lonpt[end]
-        error("$(now()) - GeoRegions.jl - The first and last points of the vector of longitude coordinates must be the same")
+        error("$(modulelog()) - The first and last points of the vector of longitude coordinates must be the same")
     end
 
     if latpt[1] != latpt[end]
-        error("$(now()) - GeoRegions.jl - The first and last points of the vector of latitude coordinates must be the same")
+        error("$(modulelog()) - The first and last points of the vector of latitude coordinates must be the same")
     end
 
     N = maximum(latpt); S = minimum(latpt)
@@ -146,9 +146,9 @@ function removeGeoRegion(
 )
 
     if RegID == "GLB"
-        error("$(now()) - GeoRegions.jl - The Global GeoRegion \"GLB\" is an integral part of the GeoRegions.jl package and cannot be removed.")
+        error("$(modulelog()) - The Global GeoRegion \"GLB\" is an integral part of the GeoRegions.jl package and cannot be removed.")
     else
-        @info "$(now()) - GeoRegions.jl - Removing the GeoRegion $(RegID) ..."
+        @info "$(modulelog()) - Removing the GeoRegion $(RegID) ..."
     end
 
     regvec,filevec,typevec = listGeoRegions(); isgeoregion(RegID,regvec)

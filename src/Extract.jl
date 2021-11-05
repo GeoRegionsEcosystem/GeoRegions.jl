@@ -20,9 +20,9 @@ function RegionGrid(
     lat :: Vector{<:Real}
 ) where {FT <: Real, ST <: AbstractString}
 
-    @info "$(now()) - GeoRegions.jl - Creating a RegionGrid for the $(geo.name) GeoRegion"
+    @info "$(modulelog()) - Creating a RegionGrid for the $(geo.name) GeoRegion"
 
-    @debug "$(now()) - GeoRegions.jl - Determining indices of longitude and latitude boundaries in the given dataset ..."
+    @debug "$(modulelog()) - Determining indices of longitude and latitude boundaries in the given dataset ..."
     N = geo.N
     S = geo.S
     E = geo.E
@@ -32,13 +32,13 @@ function RegionGrid(
     iN = igrid[1]; iS = igrid[2]; iE = igrid[3]; iW = igrid[4]
     nlon = deepcopy(lon)
 
-    @info "$(now()) - GeoRegions.jl - Creating vector of latitude indices to extract ..."
+    @info "$(modulelog()) - Creating vector of latitude indices to extract ..."
     if     iN < iS; iNS = iN : iS
     elseif iS < iN; iNS = iS : iN
     else;           iNS = iN;
     end
 
-    @info "$(now()) - GeoRegions.jl - Creating vector of longitude indices to extract ..."
+    @info "$(modulelog()) - Creating vector of longitude indices to extract ..."
     if     iW < iE; iWE = vcat(iW:iE)
     elseif iW > iE || (iW == iE && bounds[3] != bounds[4])
           iWE = vcat(iW:length(lon),1:iE); nlon[1:(iW-1)] .+= 360
@@ -75,9 +75,9 @@ function RegionGrid(
     lat :: Vector{<:Real}
 ) where {FT <: Real, ST <: AbstractString}
 
-    @info "$(now()) - GeoRegions.jl - Creating a RegionGrid for the $(geo.name) GeoRegion"
+    @info "$(modulelog()) - Creating a RegionGrid for the $(geo.name) GeoRegion"
 
-    @debug "$(now()) - GeoRegions.jl - Determining indices of longitude and latitude boundaries in the given dataset ..."
+    @debug "$(modulelog()) - Determining indices of longitude and latitude boundaries in the given dataset ..."
     N = geo.N
     S = geo.S
     E = geo.E
@@ -87,13 +87,13 @@ function RegionGrid(
     iN = igrid[1]; iS = igrid[2]; iE = igrid[3]; iW = igrid[4]
     nlon = deepcopy(lon)
 
-    @info "$(now()) - GeoRegions.jl - Creating vector of latitude indices to extract ..."
+    @info "$(modulelog()) - Creating vector of latitude indices to extract ..."
     if     iN < iS; iNS = vcat(iN:iS)
     elseif iS < iN; iNS = vcat(iS:iN)
     else;           iNS = [iN];
     end
 
-    @info "$(now()) - GeoRegions.jl - Creating vector of longitude indices to extract ..."
+    @info "$(modulelog()) - Creating vector of longitude indices to extract ..."
     if     iW < iE; iWE = vcat(iW:iE)
     elseif iW > iE || (iW == iE && bounds[3] != bounds[4])
           iWE = vcat(iW:length(lon),1:iE); nlon[1:(iW-1)] .+= 360
@@ -102,7 +102,7 @@ function RegionGrid(
 
     while maximum(nlon) > 360; nlon .-= 360 end
 
-    @info "$(now()) - GeoRegions.jl - Since the $(geo.name) GeoRegion is a PolyRegion, we need to defined a mask as well ..."
+    @info "$(modulelog()) - Since the $(geo.name) GeoRegion is a PolyRegion, we need to defined a mask as well ..."
     nlon = nlon[iWE]
     nlat =  lat[iNS]
     mask = Array{FT,2}(undef,length(nlon),length(nlat))
