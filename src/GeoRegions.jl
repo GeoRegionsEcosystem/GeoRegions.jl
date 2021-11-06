@@ -67,7 +67,14 @@ end
 """
     RegionGrid
 
-Abstract supertype for geographical regions.
+Abstract supertype for geographical regions.  RegionGrid supertypes contain the following fields:
+
+* `igrid :: Vector{Int}` - gridpoint indices of the [N,S,E,W] points respectively
+* `ilon  :: Vector{Int}` - indices of the longitude vector describing the region
+* `ilat  :: Vector{Int}` - indices of the latitude vector describing the region
+* `glon  :: Vector{FT}`  - the latitude vector describing the region
+* `glat  :: Vector{FT}`  - the latitude vector describing the region
+* `mask  :: Array{FT,2}` - mask of 0s and 1s defining shape where data is valid in the lon-lat rectilinear grid (only available in PolyGrid types)
 """
 abstract type RegionGrid end
 

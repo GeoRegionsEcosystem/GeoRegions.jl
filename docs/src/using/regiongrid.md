@@ -8,8 +8,6 @@ However, the basic uses of `RectGrid` and `PolyGrid` are the same, and as such t
 
 ```@docs
 RegionGrid
-RectGrid{FT}
-PolyGrid{FT}
 ```
 
 ## `RectGrid` Example
