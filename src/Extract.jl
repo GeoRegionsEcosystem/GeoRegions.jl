@@ -1,11 +1,11 @@
 """
     RegionGrid(
-        geo :: RectRegion{ST,FT},
+        geo :: GeoRegion,
         lon :: Vector{<:Real},
         lat :: Vector{<:Real}
-    ) -> RectGrid{FT}
+    ) -> RegionGrid
 
-Creates a rectilinear GeoRegion `RegID`.
+Creates a `RegionGrid` type based on the following arguments.
 
 Arguments
 =========
@@ -15,6 +15,19 @@ Arguments
 - `lat` : A vector containing the latitude points
 """
 function RegionGrid(
+    geo :: GeoRegion,
+    lon :: Vector{<:Real},
+    lat :: Vector{<:Real}
+)
+
+    if typeof(geo) <: RectRegion
+          return RectGrid(geo,lon,lat)
+    else; return PolyGrid(geo,lon,lat)
+    end
+
+end
+
+function RectGrid(
     geo :: RectRegion{ST,FT},
     lon :: Vector{<:Real},
     lat :: Vector{<:Real}
@@ -53,23 +66,7 @@ function RegionGrid(
 
 end
 
-"""
-    RegionGrid(
-        geo :: PolyRegion{ST,FT},
-        lon :: Vector{<:Real},
-        lat :: Vector{<:Real}
-    ) -> PolyGrid{FT}
-
-Creates a rectilinear GeoRegion `RegID`.
-
-Arguments
-=========
-
-- `geo` : A PolyRegion struct type
-- `lon` : A vector containing the longitude points
-- `lat` : A vector containing the latitude points
-"""
-function RegionGrid(
+function PolyGrid(
     geo :: PolyRegion{ST,FT},
     lon :: Vector{<:Real},
     lat :: Vector{<:Real}

@@ -6,6 +6,10 @@ Simply put, a GeoRegion is a geographic region.  In v1 of GeoRegions.jl, a GeoRe
 
 The main difference between a `PolyRegion` and a `RectRegion`, is that a `PolyRegion` also contains a `mask` field which allows us to extract a data field of a polygonal shape from the rectilinear bounds that are the natural result of a rectilinear grid.
 
+```@docs
+GeoRegion
+```
+
 In essence, a `GeoRegion` is:
 * a geographical region that can be either rectilinear region, or a polygonal shape within a specified rectilinear bound.
 * identified by a `regID`
@@ -13,9 +17,3 @@ In essence, a `GeoRegion` is:
 
 !!! tip "Default GeoRegions"
     When using `GeoRegions.jl`, the default `GeoRegion` should generally be the global domain, specified by `GLB` and given by the `[N,S,E,W]` coordinates `[90,-90,360,0]`.  The Global GeoRegion `GLB` is considered to be a subset of itself.
-
-```@docs
-GeoRegion
-RectRegion{ST,FT}
-PolyRegion{ST,FT}
-```

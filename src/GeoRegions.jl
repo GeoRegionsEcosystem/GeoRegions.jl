@@ -21,17 +21,27 @@ export
 """
     GeoRegion
 
-Abstract supertype for geographical regions.
+Abstract supertype for geographical regions, with the following subtypes:
+    
+    RectRegion{ST<:AbstractString, FT<:Real} <: GeoRegion
+    PolyRegion{ST<:AbstractString, FT<:Real} <: GeoRegion
+
+Both `RectRegion` and `PolyRegion` types contain the following fields:
+* `regID` - A `String` Type, the identifier for the GeoRegion
+* `parID` - A `String` Type, the identifier for the parent GeoRegion
+* `name` - A `String` Type, the full name of the GeoRegion
+* `N` - A `Float` Type, the north boundary of the GeoRegion
+* `S` - A `Float` Type, the south boundary of the GeoRegion
+* `E` - A `Float` Type, the east boundary of the GeoRegion
+* `W` - A `Float` Type, the est boundary of the GeoRegion
+* `is180` - A `Bool` Type, is `W` < 0
+* `is360` - A `Bool` Type, is `E` > 180
+
+A `PolyRegion` type will also contain the following field:
+* `shape` - A vector of `Point2` Types, defining a non-rectilinear shape of the GeoRegion
 """
 abstract type GeoRegion end
 
-"""
-    RectRegion{ST<:AbstractString, FT<:Real} <: GeoRegion
-
-Structure containing information on a rectilinear (i.e. rectangular shape on a lon-lat grid) region `regID`, with parent ID `parID`, name `name`, and bounds `N`, `S`, `E`, `W`.
-
-If `W` < 0º, then `is180` is true, and if `E` > 180, then `is360` is true.  Both `is180` and `is360` can simultaneously true, but they cannot both be false.
-"""
 struct RectRegion{ST<:AbstractString, FT<:Real} <: GeoRegion
     regID :: ST
     parID :: ST
@@ -44,13 +54,6 @@ struct RectRegion{ST<:AbstractString, FT<:Real} <: GeoRegion
     is360 :: Bool
 end
 
-"""
-    PolyRegion{ST<:AbstractString, FT<:Real} <: GeoRegion
-
-Structure containing information on a polygonal (and non-rectangular) GeoRegion with ID `regID`, with parent ID `parID`, name `name`, and rectangular bounds `N`, `S`, `E`, `W`.  The actual shape within the rectangular bound is given by `shape`.
-
-If `W` < 0º, then `is180` is true, and if `E` > 180, then `is360` is true.  Both `is180` and `is360` can simultaneously true, but they cannot both be false.
-"""
 struct PolyRegion{ST<:AbstractString, FT<:Real} <: GeoRegion
     regID :: ST
     parID :: ST
@@ -67,22 +70,23 @@ end
 """
     RegionGrid
 
-Abstract supertype for geographical regions.  RegionGrid supertypes contain the following fields:
+Abstract supertype for geographical regions, with the following subtypes:
+    
+    RectGrid{FT<:Real} <: RegionGrid
+    PolyGrid{FT<:Real} <: RegionGrid
 
-* `igrid :: Vector{Int}` - gridpoint indices of the [N,S,E,W] points respectively
-* `ilon  :: Vector{Int}` - indices of the longitude vector describing the region
-* `ilat  :: Vector{Int}` - indices of the latitude vector describing the region
-* `glon  :: Vector{FT}`  - the latitude vector describing the region
-* `glat  :: Vector{FT}`  - the latitude vector describing the region
-* `mask  :: Array{FT,2}` - mask of 0s and 1s defining shape where data is valid in the lon-lat rectilinear grid (only available in PolyGrid types)
+Both `RectGrid` and `PolyGrid` types contain the following fields:
+* `igrid` - A vector of `Int`s defining the gridpoint indices of the [N,S,E,W] points respectively
+* `ilon` - A vector of `Int`s defining indices of the parent longitude vector describing the region
+* `ilat` - A vector of `Int`s defining indices of the parent latitude vector describing the region
+* `glon` - A vector of `Float`s defining the latitude vector describing the region
+* `glat` - A vector of `Float`s defining the latitude vector describing the region
+
+A `PolyGrid` type will also contain the following field:
+* `mask` - An array of 0s and 1s defining a non-rectlinear shape within a rectilinear grid where data is valid (only available in PolyGrid types)
 """
 abstract type RegionGrid end
 
-"""
-    RectGrid{FT<:Real}
-
-Structure containing information needed to extract data from a given lon-lat grid for a given RectRegion.
-"""
 struct RectGrid{FT<:Real} <: RegionGrid
     igrid :: Vector{Int}
     ilon  :: Vector{Int}
@@ -91,11 +95,6 @@ struct RectGrid{FT<:Real} <: RegionGrid
     glat  :: Vector{FT}
 end
 
-"""
-    PolyGrid{FT<:Real}
-
-Structure containing information needed to extract data from a given lon-lat grid for a given PolyRegion with numeric elements of type `FT`. In addition to the information stored by the RectGrid type, it also has a `mask` that allows for non-rectilinear shape extraction.
-"""
 struct PolyGrid{FT<:Real} <: RegionGrid
     igrid :: Vector{Int}
     ilon  :: Vector{Int}

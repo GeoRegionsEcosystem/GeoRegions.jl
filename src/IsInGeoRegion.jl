@@ -42,7 +42,7 @@ function isinGeoRegion(
 )
 
     if throw
-        @info "$(modulelog()) - Performing a check to determine if the coordinates $(Point2(plon,plat)) are within the specified region boundaries."
+        @info "$(modulelog()) - Performing a check to determine if the coordinates $(Point) are within the specified region boundaries."
     end
 
     N = GeoReg.N
@@ -110,7 +110,7 @@ function isinGeoRegion(
 )
 
     if throw
-        @info "$(modulelog()) - Performing a check to determine if the coordinates $(Point2(plon,plat)) are within the specified region boundaries."
+        @info "$(modulelog()) - Performing a check to determine if the coordinates $(Point) are within the specified region boundaries."
     end
 
     N = GeoReg.N

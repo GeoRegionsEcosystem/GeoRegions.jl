@@ -8,6 +8,7 @@ However, the basic uses of `RectGrid` and `PolyGrid` are the same, and as such t
 
 ```@docs
 RegionGrid
+RegionGrid(::GeoRegion,::Vector{<:Real},::Vector{<:Real})
 ```
 
 ## `RectGrid` Example
@@ -19,10 +20,6 @@ lat   = collect(-90:5:90);
 ginfo = RegionGrid(geo,lon,lat)
 ```
 
-```@docs
-RegionGrid(::RectRegion,::Vector{<:Real},::Vector{<:Real})
-```
-
 ## `PolyGrid` Example
 ```@repl
 using GeoRegions
@@ -30,10 +27,6 @@ geo   = GeoRegion("AR6_NWS")
 lon   = collect(-180:5:180)[1:(end-1)];
 lat   = collect(-90:5:90);
 ginfo = RegionGrid(geo,lon,lat)
-```
-
-```@docs
-RegionGrid(::PolyRegion,::Vector{<:Real},::Vector{<:Real})
 ```
 
 ## The Mask of a `PolyGrid`
