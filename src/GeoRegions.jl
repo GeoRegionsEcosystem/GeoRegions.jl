@@ -15,6 +15,7 @@ export
         GeoRegion, RectRegion, PolyRegion, RegionGrid, RectGrid, PolyGrid,
         resetGeoRegions, templateGeoRegions, listGeoRegions,
         isGeoRegion, addGeoRegions, removeGeoRegion, coordGeoRegion, isinGeoRegion,
+        tableGeoRegions, tableRectRegions, tablePolyRegions,
         Point2
 
 ## Abstract types
@@ -126,5 +127,6 @@ include("IsIn.jl")
 include("IsInGeoRegion.jl")
 include("Extract.jl")
 include("Show.jl")
+include("Tables.jl")
 
 end # module
