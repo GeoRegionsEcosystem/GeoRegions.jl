@@ -274,8 +274,8 @@ Returns
 """
 function isGeoRegion(RegID::AbstractString;throw::Bool=true)
 
-    regvec,filevec,typevec = listGeoRegions()
-    return isgeoregion(RegID,regvec;throw=throw)
+    regvec,_,_ = listGeoRegions()
+    return isgeoregion(RegID,regvec;throw=throw,dolog=true)
 
 end
 
@@ -431,9 +431,15 @@ function listrectregions(fname::AbstractString)
 
 end
 
-function isgeoregion(RegID::AbstractString,regvec::AbstractArray;throw::Bool=true)
+function isgeoregion(
+    RegID  :: AbstractString,
+    regvec :: AbstractArray;
+    throw  :: Bool = true,
+    dolog  :: Bool = false)
 
-    @info "$(modulelog()) - Checking to see if the ID $RegID is in use"
+    if dolog
+        @info "$(modulelog()) - Checking to see if the ID $RegID is in use"
+    end
 
     if sum(regvec.==RegID) == 0
         if throw
@@ -443,7 +449,7 @@ function isgeoregion(RegID::AbstractString,regvec::AbstractArray;throw::Bool=tru
             return false
         end
     else
-        @info "$(modulelog()) - The ID $RegID is already in use"
+        if dolog; @info "$(modulelog()) - The ID $RegID is already in use" end
         return true
     end
 
