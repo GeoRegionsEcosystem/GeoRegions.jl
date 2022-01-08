@@ -69,15 +69,6 @@ removeGeoRegion("GLB")
 removeGeoRegion(::AbstractString)
 ```
 
-## List of All GeoRegions
-
-If you want to check the list of all GeoRegions that have been defined, use the function `listGeoRegions()`
-```@repl
-using GeoRegions
-geovec,filevec,typevec = listGeoRegions();
-geovec
-```
-
 ## Reset the list of GeoRegions
 
 Should one wish to entirely reset the list of GeoRegions, one can call `resetGeoRegions()`:
@@ -90,8 +81,3 @@ And if one wishes to reset the predefined list of GeoRegions, we can do:
 ```@repl
 using GeoRegions
 resetGeoRegions(allfiles=true)
-```
-
-```@docs
-listGeoRegions
-```
