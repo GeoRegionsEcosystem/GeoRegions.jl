@@ -18,12 +18,12 @@ makedocs(
             "Predefined GeoRegions" => "georegions/predefined.md",
             "Retrieving GeoRegions" => "georegions/read.md",
         ],
-        "A Table of GeoRegions" => "georegions/table.md",
         "Using GeoRegions" => [
             "Is it in a GeoRegion?" => "using/isin.md",
             "RegionInfo Basics"     => "using/regiongrid.md",
             "Custom GeoRegions"     => "using/custom.md",
         ],
+        "Lists of GeoRegions" => "georegions/lists.md",
         "An Example with ERA5" => "example/era5.md"
     ]
 )

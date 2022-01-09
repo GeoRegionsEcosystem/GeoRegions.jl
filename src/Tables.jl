@@ -1,8 +1,18 @@
+"""
+    tableGeoRegions(; onlycustom::Bool) -> nothing
+
+Display all available GeoRegions in tabular format.
+
+Keyword Arguments
+=================
+
+- `onlycustom` : If true, only custom, user-defined GeoRegions will be displayed. To show all available GeoRegions (including predefined GeoRegions), set `onlycustom` to `false`
+"""
 function tableGeoRegions(;
     onlycustom :: Bool = false
 )
 
-    flist   = ["rectlist.txt","polylist.txt"]
+    flist = ["rectlist.txt","polylist.txt"]
     if !onlycustom
         flist = vcat(flist,"giorgi.txt","srex.txt","ar6.txt")
     end
@@ -50,6 +60,16 @@ function tableGeoRegions(;
 
 end
 
+"""
+    tableGeoRegions(fname::AbstractString) -> nothing
+
+Display all available GeoRegions in tabular format.
+
+Keyword Arguments
+=================
+
+- `onlycustom` : If true, only custom, user-defined GeoRegions will be displayed. To show all available GeoRegions (including predefined GeoRegions), set `onlycustom` to `false`
+"""
 function tableGeoRegions(
     fname::AbstractString
 )
@@ -79,6 +99,20 @@ function tableGeoRegions(
 
 end
 
+"""
+    tableRectRegions(;
+        custom :: Bool = true,
+        giorgi :: Bool = false
+    ) -> nothing
+
+Display all available RectRegions in tabular format.
+
+Keyword Arguments
+=================
+
+- `custom` : If true, display custom user-defined GeoRegions. Default is `true`
+- `giorgi` : If true, display Giorgi predefined GeoRegions. Default is `false`
+"""
 function tableRectRegions(;
     custom :: Bool = true,
     giorgi :: Bool = false
@@ -135,6 +169,22 @@ function tableRectRegions(;
 
 end
 
+"""
+    tablePolyRegions(;
+        custom :: Bool = true,
+        srex :: Bool = false,
+        ar6  :: Bool = false
+    ) -> nothing
+
+Display all available PolyRegions in tabular format.
+
+Keyword Arguments
+=================
+
+- `custom` : If true, display custom user-defined GeoRegions. Default is `true`
+- `srex` : If true, display SREX predefined GeoRegions. Default is `false`
+- `ar6` : If true, display IPCC AR6 predefined GeoRegions. Default is `false`
+"""
 function tablePolyRegions(;
     custom :: Bool = true,
     srex :: Bool = false,
