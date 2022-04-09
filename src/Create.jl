@@ -4,6 +4,7 @@
         ParID :: AbstractString,
         name  :: AbstractString,
         bound :: Vector{<:Real},
+        savegeo :: Bool = true,
         ST = String,
         FT = Float64
     ) -> RectRegion{ST,FT}
@@ -19,12 +20,14 @@ Arguments
 - `ParID` : The ID of the parent GeoRegion where information can be extracted from
 - `name`  : A name for the GeoRegion (meta information, can be used in Logging)
 - `bound` : The [N,S,E,W] coordinates defining the region
+- `savegeo` : Save the GeoRegion into the master list?
 """
 function RectRegion(
     RegID :: AbstractString,
     ParID :: AbstractString,
     name  :: AbstractString,
-    bound :: Vector{<:Real},
+    bound :: Vector{<:Real};
+    savegeo :: Bool = true,
     ST = String,
     FT = Float64
 )
@@ -44,8 +47,10 @@ function RectRegion(
     par  = GeoRegion(ParID); isinGeoRegion(geo,par)
     name = replace(name," "=>"-")
 
-    open(joinpath(DEPOT_PATH[1],"files","GeoRegions","rectlist.txt"),"a") do io
-        write(io,"$RegID, $ParID, $N, $W, $S, $E, $name\n")
+    if savegeo
+        open(joinpath(DEPOT_PATH[1],"files","GeoRegions","rectlist.txt"),"a") do io
+            write(io,"$RegID, $ParID, $N, $W, $S, $E, $name\n")
+        end
     end
 
     return geo
@@ -58,7 +63,8 @@ end
         ParID :: AbstractString,
         name  :: AbstractString,
         lonpt :: Vector{<:Real},
-        latpt :: Vector{<:Real},
+        latpt :: Vector{<:Real};
+        savegeo :: Bool = true,
         ST = String,
         FT = Float64
     ) -> PolyRegion{ST,FT}
@@ -75,6 +81,7 @@ Arguments
 - `name`  : A name for the GeoRegion (meta information, can be used in Logging)
 - `lonpt` : A vector containing the longitude points
 - `latpt` : A vector containing the latitude points
+- `savegeo` : Save the GeoRegion into the master list?
 
 !!! info "Start and End Points"
     The 1st and last elements of `lonpt` and `latpt` must be equal.
@@ -84,7 +91,8 @@ function PolyRegion(
     ParID :: AbstractString,
     name  :: AbstractString,
     lonpt :: Vector{<:Real},
-    latpt :: Vector{<:Real},
+    latpt :: Vector{<:Real},;
+    savegeo :: Bool = true,
     ST = String,
     FT = Float64
 )
@@ -116,14 +124,16 @@ function PolyRegion(
     name  = replace(name," "=>"-")
 
     npt = length(lonpt)
-    open(joinpath(DEPOT_PATH[1],"files","GeoRegions","polylist.txt"),"a") do io
-        write(io,"\n  RegID $(RegID), $(ParID), $name\n")
-        write(io,"  RegX  $(lonpt[1])")
-        for ipt = 2 : npt; write(io,", $(lonpt[ipt])") end
-        write(io,"\n")
-        write(io,"  RegY  $(latpt[1])")
-        for ipt = 2 : npt; write(io,", $(latpt[ipt])") end
-        write(io,"\n")
+    if savegeo
+        open(joinpath(DEPOT_PATH[1],"files","GeoRegions","polylist.txt"),"a") do io
+            write(io,"\n  RegID $(RegID), $(ParID), $name\n")
+            write(io,"  RegX  $(lonpt[1])")
+            for ipt = 2 : npt; write(io,", $(lonpt[ipt])") end
+            write(io,"\n")
+            write(io,"  RegY  $(latpt[1])")
+            for ipt = 2 : npt; write(io,", $(latpt[ipt])") end
+            write(io,"\n")
+        end
     end
 
     return geo
