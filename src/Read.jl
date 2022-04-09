@@ -252,6 +252,35 @@ function addGeoRegions(fname::AbstractString)
 
 end
 
+function readGeoRegions(
+    fname   :: AbstractString;
+    savegeo :: Bool = true
+)
+
+    @info "$(modulelog()) - Reading user-defined GeoRegions from the file $fname directly into the custom lists"
+
+    rvec,rtype = listgeoregions(fname)
+    ngeo = length(rvec)
+    gvec = Vector{GeoRegion}(undef,ngeo)
+    for igeo in 1 : ngeo
+        reg = rvec[igeo]
+        if !isGeoRegion(reg,throw=false)
+            g = getgeoregion(reg,fname,rtype)
+            if rtype == "PolyRegion"
+                  _,_,lon,lat = coordGeoRegion(g)
+                  geo = PolyRegion(g.regID,g.parID,g.name,lon,lat,savegeo=savegeo)
+            else; geo = RectRegion(g.regID,g.parID,g.name,[g.N,g.S,g.E,g.W],savegeo=savegeo)
+            end
+        else
+            @warn "$(modulelog()) - The GeoRegion ID $reg is already in use. Please use a different ID, or you can remove the ID using removeGeoRegion()."
+        end
+        gvec[igeo] = geo
+    end
+
+    return gvec
+
+end
+
 """
     isGeoRegion(
         RegID :: AbstractString;

@@ -13,7 +13,7 @@ import Base: show, read
 ## Exporting the following functions:
 export
         GeoRegion, RectRegion, PolyRegion, RegionGrid, RectGrid, PolyGrid,
-        resetGeoRegions, templateGeoRegions, listGeoRegions,
+        resetGeoRegions, templateGeoRegions, listGeoRegions, readGeoRegions,
         isGeoRegion, addGeoRegions, removeGeoRegion, coordGeoRegion, isinGeoRegion,
         tableGeoRegions, tableRectRegions, tablePolyRegions,
         Point2
