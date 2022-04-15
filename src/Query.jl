@@ -22,20 +22,26 @@ function coordGeoRegion(GeoReg::PolyRegion)
 
     shape = GeoReg.shape
     npnt  = length(shape)
-    lon   = zeros(npnt)
-    lat   = zeros(npnt)
+    lon   = zeros(21,npnt-1)
+    lat   = zeros(21,npnt-1)
 
-    for ipnt = 1 : npnt
-        lon[ipnt] = shape[ipnt][1]
-        lat[ipnt] = shape[ipnt][2]
+    for ipnt = 1 : (npnt-1)
+        lon[:,ipnt] .= collect(range(shape[ipnt][1],shape[ipnt+1][1],21))
+        lat[:,ipnt] .= collect(range(shape[ipnt][2],shape[ipnt+1][2],21))
     end
+
+    lon = lon[:]
+    lat = lat[:]
 
     N = GeoReg.N
     S = GeoReg.S
     E = GeoReg.E
     W = GeoReg.W
 
-    return [W,E,E,W,W],[N,N,S,S,N],lon,lat
+    blon = vcat(range(W,E,21),range(E,E,21),range(E,W,21),range(W,W,21))
+    blat = vcat(range(N,N,21),range(N,S,21),range(S,S,21),range(S,N,21))
+
+    return blon,blat,lon,lat
 
 end
 
@@ -61,6 +67,10 @@ function coordGeoRegion(GeoReg::RectRegion)
     S = GeoReg.S
     E = GeoReg.E
     W = GeoReg.W
-    return [W,E,E,W,W],[N,N,S,S,N]
+
+    blon = vcat(range(W,E,21),range(E,E,21),range(E,W,21),range(W,W,21))
+    blat = vcat(range(N,N,21),range(N,S,21),range(S,S,21),range(S,N,21))
+
+    return blon,blat
 
 end
