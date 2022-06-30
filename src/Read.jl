@@ -230,13 +230,25 @@ Arguments
 
 - `fname` : name + path of the file containing GeoRegion information
 """
-function addGeoRegions(fname::AbstractString)
+function addGeoRegions(
+    fname     :: AbstractString;
+    overwrite :: Bool = false
+)
 
     @info "$(modulelog()) - Importing user-defined GeoRegions from the file $fname directly into the custom lists"
 
     rvec,rtype = listgeoregions(fname)
     for reg in rvec
         if !isGeoRegion(reg,throw=false)
+            g = getgeoregion(reg,fname,rtype)
+            if rtype == "PolyRegion"
+                  _,_,lon,lat = coordGeoRegion(g)
+                  PolyRegion(g.regID,g.parID,g.name,lon,lat)
+            else; RectRegion(g.regID,g.parID,g.name,[g.N,g.S,g.E,g.W])
+            end
+        elseif overwrite
+            @warn "$(modulelog()) - The GeoRegion ID $reg is already in use. Overwriting and replacing with new boundaries ..."
+            removeGeoRegion(reg)
             g = getgeoregion(reg,fname,rtype)
             if rtype == "PolyRegion"
                   _,_,lon,lat = coordGeoRegion(g)
