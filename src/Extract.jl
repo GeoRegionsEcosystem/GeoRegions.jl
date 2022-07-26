@@ -144,11 +144,11 @@ function regiongrid(gridbounds::Vector{<:Real},rlon::Vector{<:Real},rlat::Vector
     if rlon[2] > rlon[1]; EgW = true; else; EgW = false end
     if rlat[2] > rlat[1]; NgS = true; else; NgS = false end
 
-    while rlon[iW] < W
+    while mod(rlon[iW],360) < mod(W,360)
         if EgW; iW += 1; else; iW -= 1 end
     end
 
-    while rlon[iE] > E
+    while mod(rlon[iE],360) > mod(E,360)
         if EgW; iE -= 1; else; iE += 1 end
     end
 
@@ -164,9 +164,10 @@ function regiongrid(gridbounds::Vector{<:Real},rlon::Vector{<:Real},rlat::Vector
         error("$(modulelog()) - The bounds of the specified georegion do not contain any latitude points")
     end
 
-    if (EgW && (iE < iW)) || (!EgW && (iW < iE))
-        error("$(modulelog()) - The bounds of the specified georegion do not contain any longitude points")
-    end
+    # Figure out how to ensure that bounds are respected
+    # if (EgW && (iE < iW)) || (!EgW && (iW < iE))
+    #     error("$(modulelog()) - The bounds of the specified georegion do not contain any longitude points")
+    # end
 
     return [iN,iS,iE,iW]
 
