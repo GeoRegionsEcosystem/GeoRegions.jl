@@ -103,7 +103,7 @@ function PolyGrid(
     nlon = nlon[iWE]
     nlat =  lat[iNS]
     mask = Array{FT,2}(undef,length(nlon),length(nlat))
-    for ilat = 1 : length(nlat), ilon = 1 : length(nlon)
+    for ilat in eachindex(nlat), ilon in eachindex(nlon)
         ipnt = Point2(nlon[ilon],nlat[ilat])
         if isinGeoRegion(ipnt,geo,throw=false)
               mask[ilon,ilat] = 1
@@ -139,6 +139,33 @@ function regiongrid(gridbounds::Vector{<:Real},rlon::Vector{<:Real},rlat::Vector
         else; iE = iW
         end
     else; iE = argmin(abs.(nlon.-E));
+    end
+
+    if rlon[2] > rlon[1]; EgW = true; else; EgW = false end
+    if rlat[2] > rlat[1]; NgS = true; else; NgS = false end
+
+    while rlon[iW] < W
+        if EgW; iW += 1; else; iW -= 1 end
+    end
+
+    while rlon[iE] > E
+        if EgW; iE -= 1; else; iE += 1 end
+    end
+
+    while rlat[iS] < S
+        if NgS; iS += 1; else; iS -= 1 end
+    end
+
+    while rlat[iN] > N
+        if NgS; iN -= 1; else; iN += 1 end
+    end
+
+    if (NgS && (iN < iS)) || (!NgS && (iS < iN))
+        error("$(modulelog()) - The bounds of the specified georegion do not contain any latitude points")
+    end
+
+    if (EgW && (iE < iW)) || (!EgW && (iW < iE))
+        error("$(modulelog()) - The bounds of the specified georegion do not contain any longitude points")
     end
 
     return [iN,iS,iE,iW]
