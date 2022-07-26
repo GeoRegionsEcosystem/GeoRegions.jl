@@ -28,10 +28,10 @@ function RegionGrid(
 end
 
 function RectGrid(
-    geo :: RectRegion{ST,FT},
+    geo :: RectRegion,
     lon :: Vector{<:Real},
     lat :: Vector{<:Real}
-) where {FT <: Real, ST <: AbstractString}
+)
 
     @info "$(modulelog()) - Creating a RegionGrid for the $(geo.name) GeoRegion"
 
@@ -62,15 +62,15 @@ function RectGrid(
     nlon = nlon[iWE]
     nlat =  lat[iNS]
 
-    return RectGrid{FT}(igrid,iWE,iNS,nlon,nlat)
+    return RectGrid{eltype(lon)}(igrid,iWE,iNS,nlon,nlat)
 
 end
 
 function PolyGrid(
-    geo :: PolyRegion{ST,FT},
+    geo :: PolyRegion,
     lon :: Vector{<:Real},
     lat :: Vector{<:Real}
-) where {FT <: Real, ST <: AbstractString}
+)
 
     @info "$(modulelog()) - Creating a RegionGrid for the $(geo.name) GeoRegion"
 
@@ -102,7 +102,7 @@ function PolyGrid(
     @info "$(modulelog()) - Since the $(geo.name) GeoRegion is a PolyRegion, we need to defined a mask as well ..."
     nlon = nlon[iWE]
     nlat =  lat[iNS]
-    mask = Array{FT,2}(undef,length(nlon),length(nlat))
+    mask = Array{eltype(lon),2}(undef,length(nlon),length(nlat))
     for ilat in eachindex(nlat), ilon in eachindex(nlon)
         ipnt = Point2(nlon[ilon],nlat[ilat])
         if isinGeoRegion(ipnt,geo,throw=false)
@@ -111,7 +111,7 @@ function PolyGrid(
         end
     end
 
-    return PolyGrid{FT}(igrid,iWE,iNS,nlon,nlat,mask)
+    return PolyGrid{eltype(lon)}(igrid,iWE,iNS,nlon,nlat,mask)
 
 end
 
