@@ -131,25 +131,32 @@ function regiongrid(gridbounds::Vector{<:Real},rlon::Vector{<:Real},rlat::Vector
 
     N,S,E,W = gridbounds; isgridinregion(gridbounds,rlon,rlat)
 
+    if rlon[2] > rlon[1]; EgW = true; else; EgW = false end
+    if rlat[2] > rlat[1]; NgS = true; else; NgS = false end
+
     E = mod(E,360); W = mod(W,360); nlon = mod.(rlon,360);
     iN = argmin(abs.(rlat.-N)); iS = argmin(abs.(rlat.-S)); iW = argmin(abs.(nlon.-W));
     if E == W;
         if gridbounds[3] != gridbounds[4]
-              if iW != 1; iE = iW - 1; else; iE = length(nlon); end
-        else; iE = iW
+            if iW != 1; iE = iW - 1; else; iE = length(nlon); end
+        else
+            if EgW
+                if iW > 1; iE = iW - 1; else; iE = length(rlon) end
+            else
+                if iW < length(rlon); iE = iW + 1; else; iE = 1 end
+            end
         end
     else; iE = argmin(abs.(nlon.-E));
     end
 
-    if rlon[2] > rlon[1]; EgW = true; else; EgW = false end
-    if rlat[2] > rlat[1]; NgS = true; else; NgS = false end
+    if !(E==W) || (gridbounds[3] == gridbounds[4])
+        while mod(rlon[iW],360) < mod(W,360)
+            if EgW; iW += 1; else; iW -= 1 end
+        end
 
-    while mod(rlon[iW],360) < mod(W,360)
-        if EgW; iW += 1; else; iW -= 1 end
-    end
-
-    while mod(rlon[iE],360) > mod(E,360)
-        if EgW; iE -= 1; else; iE += 1 end
+        while mod(rlon[iE],360) > mod(E,360)
+            if EgW; iE -= 1; else; iE += 1 end
+        end
     end
 
     while rlat[iS] < S
