@@ -105,6 +105,12 @@ struct PolyGrid{FT<:Real} <: RegionGrid
     mask  :: Array{FT,2}
 end
 
+struct RegionMask{FT<:Real} <: RegionGrid
+    lon  :: Array{FT,2}
+    lat  :: Array{FT,2}
+    mask :: Array{FT,2}
+end
+
 modulelog() = "$(now()) - GeoRegions.jl"
 
 function __init__()
