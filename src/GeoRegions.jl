@@ -75,39 +75,45 @@ Abstract supertype for geographical regions, with the following subtypes:
     
     RectGrid{FT<:Real} <: RegionGrid
     PolyGrid{FT<:Real} <: RegionGrid
+    RegionMask{FT<:Real} <: RegionGrid
 
 Both `RectGrid` and `PolyGrid` types contain the following fields:
-* `igrid` - A vector of `Int`s defining the gridpoint indices of the [N,S,E,W] points respectively
+* `grid` - A vector of `Int`s defining the gridpoint indices of the [N,S,E,W] points respectively
+* `lon` - A vector of `Float`s defining the latitude vector describing the region
+* `lat` - A vector of `Float`s defining the latitude vector describing the region
 * `ilon` - A vector of `Int`s defining indices of the parent longitude vector describing the region
 * `ilat` - A vector of `Int`s defining indices of the parent latitude vector describing the region
-* `glon` - A vector of `Float`s defining the latitude vector describing the region
-* `glat` - A vector of `Float`s defining the latitude vector describing the region
 
 A `PolyGrid` type will also contain the following field:
 * `mask` - An array of 0s and 1s defining a non-rectlinear shape within a rectilinear grid where data is valid (only available in PolyGrid types)
+
+A `RegionMask` type will contain the following fields:
+* `lon` - An array of longitude points
+* `lat` - An array of latitude points
+* `mask` - An array of NaNs and 1s defining the region within the original field in which data points are valid
 """
 abstract type RegionGrid end
 
 struct RectGrid{FT<:Real} <: RegionGrid
-    igrid :: Vector{Int}
-    ilon  :: Vector{Int}
-    ilat  :: Vector{Int}
-    glon  :: Vector{FT}
-    glat  :: Vector{FT}
+    grid :: Vector{Int}
+     lon :: Vector{FT}
+     lat :: Vector{FT}
+    ilon :: Vector{Int}
+    ilat :: Vector{Int}
 end
 
 struct PolyGrid{FT<:Real} <: RegionGrid
-    igrid :: Vector{Int}
-    ilon  :: Vector{Int}
-    ilat  :: Vector{Int}
-    glon  :: Vector{FT}
-    glat  :: Vector{FT}
-    mask  :: Array{FT,2}
+    grid :: Vector{Int}
+     lon :: Vector{FT}
+     lat :: Vector{FT}
+    ilon :: Vector{Int}
+    ilat :: Vector{Int}
+    mask :: Array{FT,2}
 end
 
 struct RegionMask{FT<:Real} <: RegionGrid
-    lon  :: Array{FT,2}
-    lat  :: Array{FT,2}
+     lon :: Array{FT,2}
+     lat :: Array{FT,2}
     mask :: Array{FT,2}
 end
 

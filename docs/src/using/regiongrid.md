@@ -3,12 +3,14 @@
 But how do we go from defining a GeoRegion, to **extracting data** for that GeoRegion?  The answer is with the information in the `RegionGrid` types, which maps gridded lon-lat data to a given GeoRegion
 * Mapping gridded lon-lat data to a **`RectRegion`** gives a `RectGrid` structure
 * Mapping gridded lon-lat data to a **`PolyRegion`** gives a `PolyGrid` structure
+* Mapping non-rectilinear gridded lon-lat data to a **`RegionMask`** gives a `RegionMask` structure
 
 However, the basic uses of `RectGrid` and `PolyGrid` are the same, and as such their differences are largely transparent to the user, except for one field found in `PolyGrid`, the `mask`, which will be elaborated upon later.
 
 ```@docs
 RegionGrid
-RegionGrid(::GeoRegion,::Vector{<:Real},::Vector{<:Real})
+RegionGrid(::RectRegion,::Vector{<:Real},::Vector{<:Real})
+RegionGrid(::GeoRegion,::Array{<:Real},::Array{<:Real})
 ```
 
 ## `RectGrid` Example

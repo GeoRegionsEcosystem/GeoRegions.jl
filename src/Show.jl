@@ -30,11 +30,11 @@ function show(io::IO, grd::PolyGrid)
     print(
 		io,
 		"The Polygonal Grid has the following properties:\n",
-		"    Grid Bounds       (igrid) : ", grd.igrid, '\n',
-		"    Longitude Indices  (ilon) : ", grd.ilon,  '\n',
-		"    Latitude Indices   (ilat) : ", grd.ilat,  '\n',
-		"    Longitude Points   (glon) : ", grd.glon,  '\n',
-		"    Latitude Points    (glat) : ", grd.glat,  '\n',
+		"    Grid Bounds       (grid) : ", grd.grid, '\n',
+		"    Longitude Indices (ilon) : ", grd.ilon, '\n',
+		"    Latitude Indices  (ilat) : ", grd.ilat, '\n',
+		"    Longitude Points   (lon) : ", grd.lon,  '\n',
+		"    Latitude Points    (lat) : ", grd.lat,  '\n',
 		"    Region Size (nlon * nlat) : $(nlon) lon points x $(nlat) lat points\n",
 		"    Region Mask (sum(mask) / (nlon * nlat)) : $(sum(isone.(mask))) / $(nlon*nlat)\n"
 	)
@@ -46,11 +46,11 @@ function show(io::IO, grd::RectGrid)
     print(
 		io,
 		"The Rectilinear Grid has the following properties:\n",
-		"    Grid Bounds       (igrid) : ", grd.igrid, '\n',
-		"    Longitude Indices  (ilon) : ", grd.ilon,  '\n',
-		"    Latitude Indices   (ilat) : ", grd.ilat,  '\n',
-		"    Longitude Points   (glon) : ", grd.glon,  '\n',
-		"    Latitude Points    (glat) : ", grd.glat,  '\n',
+		"    Grid Bounds       (grid) : ", grd.grid, '\n',
+		"    Longitude Indices (ilon) : ", grd.ilon, '\n',
+		"    Latitude Indices  (ilat) : ", grd.ilat, '\n',
+		"    Longitude Points   (lon) : ", grd.lon,  '\n',
+		"    Latitude Points    (lat) : ", grd.lat,  '\n',
 		"    Region Size (nlon * nlat) : $(nlon) lon points x $(nlat) lat points\n",
 	)
 end

@@ -3,9 +3,9 @@
         geo :: GeoRegion,
         lon :: Vector{<:Real},
         lat :: Vector{<:Real}
-    ) -> RegionGrid
+    ) -> RectGrid, PolyGrid
 
-Creates a `RegionGrid` type based on the following arguments.
+Creates a `RectGrid` or `PolyGrid` type based on the following arguments. This method is suitable for rectilinear grids of longitude/latitude output such as from Isca, or from satellite and reanalysis gridded datasets.
 
 Arguments
 =========
@@ -14,19 +14,25 @@ Arguments
 - `lon` : A vector containing the longitude points
 - `lat` : A vector containing the latitude points
 """
-function RegionGrid(
-    geo :: GeoRegion,
-    lon :: Vector{<:Real},
-    lat :: Vector{<:Real}
-)
+RegionGrid(geo::RectRegion, lon::Vector{<:Real}, lat::Vector{<:Real}) = RectGrid(geo,lon,lat)
+RegionGrid(geo::PolyRegion, lon::Vector{<:Real}, lat::Vector{<:Real}) = PolyGrid(geo,lon,lat)
 
-    if typeof(geo) <: RectRegion
-          return RectGrid(geo,lon,lat)
-    else; return PolyGrid(geo,lon,lat)
-    end
+"""
+    RegionGrid(
+        geo :: GeoRegion,
+        lon :: Array{<:Real,2},
+        lat :: Array{<:Real,2}
+    ) -> RegionGrid
 
-end
+Creates a `RegionMask` type based on the following arguments. This method is more suitable for non-rectilinear grids of longitude and latitude points, such as in the output of WRF or CESM.
 
+Arguments
+=========
+
+- `geo` : A RectRegion struct type
+- `lon` : An array containing the longitude points
+- `lat` : An array containing the latitude points
+"""
 function RegionGrid(
     geo :: GeoRegion,
     lon :: Array{<:Real,2},
@@ -88,7 +94,7 @@ function RectGrid(
     nlon = nlon[iWE]
     nlat =  lat[iNS]
 
-    return RectGrid{eltype(lon)}(igrid,iWE,iNS,nlon,nlat)
+    return RectGrid{eltype(lon)}(igrid,nlon,nlat,iWE,iNS)
 
 end
 
@@ -137,7 +143,7 @@ function PolyGrid(
         end
     end
 
-    return PolyGrid{eltype(lon)}(igrid,iWE,iNS,nlon,nlat,mask)
+    return PolyGrid{eltype(lon)}(igrid,nlon,nlat,iWE,iNS,mask)
 
 end
 
