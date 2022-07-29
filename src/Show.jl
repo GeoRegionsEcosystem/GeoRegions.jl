@@ -54,3 +54,14 @@ function show(io::IO, grd::RectGrid)
 		"    Region Size (nlon * nlat) : $(nlon) lon points x $(nlat) lat points\n",
 	)
 end
+
+function show(io::IO, grd::RegionMask)
+	nlon = size(grd.lon,1)
+	nlat = size(grd.lon,2)
+    print(
+		io,
+		"The RegionGrid is of the RegionMask type has the following properties:\n",
+		"    Grid Size (nlon * nlat) : $(nlon) lon points x $(nlat) lat points\n",
+		"    Valid Mask Proportion   : $(sum(isone.(grd.mask))) / $(nlon*nlat)\n",
+	)
+end
