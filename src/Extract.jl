@@ -147,6 +147,72 @@ function PolyGrid(
 
 end
 
+function extractGrid(
+    odata :: AbstractArray{<:Real,2},
+    ggrd  :: RectGrid
+)
+
+    ilon  = ggrd.ilon; nlon = length(ggrd.ilon)
+	ilat  = ggrd.ilat; nlat = length(ggrd.ilat)
+	ndata = zeros(nlon,nlat)
+	for glat in 1 : nlat, glon in 1 : nlon
+		ndata[glon,glat] = odata[ilon[glon],ilat[glat]]
+	end
+
+    return ndata
+
+end
+
+function extractGrid!(
+    ndata :: AbstractArray{<:Real,2},
+    odata :: AbstractArray{<:Real,2},
+    ggrd  :: RectGrid
+)
+
+    ilon  = ggrd.ilon; nlon = length(ggrd.ilon)
+	ilat  = ggrd.ilat; nlat = length(ggrd.ilat)
+	for glat in 1 : nlat, glon in 1 : nlon
+		ndata[glon,glat] = odata[ilon[glon],ilat[glat]]
+	end
+
+    return
+
+end
+
+function extractGrid(
+    odata :: AbstractArray{<:Real,2},
+    ggrd  :: PolyGrid
+)
+
+    ilon  = ggrd.ilon; nlon = length(ggrd.ilon)
+	ilat  = ggrd.ilat; nlat = length(ggrd.ilat)
+    mask  = ggrd.mask
+	ndata = zeros(nlon,nlat)
+	for glat in 1 : nlat, glon in 1 : nlon
+		ndata[glon,glat] = odata[ilon[glon],ilat[glat]] * mask[glon,glat]
+	end
+
+    return ndata
+
+end
+
+function extractGrid!(
+    ndata :: AbstractArray{<:Real,2},
+    odata :: AbstractArray{<:Real,2},
+    ggrd  :: PolyGrid
+)
+
+    ilon  = ggrd.ilon; nlon = length(ggrd.ilon)
+	ilat  = ggrd.ilat; nlat = length(ggrd.ilat)
+    mask  = ggrd.mask
+	for glat in 1 : nlat, glon in 1 : nlon
+		ndata[glon,glat] = odata[ilon[glon],ilat[glat]] * mask[glon,glat]
+	end
+
+    return
+
+end
+
 function regionpoint(
     plon::Real, plat::Real,
     rlon::Vector{<:Real}, rlat::Vector{<:Real}

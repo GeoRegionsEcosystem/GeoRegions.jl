@@ -16,7 +16,8 @@ export
         resetGeoRegions, templateGeoRegions, listGeoRegions, readGeoRegions,
         isGeoRegion, addGeoRegions, removeGeoRegion, coordGeoRegion, isinGeoRegion,
         tableGeoRegions, tableRectRegions, tablePolyRegions,
-        Point2
+        Point2,
+        extractGrid
 
 ## Abstract types
 """
