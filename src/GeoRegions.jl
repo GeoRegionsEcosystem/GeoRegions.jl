@@ -20,7 +20,7 @@ export
         tableGeoRegions, tableRectRegions, tablePolyRegions,
         extractGrid, extractGrid!,
 
-        Point2
+        getLandSea, Point2
 
 ## Abstract types
 """
@@ -133,6 +133,12 @@ function __init__()
             @info "$(modulelog()) - $(fname) does not exist in $(jfol), copying ..."
         end
     end
+end
+
+function getLandSea()
+
+    @info "$(modulelog()) - A basic template for `getLandSea` functions used in parent packages for GeoRegions."
+
 end
 
 ## Including other files in the module
