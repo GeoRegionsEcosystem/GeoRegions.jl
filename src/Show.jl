@@ -65,3 +65,15 @@ function show(io::IO, grd::RegionMask)
 		"    Valid Mask Proportion   : $(sum(isone.(grd.mask))) / $(nlon*nlat)\n",
 	)
 end
+
+function show(io::IO, lsd::LandSea)
+	nlon = length(lsd.lon)
+	nlat = length(lsd.lat)
+    print(
+		io,
+		"The Land-Sea Mask Dataset has the following properties:\n",
+		"    Longitude Points    (lon) : ", lsd.lon,  '\n',
+		"    Latitude Points     (lat) : ", lsd.lat,  '\n',
+		"    Region Size (nlon * nlat) : $(nlon) lon points x $(nlat) lat points\n",
+	)
+end

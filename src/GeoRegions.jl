@@ -5,6 +5,7 @@ using Dates
 using DelimitedFiles
 using GeometryBasics
 using Logging
+using NCDatasets
 using PolygonOps
 using PrettyTables
 
@@ -121,6 +122,13 @@ struct RegionMask{FT<:Real} <: RegionGrid
     mask :: Array{FT,2}
 end
 
+struct LandSea{FT<:Real}
+    lon  :: Vector{FT}
+    lat  :: Vector{FT}
+    oro  :: Array{FT,2}
+    mask :: Array{Int,2}
+end
+
 modulelog() = "$(now()) - GeoRegions.jl"
 
 function __init__()
@@ -135,18 +143,13 @@ function __init__()
     end
 end
 
-function getLandSea()
-
-    @info "$(modulelog()) - A basic template for `getLandSea` functions used in parent packages for GeoRegions."
-
-end
-
 ## Including other files in the module
 include("Read.jl")
 include("Create.jl")
 include("Query.jl")
 include("IsIn.jl")
 include("IsInGeoRegion.jl")
+include("LandSea.jl")
 include("Extract.jl")
 include("Show.jl")
 include("Tables.jl")
