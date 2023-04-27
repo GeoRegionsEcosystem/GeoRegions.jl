@@ -167,7 +167,7 @@
   RegY  -30.0, -20.0, -20.0, -32.9, -30.0, -30.0
 
   RegID AR6_EAU, GLB, Eastern-Australia
-  RegX  145.5, 145.5, 155.0, 155.0, 145.0
+  RegX  145.5, 145.5, 155.0, 155.0, 145.5
   RegY  -32.9, -20.0, -20.0, -38.0, -32.9
 
   RegID AR6_SAU, GLB, Southern-Australia
