@@ -90,7 +90,7 @@ function tableGeoRegions(
     head = ["ID","Type","Name","Parent","File"];
 
     pretty_table(
-        fmat,head,
+        fmat,header=head,
         alignment=[:c,:c,:l,:c,:c],
         crop = :none, tf = tf_compact
     );
@@ -160,7 +160,7 @@ function tableRectRegions(;
     head = ["ID","Type","Name","Parent","File"];
 
     pretty_table(
-        fmat,header=Base.show_method_list_header,
+        fmat,header=head,
         alignment=[:c,:c,:l,:c,:c],
         crop = :none, tf = tf_compact
     );
