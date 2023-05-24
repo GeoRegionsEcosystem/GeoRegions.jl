@@ -243,8 +243,8 @@ function addGeoRegions(
             g = getgeoregion(reg,fname,rtype)
             if rtype == "PolyRegion"
                   _,_,lon,lat = coordGeoRegion(g)
-                  PolyRegion(g.regID,g.parID,g.name,lon,lat)
-            else; RectRegion(g.regID,g.parID,g.name,[g.N,g.S,g.E,g.W])
+                  PolyRegion(g.ID,g.pID,g.name,lon,lat)
+            else; RectRegion(g.ID,g.pID,g.name,[g.N,g.S,g.E,g.W])
             end
         elseif overwrite
             @warn "$(modulelog()) - The GeoRegion ID $reg is already in use. Overwriting and replacing with new boundaries ..."
@@ -252,8 +252,8 @@ function addGeoRegions(
             g = getgeoregion(reg,fname,rtype)
             if rtype == "PolyRegion"
                   _,_,lon,lat = coordGeoRegion(g)
-                  PolyRegion(g.regID,g.parID,g.name,lon,lat)
-            else; RectRegion(g.regID,g.parID,g.name,[g.N,g.S,g.E,g.W])
+                  PolyRegion(g.ID,g.pID,g.name,lon,lat)
+            else; RectRegion(g.ID,g.pID,g.name,[g.N,g.S,g.E,g.W])
             end
         else
             @warn "$(modulelog()) - The GeoRegion ID $reg is already in use. Please use a different ID, or you can remove the ID using removeGeoRegion()."
@@ -280,8 +280,8 @@ function readGeoRegions(
             g = getgeoregion(reg,fname,rtype)
             if rtype == "PolyRegion"
                   _,_,lon,lat = coordGeoRegion(g)
-                  geo = PolyRegion(g.regID,g.parID,g.name,lon,lat,savegeo=savegeo)
-            else; geo = RectRegion(g.regID,g.parID,g.name,[g.N,g.S,g.E,g.W],savegeo=savegeo)
+                  geo = PolyRegion(g.ID,g.pID,g.name,lon,lat,savegeo=savegeo)
+            else; geo = RectRegion(g.ID,g.pID,g.name,[g.N,g.S,g.E,g.W],savegeo=savegeo)
             end
         else
             @warn "$(modulelog()) - The GeoRegion ID $reg is already in use. Please use a different ID, or you can remove the ID using removeGeoRegion()."

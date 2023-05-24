@@ -40,10 +40,10 @@ function tableGeoRegions(;
             typevec[igeo]
         )
 
-        fmat[igeo,1] = geo.regID
+        fmat[igeo,1] = geo.ID
         fmat[igeo,2] = typevec[igeo]
         fmat[igeo,3] = geo.name
-        fmat[igeo,4] = geo.parID
+        fmat[igeo,4] = geo.pID
         fmat[igeo,5] = filevec[igeo]
 
     end
@@ -80,10 +80,10 @@ function tableGeoRegions(
 
     for igeo = 1 : ngeo
         g = getgeoregion(rvec[igeo],fname,rtype)
-        fmat[igeo,1] = g.regID
+        fmat[igeo,1] = g.ID
         fmat[igeo,2] = rtype
         fmat[igeo,3] = g.name
-        fmat[igeo,4] = g.parID
+        fmat[igeo,4] = g.pID
         fmat[igeo,5] = basename(fname)
     end
 
@@ -149,10 +149,10 @@ function tableRectRegions(;
             typevec[igeo]
         )
 
-        fmat[igeo,1] = geo.regID
+        fmat[igeo,1] = geo.ID
         fmat[igeo,2] = typevec[igeo]
         fmat[igeo,3] = geo.name
-        fmat[igeo,4] = geo.parID
+        fmat[igeo,4] = geo.pID
         fmat[igeo,5] = filevec[igeo]
 
     end
@@ -225,10 +225,10 @@ function tablePolyRegions(;
             typevec[igeo]
         )
 
-        fmat[igeo,1] = geo.regID
+        fmat[igeo,1] = geo.ID
         fmat[igeo,2] = typevec[igeo]
         fmat[igeo,3] = geo.name
-        fmat[igeo,4] = geo.parID
+        fmat[igeo,4] = geo.pID
         fmat[igeo,5] = filevec[igeo]
 
     end

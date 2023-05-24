@@ -204,7 +204,7 @@ function isinGeoRegion(
     throw  :: Bool = true
 )
 
-    @info "$(modulelog()) - Performing a check to determine if the $(Child.name) GeoRegion ($(Child.regID)) is inside the $(polyG.name) GeoRegion ($(polyG.regID))"
+    @info "$(modulelog()) - Performing a check to determine if the $(Child.name) GeoRegion ($(Child.ID)) is inside the $(polyG.name) GeoRegion ($(polyG.ID))"
 
     N = Child.N
     S = Child.S
@@ -227,19 +227,19 @@ function isinGeoRegion(
     if sum(mask) > 0
 
         if throw
-            error("$(modulelog()) - The GeoRegion $(Child.regID) ($(Child.name)) is not a subset of the GeoRegion $(polyG.regID) ($(polyG.name))")
+            error("$(modulelog()) - The GeoRegion $(Child.ID) ($(Child.name)) is not a subset of the GeoRegion $(polyG.ID) ($(polyG.name))")
         else
             if domask
-                @warn "$(modulelog()) - The GeoRegion $(Child.regID) ($(Child.name)) is not a subset of the GeoRegion $(polyG.regID) ($(polyG.name)), returning a mask to show which regions do not intersect"
+                @warn "$(modulelog()) - The GeoRegion $(Child.ID) ($(Child.name)) is not a subset of the GeoRegion $(polyG.ID) ($(polyG.name)), returning a mask to show which regions do not intersect"
                 return mask
             else
-                @warn "$(modulelog()) - The GeoRegion $(Child.regID) ($(Child.name)) is not a subset of the GeoRegion $(polyG.regID) ($(polyG.name))"
+                @warn "$(modulelog()) - The GeoRegion $(Child.ID) ($(Child.name)) is not a subset of the GeoRegion $(polyG.ID) ($(polyG.name))"
                 return false
             end
         end
 
     else
-        @info "$(modulelog()) - The GeoRegion $(Child.regID) ($(Child.name)) is indeed a subset of the GeoRegion $(polyG.regID) ($(polyG.name))"
+        @info "$(modulelog()) - The GeoRegion $(Child.ID) ($(Child.name)) is indeed a subset of the GeoRegion $(polyG.ID) ($(polyG.name))"
         return true
     end
 
@@ -271,7 +271,7 @@ function isinGeoRegion(
     throw :: Bool = true
 )
 
-    @info "$(modulelog()) - Performing a check to determine if the $(Child.name) GeoRegion ($(Child.regID)) is inside the $(rectG.name) GeoRegion ($(rectG.regID))"
+    @info "$(modulelog()) - Performing a check to determine if the $(Child.name) GeoRegion ($(Child.ID)) is inside the $(rectG.name) GeoRegion ($(rectG.ID))"
 
     isin = isgridinregion(
         [Child.N,Child.S,Child.E,Child.W],
@@ -282,14 +282,14 @@ function isinGeoRegion(
     if !isin
 
         if throw
-            error("$(modulelog()) - The GeoRegion $(Child.regID) ($(Child.name)) is not a subset of the GeoRegion $(rectG.regID) ($(rectG.name))")
+            error("$(modulelog()) - The GeoRegion $(Child.ID) ($(Child.name)) is not a subset of the GeoRegion $(rectG.ID) ($(rectG.name))")
         else
-            @warn "$(modulelog()) - The GeoRegion $(Child.regID) ($(Child.name)) is not a subset of the GeoRegion $(rectG.regID) ($(rectG.name))"
+            @warn "$(modulelog()) - The GeoRegion $(Child.ID) ($(Child.name)) is not a subset of the GeoRegion $(rectG.ID) ($(rectG.name))"
             return false
         end
 
     else
-        @info "$(modulelog()) - The GeoRegion $(Child.regID) ($(Child.name)) is indeed a subset of the GeoRegion $(rectG.regID) ($(rectG.name))"
+        @info "$(modulelog()) - The GeoRegion $(Child.ID) ($(Child.name)) is indeed a subset of the GeoRegion $(rectG.ID) ($(rectG.name))"
         return true
     end
 

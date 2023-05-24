@@ -64,7 +64,7 @@ function getLandSea(
 		ilat = ilat[1] : ilat[end]
 	end
 
-    @info "$(modulelog()) - Extracting regional ETOPO1 Land-Sea mask for the \"$(geo.regID)\" GeoRegion from the Global ETOPO1 Land-Sea mask dataset ..."
+    @info "$(modulelog()) - Extracting regional ETOPO1 Land-Sea mask for the \"$(geo.ID)\" GeoRegion from the Global ETOPO1 Land-Sea mask dataset ..."
 
     if !shift
         NCDatasets.load!(etopods["z"].var,roro,ilon,ilat)

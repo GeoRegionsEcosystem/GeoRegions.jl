@@ -178,7 +178,7 @@ function removegeoregion(
 )
 
     rvec = listpolyregions(joinpath(DEPOT_PATH[1],"files","GeoRegions",fgeo))
-    ind  = findall(rvec.==geo.regID)[1]
+    ind  = findall(rvec.==geo.ID)[1]
     ind  = (ind) * 4 .+ (0:3)
 
     flines = readlines(joinpath(DEPOT_PATH[1],"files","GeoRegions",fgeo))
@@ -208,7 +208,7 @@ function removegeoregion(
 
     open("tmp.txt","w") do io
         for iline = 1 : nlines
-            if !occursin("$(geo.regID),",flines[iline])
+            if !occursin("$(geo.ID),",flines[iline])
                 write(io,"$(flines[iline])\n")
             end
         end

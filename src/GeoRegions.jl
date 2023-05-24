@@ -33,8 +33,8 @@ Abstract supertype for geographical regions, with the following subtypes:
     PolyRegion{ST<:AbstractString, FT<:Real} <: GeoRegion
 
 Both `RectRegion` and `PolyRegion` types contain the following fields:
-* `regID` - A `String` Type, the identifier for the GeoRegion
-* `parID` - A `String` Type, the identifier for the parent GeoRegion
+* `ID` - A `String` Type, the identifier for the GeoRegion
+* `pID` - A `String` Type, the identifier for the parent GeoRegion
 * `name` - A `String` Type, the full name of the GeoRegion
 * `N` - A `Float` Type, the north boundary of the GeoRegion
 * `S` - A `Float` Type, the south boundary of the GeoRegion
@@ -49,8 +49,8 @@ A `PolyRegion` type will also contain the following field:
 abstract type GeoRegion end
 
 struct RectRegion{ST<:AbstractString, FT<:Real} <: GeoRegion
-    regID :: ST
-    parID :: ST
+    ID    :: ST
+    pID   :: ST
     name  :: ST
     N     :: FT
     S     :: FT
@@ -61,8 +61,8 @@ struct RectRegion{ST<:AbstractString, FT<:Real} <: GeoRegion
 end
 
 struct PolyRegion{ST<:AbstractString, FT<:Real} <: GeoRegion
-    regID :: ST
-    parID :: ST
+    ID    :: ST
+    pID   :: ST
     name  :: ST
     N     :: FT
     S     :: FT
@@ -125,6 +125,7 @@ end
 struct LandSea{FT<:Real}
     lon  :: Vector{FT}
     lat  :: Vector{FT}
+    lsm  :: Array{Int,2}
     oro  :: Array{FT,2}
     mask :: Array{Int,2}
 end
