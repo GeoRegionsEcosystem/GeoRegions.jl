@@ -125,9 +125,9 @@ end
 struct LandSea{FT<:Real}
     lon  :: Vector{FT}
     lat  :: Vector{FT}
-    lsm  :: Array{Int,2}
+    lsm  :: Array{FT,2}
     oro  :: Array{FT,2}
-    mask :: Array{Int,2}
+    mask :: Array{Int16,2}
 end
 
 modulelog() = "$(now()) - GeoRegions.jl"
