@@ -152,6 +152,7 @@ include("IsIn.jl")
 include("IsInGeoRegion.jl")
 include("LandSea.jl")
 include("Extract.jl")
+include("ExtractGrid.jl")
 include("Show.jl")
 include("Tables.jl")
 
