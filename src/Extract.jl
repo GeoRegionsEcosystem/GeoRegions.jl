@@ -1,8 +1,8 @@
 """
     RegionGrid(
         geo :: GeoRegion,
-        lon :: Vector{<:Real},
-        lat :: Vector{<:Real}
+        lon :: Union{Vector{<:Real},AbstractRange{<:Real},
+        lat :: Union{Vector{<:Real},AbstractRange{<:Real}
     ) -> RectGrid, PolyGrid
 
 Creates a `RectGrid` or `PolyGrid` type based on the following arguments. This method is suitable for rectilinear grids of longitude/latitude output such as from Isca, or from satellite and reanalysis gridded datasets.
@@ -10,12 +10,23 @@ Creates a `RectGrid` or `PolyGrid` type based on the following arguments. This m
 Arguments
 =========
 
-- `geo` : A RectRegion struct type
-- `lon` : A vector containing the longitude points
-- `lat` : A vector containing the latitude points
+- `geo` : A GeoRegion of interest
+- `lon` : A vector or `AbstractRange` containing the longitude points
+- `lat` : A vector or `AbstractRange` containing the latitude points
 """
-RegionGrid(geo::RectRegion, lon::Vector{<:Real}, lat::Vector{<:Real}) = RectGrid(geo,lon,lat)
-RegionGrid(geo::PolyRegion, lon::Vector{<:Real}, lat::Vector{<:Real}) = PolyGrid(geo,lon,lat)
+RegionGrid(
+    geo::RectRegion, lon::Vector{<:Real}, lat::Vector{<:Real}
+) = RectGrid(geo,lon,lat)
+RegionGrid(
+    geo::PolyRegion, lon::Vector{<:Real}, lat::Vector{<:Real}
+) = PolyGrid(geo,lon,lat)
+
+RegionGrid(
+    geo::RectRegion, lon::AbstractRange{<:Real}, lat::AbstractRange{<:Real}
+) = RectGrid(geo,collect(lon),collect(lat))
+RegionGrid(
+    geo::PolyRegion, lon::AbstractRange{<:Real}, lat::AbstractRange{<:Real}
+) = PolyGrid(geo,collect(lon),collect(lat))
 
 """
     RegionGrid(
