@@ -71,13 +71,4 @@ removeGeoRegion(::AbstractString)
 
 ## Reset the list of GeoRegions
 
-Should one wish to entirely reset the list of GeoRegions, one can call `resetGeoRegions()`:
-```@repl
-using GeoRegions
-resetGeoRegions()
-```
-
-And if one wishes to reset the predefined list of GeoRegions, we can do:
-```@repl
-using GeoRegions
-resetGeoRegions(allfiles=true)
+Should one wish to entirely reset the list of GeoRegions, one can call `resetGeoRegions()`.  See [Custom GeoRegions](../using/custom.md) for more details.

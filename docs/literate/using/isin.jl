@@ -1,7 +1,4 @@
-```@meta
-EditURL = "<unknown>/literate/using/isin.jl"
-```
-
+#=
 # Is it in a GeoRegion?
 
 When dealing with geographic data, we often wish to check if a point or region is inside another region.  GeoRegions.jl allows you to perform this check easily with the function `isinGeoRegion`.
@@ -10,8 +7,8 @@ When dealing with geographic data, we often wish to check if a point or region i
     We use the `Point2` Type from the package GeometryBasics.jl, which is reexported by GeoRegions.jl, as an easy way to denote points.  This also allows us to use the package PolygonOps.jl to determine if a point is inside a region.
 
 ### Setup
+=#
 
-````@example isin
 using GeoRegions
 using DelimitedFiles
 using CairoMakie
@@ -21,25 +18,23 @@ coast = readdlm("coast.cst",comments=true)
 clon  = coast[:,1]
 clat  = coast[:,2]
 nothing
-````
 
+#=
 ## Is a Point in a GeoRegion?
 
 As an example, let us test if a point is in GeoRegion `AR6_EAO`, defined in the blue bounding box below.  We define the below points:
 * Point *A* at coordinates (-20,5)
 * Point *B* at coordinates (340,5)
 * Point *C* at coordinates (30,15)
+=#
 
-````@example isin
 A = Point2(-20,5)
 B = Point2(340,5)
 C = Point2(-45,-7.5)
 geo = GeoRegion("AR6_EAO")
-````
 
-Here, we note that the coordinates of the GeoRegion (Equatorial Atlantic Ocean) are given in the bounds of (-180,180).  It is trivial in this case to calculate if points A and C are within the bounds of the GeoRegion.
+# Here, we note that the coordinates of the GeoRegion (Equatorial Atlantic Ocean) are given in the bounds of (-180,180).  It is trivial in this case to calculate if points A and C are within the bounds of the GeoRegion.
 
-````@example isin
 _,_,slon,slat = coordGeoRegion(geo)
 aspect = (maximum(slon)-minimum(slon))/(maximum(slat)-minimum(slat))
 fig = Figure()
@@ -53,30 +48,30 @@ scatter!(ax,A,markersize=20)
 scatter!(ax,C,markersize=20)
 resize_to_layout!(fig)
 fig
-````
 
+#=
 By eye it is easy to see that Point A is inside the GeoRegion.  However, C is not.  Let us now see if we are able to corroborate this with GeoRegions.jl using the function `isinGeoRegion()`
+=#
 
-````@example isin
 (
     isinGeoRegion(A,geo,throw=false), # Point A
     isinGeoRegion(C,geo,throw=false) # Point C
 )
-````
 
+#=
 But what about Point B?  Point B is also very obvious within the bounds of the GeoRegion, it is simply that the longitude of Point A is shifted by 360º such that it is now in the (0,360) coordinates frame.  We see that this is of no concern to GeoRegions.jl, which can detect that it is within the bounds of the GeoRegion anyway.
+=#
 
-````@example isin
 isinGeoRegion(B,geo,throw=false)
-````
 
+#=
 ## Is a GeoRegion inside a GeoRegion?
 
 Since any arbitrary geographic region can be defined as a `GeoRegion`, the natural extension now is to determine if a GeoRegion is wholly within another GeoRegion.
 
 Let us consider an arbitrary GeoRegion `BIG`, and other smaller GeoRegions `TS1-4` as defined below, and plot them on a map.
+=#
 
-````@example isin
 geo_BIG = PolyRegion(
     "BIG","GLB","A Big Region",
     [-120,-100,-100,-80,-30,15,45,75,90,115,120,105,85,45,20,-5,-45,-80,-120],
@@ -121,19 +116,19 @@ lines!(ax,slon_4.-360,slat_4,linewidth=5,color=:green)
 
 resize_to_layout!(fig)
 fig
-````
 
+#=
 We see by eye that GeoRegion `TS2` and `TS4` are in the `BIG` region, but the other GeoRegions are not.  Now let us verify this with `isinGeoRegion()`
+=#
 
-````@example isin
 (
     isinGeoRegion(geo_TS1,geo_BIG,throw=false),
     isinGeoRegion(geo_TS2,geo_BIG,throw=false),
     isinGeoRegion(geo_TS3,geo_BIG,throw=false),
     isinGeoRegion(geo_TS4,geo_BIG,throw=false)
 )
-````
 
+#=
 And we see that this is indeed the case.
 
 ## API
@@ -145,8 +140,4 @@ isinGeoRegion(
 isinGeoRegion(::GeoRegion,::RectRegion)
 isinGeoRegion(::GeoRegion,::PolyRegion)
 ```
-
----
-
-*This page was generated using [Literate.jl](https://github.com/fredrikekre/Literate.jl).*
-
+=#

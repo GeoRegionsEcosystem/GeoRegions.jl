@@ -28,10 +28,3 @@ Similarly, it is also possible to list the GeoRegions in custom files. The templ
 ```@docs
 tableGeoRegions(fname::AbstractString)
 ```
-
-## Master List of All Predefined GeoRegions
-```@repl
-using GeoRegions
-resetGeoRegions(allfiles=true)
-tableGeoRegions()
-```

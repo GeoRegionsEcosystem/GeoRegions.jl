@@ -31,9 +31,10 @@ And if you want to get the latest release without waiting for me to update the J
 ## Documentation Overview
 
 The documentation for `GeoRegions.jl` is divided into three components:
-1. Tutorials - meant as an introduction to the package
-2. How-to Examples - geared towards those looking for specific examples of what can be done
-3. API Reference - comprehensive summary of all exported functionalities
+1. Introduction - meant as an introduction to the package, the concept of `GeoRegion`, and how to create/manipulate them
+2. Tutorials - meant to show how `GeoRegion`s work, and how they can be used to extract data 
+3. How-to Examples - geared towards those looking for specific examples of what can be done
+4. API Reference - comprehensive summary of all exported functionalities
 
 !!! tip "Obtaining Example Datasets"
     All the output for the coding examples were produced using my computer with key security information (such as login info) omitted.  The examples cannot be run online because the file size requirements are too big.  Copying and pasting the code examples (with relevant directory and login information changes) should produce the same results.
