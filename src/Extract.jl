@@ -40,7 +40,7 @@ Creates a `RegionMask` type based on the following arguments. This method is mor
 Arguments
 =========
 
-- `geo` : A RectRegion struct type
+- `geo` : A GeoRegion of interest
 - `lon` : An array containing the longitude points
 - `lat` : An array containing the latitude points
 """
@@ -51,6 +51,10 @@ function RegionGrid(
 )
 
     @info "$(modulelog()) - Creating a RegionMask for the $(geo.name) GeoRegion based on an array of longitude and latitude points"
+
+    if eltype(lon) <: AbstractFloat
+        FT = eltype(lon)
+    end
 
     if size(lon) != size(lat)
         error("$(modulelog()) - The size of the longitude and latitude arrays are not the same.")
@@ -66,7 +70,7 @@ function RegionGrid(
         end
     end
 
-    return RegionMask{eltype(lon)}(lon,lat,mask)
+    return RegionMask{FT}(lon,lat,mask)
 
 end
 
@@ -112,7 +116,8 @@ end
 function PolyGrid(
     geo :: PolyRegion,
     lon :: Vector{<:Real},
-    lat :: Vector{<:Real}
+    lat :: Vector{<:Real};
+    FT = Float64
 )
 
     @info "$(modulelog()) - Creating a RegionGrid for the $(geo.name) GeoRegion"
@@ -122,6 +127,10 @@ function PolyGrid(
     S = geo.S
     E = geo.E
     W = geo.W
+
+    if eltype(lon) <: AbstractFloat
+        FT = eltype(lon)
+    end
 
     igrid = regiongrid([N,S,E,W],lon,lat);
     iN = igrid[1]; iS = igrid[2]; iE = igrid[3]; iW = igrid[4]
@@ -145,7 +154,7 @@ function PolyGrid(
     @info "$(modulelog()) - Since the $(geo.name) GeoRegion is a PolyRegion, we need to defined a mask as well ..."
     nlon = nlon[iWE]
     nlat =  lat[iNS]
-    mask = Array{eltype(lon),2}(undef,length(nlon),length(nlat))
+    mask = Array{FT,2}(undef,length(nlon),length(nlat))
     for ilat in eachindex(nlat), ilon in eachindex(nlon)
         ipnt = Point2(nlon[ilon],nlat[ilat])
         if isinGeoRegion(ipnt,geo,throw=false)
@@ -154,73 +163,7 @@ function PolyGrid(
         end
     end
 
-    return PolyGrid{eltype(lon)}(igrid,nlon,nlat,iWE,iNS,mask)
-
-end
-
-function extractGrid(
-    odata :: AbstractArray{<:Real,2},
-    ggrd  :: RectGrid
-)
-
-    ilon  = ggrd.ilon; nlon = length(ggrd.ilon)
-	ilat  = ggrd.ilat; nlat = length(ggrd.ilat)
-	ndata = zeros(nlon,nlat)
-	for glat in 1 : nlat, glon in 1 : nlon
-		ndata[glon,glat] = odata[ilon[glon],ilat[glat]]
-	end
-
-    return ndata
-
-end
-
-function extractGrid!(
-    ndata :: AbstractArray{<:Real,2},
-    odata :: AbstractArray{<:Real,2},
-    ggrd  :: RectGrid
-)
-
-    ilon  = ggrd.ilon; nlon = length(ggrd.ilon)
-	ilat  = ggrd.ilat; nlat = length(ggrd.ilat)
-	for glat in 1 : nlat, glon in 1 : nlon
-		ndata[glon,glat] = odata[ilon[glon],ilat[glat]]
-	end
-
-    return
-
-end
-
-function extractGrid(
-    odata :: AbstractArray{<:Real,2},
-    ggrd  :: PolyGrid
-)
-
-    ilon  = ggrd.ilon; nlon = length(ggrd.ilon)
-	ilat  = ggrd.ilat; nlat = length(ggrd.ilat)
-    mask  = ggrd.mask
-	ndata = zeros(nlon,nlat)
-	for glat in 1 : nlat, glon in 1 : nlon
-		ndata[glon,glat] = odata[ilon[glon],ilat[glat]] * mask[glon,glat]
-	end
-
-    return ndata
-
-end
-
-function extractGrid!(
-    ndata :: AbstractArray{<:Real,2},
-    odata :: AbstractArray{<:Real,2},
-    ggrd  :: PolyGrid
-)
-
-    ilon  = ggrd.ilon; nlon = length(ggrd.ilon)
-	ilat  = ggrd.ilat; nlat = length(ggrd.ilat)
-    mask  = ggrd.mask
-	for glat in 1 : nlat, glon in 1 : nlon
-		ndata[glon,glat] = odata[ilon[glon],ilat[glat]] * mask[glon,glat]
-	end
-
-    return
+    return PolyGrid{FT}(igrid,nlon,nlat,iWE,iNS,mask)
 
 end
 
