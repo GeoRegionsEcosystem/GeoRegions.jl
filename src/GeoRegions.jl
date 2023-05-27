@@ -15,13 +15,17 @@ import Base: show, read
 export
         GeoRegion, RectRegion, PolyRegion,
         RegionGrid, RectGrid, PolyGrid, RegionMask,
+        AbstractLandSea,
 
         resetGeoRegions, templateGeoRegions, listGeoRegions, readGeoRegions,
         isGeoRegion, addGeoRegions, removeGeoRegion, coordGeoRegion, isinGeoRegion,
         tableGeoRegions, tableRectRegions, tablePolyRegions,
+
         extractGrid, extractGrid!,
 
-        getLandSea, Point2
+        getLandSea,
+        
+        Point2
 
 ## Abstract types
 """
@@ -134,7 +138,9 @@ Object containing information on the ETOPO 2022 Land Sea mask for a GeoRegion.
 * `z` - rray containing data regarding the Orographic Height in meters.  NaN is outside the bounds of the GeoRegion
 * `mask` - Mask determining if point is within the GeoRegion or not. 1 is `true`, 0 is `false`.
 """
-struct LandSea{FT<:Real}
+abstract type AbstractLandSea end
+
+struct LandSea{FT<:Real} <: AbstractLandSea
     lon  :: Vector{FT}
     lat  :: Vector{FT}
     lsm  :: Array{FT,2}
