@@ -8,7 +8,7 @@ CairoMakie.activate!(type = "svg")
 pages_using = [
     "Is it in a GeoRegion?"           => "isin",
     "Custom GeoRegions"               => "custom",
-    # "Data Extraction via RegionGrids" => "extract",
+    "Data Extraction via RegionGrids" => "extract",
 ]
 
 pages_examples = [
@@ -34,6 +34,8 @@ for scripts in scripts_examples
     Literate.markdown(scripts_filepath, DIR_EXAMPLES; flavor = Literate.DocumenterFlavor())
 end
 
+# Literate.markdown("landsea.jl",joinpath(@__DIR__,"src"); flavor = Literate.DocumenterFlavor())
+
 makedocs(
     modules  = [GeoRegions],
     doctest  = false,
@@ -58,9 +60,12 @@ makedocs(
         "Using GeoRegions.jl: A Tutorial" => [
             "Is it in a GeoRegion?"           => "using/isin.md",
             "Custom GeoRegions"               => "using/custom.md",
-            # "Data Extraction via RegionGrids" => "using/extract.md"
+            "Data Extraction via RegionGrids" => "using/extract.md"
         ],
-    #     # "Retrieving ETOPO Data" => "etopo.md",
+        "LandSea Datasets: ETOPO 2022" => [
+            "What is a LandSea Dataset?" => "landsea/intro.md",
+            "Loading LandSea Datasets"   => "landsea/create.md",
+        ],
         "Examples"              => "example/placeholder.md",
         "Lists of GeoRegions"   => [
             "API"     => "lists/api.md",
