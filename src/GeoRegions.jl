@@ -122,11 +122,23 @@ struct RegionMask{FT<:Real} <: RegionGrid
     mask :: Array{FT,2}
 end
 
+"""
+    LandSea
+
+Object containing information on the ETOPO 2022 Land Sea mask for a GeoRegion.
+
+`LandSea` types contain the following fields:
+* `lon` - Vector containing the longitude points for the Land-Sea Dataset
+* `lat` - Vector containing the latitude points for the Land-Sea Dataset
+* `lsm` - Array containing data regarding the Land-Sea Mask.  1 is Land, 0 is Ocean, NaN is outside the bounds of the GeoRegion
+* `z` - rray containing data regarding the Orographic Height in meters.  NaN is outside the bounds of the GeoRegion
+* `mask` - Mask determining if point is within the GeoRegion or not. 1 is `true`, 0 is `false`.
+"""
 struct LandSea{FT<:Real}
     lon  :: Vector{FT}
     lat  :: Vector{FT}
     lsm  :: Array{FT,2}
-    oro  :: Array{FT,2}
+    z    :: Array{FT,2}
     mask :: Array{Int16,2}
 end
 
