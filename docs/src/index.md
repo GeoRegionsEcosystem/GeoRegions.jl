@@ -30,7 +30,7 @@ And if you want to get the latest release without waiting for me to update the J
 
 ## Documentation Overview
 
-The documentation for `GeoRegions.jl` is divided into three components:
+The documentation for `GeoRegions.jl` is divided into four components:
 1. Introduction - meant as an introduction to the package, the concept of `GeoRegion`, and how to create/manipulate them
 2. Tutorials - meant to show how `GeoRegion`s work, and how they can be used to extract data 
 3. How-to Examples - geared towards those looking for specific examples of what can be done
