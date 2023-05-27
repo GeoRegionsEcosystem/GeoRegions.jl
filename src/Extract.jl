@@ -203,11 +203,19 @@ function regiongrid(gridbounds::Vector{<:Real},rlon::Vector{<:Real},rlat::Vector
 
     if !(E==W) || (gridbounds[3] == gridbounds[4])
         while mod(rlon[iW],360) < mod(W,360)
-            if EgW; iW += 1; else; iW -= 1 end
+            if EgW
+                iW += 1; if iW > length(rlon); iW = 1 end
+            else
+                iW -= 1; if iszero(iW); iW = length(rlon) end
+            end
         end
 
         while mod(rlon[iE],360) > mod(E,360)
-            if EgW; iE -= 1; else; iE += 1 end
+            if EgW
+                iE -= 1; if iszero(iE); iE = length(rlon) end
+            else
+                iE += 1; if iE > length(rlon); iE = 1 end
+            end
         end
     end
 
