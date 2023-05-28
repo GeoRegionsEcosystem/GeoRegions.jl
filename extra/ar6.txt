@@ -130,11 +130,11 @@
   RegX  130.0, 130.0, 180.0, 180.0, 157.0, 152.0, 130.0
   RegY  45.0, 65.0, 65.0, 59.9, 50.0, 45.0, 45.0
 
-  RegID AR6_WCA, GLB, Western-Central-Africa
+  RegID AR6_WCA, GLB, Western-Central-Asia
   RegX  40.0, 40.0, 75.0, 75.0, 60.0, 60.0, 47.6, 40.0
   RegY  30.0, 45.0, 45.0, 30.0, 30.0, 23.5, 30.0, 30.0
 
-  RegID AR6_ECA, GLB, Eastern-Central-Africa
+  RegID AR6_ECA, GLB, Eastern-Central-Asia
   RegX  75.0, 75.0, 117.0, 108.0, 75.0
   RegY  37.0, 45.0, 45.0, 37.0, 37.0
 
