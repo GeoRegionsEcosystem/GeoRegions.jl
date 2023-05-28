@@ -15,7 +15,7 @@ import Base: show, read
 export
         GeoRegion, RectRegion, PolyRegion,
         RegionGrid, RectGrid, PolyGrid, RegionMask,
-        AbstractLandSea,
+        AbstractLandSea, LandSeaTopo, LandSeaFlat,
 
         resetGeoRegions, templateGeoRegions, listGeoRegions, readGeoRegions,
         isGeoRegion, addGeoRegions, removeGeoRegion, coordGeoRegion, isinGeoRegion,
@@ -80,7 +80,7 @@ end
 """
     RegionGrid
 
-Abstract supertype for geographical regions, with the following subtypes:
+Abstract supertype for geographical region gridded information, with the following subtypes:
     
     RectGrid{FT<:Real} <: RegionGrid
     PolyGrid{FT<:Real} <: RegionGrid
@@ -127,24 +127,38 @@ struct RegionMask{FT<:Real} <: RegionGrid
 end
 
 """
-    LandSea
+    AbstractLandSea
 
-Object containing information on the ETOPO 2022 Land Sea mask for a GeoRegion.
+Abstract supertype for LandSea Datasets, with the following subtypes:
 
-`LandSea` types contain the following fields:
+    LandSeaTopo <: AbstractLandSea
+    LandSeaFlat <: AbstractLandSea
+
+Both `LandSeaTopo` and `LandSeaFlat` types contain the following fields:
 * `lon` - Vector containing the longitude points for the Land-Sea Dataset
 * `lat` - Vector containing the latitude points for the Land-Sea Dataset
 * `lsm` - Array containing data regarding the Land-Sea Mask.  1 is Land, 0 is Ocean, NaN is outside the bounds of the GeoRegion
-* `z` - rray containing data regarding the Orographic Height in meters.  NaN is outside the bounds of the GeoRegion
 * `mask` - Mask determining if point is within the GeoRegion or not. 1 is `true`, 0 is `false`.
+
+A `LandSeaTopo` type will also contain the following field:
+* `z` - Array containing data regarding the Orographic Height in meters.  NaN is outside the bounds of the GeoRegion
 """
 abstract type AbstractLandSea end
 
-struct LandSea{FT<:Real} <: AbstractLandSea
-    lon  :: Vector{FT}
-    lat  :: Vector{FT}
-    lsm  :: Array{FT,2}
-    z    :: Array{FT,2}
+abstract type LandSeaTopo <: AbstractLandSea end
+
+abstract type LandSeaFlat <: AbstractLandSea end
+
+"""
+    GeoRegion.LandSea <: LandSeaTopo
+
+Object containing information on the ETOPO 2022 Land Sea mask for a GeoRegion.
+"""
+struct LandSea{FT<:Real} <: LandSeaTopo
+    lon  :: Vector{Float32}
+    lat  :: Vector{Float32}
+    lsm  :: Array{Float32,2}
+    z    :: Array{Float32,2}
     mask :: Array{Int16,2}
 end
 
