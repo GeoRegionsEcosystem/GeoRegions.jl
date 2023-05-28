@@ -8,6 +8,16 @@ function etopotype(type::String)
     end
 end
 
+function etoponamestring(type::String)
+    if type == "bed"
+        return "Bedrock"
+    elseif type == "geoid"
+        return "Geoid"
+    else
+        return "Surface"
+    end
+end
+
 """
     getLandSea(
         geo :: GeoRegion = GeoRegion("GLB");
@@ -289,8 +299,8 @@ function saveLandSea(
     ))
 
     ncoro = defVar(ds,"z",Float32,("longitude","latitude",),attrib = Dict(
-        "long_name" => "geopotential",
-        "full_name" => "height",
+        "long_name" => "height",
+        "full_name" => "$(etoponamestring(type)) Height",
         "units"     => "m",
     ))
 
