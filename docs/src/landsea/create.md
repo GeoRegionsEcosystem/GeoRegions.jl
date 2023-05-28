@@ -26,10 +26,10 @@ clat  = coast[:,2]
 nothing
 ````
 
-## Retrieving LandSea Example over Peninsular Malaysia
+## Retrieving LandSea Example over Aceh
 
 ````@example regiongrid
-geo  = RectRegion("SGP","GLB","Singapore",[5,0,105,100],savegeo=false)
+geo  = RectRegion("ACH","GLB","Aceh",[6,3,98,95],savegeo=false)
 slon,slat = coordGeoRegion(geo)
 lsd = getLandSea(geo,savelsd=false)
 ````
@@ -39,17 +39,29 @@ And we plot it here, with coarser-resolution coastlines for comparison:
 ````@example regiongrid
 fig = Figure()
 aspect = (maximum(slon)-minimum(slon))/(maximum(slat)-minimum(slat))
-ax = Axis(
-    fig[1,1],width=750,height=750/aspect,
-    limits=(minimum(slon)-0.5,maximum(slon)+0.5,minimum(slat)-0.5,maximum(slat)+0.5)
-)
 
-contourf!(
-    ax,lsd.lon,lsd.lat,lsd.z,
-    levels=range(0,1000,length=11),extendlow=:auto,extendhigh=:auto
+ax1 = Axis(
+    fig[1,1],width=350,height=350/aspect,
+    title="Orographic Height",xlabel="Longitude / º",ylabel="Latitude / º",
+    limits=(minimum(slon)-0.1,maximum(slon)+0.1,minimum(slat)-0.1,maximum(slat)+0.1)
 )
-lines!(ax,clon,clat,color=:black,linewidth=5)
-lines!(ax,slon,slat,linewidth=5)
+contourf!(
+    ax1,lsd.lon,lsd.lat,lsd.z,
+    levels=range(0,1500,length=16),extendlow=:auto,extendhigh=:auto
+)
+lines!(ax1,clon,clat,color=:black,linewidth=2)
+lines!(ax1,slon,slat,linewidth=5)
+
+ax2 = Axis(
+    fig[1,2],width=350,height=350/aspect,
+    title="Land-Sea Mask",xlabel="Longitude / º",
+    limits=(minimum(slon)-0.1,maximum(slon)+0.1,minimum(slat)-0.1,maximum(slat)+0.1)
+)
+contourf!(
+    ax2,lsd.lon,lsd.lat,lsd.lsm,
+    levels=range(0.05,0.95,length=19),extendlow=:auto,extendhigh=:auto
+)
+lines!(ax2,slon,slat,linewidth=5)
 
 resize_to_layout!(fig)
 fig
