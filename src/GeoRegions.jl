@@ -94,7 +94,7 @@ Both `RectGrid` and `PolyGrid` types contain the following fields:
 * `ilat` - A vector of `Int`s defining indices of the parent latitude vector describing the region
 
 A `PolyGrid` type will also contain the following field:
-* `mask` - An array of 0s and 1s defining a non-rectlinear shape within a rectilinear grid where data is valid (only available in PolyGrid types)
+* `mask` - An array of 0s and 1s defining a non-rectilinear shape within a rectilinear grid where data is valid (only available in PolyGrid types)
 
 A `RegionMask` type will contain the following fields:
 * `lon` - An array of longitude points

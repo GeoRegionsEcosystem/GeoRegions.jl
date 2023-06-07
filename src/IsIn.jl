@@ -264,7 +264,7 @@ function checkgrid(
 
 end
 
-## Tranformation of Coordinates
+## Transformation of Coordinates
 
 from180to0360(lon::Real) = lon + 360
 from0360to180(lon::Real) = lon - 360
