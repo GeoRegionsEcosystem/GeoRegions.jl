@@ -82,6 +82,12 @@ function getLandSea(
                 @info "$(modulelog()) - The Global ETOPO $(uppercase(type)) Land-Sea mask dataset is not available, downloading from ETOPO OPeNDAP servers ..."
                 downloadLandSea(type,path,resolution)
 
+                gds  = NCDataset(glbfnc)
+                glon = gds["longitude"][:]
+                glat = gds["latitude"][:]
+                goro = gds["z"][:]
+                close(gds)
+
                 rinfo = RegionGrid(GeoRegion("GLB"),glon,glat)
                 ilon  = rinfo.ilon; nlon = length(rinfo.ilon)
                 ilat  = rinfo.ilat; nlat = length(rinfo.ilat)
