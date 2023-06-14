@@ -177,15 +177,19 @@ function __init__()
 end
 
 ## Including other files in the module
-include("Read.jl")
-include("Create.jl")
-include("Query.jl")
-include("IsIn.jl")
-include("IsInGeoRegion.jl")
-include("LandSea.jl")
-include("Extract.jl")
-include("ExtractGrid.jl")
-include("Show.jl")
-include("Tables.jl")
+include("georegions/read.jl")
+include("georegions/create.jl")
+include("georegions/query.jl")
+include("georegions/show.jl")
+include("georegions/tables.jl")
+
+include("isin/isin.jl")
+include("isin/isingeoRegion.jl")
+
+include("extract/extract.jl")
+include("extract/grid.jl")
+
+include("landsea/landsea.jl")
+# include("landsea/filter.jl")
 
 end # module
