@@ -20,8 +20,9 @@ end
 
 """
     getLandSea(
-        geo :: GeoRegion = GeoRegion("GLB");
-        resolution :: Int,
+        geo  :: GeoRegion = GeoRegion("GLB");
+        path :: AbstractString = homedir(),
+        resolution :: Int = 60,
         bedrock   :: Bool = false,
         geoid     :: Bool = false,
         returnlsd :: Bool = false,
@@ -37,13 +38,14 @@ Arguments
 
 Keyword Arguments
 =================
+- `path` :: The path to which an `ETOPO` folder is created within and ETOPO LandSea data saved into
 - `resolution` : The resolution of the dataset to be downloaded, in units of arc-seconds.  Possible values are 15, 30 and 60, default is 60.
 - `bedrock`, `geoid` : The type of ETOPO data (bedrock, geoid, ice-surface) to be downloaded. Bedrock has priority over geoid, so if both are `true`, the bedrock is downloaded.
 - `savelsd` : Save LandSea dataset into a local NetCDF file.
 - `returnlsd` : If `savelsd = true`, you can choose to simply save the data into the NetCDF file, or load return it as a `LandSea` dataset. Otherwise, if `savelsd = false`, you always return the `LandSea` dataset.
 """
 function getLandSea(
-	geo :: GeoRegion = GeoRegion("GLB");
+	geo  :: GeoRegion = GeoRegion("GLB");
     path :: AbstractString = homedir(),
     resolution :: Int = 60,
     bedrock   :: Bool = false,
@@ -79,6 +81,37 @@ function getLandSea(
             if !isfile(glbfnc)
                 @info "$(modulelog()) - The Global ETOPO $(uppercase(type)) Land-Sea mask dataset is not available, downloading from ETOPO OPeNDAP servers ..."
                 downloadLandSea(type,path,resolution)
+
+                rinfo = RegionGrid(GeoRegion("GLB"),glon,glat)
+                ilon  = rinfo.ilon; nlon = length(rinfo.ilon)
+                ilat  = rinfo.ilat; nlat = length(rinfo.ilat)
+                rlsm  = zeros(nlon,nlat)
+                roro  = zeros(nlon,nlat)
+
+                if typeof(rinfo) <: PolyGrid
+                    mask = rinfo.mask; mask[isnan.(mask)] .= 0
+                else; mask = ones(Int,nlon,nlat)
+                end
+
+                @info "$(modulelog()) - Extracting regional ETOPO $(uppercase(type)) Land-Sea mask for the \"$(geo.ID)\" GeoRegion from the Global IMERG Land-Sea mask dataset ..."
+
+                for iglat = 1 : nlat, iglon = 1 : nlon
+                    if isone(mask[iglon,iglat])
+                        roro[iglon,iglat] = goro[ilon[iglon],ilat[iglat]]
+                        if roro[iglon,iglat] > 0
+                            rlsm[iglon,iglat] = 1
+                        else; rlsm[iglon,iglat] = 0
+                        end
+                    else
+                        roro[iglon,iglat] = NaN
+                        rlsm[iglon,iglat] = NaN
+                    end
+                end
+
+                saveLandSea(
+                    GeoRegion("GLB"),rinfo.lon,rinfo.lat,rlsm,roro,Int16.(mask),
+                    path,type,resolution
+                )
             end
 
             gds  = NCDataset(glbfnc)
@@ -203,6 +236,8 @@ function getLandSea(
             end
         end
 
+        @info "$(modulelog()) - Extracting the regional ETOPO1 Land-Sea mask for the \"$(geo.ID)\" has completed"
+
         return LandSea{FT}(rinfo.lon,rinfo.lat,rlsm,roro,mask)
 
     end
@@ -228,9 +263,14 @@ function downloadLandSea(
     lsm  = zeros(Float32,nlon,nlat)
     oro  = zeros(Float32,nlon,nlat)
 
+    nreg = nlonstep * nlatstep
+    ireg = 0
+    @info "$(modulelog()) - The Global ETOPO1 Land-Sea mask is too big to download at one-shot, splitting into $nreg regions ..."
+
     for ilatstep = 1 : nlatstep, ilonstep = 1 : nlonstep
 
-        @info [ilonstep,ilatstep]
+        ireg += 1
+        @info "$(modulelog()) - Extracting Region $ireg of $nreg ..."
         ilon = (1:5400) .+ (ilonstep-1) * 5400
         ilat = (1:5400) .+ (ilatstep-1) * 5400
         NCDatasets.load!(eds["z"].var,oro[ilon,ilat],ilon,ilat)
