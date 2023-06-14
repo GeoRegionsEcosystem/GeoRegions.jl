@@ -99,7 +99,7 @@ function getLandSea(
                 else; mask = ones(Int,nlon,nlat)
                 end
 
-                @info "$(modulelog()) - Extracting regional ETOPO $(uppercase(type)) Land-Sea mask for the \"$(geo.ID)\" GeoRegion from the Global IMERG Land-Sea mask dataset ..."
+                @info "$(modulelog()) - Extracting regional ETOPO $(uppercase(type)) Land-Sea mask for the \"GLB\" GeoRegion from the original ETOPO Land-Sea mask dataset ..."
 
                 for iglat = 1 : nlat, iglon = 1 : nlon
                     if isone(mask[iglon,iglat])
@@ -137,7 +137,7 @@ function getLandSea(
             else; mask = ones(Int,nlon,nlat)
             end
 
-            @info "$(modulelog()) - Extracting regional ETOPO $(uppercase(type)) Land-Sea mask for the \"$(geo.ID)\" GeoRegion from the Global IMERG Land-Sea mask dataset ..."
+            @info "$(modulelog()) - Extracting regional ETOPO $(uppercase(type)) Land-Sea mask for the \"$(geo.ID)\" GeoRegion from the Global ETOPO Land-Sea mask dataset ..."
 
             for iglat = 1 : nlat, iglon = 1 : nlon
                 if isone(mask[iglon,iglat])
