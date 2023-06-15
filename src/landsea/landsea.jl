@@ -27,6 +27,10 @@ end
         geoid     :: Bool = false,
         returnlsd :: Bool = false,
         savelsd   :: Bool = false,
+        smooth    :: Bool = false,
+        σlon :: Int = 0,
+        σlat :: Int = 0,
+        iterations :: Int = 100,
         FT = Float32
     ) -> LandSea
 
@@ -43,6 +47,10 @@ Keyword Arguments
 - `bedrock`, `geoid` : The type of ETOPO data (bedrock, geoid, ice-surface) to be downloaded. Bedrock has priority over geoid, so if both are `true`, the bedrock is downloaded.
 - `savelsd` : Save LandSea dataset into a local NetCDF file.
 - `returnlsd` : If `savelsd = true`, you can choose to simply save the data into the NetCDF file, or load return it as a `LandSea` dataset. Otherwise, if `savelsd = false`, you always return the `LandSea` dataset.
+- `smooth` : If `smooth = true`, then you can smooth the land-sea mask using the Gaussian Filter of ImageFiltering.jl such that the coastline (i.e. the separation between land and ocean) becomes blurred.
+- `σlon` : Smooth in the longitude direction (every increase of 1 in σlon roughly corresponds to 8 pixels)
+- `σlat` : Smooth in the latitude direction (every increase of 1 in σlat roughly corresponds to 8 pixels)
+- `iterations` : Iterations of gausssian smoothing, the higher, the closer the smoothing follows a semi-log.  50-100 iterations is generally enough.
 """
 function getLandSea(
 	geo  :: GeoRegion = GeoRegion("GLB");
