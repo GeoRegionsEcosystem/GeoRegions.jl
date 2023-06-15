@@ -119,7 +119,7 @@ function templateGeoRegions(;
     if !isdir(path); mkpath(path) end
     for fname in ["recttemplate.txt","polytemplate.txt"]
 
-        ftem = joinpath(@__DIR__,"..","extra",fname)
+        ftem = joinpath(@__DIR__,"..","..","extra",fname)
         freg = joinpath(path,fname)
 
         if !overwrite
@@ -394,7 +394,7 @@ function copygeoregions(
 )
 
     jfol = joinpath(DEPOT_PATH[1],"files","GeoRegions"); mkpath(jfol);
-    ftem = joinpath(@__DIR__,"..","extra",fname)
+    ftem = joinpath(@__DIR__,"..","..","extra",fname)
     freg = joinpath(jfol,fname)
 
     if !overwrite
