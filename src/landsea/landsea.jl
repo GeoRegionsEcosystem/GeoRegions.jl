@@ -140,9 +140,7 @@ function getLandSea(
                 @info "$(modulelog()) - Extracting regional ETOPO $(uppercase(type)) Land-Sea mask for the \"$(geo.ID)\" GeoRegion from the Global ETOPO Land-Sea mask dataset ..."
     
                 roro = extractGrid(roro,ggrd)
-                rlsm = deepcopy(roro)
-                rlsm[roro .>= 0] .= 1
-                rlsm[roro .<  0] .= 0
+                rlsm = extractGrid(rlsm,ggrd)
 
             end
 
@@ -256,9 +254,7 @@ function getLandSea(
             @info "$(modulelog()) - Extracting regional ETOPO $(uppercase(type)) Land-Sea mask for the \"$(geo.ID)\" GeoRegion from the Global ETOPO Land-Sea mask dataset ..."
 
             roro = extractGrid(roro,ggrd)
-            rlsm = deepcopy(roro)
-            rlsm[roro .>= 0] .= 1
-            rlsm[roro .<  0] .= 0
+            rlsm = extractGrid(rlsm,ggrd)
             
         end
 

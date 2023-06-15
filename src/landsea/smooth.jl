@@ -48,7 +48,7 @@ function smooth!(
 
     lsd.lsm .= flsm
 
-    return 
+    return nothing
 
 end
 
@@ -76,7 +76,7 @@ function smooth!(
 
     lsd.lsm .= flsm
 
-    return
+    return nothing
 
 end
 
@@ -93,21 +93,18 @@ function smooth!(
     end
 
     olsm = deepcopy(lsm)
-
-    if topography
-        olsm[oro.>=0] .= 1
-        olsm[oro.< 0] .= 0
-    end
+    olsm[oro.>=0] .= 1
+    olsm[oro.< 0] .= 0
     
     it = 0
 	while it < iterations
         olsm .= lsm
-		lsm   = log10.(imfilter(10. .^olsm, Kernel.gaussian((σlon,σlat)),"circular"));
-		lsm  .= (lsm .+ olsm) / 2
+		nlsm  = log10.(imfilter(10. .^olsm, Kernel.gaussian((σlon,σlat)),"circular"));
+		lsm  .= (nlsm .+ olsm) / 2
 		it   += 1
 	end
 
-    return 
+    return nothing
 
 end
 
@@ -127,11 +124,11 @@ function smooth!(
     it = 0
 	while it < iterations
         olsm .= lsm
-		lsm   = log10.(imfilter(10. .^olsm, Kernel.gaussian((σlon,σlat)),"circular"));
-		lsm  .= (lsm .+ olsm) / 2
+		nlsm  = log10.(imfilter(10. .^olsm, Kernel.gaussian((σlon,σlat)),"circular"));
+		lsm  .= (nlsm .+ olsm) / 2
 		it   += 1
 	end
 
-    return
+    return nothing
 
 end
