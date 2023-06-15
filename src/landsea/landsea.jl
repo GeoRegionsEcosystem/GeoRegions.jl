@@ -92,7 +92,12 @@ function getLandSea(
 
         if !isdir(joinpath(path,"ETOPO")); mkpath(joinpath(path,"ETOPO")) end
 
-        lsmfnc = joinpath(path,"ETOPO","etopo-$(type)-$(geo.ID)_$(resolution)arcsec.nc")
+        if !smooth
+            fid = "etopo-$(type)-$(geo.ID)_$(resolution)arcsec.nc"
+        else
+            fid = "etopo-$(type)-$(tgeo.ID)_$(resolution)arcsec-smooth_$(σlon)x$(σlat).nc"
+        end
+        lsmfnc = joinpath(path,"ETOPO",fid)
 
         if !isfile(lsmfnc)
 
