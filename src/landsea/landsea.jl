@@ -75,19 +75,6 @@ function getLandSea(
         error("$(modulelog()) - Incomplete specification of smoothing parameters, at least one of σlon and σlat must be nonzero")
     end
 
-    if smooth
-        tgeo = geo
-        tN = geo.N + (ceil(σlat*20 / resolution) + 1); if tN >   90; tN =   90 end
-        tS = geo.S - (ceil(σlat*20 / resolution) + 1); if tS <  -90; tS =  -90 end
-        tE = geo.E + (ceil(σlon*20 / resolution) + 1); if tE >  360; tE =  360 end
-        tW = geo.W - (ceil(σlon*20 / resolution) + 1); if tW < -180; tW = -180 end
-        if (tE - tW) > 360; tW = 0; tE = 360 end
-        geo = RectRegion(
-            "TMP", "GLB", "Temporary GeoRegion",
-            [tN,tS,tE,tW], savegeo = false
-        )
-    end
-
     if savelsd
 
         if !isdir(joinpath(path,"ETOPO")); mkpath(joinpath(path,"ETOPO")) end
@@ -95,11 +82,24 @@ function getLandSea(
         if !smooth
             fid = "etopo-$(type)-$(geo.ID)_$(resolution)arcsec.nc"
         else
-            fid = "etopo-$(type)-$(tgeo.ID)_$(resolution)arcsec-smooth_$(σlon)x$(σlat).nc"
+            fid = "etopo-$(type)-$(geo.ID)_$(resolution)arcsec-smooth_$(σlon)x$(σlat).nc"
         end
         lsmfnc = joinpath(path,"ETOPO",fid)
 
         if !isfile(lsmfnc)
+
+            if smooth
+                tgeo = geo
+                tN = geo.N + (ceil(σlat*20 / resolution) + 1); if tN >   90; tN =   90 end
+                tS = geo.S - (ceil(σlat*20 / resolution) + 1); if tS <  -90; tS =  -90 end
+                tE = geo.E + (ceil(σlon*20 / resolution) + 1); if tE >  360; tE =  360 end
+                tW = geo.W - (ceil(σlon*20 / resolution) + 1); if tW < -180; tW = -180 end
+                if (tE - tW) > 360; tW = 0; tE = 360 end
+                geo = RectRegion(
+                    "TMP", "GLB", "Temporary GeoRegion",
+                    [tN,tS,tE,tW], savegeo = false
+                )
+            end
 
             @info "$(modulelog()) - The ETOPO $(uppercase(type)) Land-Sea mask dataset for the \"$(geo.ID)\" GeoRegion is not available, extracting from Global ETOPO $(uppercase(type)) Land-Sea mask dataset ..."
 
