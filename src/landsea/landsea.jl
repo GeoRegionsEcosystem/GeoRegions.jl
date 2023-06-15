@@ -281,25 +281,21 @@ function downloadLandSea(
         "ETOPO_2022_v1_$(resolution)s_N90W180_$(type).nc"
     ))
 
-    lon = eds["lon"][:]; nlon = length(lon); nlonstep = Int(nlon/5400)
-    lat = eds["lat"][:]; nlat = length(lat); nlatstep = Int(nlat/5400)
+    lon = eds["lon"][:]; nlon = length(lon)
+    lat = eds["lat"][:]; nlat = length(lat); nstep = Int(nlat/1800)
 
     mask =  ones(Int16,nlon,nlat)
     lsm  = zeros(Float32,nlon,nlat)
     oro  = zeros(Float32,nlon,nlat)
 
-    nreg = nlonstep * nlatstep
-    ireg = 0
-    @info "$(modulelog()) - The Global ETOPO1 Land-Sea mask is too big to download at one-shot, splitting into $nreg regions ..."
+    @info "$(modulelog()) - The Global ETOPO1 Land-Sea mask is too big to download at one-shot, splitting into $nstep regions ..."
 
-    for ilatstep = 1 : nlatstep, ilonstep = 1 : nlonstep
+    for istep = 1 : nstep
 
-        ireg += 1
-        @info "$(modulelog()) - Extracting Region $ireg of $nreg ..."
-        ilon = (1:5400) .+ (ilonstep-1) * 5400
-        ilat = (1:5400) .+ (ilatstep-1) * 5400
-        roro = @view oro[ilon,ilat]
-        NCDatasets.load!(eds["z"].var,roro,ilon,ilat)
+        @info "$(modulelog()) - Extracting Region $istep of $nstep ..."
+        ilat = (1:1800)  .+ (istep-1) * 1800
+        roro = @view oro[:,ilat]
+        NCDatasets.load!(eds["z"].var,roro,:,ilat)
 
     end
 
@@ -414,12 +410,12 @@ function setupLandSea(
     goro = gds["z"][:]
     close(gds)
 
-    ggrd = RegionGrid(geo,glon,glat)
+    ggrd = RegionGrid(GeoRegion("GLB"),glon,glat)
     nlon = length(ggrd.ilon)
     nlat = length(ggrd.ilat)
     mask = ones(Int,nlon,nlat)
 
-    @info "$(modulelog()) - Extracting regional ETOPO $(uppercase(type)) Land-Sea mask for the \"$(geo.ID)\" GeoRegion from the Global ETOPO Land-Sea mask dataset ..."
+    @info "$(modulelog()) - Extracting regional ETOPO $(uppercase(type)) Land-Sea mask for the \"GLB\" GeoRegion from the Global ETOPO Land-Sea mask dataset ..."
     
     roro = extractGrid(goro,ggrd)
     rlsm = deepcopy(roro)
