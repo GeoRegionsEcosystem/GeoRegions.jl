@@ -184,7 +184,7 @@ include("georegions/show.jl")
 include("georegions/tables.jl")
 
 include("isin/isin.jl")
-include("isin/isingeoRegion.jl")
+include("isin/isingeoregion.jl")
 
 include("extract/extract.jl")
 include("extract/grid.jl")
