@@ -293,7 +293,8 @@ function downloadLandSea(
         @info "$(modulelog()) - Extracting Region $ireg of $nreg ..."
         ilon = (1:5400) .+ (ilonstep-1) * 5400
         ilat = (1:5400) .+ (ilatstep-1) * 5400
-        NCDatasets.load!(eds["z"].var,oro[ilon,ilat],ilon,ilat)
+        roro = @view oro[ilon,ilat]
+        NCDatasets.load!(eds["z"].var,roro,ilon,ilat)
 
     end
 
