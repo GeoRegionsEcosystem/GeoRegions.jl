@@ -192,5 +192,6 @@ include("extract/grid.jl")
 
 include("landsea/landsea.jl")
 include("landsea/smooth.jl")
+include("landsea/etopobackend.jl")
 
 end # module
