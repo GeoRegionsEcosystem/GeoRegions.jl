@@ -52,6 +52,10 @@ function getLandSea(
     geoid     :: Bool = false,
     returnlsd :: Bool = false,
     savelsd   :: Bool = false,
+    smooth    :: Bool = false,
+    σlon :: Int = 0,
+    σlat :: Int = 0,
+    iterations :: Int = 100,
     FT = Float32
 )
 
@@ -67,6 +71,23 @@ function getLandSea(
         error("$(modulelog()) - The only possible specifications for the resolution are 30 and 60 arc-seconds, an option for 15 arc-seconds may be added in the future once I figure out how to manage the 288 tiles for 15 arc-second data")
     end
 
+    if smooth && (iszero(σlon) && iszero(σlat))
+        error("$(modulelog()) - Incomplete specification of smoothing parameters, at least one of σlon and σlat must be nonzero")
+    end
+
+    if smooth
+        tgeo = geo
+        tN = geo.N + (ceil(σlat*20 / resolution) + 1); if tN >   90; tN =   90 end
+        tS = geo.S - (ceil(σlat*20 / resolution) + 1); if tS <  -90; tS =  -90 end
+        tE = geo.E + (ceil(σlon*20 / resolution) + 1); if tE >  360; tE =  360 end
+        tW = geo.W - (ceil(σlon*20 / resolution) + 1); if tW < -180; tW = -180 end
+        if (tE - tW) > 360; tW = 0; tE = 360 end
+        geo = RectRegion(
+            "TMP", "GLB", "Temporary GeoRegion",
+            [tN,tS,tE,tW], savegeo = false
+        )
+    end
+
     if savelsd
 
         if !isdir(joinpath(path,"ETOPO")); mkpath(joinpath(path,"ETOPO")) end
@@ -78,47 +99,7 @@ function getLandSea(
             @info "$(modulelog()) - The ETOPO $(uppercase(type)) Land-Sea mask dataset for the \"$(geo.ID)\" GeoRegion is not available, extracting from Global ETOPO $(uppercase(type)) Land-Sea mask dataset ..."
 
             glbfnc = joinpath(path,"ETOPO","etopo-$(type)-GLB_$(resolution)arcsec.nc")
-            if !isfile(glbfnc)
-                @info "$(modulelog()) - The Global ETOPO $(uppercase(type)) Land-Sea mask dataset is not available, downloading from ETOPO OPeNDAP servers ..."
-                downloadLandSea(type,path,resolution)
-
-                gds  = NCDataset(glbfnc)
-                glon = gds["longitude"][:]
-                glat = gds["latitude"][:]
-                goro = gds["z"][:]
-                close(gds)
-
-                rinfo = RegionGrid(GeoRegion("GLB"),glon,glat)
-                ilon  = rinfo.ilon; nlon = length(rinfo.ilon)
-                ilat  = rinfo.ilat; nlat = length(rinfo.ilat)
-                rlsm  = zeros(nlon,nlat)
-                roro  = zeros(nlon,nlat)
-
-                if typeof(rinfo) <: PolyGrid
-                    mask = rinfo.mask; mask[isnan.(mask)] .= 0
-                else; mask = ones(Int,nlon,nlat)
-                end
-
-                @info "$(modulelog()) - Extracting regional ETOPO $(uppercase(type)) Land-Sea mask for the \"GLB\" GeoRegion from the original ETOPO Land-Sea mask dataset ..."
-
-                for iglat = 1 : nlat, iglon = 1 : nlon
-                    if isone(mask[iglon,iglat])
-                        roro[iglon,iglat] = goro[ilon[iglon],ilat[iglat]]
-                        if roro[iglon,iglat] > 0
-                            rlsm[iglon,iglat] = 1
-                        else; rlsm[iglon,iglat] = 0
-                        end
-                    else
-                        roro[iglon,iglat] = NaN
-                        rlsm[iglon,iglat] = NaN
-                    end
-                end
-
-                saveLandSea(
-                    GeoRegion("GLB"),rinfo.lon,rinfo.lat,rlsm,roro,Int16.(mask),
-                    path,type,resolution
-                )
-            end
+            if !isfile(glbfnc); setupLandSea(type,path,resolution) end
 
             gds  = NCDataset(glbfnc)
             glon = gds["longitude"][:]
@@ -126,33 +107,50 @@ function getLandSea(
             goro = gds["z"][:]
             close(gds)
 
-            rinfo = RegionGrid(geo,glon,glat)
-            ilon  = rinfo.ilon; nlon = length(rinfo.ilon)
-            ilat  = rinfo.ilat; nlat = length(rinfo.ilat)
-            rlsm  = zeros(nlon,nlat)
-            roro  = zeros(nlon,nlat)
+            ggrd = RegionGrid(geo,glon,glat)
+            nlon = length(ggrd.ilon)
+            nlat = length(ggrd.ilat)
 
-            if typeof(rinfo) <: PolyGrid
-                mask = rinfo.mask; mask[isnan.(mask)] .= 0
+            if typeof(ggrd) <: PolyGrid
+                  mask = ggrd.mask; mask[isnan.(mask)] .= 0
             else; mask = ones(Int,nlon,nlat)
             end
 
             @info "$(modulelog()) - Extracting regional ETOPO $(uppercase(type)) Land-Sea mask for the \"$(geo.ID)\" GeoRegion from the Global ETOPO Land-Sea mask dataset ..."
 
-            for iglat = 1 : nlat, iglon = 1 : nlon
-                if isone(mask[iglon,iglat])
-                    roro[iglon,iglat] = goro[ilon[iglon],ilat[iglat]]
-                    if roro[iglon,iglat] > 0
-                        rlsm[iglon,iglat] = 1
-                    else; rlsm[iglon,iglat] = 0
-                    end
-                else
-                    roro[iglon,iglat] = NaN
-                    rlsm[iglon,iglat] = NaN
+            roro = extractGrid(goro,ggrd)
+            rlsm = deepcopy(roro)
+            rlsm[roro .>= 0] .= 1
+            rlsm[roro .<  0] .= 0
+
+            if smooth
+
+                smooth!(rlsm,roro,σlon=σlon,σlat=σlat,iterations=iterations)
+
+                geo = tgeo
+                ggrd = RegionGrid(geo,ggrd.lon,ggrd.lat)
+                nlon = length(ggrd.ilon)
+                nlat = length(ggrd.ilat)
+    
+                if typeof(ggrd) <: PolyGrid
+                      mask = ggrd.mask; mask[isnan.(mask)] .= 0
+                else; mask = ones(Int,nlon,nlat)
                 end
+    
+                @info "$(modulelog()) - Extracting regional ETOPO $(uppercase(type)) Land-Sea mask for the \"$(geo.ID)\" GeoRegion from the Global ETOPO Land-Sea mask dataset ..."
+    
+                roro = extractGrid(roro,ggrd)
+                rlsm = deepcopy(roro)
+                rlsm[roro .>= 0] .= 1
+                rlsm[roro .<  0] .= 0
+
             end
 
-            saveLandSea(geo,rinfo.lon,rinfo.lat,rlsm,roro,Int16.(mask),path,type,resolution)
+            saveLandSea(
+                geo, ggrd.lon, ggrd.lat,
+                rlsm, roro, Int16.(mask),
+                path, type, resolution, smooth, σlon, σlat
+            )
 
         end
 
@@ -191,14 +189,14 @@ function getLandSea(
 
         @info "$(modulelog()) - Extracting RegionGrid information for later extraction ..."
 
-        rinfo = RegionGrid(geo,lon,lat)
-        ilon  = rinfo.ilon; nlon = length(rinfo.ilon)
-        ilat  = rinfo.ilat; nlat = length(rinfo.ilat)
-        rlsm  = zeros(Float32,nlon,nlat)
-        roro  = zeros(Float32,nlon,nlat)
+        ggrd = RegionGrid(geo,lon,lat)
+        ilon = ggrd.ilon; nlon = length(ggrd.ilon)
+        ilat = ggrd.ilat; nlat = length(ggrd.ilat)
+        rlsm = zeros(Float32,nlon,nlat)
+        roro = zeros(Float32,nlon,nlat)
 
-        if typeof(rinfo) <: PolyGrid
-              mask = rinfo.mask; mask[isnan.(mask)] .= 0
+        if typeof(ggrd) <: PolyGrid
+              mask = ggrd.mask; mask[isnan.(mask)] .= 0
         else; mask = ones(Int16,nlon,nlat)
         end
 
@@ -233,18 +231,38 @@ function getLandSea(
         for ilat = 1 : nlat, ilon = 1 : nlon
             if !isone(mask[ilon,ilat])
                 roro[ilon,ilat] = NaN32
-                rlsm[ilon,ilat] = NaN32
-            else
-                if roro[ilon,ilat] > 0
-                      rlsm[ilon,ilat] = 1
-                else; rlsm[ilon,ilat] = 0
-                end
             end
         end
 
+        rlsm[roro .>= 0] .= 1
+        rlsm[roro .<  0] .= 0
+
         @info "$(modulelog()) - Extracting the regional ETOPO1 Land-Sea mask for the \"$(geo.ID)\" has completed"
 
-        return LandSea{FT}(rinfo.lon,rinfo.lat,rlsm,roro,mask)
+        if smooth
+
+            smooth!(rlsm,roro,σlon=σlon,σlat=σlat,iterations=iterations)
+
+            geo = tgeo
+            ggrd = RegionGrid(geo,ggrd.lon,ggrd.lat)
+            nlon = length(ggrd.ilon)
+            nlat = length(ggrd.ilat)
+
+            if typeof(ggrd) <: PolyGrid
+                  mask = ggrd.mask; mask[isnan.(mask)] .= 0
+            else; mask = ones(Int,nlon,nlat)
+            end
+
+            @info "$(modulelog()) - Extracting regional ETOPO $(uppercase(type)) Land-Sea mask for the \"$(geo.ID)\" GeoRegion from the Global ETOPO Land-Sea mask dataset ..."
+
+            roro = extractGrid(roro,ggrd)
+            rlsm = deepcopy(roro)
+            rlsm[roro .>= 0] .= 1
+            rlsm[roro .<  0] .= 0
+            
+        end
+
+        return LandSea{FT}(ggrd.lon,ggrd.lat,rlsm,roro,mask)
 
     end
 
@@ -304,10 +322,23 @@ function saveLandSea(
     mask :: Array{Int16,2},
     path :: AbstractString,
     type :: AbstractString,
-    eres :: Int
+    eres :: Int,
+    smooth :: Bool = false,
+    σlon :: Int = 0,
+    σlat :: Int = 0,
 )
 
-    fnc = joinpath(path,"ETOPO","etopo-$(type)-$(geo.ID)_$(eres)arcsec.nc")
+    if !smooth
+        fnc = joinpath(path,"ETOPO","etopo-$(type)-$(geo.ID)_$(eres)arcsec.nc")
+    else
+        if iszero(σlon) && iszero(σlat)
+            error("$(modulelog()) - Incomplete specification of smoothing parameters, at least one of σlon and σlat must be nonzero")
+        end
+        fnc = joinpath(path,"ETOPO",
+            "etopo-$(type)-$(geo.ID)_$(eres)arcsec-smooth_$(σlon)x$(σlat).nc"
+        )
+    end
+
     if isfile(fnc)
         rm(fnc,force=true)
     end
@@ -363,5 +394,39 @@ function saveLandSea(
     ncmsk[:] = mask
 
     close(ds)
+
+end
+
+function setupLandSea(
+    type :: AbstractString,
+    path :: AbstractString,
+    resolution :: Int,
+)
+
+    @info "$(modulelog()) - The Global ETOPO $(uppercase(type)) Land-Sea mask dataset is not available, downloading from ETOPO OPeNDAP servers ..."
+    downloadLandSea(type,path,resolution)
+
+    gds  = NCDataset(joinpath(path,"ETOPO","etopo-$(type)-GLB_$(resolution)arcsec.nc"))
+    glon = gds["longitude"][:]
+    glat = gds["latitude"][:]
+    goro = gds["z"][:]
+    close(gds)
+
+    ggrd = RegionGrid(geo,glon,glat)
+    nlon = length(ggrd.ilon)
+    nlat = length(ggrd.ilat)
+    mask = ones(Int,nlon,nlat)
+
+    @info "$(modulelog()) - Extracting regional ETOPO $(uppercase(type)) Land-Sea mask for the \"$(geo.ID)\" GeoRegion from the Global ETOPO Land-Sea mask dataset ..."
+    
+    roro = extractGrid(goro,ggrd)
+    rlsm = deepcopy(roro)
+    rlsm[roro .>= 0] .= 1
+    rlsm[roro .<  0] .= 0
+
+    saveLandSea(
+        GeoRegion("GLB"),ggrd.lon,ggrd.lat,rlsm,roro,Int16.(mask),
+        path,type,resolution
+    )
 
 end

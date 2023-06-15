@@ -4,6 +4,7 @@ module GeoRegions
 using Dates
 using DelimitedFiles
 using GeometryBasics
+using ImageFiltering
 using Logging
 using NCDatasets
 using PolygonOps
@@ -23,7 +24,7 @@ export
 
         extractGrid, extractGrid!,
 
-        getLandSea,
+        getLandSea, smooth, smooth!,
         
         Point2
 
@@ -190,6 +191,6 @@ include("extract/extract.jl")
 include("extract/grid.jl")
 
 include("landsea/landsea.jl")
-# include("landsea/filter.jl")
+include("landsea/smooth.jl")
 
 end # module
