@@ -167,6 +167,19 @@ function getLandSea(
         
     else
 
+        if smooth
+            tgeo = geo
+            tN = geo.N + (ceil(σlat*20 / resolution) + 1); if tN >   90; tN =   90 end
+            tS = geo.S - (ceil(σlat*20 / resolution) + 1); if tS <  -90; tS =  -90 end
+            tE = geo.E + (ceil(σlon*20 / resolution) + 1); if tE >  360; tE =  360 end
+            tW = geo.W - (ceil(σlon*20 / resolution) + 1); if tW < -180; tW = -180 end
+            if (tE - tW) > 360; tW = 0; tE = 360 end
+            geo = RectRegion(
+                "TMP", "GLB", "Temporary GeoRegion",
+                [tN,tS,tE,tW], savegeo = false
+            )
+        end
+
         @info "$(modulelog()) - Opneing global ETOPO1 Land-Sea mask dataset from OPeNDAP servers ..."
 
         etopods = NCDataset(joinpath(
