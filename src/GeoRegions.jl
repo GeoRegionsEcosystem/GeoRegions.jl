@@ -24,7 +24,7 @@ export
 
         extractGrid, extractGrid!,
 
-        getLandSea, smooth, smooth!,
+        getLandSea, smooth, smooth!, smoothlsm,
         
         Point2
 

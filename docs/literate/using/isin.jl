@@ -141,3 +141,9 @@ isinGeoRegion(::GeoRegion,::RectRegion)
 isinGeoRegion(::GeoRegion,::PolyRegion)
 ```
 =#
+
+removeGeoRegion("BIG")
+removeGeoRegion("TS1")
+removeGeoRegion("TS2")
+removeGeoRegion("TS3")
+removeGeoRegion("TS4")

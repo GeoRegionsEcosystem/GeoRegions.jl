@@ -146,6 +146,14 @@ isinGeoRegion(::GeoRegion,::RectRegion)
 isinGeoRegion(::GeoRegion,::PolyRegion)
 ```
 
+````@example isin
+removeGeoRegion("BIG")
+removeGeoRegion("TS1")
+removeGeoRegion("TS2")
+removeGeoRegion("TS3")
+removeGeoRegion("TS4")
+````
+
 ---
 
 *This page was generated using [Literate.jl](https://github.com/fredrikekre/Literate.jl).*

@@ -104,17 +104,17 @@ function getLandSea(
             nlon = length(ggrd.ilon)
             nlat = length(ggrd.ilat)
 
-            if typeof(ggrd) <: PolyGrid
-                  mask = ggrd.mask; mask[isnan.(mask)] .= 0
-            else; mask = ones(Int,nlon,nlat)
-            end
-
             @info "$(modulelog()) - Extracting regional ETOPO $(uppercase(type)) Land-Sea mask for the \"$(geo.ID)\" GeoRegion from the Global ETOPO Land-Sea mask dataset ..."
 
             roro = extractGrid(goro,ggrd)
             rlsm = deepcopy(roro)
             rlsm[roro .>= 0] .= 1
             rlsm[roro .<  0] .= 0
+
+            if typeof(ggrd) <: PolyGrid
+                  mask = ggrd.mask; mask[isnan.(mask)] .= 0
+            else; mask = ones(Int,nlon,nlat)
+            end
 
             if smooth
 
@@ -125,15 +125,15 @@ function getLandSea(
                 nlon = length(ggrd.ilon)
                 nlat = length(ggrd.ilat)
     
-                if typeof(ggrd) <: PolyGrid
-                      mask = ggrd.mask; mask[isnan.(mask)] .= 0
-                else; mask = ones(Int,nlon,nlat)
-                end
-    
                 @info "$(modulelog()) - Extracting regional ETOPO $(uppercase(type)) Land-Sea mask for the \"$(geo.ID)\" GeoRegion from the Global ETOPO Land-Sea mask dataset ..."
     
                 roro = extractGrid(roro,ggrd)
                 rlsm = extractGrid(rlsm,ggrd)
+    
+                if typeof(ggrd) <: PolyGrid
+                      mask = ggrd.mask; mask[isnan.(mask)] .= 0
+                else; mask = ones(Int,nlon,nlat)
+                end
 
             end
 
@@ -252,15 +252,15 @@ function getLandSea(
             nlon = length(ggrd.ilon)
             nlat = length(ggrd.ilat)
 
-            if typeof(ggrd) <: PolyGrid
-                  mask = ggrd.mask; mask[isnan.(mask)] .= 0
-            else; mask = ones(Int,nlon,nlat)
-            end
-
             @info "$(modulelog()) - Extracting regional ETOPO $(uppercase(type)) Land-Sea mask for the \"$(geo.ID)\" GeoRegion from the Global ETOPO Land-Sea mask dataset ..."
 
             roro = extractGrid(roro,ggrd)
             rlsm = extractGrid(rlsm,ggrd)
+
+            if typeof(ggrd) <: PolyGrid
+                  mask = ggrd.mask; mask[isnan.(mask)] .= 0
+            else; mask = ones(Int,nlon,nlat)
+            end
             
         end
 

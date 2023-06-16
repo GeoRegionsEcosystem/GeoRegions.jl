@@ -1,22 +1,26 @@
 """
-    smooth(
-        lsd :: LandSeaTopo;
-        usetopography :: false
-    ) --> 
+    smooth!(
+        lsd  :: LandSeaTopo;
+        σlon :: Int = 0,
+        σlat :: Int = 0,
+        iterations :: Int = 100,
+        topography :: Bool = false
+    ) --> nothing
 
 Perform a gaussian smoothing on the Land-Sea mask given a LandSeaTopo Mask dataset.  If `usetopography` is set to true, then before the filtering, any points where height >= 0 is set to 1, and <0 is set = 0.
 
+The smoothed land-sea mask will be saved into `lsd.lsm`
+
 Arguments
 =========
-- `geo` : The GeoRegion of interest
+- `lsd` : A Land-Sea Dataset with Topography
 
 Keyword Arguments
 =================
-- `path` :: The path to which an `ETOPO` folder is created within and ETOPO LandSea data saved into
-- `resolution` : The resolution of the dataset to be downloaded, in units of arc-seconds.  Possible values are 15, 30 and 60, default is 60.
-- `bedrock`, `geoid` : The type of ETOPO data (bedrock, geoid, ice-surface) to be downloaded. Bedrock has priority over geoid, so if both are `true`, the bedrock is downloaded.
-- `savelsd` : Save LandSea dataset into a local NetCDF file.
-- `returnlsd` : If `savelsd = true`, you can choose to simply save the data into the NetCDF file, or load return it as a `LandSea` dataset. Otherwise, if `savelsd = false`, you always return the `LandSea` dataset.
+- `σlon` : Smooth in the longitude direction (every increase of 1 in σlon roughly corresponds to 8 pixels)
+- `σlat` : Smooth in the latitude direction (every increase of 1 in σlat roughly corresponds to 8 pixels)
+- `iterations` : Iterations of gausssian smoothing, the higher, the closer the smoothing follows a semi-log.  50-100 iterations is generally enough.
+- `topography` : If `true`, then the land-sea mask that is smoothed will be based on the topography instead of the raw ERA5 land-sea mask
 """
 function smooth!(
     lsd  :: LandSeaTopo;
@@ -52,6 +56,28 @@ function smooth!(
 
 end
 
+"""
+    smooth!(
+        lsd  :: LandSeaFlat;
+        σlon :: Int = 0,
+        σlat :: Int = 0,
+        iterations :: Int = 100
+    ) --> nothing
+
+Perform a gaussian smoothing on the Land-Sea mask given a LandSeaFlat Mask dataset.
+
+The smoothed land-sea mask will be saved into `lsd.lsm`
+
+Arguments
+=========
+- `lsd` : A Land-Sea Dataset without Topography
+
+Keyword Arguments
+=================
+- `σlon` : Smooth in the longitude direction (every increase of 1 in σlon roughly corresponds to 8 pixels)
+- `σlat` : Smooth in the latitude direction (every increase of 1 in σlat roughly corresponds to 8 pixels)
+- `iterations` : Iterations of gausssian smoothing, the higher, the closer the smoothing follows a semi-log.  50-100 iterations is generally enough.
+"""
 function smooth!(
     lsd  :: LandSeaFlat;
     σlon :: Int = 0,
@@ -80,6 +106,77 @@ function smooth!(
 
 end
 
+"""
+    smooth!(
+        lsm  :: Array{<:Real,2};
+        σlon :: Int = 0,
+        σlat :: Int = 0,
+        iterations :: Int = 100
+    ) --> nothing
+
+Perform a gaussian smoothing on the Land-Sea mask.
+
+The smoothed land-sea mask will be saved into `lsm`.
+
+Arguments
+=========
+- `lsm` : A Land-Sea Mask
+
+Keyword Arguments
+=================
+- `σlon` : Smooth in the longitude direction (every increase of 1 in σlon roughly corresponds to 8 pixels)
+- `σlat` : Smooth in the latitude direction (every increase of 1 in σlat roughly corresponds to 8 pixels)
+- `iterations` : Iterations of gausssian smoothing, the higher, the closer the smoothing follows a semi-log.  50-100 iterations is generally enough.
+"""
+function smooth!(
+    lsm  :: Array{<:Real,2};
+    σlon :: Int = 0,
+    σlat :: Int = 0,
+    iterations :: Int = 100,
+)
+
+    if iszero(σlon) && iszero(σlat)
+        error("$(modulelog()) - Incomplete specification of smoothing parameters, at least one of σlon and σlat must be nonzero")
+    end
+    
+    olsm = deepcopy(lsm)
+
+    it = 0
+	while it < iterations
+        olsm .= lsm
+		nlsm  = log10.(imfilter(10. .^olsm, Kernel.gaussian((σlon,σlat)),"circular"));
+		lsm  .= (nlsm .+ olsm) / 2
+		it   += 1
+	end
+
+    return nothing
+
+end
+
+"""
+    smooth!(
+        lsm  :: Array{<:Real,2},
+        oro  :: Array{<:Real,2};
+        σlon :: Int = 0,
+        σlat :: Int = 0,
+        iterations :: Int = 100
+    ) --> nothing
+
+Perform a gaussian smoothing on the Land-Sea mask given a corresponding topographic dataset.
+
+The smoothed land-sea mask will be saved into `lsm`.
+
+Arguments
+=========
+- `lsm` : A Land-Sea Mask
+- `oro` : A topographic dataset that the smoothing will be based off
+
+Keyword Arguments
+=================
+- `σlon` : Smooth in the longitude direction (every increase of 1 in σlon roughly corresponds to 8 pixels)
+- `σlat` : Smooth in the latitude direction (every increase of 1 in σlat roughly corresponds to 8 pixels)
+- `iterations` : Iterations of gausssian smoothing, the higher, the closer the smoothing follows a semi-log.  50-100 iterations is generally enough.
+"""
 function smooth!(
     lsm  :: Array{<:Real,2},
     oro  :: Array{<:Real,2};
@@ -108,8 +205,28 @@ function smooth!(
 
 end
 
-function smooth!(
-    lsm  :: Array{<:Real,2},
+"""
+    smoothlsm(
+        oro  :: Array{<:Real,2};
+        σlon :: Int = 0,
+        σlat :: Int = 0,
+        iterations :: Int = 100
+    ) --> Array{<:Real,2}
+
+Perform a gaussian smoothing on the Land-Sea mask
+
+Arguments
+=========
+- `oro` : A topographic dataset that the smoothing will be based off
+
+Keyword Arguments
+=================
+- `σlon` : Smooth in the longitude direction (every increase of 1 in σlon roughly corresponds to 8 pixels)
+- `σlat` : Smooth in the latitude direction (every increase of 1 in σlat roughly corresponds to 8 pixels)
+- `iterations` : Iterations of gausssian smoothing, the higher, the closer the smoothing follows a semi-log.  50-100 iterations is generally enough.
+"""
+function smoothlsm(
+    oro  :: Array{<:Real,2};
     σlon :: Int = 0,
     σlat :: Int = 0,
     iterations :: Int = 100,
@@ -119,16 +236,18 @@ function smooth!(
         error("$(modulelog()) - Incomplete specification of smoothing parameters, at least one of σlon and σlat must be nonzero")
     end
     
-    olsm = deepcopy(lsm)
+    lsm = deepcopy(oro)
+    lsm[oro .>= 0] .= 1
+    lsm[oro .<  0] .= 0
 
     it = 0
 	while it < iterations
         olsm .= lsm
-		nlsm  = log10.(imfilter(10. .^olsm, Kernel.gaussian((σlon,σlat)),"circular"));
-		lsm  .= (nlsm .+ olsm) / 2
-		it   += 1
+	    nlsm  = log10.(imfilter(10. .^olsm, Kernel.gaussian((σlon,σlat)),"circular"));
+	    lsm  .= (nlsm .+ olsm) / 2
+	    it   += 1
 	end
 
-    return nothing
+    return lsm
 
 end
