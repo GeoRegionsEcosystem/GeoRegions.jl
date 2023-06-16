@@ -221,19 +221,22 @@ function downloadLandSea(
         "ETOPO_2022_v1_$(resolution)s_N90W180_$(type).nc"
     ))
 
-    lon = eds["lon"][:]; nlon = length(lon); nlonstep = Int(nlon/5400)
-    lat = eds["lat"][:]; nlat = length(lat); nlatstep = Int(nlat/5400)
+    lon = eds["lon"][:]; nlon = length(lon)
+    lat = eds["lat"][:]; nlat = length(lat); nstep = Int(nlat/5400)
+
+    @info "$(modulelog()) - The Global ETOPO Land-Sea Mask is too huge to download at one shot, splitting into $nstep subregions ..."
 
     mask =  ones(Int16,nlon,nlat)
     lsm  = zeros(Float32,nlon,nlat)
     oro  = zeros(Float32,nlon,nlat)
 
-    for ilatstep = 1 : nlatstep, ilonstep = 1 : nlonstep
+    for istep = 1 : nstep
 
-        @info [ilonstep,ilatstep]
-        ilon = (1:5400) .+ (ilonstep-1) * 5400
-        ilat = (1:5400) .+ (ilatstep-1) * 5400
-        NCDatasets.load!(eds["z"].var,oro[ilon,ilat],ilon,ilat)
+        @info "$(modulelog()) - Downloading subRegion $istep of $nstep ..."
+
+        ilat = (1:5400) .+ (istep-1) * 5400
+        roro = @view oro[:,ilat]
+        NCDatasets.load!(eds["z"].var,roro,:,ilat)
 
     end
 
