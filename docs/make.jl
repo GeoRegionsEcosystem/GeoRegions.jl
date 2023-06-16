@@ -65,6 +65,7 @@ makedocs(
         "LandSea Datasets: ETOPO 2022" => [
             "What is a LandSea Dataset?" => "landsea/intro.md",
             "Loading LandSea Datasets"   => "landsea/create.md",
+            "Smoothing LandSea Masks"    => "landsea/smooth.md",
         ],
         "Examples"              => "example/placeholder.md",
         "Lists of GeoRegions"   => [

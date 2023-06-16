@@ -10,7 +10,9 @@ Option (2) however, is much faster for smaller GeoRegions when loading the data 
 
 You can toggle between the two options using the keyword argument `savelsd` - `true` sets the function to option 1, and `false` is option 2.
 
-See end of the page for the API
+See end of the page for the API.
+
+For more details on *smoothing* the land-sea mask, such that distance from the actual coastline is better resolved, please see [this page](smooth.md)
 
 ### Setup
 
