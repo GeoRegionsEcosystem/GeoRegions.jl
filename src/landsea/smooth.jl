@@ -34,7 +34,7 @@ function smooth!(
         error("$(modulelog()) - Incomplete specification of smoothing parameters, at least one of σlon and σlat must be nonzero")
     end
 
-    olsm = deepcopy(lsd.lsm)
+    lsm  = lsd.lsm
 	flsm = deepcopy(lsd.lsm)
 
     if topography
@@ -44,9 +44,8 @@ function smooth!(
     
     it = 0
 	while it < iterations
-        olsm .= flsm
-		flsm  = log10.(imfilter(10. .^olsm, Kernel.gaussian((σlon,σlat)),"circular"));
-		flsm .= (flsm .+ olsm) / 2
+		flsm .= log10.(imfilter(10. .^flsm, Kernel.gaussian((σlon,σlat)),"circular"));
+		flsm .= (flsm .+ lsm) / 2
 		it   += 1
 	end
 
@@ -89,14 +88,12 @@ function smooth!(
         error("$(modulelog()) - Incomplete specification of smoothing parameters, at least one of σlon and σlat must be nonzero")
     end
 
-    olsm = deepcopy(lsd.lsm)
     flsm = deepcopy(lsd.lsm)
 
     it = 0
 	while it < iterations
-        olsm .= flsm
-		flsm  = log10.(imfilter(10. .^olsm, Kernel.gaussian((σlon,σlat)),"circular"));
-		flsm .= (flsm .+ olsm) / 2
+		flsm .= log10.(imfilter(10. .^flsm, Kernel.gaussian((σlon,σlat)),"circular"));
+		flsm .= (flsm .+ lsm) / 2
 		it   += 1
 	end
 
@@ -138,16 +135,18 @@ function smooth!(
     if iszero(σlon) && iszero(σlat)
         error("$(modulelog()) - Incomplete specification of smoothing parameters, at least one of σlon and σlat must be nonzero")
     end
-    
-    olsm = deepcopy(lsm)
+
+    flsm = deepcopy(lsm)
 
     it = 0
 	while it < iterations
-        olsm .= lsm
-		nlsm  = log10.(imfilter(10. .^olsm, Kernel.gaussian((σlon,σlat)),"circular"));
-		lsm  .= (nlsm .+ olsm) / 2
+		flsm .= log10.(imfilter(10. .^flsm, Kernel.gaussian((σlon,σlat)),"circular"));
+		flsm .= (flsm .+ lsm) / 2
 		it   += 1
+        @info it
 	end
+
+    lsm .= flsm
 
     return nothing
 
@@ -168,7 +167,7 @@ The smoothed land-sea mask will be saved into `lsm`.
 
 Arguments
 =========
-- `lsm` : A Land-Sea Mask
+- `olsm` : The old Land-Sea Mask
 - `oro` : A topographic dataset that the smoothing will be based off
 
 Keyword Arguments
@@ -178,7 +177,7 @@ Keyword Arguments
 - `iterations` : Iterations of gausssian smoothing, the higher, the closer the smoothing follows a semi-log.  50-100 iterations is generally enough.
 """
 function smooth!(
-    lsm  :: Array{<:Real,2},
+    lsm :: Array{<:Real,2},
     oro  :: Array{<:Real,2};
     σlon :: Int = 0,
     σlat :: Int = 0,
@@ -189,17 +188,19 @@ function smooth!(
         error("$(modulelog()) - Incomplete specification of smoothing parameters, at least one of σlon and σlat must be nonzero")
     end
 
-    olsm = deepcopy(lsm)
-    olsm[oro.>=0] .= 1
-    olsm[oro.< 0] .= 0
+    tlsm = deepcopy(lsm)
+    tlsm[oro.>=0] .= 1
+    tlsm[oro.< 0] .= 0
+    flsm = deepcopy(lsm)
     
     it = 0
 	while it < iterations
-        olsm .= lsm
-		nlsm  = log10.(imfilter(10. .^olsm, Kernel.gaussian((σlon,σlat)),"circular"));
-		lsm  .= (nlsm .+ olsm) / 2
+		flsm .= log10.(imfilter(10. .^flsm, Kernel.gaussian((σlon,σlat)),"circular"));
+		flsm .= (flsm .+ lsm) / 2
 		it   += 1
 	end
+
+    lsm .= flsm
 
     return nothing
 
@@ -236,18 +237,18 @@ function smoothlsm(
         error("$(modulelog()) - Incomplete specification of smoothing parameters, at least one of σlon and σlat must be nonzero")
     end
     
-    lsm = deepcopy(oro)
+    lsm  = deepcopy(oro)
     lsm[oro .>= 0] .= 1
     lsm[oro .<  0] .= 0
+    flsm = deepcopy(oro)
 
     it = 0
 	while it < iterations
-        olsm .= lsm
-	    nlsm  = log10.(imfilter(10. .^olsm, Kernel.gaussian((σlon,σlat)),"circular"));
-	    lsm  .= (nlsm .+ olsm) / 2
+	    flsm .= log10.(imfilter(10. .^flsm, Kernel.gaussian((σlon,σlat)),"circular"));
+	    flsm .= (flsm .+ lsm) / 2
 	    it   += 1
 	end
 
-    return lsm
+    return flsm
 
 end

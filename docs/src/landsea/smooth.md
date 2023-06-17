@@ -29,8 +29,8 @@ nothing
 ````@example smooth
 geo = RectRegion("ACH","GLB","Aceh",[7,2,99,94],savegeo=false)
 lsd_raw = getLandSea(geo,savelsd=false)
-lsd_σ1d = getLandSea(geo,savelsd=false,smooth=true,σlon=1,σlat=1)
-lsd_σ2d = getLandSea(geo,savelsd=false,smooth=true,σlon=2,σlat=2)
+lsd_σ05 = getLandSea(geo,savelsd=false,smooth=true,σlon=5,σlat=5)
+lsd_σ10 = getLandSea(geo,savelsd=false,smooth=true,σlon=10,σlat=10)
 ````
 
 ````@example smooth
@@ -49,22 +49,22 @@ lines!(ax1,clon,clat,color=:black,linewidth=2)
 
 ax2 = Axis(
     fig[1,2],width=225,height=225,
-    title="Smoothed Land-Sea Mask (σ=1)",xlabel="Longitude / º",
+    title="Smoothed (σ=5)",xlabel="Longitude / º",
     limits=(93.9,99.1,1.9,7.1)
 )
 contourf!(
-    ax2,lsd_σ1d.lon,lsd_σ1d.lat,lsd_σ1d.lsm,
+    ax2,lsd_σ05.lon,lsd_σ05.lat,lsd_σ05.lsm,
     levels=range(0.05,0.95,length=19),extendlow=:auto,extendhigh=:auto
 )
 lines!(ax2,clon,clat,color=:black,linewidth=2)
 
 ax3 = Axis(
     fig[1,3],width=225,height=225,
-    title="Smoothed Land-Sea Mask (σ=2)",xlabel="Longitude / º",
+    title="Smoothed (σ=10)",xlabel="Longitude / º",
     limits=(93.9,99.1,1.9,7.1)
 )
 contourf!(
-    ax3,lsd_σ2d.lon,lsd_σ2d.lat,lsd_σ2d.lsm,
+    ax3,lsd_σ10.lon,lsd_σ10.lat,lsd_σ10.lsm,
     levels=range(0.05,0.95,length=19),extendlow=:auto,extendhigh=:auto
 )
 lines!(ax3,clon,clat,color=:black,linewidth=2)
@@ -76,7 +76,7 @@ fig
 ## Smoothing Directly from a loaded Land-Sea Mask
 
 ````@example smooth
-smooth!(lsd_raw,σlon=1,σlat=1)
+smooth!(lsd_raw,σlon=5,σlat=5)
 ````
 
 ````@example smooth
@@ -88,7 +88,7 @@ ax1 = Axis(
     limits=(93.9,99.1,1.9,7.1)
 )
 contourf!(
-    ax1,lsd_σ1d.lon,lsd_σ1d.lat,lsd_σ1d.lsm,
+    ax1,lsd_σ05.lon,lsd_σ05.lat,lsd_σ05.lsm,
     levels=range(0.05,0.95,length=19),extendlow=:auto,extendhigh=:auto
 )
 lines!(ax1,clon,clat,color=:black,linewidth=2)
