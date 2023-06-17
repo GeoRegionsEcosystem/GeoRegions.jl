@@ -143,7 +143,6 @@ function smooth!(
 		flsm .= log10.(imfilter(10. .^flsm, Kernel.gaussian((σlon,σlat)),"circular"));
 		flsm .= (flsm .+ lsm) / 2
 		it   += 1
-        @info it
 	end
 
     lsm .= flsm
