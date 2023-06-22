@@ -143,7 +143,7 @@ function extractGrid(
     ilat  = ggrd.ilat; nlat = length(ggrd.ilat)
                        n3D  = size(odata,3)
     mask  = ggrd.mask
-	ndata = zeros(nlon,nlat)
+	ndata = zeros(nlon,nlat,n3D)
 	for i3D = 1 : n3D, glat in 1 : nlat, glon in 1 : nlon
 		ndata[glon,glat,i3D] = odata[ilon[glon],ilat[glat],i3D] * mask[glon,glat]
 	end
@@ -179,7 +179,7 @@ function extractGrid(
 	ilat  = ggrd.ilat; nlat = length(ggrd.ilat)
                        n3D  = size(odata,3)
                        n4D  = size(odata,4)
-	ndata = zeros(nlon,nlat,n3D)
+	ndata = zeros(nlon,nlat,n3D,n4D)
 	for i4D = 1 : n4D, i3D = 1 : n3D, glat in 1 : nlat, glon in 1 : nlon
 		ndata[glon,glat,i3D,i4D] = odata[ilon[glon],ilat[glat],i3D,i4D]
 	end
@@ -216,7 +216,7 @@ function extractGrid(
                        n3D  = size(odata,3)
                        n4D  = size(odata,4)
     mask  = ggrd.mask
-	ndata = zeros(nlon,nlat)
+	ndata = zeros(nlon,nlat,n3D,n4D)
 	for i4D = 1 : n4D, i3D = 1 : n3D, glat in 1 : nlat, glon in 1 : nlon
 		ndata[glon,glat,i3D,i4D] = odata[ilon[glon],ilat[glat],i3D,i4D] * mask[glon,glat]
 	end
