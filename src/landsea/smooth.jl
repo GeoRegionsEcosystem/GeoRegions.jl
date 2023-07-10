@@ -38,8 +38,8 @@ function smooth!(
 	flsm = deepcopy(lsd.lsm)
 
     if topography
-        olsm[lsd.z .>= 0] .= 1
-        olsm[lsd.z .<  0] .= 0
+        olsm[lsd.z .>  0] .= 1
+        olsm[lsd.z .<= 0] .= 0
     end
     
     it = 0
@@ -188,8 +188,8 @@ function smooth!(
     end
 
     tlsm = deepcopy(lsm)
-    tlsm[oro.>=0] .= 1
-    tlsm[oro.< 0] .= 0
+    tlsm[oro .>  0] .= 1
+    tlsm[oro .<= 0] .= 0
     flsm = deepcopy(lsm)
     
     it = 0
@@ -237,8 +237,8 @@ function smoothlsm(
     end
     
     lsm  = deepcopy(oro)
-    lsm[oro .>= 0] .= 1
-    lsm[oro .<  0] .= 0
+    lsm[oro .>  0] .= 1
+    lsm[oro .<= 0] .= 0
     flsm = deepcopy(oro)
 
     it = 0
