@@ -240,7 +240,7 @@ function removegeoregion(
         for iline = 1 : nlines
             line = flines[iline]
             items = split(line,", ")
-            if items[1] == geo.ID
+            if !(items[1] == geo.ID)
                 write(io,"$(flines[iline])\n")
             end
         end
