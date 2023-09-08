@@ -238,7 +238,9 @@ function removegeoregion(
 
     open("tmp.txt","w") do io
         for iline = 1 : nlines
-            if !occursin("$(geo.ID),",flines[iline])
+            line = flines[iline]
+            items = split(line,", ")
+            if items[1] == geo.ID
                 write(io,"$(flines[iline])\n")
             end
         end
