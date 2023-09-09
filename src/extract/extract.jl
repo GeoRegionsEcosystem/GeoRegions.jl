@@ -109,6 +109,9 @@ function RectGrid(
     nlon = nlon[iWE]
     nlat =  lat[iNS]
 
+    while maximum(nlon) > geo.E; nlon .-= 360 end
+    while minimum(nlon) < geo.W; nlon .+= 360 end
+
     return RectGrid{eltype(lon)}(igrid,nlon,nlat,iWE,iNS)
 
 end
@@ -162,6 +165,9 @@ function PolyGrid(
         else; mask[ilon,ilat] = NaN
         end
     end
+
+    while maximum(nlon) > geo.E; nlon .-= 360 end
+    while minimum(nlon) < geo.W; nlon .+= 360 end
 
     return PolyGrid{FT}(igrid,nlon,nlat,iWE,iNS,mask)
 
@@ -259,6 +265,9 @@ function regioninfo(gridbounds::Vector{<:Real},rlon::Vector{<:Real},rlat::Vector
     while maximum(nlon); nlon .-= 360 end
     nlon = nlon[iWE]
     nlat =  lat[iNS]
+
+    while maximum(nlon) > geo.E; nlon .-= 360 end
+    while minimum(nlon) < geo.W; nlon .+= 360 end
 
     return RectGrid{FT}(igrid,iWE,iNS,nlon,nlat)
 
