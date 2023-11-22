@@ -39,6 +39,7 @@ end
 makedocs(
     modules  = [GeoRegions],
     doctest  = false,
+    warnonly = true,
     format   = Documenter.HTML(
         collapselevel = 1,
         prettyurls    = false
