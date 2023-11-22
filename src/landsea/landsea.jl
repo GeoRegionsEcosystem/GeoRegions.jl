@@ -98,7 +98,7 @@ function getLandSea(
             gds  = NCDataset(glbfnc)
             glon = gds["longitude"][:]
             glat = gds["latitude"][:]
-            goro = gds["z"][:]
+            goro = gds["z"][:,:]
             close(gds)
 
             ggrd = RegionGrid(geo,glon,glat)
@@ -151,9 +151,9 @@ function getLandSea(
             lds = NCDataset(lsmfnc)
             lon = lds["longitude"][:]
             lat = lds["latitude"][:]
-            lsm = nomissing(lds["lsm"][:], NaN)
-            oro = nomissing(lds["z"][:],   NaN)
-            msk = lds["mask"][:]
+            lsm = nomissing(lds["lsm"][:,:], NaN)
+            oro = nomissing(lds["z"][:,:],   NaN)
+            msk = lds["mask"][:,:]
             close(lds)
 
             @info "$(modulelog()) - Retrieving the regional ETOPO $(uppercase(type)) Land-Sea mask for the \"$(geo.ID)\" GeoRegion ..."
@@ -390,9 +390,9 @@ function saveLandSea(
 
     nclon[:] = lon
     nclat[:] = lat
-    nclsm[:] = lsm
-    ncoro[:] = oro
-    ncmsk[:] = mask
+    nclsm[:,:] = lsm
+    ncoro[:,:] = oro
+    ncmsk[:,:] = mask
 
     close(ds)
 
@@ -410,7 +410,7 @@ function setupLandSea(
     gds  = NCDataset(joinpath(path,"ETOPO","etopo-$(type)-GLB_$(resolution)arcsec.nc"))
     glon = gds["longitude"][:]
     glat = gds["latitude"][:]
-    goro = gds["z"][:]
+    goro = gds["z"][:,:]
     close(gds)
 
     ggrd = RegionGrid(GeoRegion("GLB"),glon,glat)
