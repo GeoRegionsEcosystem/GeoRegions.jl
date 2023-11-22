@@ -41,19 +41,19 @@ ndata = extractGrid(odata,ggrd)
 # Let us plot the old and new data
 
 fig = Figure()
-_,_,slon,slat = coordGeoRegion(geo); slon = slon .+ 360
+_,_,slon,slat = coordGeoRegion(geo); slon = slon
 aspect = (maximum(slon)-minimum(slon))/(maximum(slat)-minimum(slat))
 
 ax = Axis(
     fig[1,1],width=350,height=350/aspect,
-    limits=(minimum(slon)-2,maximum(slon)+2,minimum(slat)-2,maximum(slat)+2)
+    limits=(minimum(slon)-2+360,maximum(slon)+2+360,minimum(slat)-2,maximum(slat)+2)
 )
 contourf!(
     ax,lon,lat,odata,
     levels=range(-1,1,length=11),extendlow=:auto,extendhigh=:auto
 )
 lines!(ax,clon,clat,color=:black)
-lines!(ax,slon,slat,color=:red,linewidth=5)
+lines!(ax,slon.+360,slat.+360,color=:red,linewidth=5)
 
 ax = Axis(
     fig[1,2],width=350,height=350/aspect,
