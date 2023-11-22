@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><title>Default · GeoRegions.jl</title><meta name="title" content="Default · GeoRegions.jl"/><meta property="og:title" content="Default · GeoRegions.jl"/><meta property="twitter:title" content="Default · GeoRegions.jl"/><meta name="description" content="Documentation for GeoRegions.jl."/><meta property="og:description" content="Documentation for GeoRegions.jl."/><meta property="twitter:description" content="Documentation for GeoRegions.jl."/><script data-outdated-warner src="../assets/warner.js"></script><link href="https://cdnjs.cloudflare.com/ajax/libs/lato-font/3.0.0/css/lato-font.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/juliamono/0.050/juliamono.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/fontawesome.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/solid.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/brands.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.8/katex.min.css" rel="stylesheet" type="text/css"/><script>documenterBaseURL=".."</script><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" data-main="../assets/documenter.js"></script><script src="../search_index.js"></script><script src="../siteinfo.js"></script><script src="../../versions.js"></script><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../assets/themes/documenter-dark.css" data-theme-name="documenter-dark" data-theme-primary-dark/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../assets/themes/documenter-light.css" data-theme-name="documenter-light" data-theme-primary/><script src="../assets/themeswap.js"></script></head><body><div id="documenter"><nav class="docs-sidebar"><a class="docs-logo" href="../index.html"><img src="../assets/logo.png" alt="GeoRegions.jl logo"/></a><div class="docs-package-name"><span class="docs-autofit"><a href="../index.html">GeoRegions.jl</a></span></div><button class="docs-search-query input is-rounded is-small is-clickable my-2 mx-auto py-1 px-2" id="documenter-search-query">Search docs (Ctrl + /)</button><ul class="docs-menu"><li><a class="tocitem" href="../index.html">Home</a></li><li><input class="collapse-toggle" id="menuitem-2" type="checkbox"/><label class="tocitem" for="menuitem-2"><span class="docs-label">What is a GeoRegion: An Overview</span><i class="docs-chevron"></i></label><ul class="collapsed"><li><a class="tocitem" href="../georegions/intro.html">What is a GeoRegion?</a></li><li><a class="tocitem" href="../georegions/create.html">Creating GeoRegions</a></li><li><a class="tocitem" href="../georegions/predefined.html">Predefined GeoRegions</a></li><li><a class="tocitem" href="../georegions/read.html">Retrieving GeoRegions</a></li></ul></li><li><input class="collapse-toggle" id="menuitem-3" type="checkbox"/><label class="tocitem" for="menuitem-3"><span class="docs-label">What is a RegionGrid: An Overview</span><i class="docs-chevron"></i></label><ul class="collapsed"><li><a class="tocitem" href="../regiongrids/intro.html">What is a RegionGrid?</a></li><li><a class="tocitem" href="../regiongrids/create.html">Creating RegionGrids</a></li></ul></li><li><input class="collapse-toggle" id="menuitem-4" type="checkbox"/><label class="tocitem" for="menuitem-4"><span class="docs-label">Using GeoRegions.jl: A Tutorial</span><i class="docs-chevron"></i></label><ul class="collapsed"><li><a class="tocitem" href="../using/isin.html">Is it in a GeoRegion?</a></li><li><a class="tocitem" href="../using/custom.html">Custom GeoRegions</a></li><li><a class="tocitem" href="../using/extract.html">Data Extraction via RegionGrids</a></li></ul></li><li><input class="collapse-toggle" id="menuitem-5" type="checkbox"/><label class="tocitem" for="menuitem-5"><span class="docs-label">LandSea Datasets: ETOPO 2022</span><i class="docs-chevron"></i></label><ul class="collapsed"><li><a class="tocitem" href="../landsea/intro.html">What is a LandSea Dataset?</a></li><li><a class="tocitem" href="../landsea/create.html">Loading LandSea Datasets</a></li><li><a class="tocitem" href="../landsea/smooth.html">Smoothing LandSea Masks</a></li></ul></li><li><a class="tocitem" href="../example/placeholder.html">Examples</a></li><li><input class="collapse-toggle" id="menuitem-7" type="checkbox" checked/><label class="tocitem" for="menuitem-7"><span class="docs-label">Lists of GeoRegions</span><i class="docs-chevron"></i></label><ul class="collapsed"><li><a class="tocitem" href="api.html">API</a></li><li class="is-active"><a class="tocitem" href="default.html">Default</a></li></ul></li></ul><div class="docs-version-selector field has-addons"><div class="control"><span class="docs-label button is-static is-size-7">Version</span></div><div class="docs-selector control is-expanded"><div class="select is-fullwidth is-size-7"><select id="documenter-version-selector"></select></div></div></div></nav><div class="docs-main"><header class="docs-navbar"><a class="docs-sidebar-button docs-navbar-link fa-solid fa-bars is-hidden-desktop" id="documenter-sidebar-button" href="#"></a><nav class="breadcrumb"><ul class="is-hidden-mobile"><li><a class="is-disabled">Lists of GeoRegions</a></li><li class="is-active"><a href="default.html">Default</a></li></ul><ul class="is-hidden-tablet"><li class="is-active"><a href="default.html">Default</a></li></ul></nav><div class="docs-right"><a class="docs-navbar-link" href="https://github.com/JuliaClimate/GeoRegions.jl" title="View the repository on GitHub"><span class="docs-icon fa-brands"></span><span class="docs-label is-hidden-touch">GitHub</span></a><a class="docs-navbar-link" href="https://github.com/JuliaClimate/GeoRegions.jl/blob/main/docs/src/lists/default.md" title="Edit source on GitHub"><span class="docs-icon fa-solid"></span></a><a class="docs-settings-button docs-navbar-link fa-solid fa-gear" id="documenter-settings-button" href="#" title="Settings"></a><a class="docs-article-toggle-button fa-solid fa-chevron-up" id="documenter-article-toggle-button" href="javascript:;" title="Collapse all docstrings"></a></div></header><article class="content" id="documenter-page"><h1 id="Default-List-of-All-Predefined-GeoRegions"><a class="docs-heading-anchor" href="#Default-List-of-All-Predefined-GeoRegions">Default List of All Predefined GeoRegions</a><a id="Default-List-of-All-Predefined-GeoRegions-1"></a><a class="docs-heading-anchor-permalink" href="#Default-List-of-All-Predefined-GeoRegions" title="Permalink"></a></h1><pre><code class="language-julia hljs">using GeoRegions
+resetGeoRegions(allfiles=true)
+tableGeoRegions()</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">[ Info: 2023-11-22T08:07:34.057 - GeoRegions.jl - Resetting both the master and custom lists of GeoRegions back to the default
+┌ Warning: 2023-11-22T08:07:34.057 - GeoRegions.jl - Overwriting /home/runner/.julia/files/GeoRegions/rectlist.txt with original file in /home/runner/work/GeoRegions.jl/GeoRegions.jl/src/georegions/../../extra/rectlist.txt ...
+└ @ GeoRegions ~/work/GeoRegions.jl/GeoRegions.jl/src/georegions/read.jl:417
+┌ Warning: 2023-11-22T08:07:34.057 - GeoRegions.jl - Overwriting /home/runner/.julia/files/GeoRegions/polylist.txt with original file in /home/runner/work/GeoRegions.jl/GeoRegions.jl/src/georegions/../../extra/polylist.txt ...
+└ @ GeoRegions ~/work/GeoRegions.jl/GeoRegions.jl/src/georegions/read.jl:417
+┌ Warning: 2023-11-22T08:07:34.057 - GeoRegions.jl - Overwriting /home/runner/.julia/files/GeoRegions/giorgi.txt with original file in /home/runner/work/GeoRegions.jl/GeoRegions.jl/src/georegions/../../extra/giorgi.txt ...
+└ @ GeoRegions ~/work/GeoRegions.jl/GeoRegions.jl/src/georegions/read.jl:417
+┌ Warning: 2023-11-22T08:07:34.057 - GeoRegions.jl - Overwriting /home/runner/.julia/files/GeoRegions/srex.txt with original file in /home/runner/work/GeoRegions.jl/GeoRegions.jl/src/georegions/../../extra/srex.txt ...
+└ @ GeoRegions ~/work/GeoRegions.jl/GeoRegions.jl/src/georegions/read.jl:417
+┌ Warning: 2023-11-22T08:07:34.057 - GeoRegions.jl - Overwriting /home/runner/.julia/files/GeoRegions/ar6.txt with original file in /home/runner/work/GeoRegions.jl/GeoRegions.jl/src/georegions/../../extra/ar6.txt ...
+└ @ GeoRegions ~/work/GeoRegions.jl/GeoRegions.jl/src/georegions/read.jl:417
+ ---------- ------------ ---------------------------- -------- --------------
+     ID         Type      Name                         Parent       File
+ ---------- ------------ ---------------------------- -------- --------------
+    GLB      RectRegion   Globe                         GLB     rectlist.txt
+   GF_AUS    RectRegion   Australia                     GLB      giorgi.txt
+   GF_AMZ    RectRegion   Amazon Basin                  GLB      giorgi.txt
+   GF_SSA    RectRegion   Southern South America        GLB      giorgi.txt
+   GF_CAM    RectRegion   Central America               GLB      giorgi.txt
+   GF_WNA    RectRegion   Western North America         GLB      giorgi.txt
+   GF_CNA    RectRegion   Central North America         GLB      giorgi.txt
+   GF_ENA    RectRegion   Eastern North America         GLB      giorgi.txt
+   GF_ALA    RectRegion   Alaska                        GLB      giorgi.txt
+   GF_GRL    RectRegion   Greenland                     GLB      giorgi.txt
+   GF_MED    RectRegion   Mediterranean Basin           GLB      giorgi.txt
+   GF_NEU    RectRegion   Northern Europe               GLB      giorgi.txt
+   GF_WAF    RectRegion   Western Africa                GLB      giorgi.txt
+   GF_EAF    RectRegion   Eastern Africa                GLB      giorgi.txt
+   GF_SAF    RectRegion   Southern Africa               GLB      giorgi.txt
+   GF_SAH    RectRegion   Sahara                        GLB      giorgi.txt
+   GF_SEA    RectRegion   Southeast Asia                GLB      giorgi.txt
+   GF_EAS    RectRegion   East Asia                     GLB      giorgi.txt
+   GF_SAS    RectRegion   South Asia                    GLB      giorgi.txt
+   GF_CAS    RectRegion   Central Asia                  GLB      giorgi.txt
+   GF_TIB    RectRegion   Tibet                         GLB      giorgi.txt
+   GF_NAS    RectRegion   North Asia                    GLB      giorgi.txt
+  SRX_ALA    PolyRegion   Alaska/N.W. Canada            GLB       srex.txt
+  SRX_AMZ    PolyRegion   Amazon                        GLB       srex.txt
+  SRX_CAM    PolyRegion   Central America/Mexico        GLB       srex.txt
+  SRX_CAR    PolyRegion   Caribbean                     GLB       srex.txt
+  SRX_CAS    PolyRegion   Central Asia                  GLB       srex.txt
+  SRX_CEU    PolyRegion   Central Europe                GLB       srex.txt
+  SRX_CGI    PolyRegion   Canada/Greenland/Iceland      GLB       srex.txt
+  SRX_CNA    PolyRegion   Central North America         GLB       srex.txt
+  SRX_EAF    PolyRegion   East Africa                   GLB       srex.txt
+  SRX_EAS    PolyRegion   East Asia                     GLB       srex.txt
+  SRX_ENA    PolyRegion   East North America            GLB       srex.txt
+  SRX_MED    PolyRegion   South Europe/Mediterranean    GLB       srex.txt
+  SRX_NAS    PolyRegion   North Asia                    GLB       srex.txt
+  SRX_NAU    PolyRegion   North Australia               GLB       srex.txt
+  SRX_NEB    PolyRegion   Northeast Brazil              GLB       srex.txt
+  SRX_NEU    PolyRegion   North Europe                  GLB       srex.txt
+  SRX_SAF    PolyRegion   Southern Africa               GLB       srex.txt
+  SRX_SAH    PolyRegion   Sahara                        GLB       srex.txt
+  SRX_SAS    PolyRegion   South Asia                    GLB       srex.txt
+  SRX_SAU    PolyRegion   South Australia/NewZealand    GLB       srex.txt
+  SRX_SEA    PolyRegion   Southeast Asia                GLB       srex.txt
+  SRX_SSA    PolyRegion   Southeastern South America    GLB       srex.txt
+  SRX_TIB    PolyRegion   Tibetan Plateau               GLB       srex.txt
+  SRX_WAF    PolyRegion   West Africa                   GLB       srex.txt
+  SRX_WAS    PolyRegion   West Asia                     GLB       srex.txt
+  SRX_WNA    PolyRegion   Northwest America             GLB       srex.txt
+  SRX_WSA    PolyRegion   West Coast South America      GLB       srex.txt
+  SRX_ANT    PolyRegion   Antarctica                    GLB       srex.txt
+  SRX_ARC    PolyRegion   Arctic                        GLB       srex.txt
+  SRX_NTP    PolyRegion   Pacific Islands               GLB       srex.txt
+  SRX_STP    PolyRegion   Southern Tropical Pacific     GLB       srex.txt
+  SRX_ETP    PolyRegion   Eastern Tropical Pacific      GLB       srex.txt
+  SRX_WIO    PolyRegion   West Indian Ocean             GLB       srex.txt
+  AR6_GIC    PolyRegion   Greenland/Iceland             GLB       ar6.txt
+  AR6_NWN    PolyRegion   Northwest North America       GLB       ar6.txt
+  AR6_NEN    PolyRegion   Northeast North America       GLB       ar6.txt
+  AR6_WNA    PolyRegion   Western North America         GLB       ar6.txt
+  AR6_CNA    PolyRegion   Central North America         GLB       ar6.txt
+  AR6_ENA    PolyRegion   Eastern North America         GLB       ar6.txt
+  AR6_NCA    PolyRegion   Northern Central America      GLB       ar6.txt
+  AR6_SCA    PolyRegion   Southern Central America      GLB       ar6.txt
+  AR6_CAR    PolyRegion   Caribbean                     GLB       ar6.txt
+  AR6_NWS    PolyRegion   Northwest South America       GLB       ar6.txt
+  AR6_NSA    PolyRegion   Northern South America        GLB       ar6.txt
+  AR6_NES    PolyRegion   Northeast South America       GLB       ar6.txt
+  AR6_SAM    PolyRegion   South American Monsoon        GLB       ar6.txt
+  AR6_SWS    PolyRegion   Southwest South America       GLB       ar6.txt
+  AR6_SES    PolyRegion   Southeast South America       GLB       ar6.txt
+  AR6_SSA    PolyRegion   Southern South America        GLB       ar6.txt
+  AR6_NEU    PolyRegion   Northern Europe               GLB       ar6.txt
+  AR6_WCE    PolyRegion   West and Central Europe       GLB       ar6.txt
+  AR6_EEU    PolyRegion   Eastern Europe                GLB       ar6.txt
+  AR6_MED    PolyRegion   Mediterranean                 GLB       ar6.txt
+  AR6_SAH    PolyRegion   Sahara                        GLB       ar6.txt
+  AR6_WAF    PolyRegion   Western Africa                GLB       ar6.txt
+  AR6_CAF    PolyRegion   Central Africa                GLB       ar6.txt
+  AR6_NEAF   PolyRegion   Northern East Africa          GLB       ar6.txt
+  AR6_SEAF   PolyRegion   Southern East Africa          GLB       ar6.txt
+  AR6_WSAF   PolyRegion   Western South Africa          GLB       ar6.txt
+  AR6_ESAF   PolyRegion   Eastern South Africa          GLB       ar6.txt
+  AR6_MDG    PolyRegion   Madagascar                    GLB       ar6.txt
+  AR6_RAR    PolyRegion   Arctic Russia                 GLB       ar6.txt
+  AR6_WSB    PolyRegion   Western Siberia               GLB       ar6.txt
+  AR6_ESB    PolyRegion   Eastern Siberia               GLB       ar6.txt
+  AR6_RFE    PolyRegion   Far East Russia               GLB       ar6.txt
+  AR6_WCA    PolyRegion   Western Central Asia          GLB       ar6.txt
+  AR6_ECA    PolyRegion   Eastern Central Asia          GLB       ar6.txt
+  AR6_TIB    PolyRegion   Tibetian Plateau              GLB       ar6.txt
+  AR6_EAS    PolyRegion   East Asia                     GLB       ar6.txt
+  AR6_ARP    PolyRegion   Arabian Peninsular            GLB       ar6.txt
+  AR6_SAS    PolyRegion   South Asia                    GLB       ar6.txt
+  AR6_SEA    PolyRegion   Southeast Asia                GLB       ar6.txt
+  AR6_NAU    PolyRegion   Northern Australia            GLB       ar6.txt
+  AR6_CAU    PolyRegion   Central Australia             GLB       ar6.txt
+  AR6_EAU    PolyRegion   Eastern Australia             GLB       ar6.txt
+  AR6_SAU    PolyRegion   Southern Australia            GLB       ar6.txt
+   AR6_NZ    PolyRegion   New Zealand                   GLB       ar6.txt
+  AR6_EAN    PolyRegion   East Antarctica               GLB       ar6.txt
+  AR6_WAN    PolyRegion   West Antarctica               GLB       ar6.txt
+  AR6_ARO    PolyRegion   Arctic Ocean                  GLB       ar6.txt
+  AR6_NPO    PolyRegion   Northern Pacific Ocean        GLB       ar6.txt
+  AR6_EPO    PolyRegion   Equatorial Pacific Ocean      GLB       ar6.txt
+  AR6_SPO    PolyRegion   Southern Pacific Ocean        GLB       ar6.txt
+  AR6_NAO    PolyRegion   Northern Atlantic Ocean       GLB       ar6.txt
+  AR6_EAO    PolyRegion   Equatorial Atlantic Ocean     GLB       ar6.txt
+  AR6_SAO    PolyRegion   Southern Atlantic Ocean       GLB       ar6.txt
+  AR6_ARS    PolyRegion   Arabian Sea                   GLB       ar6.txt
+  AR6_BOB    PolyRegion   Bay of Bengal                 GLB       ar6.txt
+  AR6_EIO    PolyRegion   Equatorial Indian Ocean       GLB       ar6.txt
+  AR6_SIO    PolyRegion   Southern Indian Ocean         GLB       ar6.txt
+  AR6_SOO    PolyRegion   Southern Ocean                GLB       ar6.txt
+ ---------- ------------ ---------------------------- -------- --------------</code></pre></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="api.html">« API</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option><option value="auto">Automatic (OS)</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 1.1.2 on <span class="colophon-date" title="Wednesday 22 November 2023 08:10">Wednesday 22 November 2023</span>. Using Julia version 1.9.4.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
