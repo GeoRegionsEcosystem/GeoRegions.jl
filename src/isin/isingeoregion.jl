@@ -10,6 +10,14 @@ Other additional features include:
 ## Is Point in GeoRegion?
 
 """
+    in(point::Point2{<:Real},geo::GeoRegion)
+
+
+Check if a geographical point `point` is within a GeoRegion defined by `geo`.
+"""
+Base.in(point::Point2{<:Real},geo::GeoRegion) = isinGeoRegion(point,geo,throw=false)
+
+"""
     isinGeoRegion(
         Point  :: Point2{<:Real},
         geo    :: GeoRegion;
