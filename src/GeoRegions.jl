@@ -10,7 +10,7 @@ using NCDatasets
 using PolygonOps
 using PrettyTables
 
-import Base: show, read
+import Base: show, read, in
 
 ## Exporting the following functions:
 export
