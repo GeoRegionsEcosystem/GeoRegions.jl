@@ -26,7 +26,7 @@ export
 
         getLandSea, smooth, smooth!, smoothlsm,
         
-        Point2
+        in, Point2
 
 ## Abstract types
 """

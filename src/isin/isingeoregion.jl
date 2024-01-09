@@ -24,7 +24,7 @@ Base.in(
     tlon   :: Real = 0,
     tlat   :: Real = 0,
     throw  :: Bool = true
-) = isinGeoRegion(point,geo,tlon,tlat,throw)
+) = isinGeoRegion(point,geo,tlon=tlon,tlat=tlat,throw=throw)
 
 """
     in(
@@ -53,7 +53,7 @@ Base.in(
     polyG  :: PolyRegion;
     domask :: Bool = false,
     throw  :: Bool = true
-) = isinGeoRegion(Child,polyG,domask,throw)
+) = isinGeoRegion(Child,polyG,domask=domask,throw=throw)
 
 """
     in(
@@ -79,7 +79,7 @@ Base.in(
     Child :: GeoRegion,
     rectG :: RectRegion;
     throw :: Bool = true
-) = isinGeoRegion(Child,rectG,throw)
+) = isinGeoRegion(Child,rectG,throw=throw)
 
 """
     isinGeoRegion(
