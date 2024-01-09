@@ -17,26 +17,26 @@ nothing</code></pre><h2 id="Let-us-define-the-GeoRegion-of-interest"><a class="d
 </code></pre><p>We also define some sample test data in the global domain</p><pre><code class="language-julia hljs">lon = collect(0:360); pop!(lon); nlon = length(lon)
 lat = collect(-90:90);           nlat = length(lat)
 odata = randn((nlon,nlat))</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">360×181 Matrix{Float64}:
- -1.88663     0.529908     2.46024    …   0.851893   0.422623   -0.751104
- -1.06108    -0.302167     0.341586       0.311422  -0.489105    1.66849
- -1.65586    -0.583806     0.648202       0.361057  -0.887369    1.34285
- -0.82699     0.786828     0.381343      -0.844645  -0.103544   -0.0653118
- -0.221063    0.510136    -1.88808       -0.556655  -0.139177   -0.0989548
- -0.16948    -1.11782     -0.840806   …   0.606006   2.11664    -0.0204742
-  0.326652    0.630043    -1.35531        1.32327    0.0523877   2.30506
-  1.65932    -0.254921     0.118505      -0.568144   0.606835   -1.25209
- -1.01821    -1.07102      0.271912      -0.255987  -0.351344    0.436778
- -0.79407    -2.3559       0.831979      -0.719146   0.882836   -0.794112
-  ⋮                                   ⋱                          ⋮
-  1.47014    -0.423561     0.303252       0.15212    1.6406     -0.419568
- -0.127028    1.12406     -0.0889913      1.51058   -0.127883    0.259354
- -1.58673    -1.38716     -0.18853       -0.629898   0.863335    1.12853
- -0.101981   -1.39531      0.621969       0.736727  -0.652828    1.01008
-  0.129032    0.579567     0.79973    …  -0.472187   0.779175   -0.302025
- -0.39377     0.955207    -1.09077       -1.88467    0.889157   -2.09465
-  0.0976835   0.00150027   1.02352        0.505869  -0.403094   -0.0682363
- -0.155258   -1.28958      0.851844       0.27451   -0.885193    0.67041
-  0.416302    0.652474    -2.2063        -0.81181    0.0530673   0.297364</code></pre><p>Our next step is to define the RegionGrid based on the longitude and latitude vectors and their intersection with the GeoRegion</p><pre><code class="language-julia hljs">ggrd = RegionGrid(geo,lon,lat)</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">The Polygonal Grid has the following properties:
+  0.93407     0.0532188   0.0347171  …  -0.196793    -0.993889   -2.43646
+ -0.0899106  -1.76103     2.76544       -1.02364     -0.298509   -0.717703
+  1.7225      0.0175657   1.23161       -1.11521     -0.899841   -2.23185
+ -0.412851   -1.41814     0.0950323     -0.725339    -0.470463   -0.153626
+  0.282229   -0.214479   -0.816745      -0.00885786  -0.013438   -0.365022
+ -0.559556   -0.0822279  -2.79643    …  -0.373949    -0.719077   -0.601862
+ -0.0510491   0.365001   -1.42874        0.592128    -1.00687    -0.198263
+  0.403874   -0.214678    0.0410279     -0.998475     0.803511   -0.533608
+  0.587162    0.765082    1.18757        0.650655     0.25358    -1.19558
+ -0.24153     1.29126    -0.772625      -1.37511      0.460221    0.141864
+  ⋮                                  ⋱                            ⋮
+  1.01006    -0.324117    0.101859       0.250433     0.469225    0.459834
+ -2.14798     1.65094     1.71609       -1.34907      1.56844    -0.511733
+ -0.370601    0.21252    -1.07692        0.957392    -0.0133452   1.07968
+ -1.58487     0.603816   -0.677777       0.74825      2.07518    -0.498762
+  0.280007   -1.16346    -0.318062   …  -0.788119     1.298      -0.458696
+ -0.633668    0.033046   -0.616337       1.26588     -1.68516     1.32394
+ -0.168585    0.845697   -1.80144        0.601708     1.11583     0.906516
+ -0.707692   -0.422701    1.20676        1.91438      0.838154    0.504296
+  0.357344    0.992834   -0.87959        0.571578     0.224446    0.321796</code></pre><p>Our next step is to define the RegionGrid based on the longitude and latitude vectors and their intersection with the GeoRegion</p><pre><code class="language-julia hljs">ggrd = RegionGrid(geo,lon,lat)</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">The Polygonal Grid has the following properties:
     Grid Bounds       (grid) : [124, 107, 271, 239]
     Longitude Indices (ilon) : [239, 240, 241, 242, 243, 244, 245, 246, 247, 248  …  262, 263, 264, 265, 266, 267, 268, 269, 270, 271]
     Latitude Indices  (ilat) : [107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 123, 124]
@@ -45,26 +45,26 @@ odata = randn((nlon,nlat))</code></pre><pre class="documenter-example-output"><c
     Region Size (nlon * nlat) : 33 lon points x 18 lat points
     Region Mask (sum(mask) / (nlon * nlat)) : 281 / 594
 </code></pre><p>Then we extract the data</p><pre><code class="language-julia hljs">ndata = extractGrid(odata,ggrd)</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">33×18 Matrix{Float64}:
- NaN  NaN  NaN  NaN  NaN  NaN          …  NaN           NaN
- NaN  NaN  NaN  NaN  NaN  NaN             NaN             0.266127
- NaN  NaN  NaN  NaN  NaN  NaN               0.736364      1.10036
- NaN  NaN  NaN  NaN  NaN  NaN               0.261914     -0.0829823
- NaN  NaN  NaN  NaN  NaN  NaN               0.222737      0.136801
- NaN  NaN  NaN  NaN  NaN  NaN          …    1.22324       0.773354
- NaN  NaN  NaN  NaN  NaN  NaN              -0.274337      1.06241
- NaN  NaN  NaN  NaN  NaN  NaN              -0.00675134   -0.367416
- NaN  NaN  NaN  NaN  NaN  NaN               0.372987      1.09628
- NaN  NaN  NaN  NaN  NaN  NaN              -1.78098       0.311549
-   ⋮                        ⋮          ⋱                
- NaN  NaN  NaN  NaN  NaN    0.708154      NaN           NaN
- NaN  NaN  NaN  NaN  NaN   -0.0450285  …  NaN           NaN
- NaN  NaN  NaN  NaN  NaN  NaN             NaN           NaN
- NaN  NaN  NaN  NaN  NaN  NaN             NaN           NaN
- NaN  NaN  NaN  NaN  NaN  NaN             NaN           NaN
- NaN  NaN  NaN  NaN  NaN  NaN             NaN           NaN
- NaN  NaN  NaN  NaN  NaN  NaN          …  NaN           NaN
- NaN  NaN  NaN  NaN  NaN  NaN             NaN           NaN
- NaN  NaN  NaN  NaN  NaN  NaN             NaN           NaN</code></pre><p>Let us plot the old and new data</p><pre><code class="language-julia hljs">fig = Figure()
+ NaN  NaN  NaN  NaN  NaN  NaN         …  NaN         NaN          NaN
+ NaN  NaN  NaN  NaN  NaN  NaN            NaN         NaN           -0.846424
+ NaN  NaN  NaN  NaN  NaN  NaN            NaN           0.182597     0.681565
+ NaN  NaN  NaN  NaN  NaN  NaN             -1.23187    -1.20882      0.733192
+ NaN  NaN  NaN  NaN  NaN  NaN             -0.488381    1.69966     -0.644344
+ NaN  NaN  NaN  NaN  NaN  NaN         …   -0.167353   -2.04955     -1.43332
+ NaN  NaN  NaN  NaN  NaN  NaN              0.808111    0.117284    -0.865938
+ NaN  NaN  NaN  NaN  NaN  NaN             -0.624087    0.0412675    1.66803
+ NaN  NaN  NaN  NaN  NaN  NaN             -0.517901   -0.737364    -0.398195
+ NaN  NaN  NaN  NaN  NaN  NaN              0.218157   -2.29084      0.883564
+   ⋮                        ⋮         ⋱    ⋮                      
+ NaN  NaN  NaN  NaN  NaN    1.15659      NaN         NaN          NaN
+ NaN  NaN  NaN  NaN  NaN   -0.190469  …  NaN         NaN          NaN
+ NaN  NaN  NaN  NaN  NaN  NaN            NaN         NaN          NaN
+ NaN  NaN  NaN  NaN  NaN  NaN            NaN         NaN          NaN
+ NaN  NaN  NaN  NaN  NaN  NaN            NaN         NaN          NaN
+ NaN  NaN  NaN  NaN  NaN  NaN            NaN         NaN          NaN
+ NaN  NaN  NaN  NaN  NaN  NaN         …  NaN         NaN          NaN
+ NaN  NaN  NaN  NaN  NaN  NaN            NaN         NaN          NaN
+ NaN  NaN  NaN  NaN  NaN  NaN            NaN         NaN          NaN</code></pre><p>Let us plot the old and new data</p><pre><code class="language-julia hljs">fig = Figure()
 _,_,slon,slat = coordGeoRegion(geo); slon = slon
 aspect = (maximum(slon)-minimum(slon))/(maximum(slat)-minimum(slat))
 
@@ -93,11 +93,11 @@ lines!(ax,slon,slat,color=:red,linewidth=5)
 hideydecorations!(ax, ticks = false,grid=false)
 
 resize_to_layout!(fig)
-fig</code></pre><img src="extract-79423087.svg" alt="Example block output"/><h2 id="API"><a class="docs-heading-anchor" href="#API">API</a><a id="API-1"></a><a class="docs-heading-anchor-permalink" href="#API" title="Permalink"></a></h2><article class="docstring"><header><a class="docstring-article-toggle-button fa-solid fa-chevron-down" href="javascript:;" title="Collapse docstring"></a><a class="docstring-binding" id="GeoRegions.extractGrid" href="#GeoRegions.extractGrid"><code>GeoRegions.extractGrid</code></a> — <span class="docstring-category">Function</span></header><section><div><pre><code class="language-julia hljs">extractGrid(
+fig</code></pre><img src="extract-228ee063.svg" alt="Example block output"/><h2 id="API"><a class="docs-heading-anchor" href="#API">API</a><a id="API-1"></a><a class="docs-heading-anchor-permalink" href="#API" title="Permalink"></a></h2><article class="docstring"><header><a class="docstring-article-toggle-button fa-solid fa-chevron-down" href="javascript:;" title="Collapse docstring"></a><a class="docstring-binding" id="GeoRegions.extractGrid" href="#GeoRegions.extractGrid"><code>GeoRegions.extractGrid</code></a> — <span class="docstring-category">Function</span></header><section><div><pre><code class="language-julia hljs">extractGrid(
     odata :: AbstractArray{&lt;:Real,N},
     ggrd  :: RegionGrid
-) where N &lt;: Int -&gt; Array{&lt;:Real,N}</code></pre><p>Extracts data from odata, an Array of dimension N (where N ∈ 2,3,4) that contains data of a Parent <code>GeoRegion</code>, into another Array of dimension N, containing <em><strong>only</strong></em> within a sub <code>GeoRegion</code> we are interested in.</p><div class="admonition is-warning"><header class="admonition-header">Warning</header><div class="admonition-body"><p>Please ensure that the 1st dimension is longitude and 2nd dimension is latitude before proceeding. The order of the 3rd and 4th dimensions (when used), however, is not significant.</p></div></div><p><strong>Arguments</strong></p><ul><li><code>odata</code> : An array of dimension N containing gridded data in the region we are interesting in extracting from</li><li><code>ggrd</code> : A <code>RegionGrid</code> containing detailed information on what to extract</li></ul></div><a class="docs-sourcelink" target="_blank" href="https://github.com/JuliaClimate/GeoRegions.jl/blob/7b47a0ae0573b2ee9d701068d5b1d6b967705be8/src/extract/grid.jl#L1-L16">source</a></section></article><article class="docstring"><header><a class="docstring-article-toggle-button fa-solid fa-chevron-down" href="javascript:;" title="Collapse docstring"></a><a class="docstring-binding" id="GeoRegions.extractGrid!" href="#GeoRegions.extractGrid!"><code>GeoRegions.extractGrid!</code></a> — <span class="docstring-category">Function</span></header><section><div><pre><code class="language-julia hljs">extractGrid!(
+) where N &lt;: Int -&gt; Array{&lt;:Real,N}</code></pre><p>Extracts data from odata, an Array of dimension N (where N ∈ 2,3,4) that contains data of a Parent <code>GeoRegion</code>, into another Array of dimension N, containing <em><strong>only</strong></em> within a sub <code>GeoRegion</code> we are interested in.</p><div class="admonition is-warning"><header class="admonition-header">Warning</header><div class="admonition-body"><p>Please ensure that the 1st dimension is longitude and 2nd dimension is latitude before proceeding. The order of the 3rd and 4th dimensions (when used), however, is not significant.</p></div></div><p><strong>Arguments</strong></p><ul><li><code>odata</code> : An array of dimension N containing gridded data in the region we are interesting in extracting from</li><li><code>ggrd</code> : A <code>RegionGrid</code> containing detailed information on what to extract</li></ul></div><a class="docs-sourcelink" target="_blank" href="https://github.com/JuliaClimate/GeoRegions.jl/blob/6ea80ad958ab53ba6813d380d0e387d4f6c11e9b/src/extract/grid.jl#L1-L16">source</a></section></article><article class="docstring"><header><a class="docstring-article-toggle-button fa-solid fa-chevron-down" href="javascript:;" title="Collapse docstring"></a><a class="docstring-binding" id="GeoRegions.extractGrid!" href="#GeoRegions.extractGrid!"><code>GeoRegions.extractGrid!</code></a> — <span class="docstring-category">Function</span></header><section><div><pre><code class="language-julia hljs">extractGrid!(
     odata :: AbstractArray{&lt;:Real,N},
     ndata :: AbstractArray{&lt;:Real,N},
     ggrd  :: RegionGrid
-) where N &lt;: Int -&gt; nothing</code></pre><p>Extracts data from odata, an Array of dimension N (where N ∈ 2,3,4) that contains data of a Parent <code>GeoRegion</code>, into ndata, another Array of dimension N, containing <em><strong>only</strong></em> within a sub <code>GeoRegion</code> we are interested in.</p><p>This allows for iterable in-place modification to save memory space and reduce allocations if the dimensions are fixed.</p><div class="admonition is-warning"><header class="admonition-header">Warning</header><div class="admonition-body"><p>Please ensure that the 1st dimension is longitude and 2nd dimension is latitude before proceeding. The order of the 3rd and 4th dimensions (when used), however, is not significant.</p></div></div><p><strong>Arguments</strong></p><ul><li><code>odata</code> : An array of dimension N containing gridded data in the region we are interesting in extracting from</li><li><code>ndata</code> : An array of dimension N meant as a placeholder for the extracted data to minimize allocations</li><li><code>ggrd</code> : A <code>RegionGrid</code> containing detailed information on what to extract</li></ul></div><a class="docs-sourcelink" target="_blank" href="https://github.com/JuliaClimate/GeoRegions.jl/blob/7b47a0ae0573b2ee9d701068d5b1d6b967705be8/src/extract/grid.jl#L33-L52">source</a></section></article><hr/><p><em>This page was generated using <a href="https://github.com/fredrikekre/Literate.jl">Literate.jl</a>.</em></p></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="custom.html">« Custom GeoRegions</a><a class="docs-footer-nextpage" href="../landsea/intro.html">What is a LandSea Dataset? »</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option><option value="auto">Automatic (OS)</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 1.2.1 on <span class="colophon-date" title="Tuesday 9 January 2024 14:32">Tuesday 9 January 2024</span>. Using Julia version 1.10.0.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
+) where N &lt;: Int -&gt; nothing</code></pre><p>Extracts data from odata, an Array of dimension N (where N ∈ 2,3,4) that contains data of a Parent <code>GeoRegion</code>, into ndata, another Array of dimension N, containing <em><strong>only</strong></em> within a sub <code>GeoRegion</code> we are interested in.</p><p>This allows for iterable in-place modification to save memory space and reduce allocations if the dimensions are fixed.</p><div class="admonition is-warning"><header class="admonition-header">Warning</header><div class="admonition-body"><p>Please ensure that the 1st dimension is longitude and 2nd dimension is latitude before proceeding. The order of the 3rd and 4th dimensions (when used), however, is not significant.</p></div></div><p><strong>Arguments</strong></p><ul><li><code>odata</code> : An array of dimension N containing gridded data in the region we are interesting in extracting from</li><li><code>ndata</code> : An array of dimension N meant as a placeholder for the extracted data to minimize allocations</li><li><code>ggrd</code> : A <code>RegionGrid</code> containing detailed information on what to extract</li></ul></div><a class="docs-sourcelink" target="_blank" href="https://github.com/JuliaClimate/GeoRegions.jl/blob/6ea80ad958ab53ba6813d380d0e387d4f6c11e9b/src/extract/grid.jl#L33-L52">source</a></section></article><hr/><p><em>This page was generated using <a href="https://github.com/fredrikekre/Literate.jl">Literate.jl</a>.</em></p></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="custom.html">« Custom GeoRegions</a><a class="docs-footer-nextpage" href="../landsea/intro.html">What is a LandSea Dataset? »</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option><option value="auto">Automatic (OS)</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 1.2.1 on <span class="colophon-date" title="Tuesday 9 January 2024 14:46">Tuesday 9 January 2024</span>. Using Julia version 1.10.0.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
