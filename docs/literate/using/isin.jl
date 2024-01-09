@@ -133,12 +133,12 @@ And we see that this is indeed the case.
 
 ## API
 ```@docs
-isinGeoRegion(
+in(
     Point  :: Point2{<:Real},
     geo    :: RectRegion;
 )
-isinGeoRegion(::GeoRegion,::RectRegion)
-isinGeoRegion(::GeoRegion,::PolyRegion)
+in(::GeoRegion,::RectRegion)
+in(::GeoRegion,::PolyRegion)
 ```
 =#
 

@@ -7,15 +7,79 @@ Other additional features include:
 
 """
 
-## Is Point in GeoRegion?
-
 """
-    in(point::Point2{<:Real},geo::GeoRegion)
-
+    in(
+        Point  :: Point2{<:Real},
+        geo    :: GeoRegion;
+        tlon   :: Real = 0,
+        tlat   :: Real = 0,
+        throw  :: Bool = true
+    ) -> Bool
 
 Check if a geographical point `point` is within a GeoRegion defined by `geo`.
 """
-Base.in(point::Point2{<:Real},geo::GeoRegion) = isinGeoRegion(point,geo,throw=false)
+Base.in(
+    point :: Point2{<:Real},
+    geo   :: GeoRegion;
+    tlon   :: Real = 0,
+    tlat   :: Real = 0,
+    throw  :: Bool = true
+) = isinGeoRegion(point,geo,tlon,tlat,throw)
+
+"""
+    in(
+        Child  :: GeoRegion,
+        polyG  :: PolyRegion;
+        domask :: Bool = false,
+        throw  :: Bool = true
+    ) -> Bool
+
+Check if a child GeoRegion defined by `Child` is within a PolyRegion `polyG`.
+
+Arguments
+=========
+
+- `Child` : A GeoRegion that we postulate to be a "child", or a subset of the GeoRegion defined by `polyG`
+- `polyG` : A GeoRegion that we postulate to be a "parent", or containing the GeoRegion defined by `Child`
+
+Keyword Arguments
+=================
+
+- `throw`  : If `true`, then if `Child` is not within `polyG`, an error is thrown and the program stops running
+- `domask` : If `throw` is `false` and `domask` is `true`, return a mask (with bounds defined by the `Child` GeoRegion) showing the region where `Child` and `polyG` do not overlap
+"""
+Base.in(
+    Child  :: GeoRegion,
+    polyG  :: PolyRegion;
+    domask :: Bool = false,
+    throw  :: Bool = true
+) = isinGeoRegion(Child,polyG,domask,throw)
+
+"""
+    in(
+        Child  :: GeoRegion,
+        rectG  :: RectRegion;
+        throw  :: Bool = true
+    ) -> Bool
+
+Check if a child GeoRegion defined by `Child` is within a RectRegion `rectG`.
+
+Arguments
+=========
+
+- `Child` : A GeoRegion that we postulate to be a "child", or a subset of the GeoRegion defined by `polyG`
+- `polyG` : A GeoRegion that we postulate to be a "parent", or containing the GeoRegion defined by `Child`
+
+Keyword Arguments
+=================
+
+- `throw`  : If `true`, then if `Child` is not within `polyG`, an error is thrown and the program stops running
+"""
+Base.in(
+    Child :: GeoRegion,
+    rectG :: RectRegion;
+    throw :: Bool = true
+) = isinGeoRegion(Child,rectG,throw)
 
 """
     isinGeoRegion(
