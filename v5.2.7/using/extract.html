@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><title>Data Extraction via RegionGrids · GeoRegions.jl</title><meta name="title" content="Data Extraction via RegionGrids · GeoRegions.jl"/><meta property="og:title" content="Data Extraction via RegionGrids · GeoRegions.jl"/><meta property="twitter:title" content="Data Extraction via RegionGrids · GeoRegions.jl"/><meta name="description" content="Documentation for GeoRegions.jl."/><meta property="og:description" content="Documentation for GeoRegions.jl."/><meta property="twitter:description" content="Documentation for GeoRegions.jl."/><script data-outdated-warner src="../assets/warner.js"></script><link href="https://cdnjs.cloudflare.com/ajax/libs/lato-font/3.0.0/css/lato-font.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/juliamono/0.050/juliamono.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/fontawesome.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/solid.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/brands.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.8/katex.min.css" rel="stylesheet" type="text/css"/><script>documenterBaseURL=".."</script><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" data-main="../assets/documenter.js"></script><script src="../search_index.js"></script><script src="../siteinfo.js"></script><script src="../../versions.js"></script><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../assets/themes/documenter-dark.css" data-theme-name="documenter-dark" data-theme-primary-dark/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../assets/themes/documenter-light.css" data-theme-name="documenter-light" data-theme-primary/><script src="../assets/themeswap.js"></script></head><body><div id="documenter"><nav class="docs-sidebar"><a class="docs-logo" href="../index.html"><img src="../assets/logo.png" alt="GeoRegions.jl logo"/></a><div class="docs-package-name"><span class="docs-autofit"><a href="../index.html">GeoRegions.jl</a></span></div><button class="docs-search-query input is-rounded is-small is-clickable my-2 mx-auto py-1 px-2" id="documenter-search-query">Search docs (Ctrl + /)</button><ul class="docs-menu"><li><a class="tocitem" href="../index.html">Home</a></li><li><input class="collapse-toggle" id="menuitem-2" type="checkbox"/><label class="tocitem" for="menuitem-2"><span class="docs-label">What is a GeoRegion: An Overview</span><i class="docs-chevron"></i></label><ul class="collapsed"><li><a class="tocitem" href="../georegions/intro.html">What is a GeoRegion?</a></li><li><a class="tocitem" href="../georegions/create.html">Creating GeoRegions</a></li><li><a class="tocitem" href="../georegions/predefined.html">Predefined GeoRegions</a></li><li><a class="tocitem" href="../georegions/read.html">Retrieving GeoRegions</a></li></ul></li><li><input class="collapse-toggle" id="menuitem-3" type="checkbox"/><label class="tocitem" for="menuitem-3"><span class="docs-label">What is a RegionGrid: An Overview</span><i class="docs-chevron"></i></label><ul class="collapsed"><li><a class="tocitem" href="../regiongrids/intro.html">What is a RegionGrid?</a></li><li><a class="tocitem" href="../regiongrids/create.html">Creating RegionGrids</a></li></ul></li><li><input class="collapse-toggle" id="menuitem-4" type="checkbox" checked/><label class="tocitem" for="menuitem-4"><span class="docs-label">Using GeoRegions.jl: A Tutorial</span><i class="docs-chevron"></i></label><ul class="collapsed"><li><a class="tocitem" href="isin.html">Is it in a GeoRegion?</a></li><li><a class="tocitem" href="custom.html">Custom GeoRegions</a></li><li class="is-active"><a class="tocitem" href="extract.html">Data Extraction via RegionGrids</a><ul class="internal"><li><a class="tocitem" href="#Let-us-define-the-GeoRegion-of-interest"><span>Let us define the GeoRegion of interest</span></a></li><li><a class="tocitem" href="#API"><span>API</span></a></li></ul></li></ul></li><li><input class="collapse-toggle" id="menuitem-5" type="checkbox"/><label class="tocitem" for="menuitem-5"><span class="docs-label">LandSea Datasets: ETOPO 2022</span><i class="docs-chevron"></i></label><ul class="collapsed"><li><a class="tocitem" href="../landsea/intro.html">What is a LandSea Dataset?</a></li><li><a class="tocitem" href="../landsea/create.html">Loading LandSea Datasets</a></li><li><a class="tocitem" href="../landsea/smooth.html">Smoothing LandSea Masks</a></li></ul></li><li><a class="tocitem" href="../example/placeholder.html">Examples</a></li><li><input class="collapse-toggle" id="menuitem-7" type="checkbox"/><label class="tocitem" for="menuitem-7"><span class="docs-label">Lists of GeoRegions</span><i class="docs-chevron"></i></label><ul class="collapsed"><li><a class="tocitem" href="../lists/api.html">API</a></li><li><a class="tocitem" href="../lists/default.html">Default</a></li></ul></li></ul><div class="docs-version-selector field has-addons"><div class="control"><span class="docs-label button is-static is-size-7">Version</span></div><div class="docs-selector control is-expanded"><div class="select is-fullwidth is-size-7"><select id="documenter-version-selector"></select></div></div></div></nav><div class="docs-main"><header class="docs-navbar"><a class="docs-sidebar-button docs-navbar-link fa-solid fa-bars is-hidden-desktop" id="documenter-sidebar-button" href="#"></a><nav class="breadcrumb"><ul class="is-hidden-mobile"><li><a class="is-disabled">Using GeoRegions.jl: A Tutorial</a></li><li class="is-active"><a href="extract.html">Data Extraction via RegionGrids</a></li></ul><ul class="is-hidden-tablet"><li class="is-active"><a href="extract.html">Data Extraction via RegionGrids</a></li></ul></nav><div class="docs-right"><a class="docs-navbar-link" href="https://github.com/JuliaClimate/GeoRegions.jl" title="View the repository on GitHub"><span class="docs-icon fa-brands"></span><span class="docs-label is-hidden-touch">GitHub</span></a><a class="docs-navbar-link" href="https://github.com/JuliaClimate/GeoRegions.jl/blob/main/docs/literate/using/extract.jl" title="Edit source on GitHub"><span class="docs-icon fa-solid"></span></a><a class="docs-settings-button docs-navbar-link fa-solid fa-gear" id="documenter-settings-button" href="#" title="Settings"></a><a class="docs-article-toggle-button fa-solid fa-chevron-up" id="documenter-article-toggle-button" href="javascript:;" title="Collapse all docstrings"></a></div></header><article class="content" id="documenter-page"><h1 id="Extracting-Gridded-Data-using-RegionGrid"><a class="docs-heading-anchor" href="#Extracting-Gridded-Data-using-RegionGrid">Extracting Gridded Data using RegionGrid</a><a id="Extracting-Gridded-Data-using-RegionGrid-1"></a><a class="docs-heading-anchor-permalink" href="#Extracting-Gridded-Data-using-RegionGrid" title="Permalink"></a></h1><p>Suppose we have Global Data.  However, we are only interested in a specific region (say, the North Central American region as defined in AR6), how do we extract data for this region?</p><p>The simple answer is, we use the <code>extractGrid()</code> function, which takes in a <code>RegionGrid</code> and a data array, and returns a new data array for the GeoRegion.</p><h3 id="Setup"><a class="docs-heading-anchor" href="#Setup">Setup</a><a id="Setup-1"></a><a class="docs-heading-anchor-permalink" href="#Setup" title="Permalink"></a></h3><pre><code class="language-julia hljs">using GeoRegions
+using DelimitedFiles
+using CairoMakie
+
+download(&quot;https://raw.githubusercontent.com/natgeo-wong/GeoPlottingData/main/coastline_resl.txt&quot;,&quot;coast.cst&quot;)
+coast = readdlm(&quot;coast.cst&quot;,comments=true)
+clon  = coast[:,1]
+clat  = coast[:,2]
+nothing</code></pre><h2 id="Let-us-define-the-GeoRegion-of-interest"><a class="docs-heading-anchor" href="#Let-us-define-the-GeoRegion-of-interest">Let us define the GeoRegion of interest</a><a id="Let-us-define-the-GeoRegion-of-interest-1"></a><a class="docs-heading-anchor-permalink" href="#Let-us-define-the-GeoRegion-of-interest" title="Permalink"></a></h2><pre><code class="language-julia hljs">geo  = GeoRegion(&quot;AR6_NCA&quot;)</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">The Polygonal Region AR6_NCA has the following properties:
+    Region ID    (ID) : AR6_NCA
+    Parent ID   (pID) : GLB
+    Name       (name) : Northern Central America
+    Bounds  (N,S,E,W) : [33.8, 16.0, -90.0, -122.5]
+    Shape     (shape) : Point2{Float64}[[-90.0, 25.0], [-104.5, 16.0], [-122.5, 33.8], [-105.0, 33.8], [-90.0, 25.0]]
+        (is180,is360) : (true, false)
+</code></pre><p>We also define some sample test data in the global domain</p><pre><code class="language-julia hljs">lon = collect(0:360); pop!(lon); nlon = length(lon)
+lat = collect(-90:90);           nlat = length(lat)
+odata = randn((nlon,nlat))</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">360×181 Matrix{Float64}:
+  0.743878    0.215347   0.797505    …   2.38487    -1.41452     -0.487161
+ -0.836976   -0.522279  -0.742974       -0.0774914  -0.285505    -0.672039
+  1.17802     0.407393  -0.783909        0.494963    2.11024     -2.19828
+  0.0610333  -0.319797  -0.230227        0.33881     1.35005      0.656233
+  1.0184     -0.102823   0.683836        1.06714    -0.00687154   0.311811
+  1.07802    -0.783349   0.259099    …   0.51524     0.114212    -0.546989
+ -1.23991     1.18968    0.443209       -1.8809     -0.0532506    2.22403
+  0.249049    0.346461  -0.995266       -0.598945   -1.08407     -0.563606
+  2.41308    -0.453135  -0.366251       -0.236916    2.03501      0.132898
+  0.31055    -0.188774   0.511434       -1.89519    -0.557563     0.85635
+  ⋮                                  ⋱                            ⋮
+ -0.363373    1.37689   -0.0365136       0.707786    0.0865657    1.41909
+ -0.847941    1.29591   -0.114976        0.383235    0.0452663   -0.736994
+  0.440844    0.021256  -1.19499         2.27946    -2.28355      0.254091
+  0.973469   -0.707987   1.65242         1.64485     0.483906    -0.381885
+  1.5878      0.590023   0.125085    …  -3.03593    -0.305305     2.008
+  1.68234    -1.34705   -1.06532        -2.41418    -0.36214      0.113718
+ -0.700984    1.40048   -0.499192       -0.0660869  -0.285646    -0.730803
+  0.970599    0.3441    -0.00305265     -0.149035   -0.840992    -1.10148
+  0.767426   -0.495731  -0.237186       -1.30129     1.29208      0.458902</code></pre><p>Our next step is to define the RegionGrid based on the longitude and latitude vectors and their intersection with the GeoRegion</p><pre><code class="language-julia hljs">ggrd = RegionGrid(geo,lon,lat)</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">The Polygonal Grid has the following properties:
+    Grid Bounds       (grid) : [124, 107, 271, 239]
+    Longitude Indices (ilon) : [239, 240, 241, 242, 243, 244, 245, 246, 247, 248  …  262, 263, 264, 265, 266, 267, 268, 269, 270, 271]
+    Latitude Indices  (ilat) : [107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 123, 124]
+    Longitude Points   (lon) : [-122.0, -121.0, -120.0, -119.0, -118.0, -117.0, -116.0, -115.0, -114.0, -113.0  …  -99.0, -98.0, -97.0, -96.0, -95.0, -94.0, -93.0, -92.0, -91.0, -90.0]
+    Latitude Points    (lat) : [16.0, 17.0, 18.0, 19.0, 20.0, 21.0, 22.0, 23.0, 24.0, 25.0, 26.0, 27.0, 28.0, 29.0, 30.0, 31.0, 32.0, 33.0]
+    Region Size (nlon * nlat) : 33 lon points x 18 lat points
+    Region Mask (sum(mask) / (nlon * nlat)) : 281 / 594
+</code></pre><p>Then we extract the data</p><pre><code class="language-julia hljs">ndata = extractGrid(odata,ggrd)</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">33×18 Matrix{Float64}:
+ NaN  NaN  NaN  NaN  NaN  NaN         …  NaN         NaN          NaN
+ NaN  NaN  NaN  NaN  NaN  NaN            NaN         NaN           -1.42362
+ NaN  NaN  NaN  NaN  NaN  NaN            NaN           0.456088    -0.417757
+ NaN  NaN  NaN  NaN  NaN  NaN              0.583188   -0.306318     0.48176
+ NaN  NaN  NaN  NaN  NaN  NaN             -0.483981   -0.115201     0.268305
+ NaN  NaN  NaN  NaN  NaN  NaN         …   -2.18194    -0.683028    -0.135998
+ NaN  NaN  NaN  NaN  NaN  NaN              0.517423    0.487337     1.31885
+ NaN  NaN  NaN  NaN  NaN  NaN              0.825275   -1.53006     -0.484056
+ NaN  NaN  NaN  NaN  NaN  NaN             -0.307652    0.0673038   -1.92951
+ NaN  NaN  NaN  NaN  NaN  NaN              0.699475   -0.542391    -1.49064
+   ⋮                        ⋮         ⋱    ⋮                      
+ NaN  NaN  NaN  NaN  NaN   -0.426891     NaN         NaN          NaN
+ NaN  NaN  NaN  NaN  NaN   -0.948739  …  NaN         NaN          NaN
+ NaN  NaN  NaN  NaN  NaN  NaN            NaN         NaN          NaN
+ NaN  NaN  NaN  NaN  NaN  NaN            NaN         NaN          NaN
+ NaN  NaN  NaN  NaN  NaN  NaN            NaN         NaN          NaN
+ NaN  NaN  NaN  NaN  NaN  NaN            NaN         NaN          NaN
+ NaN  NaN  NaN  NaN  NaN  NaN         …  NaN         NaN          NaN
+ NaN  NaN  NaN  NaN  NaN  NaN            NaN         NaN          NaN
+ NaN  NaN  NaN  NaN  NaN  NaN            NaN         NaN          NaN</code></pre><p>Let us plot the old and new data</p><pre><code class="language-julia hljs">fig = Figure()
+_,_,slon,slat = coordGeoRegion(geo); slon = slon
+aspect = (maximum(slon)-minimum(slon))/(maximum(slat)-minimum(slat))
+
+ax = Axis(
+    fig[1,1],width=350,height=350/aspect,
+    limits=(minimum(slon)-2+360,maximum(slon)+2+360,minimum(slat)-2,maximum(slat)+2)
+)
+contourf!(
+    ax,lon,lat,odata,
+    levels=range(-1,1,length=11),extendlow=:auto,extendhigh=:auto
+)
+lines!(ax,clon,clat,color=:black)
+lines!(ax,slon.+360,slat.+360,color=:red,linewidth=5)
+
+ax = Axis(
+    fig[1,2],width=350,height=350/aspect,
+    limits=(minimum(slon)-2,maximum(slon)+2,minimum(slat)-2,maximum(slat)+2)
+)
+contourf!(
+    ax,ggrd.lon,ggrd.lat,ndata,
+    levels=range(-1,1,length=11),extendlow=:auto,extendhigh=:auto
+)
+lines!(ax,clon,clat,color=:black)
+lines!(ax,slon,slat,color=:red,linewidth=5)
+
+hideydecorations!(ax, ticks = false,grid=false)
+
+resize_to_layout!(fig)
+fig</code></pre><img src="extract-2ab4eca9.svg" alt="Example block output"/><h2 id="API"><a class="docs-heading-anchor" href="#API">API</a><a id="API-1"></a><a class="docs-heading-anchor-permalink" href="#API" title="Permalink"></a></h2><article class="docstring"><header><a class="docstring-article-toggle-button fa-solid fa-chevron-down" href="javascript:;" title="Collapse docstring"></a><a class="docstring-binding" id="GeoRegions.extractGrid" href="#GeoRegions.extractGrid"><code>GeoRegions.extractGrid</code></a> — <span class="docstring-category">Function</span></header><section><div><pre><code class="language-julia hljs">extractGrid(
+    odata :: AbstractArray{&lt;:Real,N},
+    ggrd  :: RegionGrid
+) where N &lt;: Int -&gt; Array{&lt;:Real,N}</code></pre><p>Extracts data from odata, an Array of dimension N (where N ∈ 2,3,4) that contains data of a Parent <code>GeoRegion</code>, into another Array of dimension N, containing <em><strong>only</strong></em> within a sub <code>GeoRegion</code> we are interested in.</p><div class="admonition is-warning"><header class="admonition-header">Warning</header><div class="admonition-body"><p>Please ensure that the 1st dimension is longitude and 2nd dimension is latitude before proceeding. The order of the 3rd and 4th dimensions (when used), however, is not significant.</p></div></div><p><strong>Arguments</strong></p><ul><li><code>odata</code> : An array of dimension N containing gridded data in the region we are interesting in extracting from</li><li><code>ggrd</code> : A <code>RegionGrid</code> containing detailed information on what to extract</li></ul></div><a class="docs-sourcelink" target="_blank" href="https://github.com/JuliaClimate/GeoRegions.jl/blob/19dfd82177d2b5032e082e323b12baa286ea82e4/src/extract/grid.jl#L1-L16">source</a></section></article><article class="docstring"><header><a class="docstring-article-toggle-button fa-solid fa-chevron-down" href="javascript:;" title="Collapse docstring"></a><a class="docstring-binding" id="GeoRegions.extractGrid!" href="#GeoRegions.extractGrid!"><code>GeoRegions.extractGrid!</code></a> — <span class="docstring-category">Function</span></header><section><div><pre><code class="language-julia hljs">extractGrid!(
+    odata :: AbstractArray{&lt;:Real,N},
+    ndata :: AbstractArray{&lt;:Real,N},
+    ggrd  :: RegionGrid
+) where N &lt;: Int -&gt; nothing</code></pre><p>Extracts data from odata, an Array of dimension N (where N ∈ 2,3,4) that contains data of a Parent <code>GeoRegion</code>, into ndata, another Array of dimension N, containing <em><strong>only</strong></em> within a sub <code>GeoRegion</code> we are interested in.</p><p>This allows for iterable in-place modification to save memory space and reduce allocations if the dimensions are fixed.</p><div class="admonition is-warning"><header class="admonition-header">Warning</header><div class="admonition-body"><p>Please ensure that the 1st dimension is longitude and 2nd dimension is latitude before proceeding. The order of the 3rd and 4th dimensions (when used), however, is not significant.</p></div></div><p><strong>Arguments</strong></p><ul><li><code>odata</code> : An array of dimension N containing gridded data in the region we are interesting in extracting from</li><li><code>ndata</code> : An array of dimension N meant as a placeholder for the extracted data to minimize allocations</li><li><code>ggrd</code> : A <code>RegionGrid</code> containing detailed information on what to extract</li></ul></div><a class="docs-sourcelink" target="_blank" href="https://github.com/JuliaClimate/GeoRegions.jl/blob/19dfd82177d2b5032e082e323b12baa286ea82e4/src/extract/grid.jl#L33-L52">source</a></section></article><hr/><p><em>This page was generated using <a href="https://github.com/fredrikekre/Literate.jl">Literate.jl</a>.</em></p></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="custom.html">« Custom GeoRegions</a><a class="docs-footer-nextpage" href="../landsea/intro.html">What is a LandSea Dataset? »</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option><option value="auto">Automatic (OS)</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 1.2.1 on <span class="colophon-date" title="Friday 12 January 2024 00:17">Friday 12 January 2024</span>. Using Julia version 1.10.0.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
