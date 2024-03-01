@@ -1,4 +1,5 @@
 using Documenter
+using DocumenterVitepress
 using GeoRegions
 using Literate
 
@@ -40,9 +41,10 @@ makedocs(
     modules  = [GeoRegions],
     doctest  = false,
     warnonly = true,
-    format   = Documenter.HTML(
-        collapselevel = 1,
-        prettyurls    = false
+    format   = DocumenterVitepress.MarkdownVitepress(
+        repo       = "https://github.com/JuliaClimate/GeoRegions.jl",
+        devurl     = "dev",
+        deploy_url = "juliaclimate.github.io/GeoRegions.jl",
     ),
     authors  = "Nathanael Wong",
     sitename = "GeoRegions.jl",
