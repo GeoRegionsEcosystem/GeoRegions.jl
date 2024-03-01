@@ -50,28 +50,28 @@ makedocs(
     sitename = "GeoRegions.jl",
     pages    = [
         "Home"       => "index.md",
-        "What is a GeoRegion: An Overview" => [
+        "GeoRegions" => [
             "What is a GeoRegion?"  => "georegions/intro.md",
             "Creating GeoRegions"   => "georegions/create.md",
             "Predefined GeoRegions" => "georegions/predefined.md",
             "Retrieving GeoRegions" => "georegions/read.md",
         ],
-        "What is a RegionGrid: An Overview" => [
+        "RegionGrids" => [
             "What is a RegionGrid?"  => "regiongrids/intro.md",
             "Creating RegionGrids"   => "regiongrids/create.md",
         ],
-        "Using GeoRegions.jl: A Tutorial" => [
-            "Is it in a GeoRegion?"           => "using/isin.md",
-            "Custom GeoRegions"               => "using/custom.md",
-            "Data Extraction via RegionGrids" => "using/extract.md"
+        "Tutorials" => [
+            "Is it in a GeoRegion?" => "using/isin.md",
+            "Custom GeoRegions"     => "using/custom.md",
+            "Data Extraction"       => "using/extract.md"
         ],
-        "LandSea Datasets: ETOPO 2022" => [
+        "LandSea Datasets" => [
             "What is a LandSea Dataset?" => "landsea/intro.md",
             "Loading LandSea Datasets"   => "landsea/create.md",
             "Smoothing LandSea Masks"    => "landsea/smooth.md",
         ],
-        "Examples"              => "example/placeholder.md",
-        "Lists of GeoRegions"   => [
+        # "Examples"              => "example/placeholder.md",
+        "Custom Lists"   => [
             "API"     => "lists/api.md",
             "Default" => "lists/default.md",
         ],
