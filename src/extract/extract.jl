@@ -100,7 +100,7 @@ function RectGrid(
 
     @info "$(modulelog()) - Creating vector of longitude indices to extract ..."
     if     iW < iE; iWE = vcat(iW:iE)
-    elseif iW > iE || (iW == iE && bounds[3] != bounds[4])
+    elseif iW > iE || (iW == iE && E != W)
           iWE = vcat(iW:length(lon),1:iE); nlon[1:(iW-1)] .+= 360
     else; iWE = [iW];
     end
@@ -147,7 +147,7 @@ function PolyGrid(
 
     @info "$(modulelog()) - Creating vector of longitude indices to extract ..."
     if     iW < iE; iWE = vcat(iW:iE)
-    elseif iW > iE || (iW == iE && bounds[3] != bounds[4])
+    elseif iW > iE || (iW == iE && E != W)
           iWE = vcat(iW:length(lon),1:iE); nlon[1:(iW-1)] .+= 360
     else; iWE = [iW];
     end
