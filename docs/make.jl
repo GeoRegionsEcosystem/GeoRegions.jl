@@ -44,7 +44,6 @@ makedocs(
     format   = DocumenterVitepress.MarkdownVitepress(
         repo       = "https://github.com/JuliaClimate/GeoRegions.jl",
         devurl     = "dev",
-        deploy_url = "juliaclimate.github.io/GeoRegions.jl",
     ),
     authors  = "Nathanael Wong",
     sitename = "GeoRegions.jl",
