@@ -99,8 +99,9 @@ function VectorGrid(
         else; mask[ii] = NaN
         end
     end
+    jj = .!isnan.(mask)
 
-    return VectorMask{FT}(lon,lat,mask)
+    return VectorMask{FT}(lon,lat,mask,lon[jj],lat[jj])
 
 end
 
