@@ -15,7 +15,7 @@ import Base: show, read, in
 ## Exporting the following functions:
 export
         GeoRegion, RectRegion, PolyRegion,
-        RegionGrid, RectGrid, PolyGrid, RegionMask,
+        RegionGrid, RectGrid, PolyGrid, VectorGrid, RegionMask, VectorMask,
         AbstractLandSea, LandSeaTopo, LandSeaFlat,
 
         resetGeoRegions, templateGeoRegions, listGeoRegions, readGeoRegions,
@@ -125,6 +125,12 @@ struct RegionMask{FT<:Real} <: RegionGrid
      lon :: Array{FT,2}
      lat :: Array{FT,2}
     mask :: Array{FT,2}
+end
+
+struct VectorMask{FT<:Real} <: RegionGrid
+     lon :: Vector{FT}
+     lat :: Vector{FT}
+    mask :: Vector{FT}
 end
 
 """

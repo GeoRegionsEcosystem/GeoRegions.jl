@@ -100,7 +100,7 @@ function VectorGrid(
         end
     end
 
-    return RegionMask{FT}(lon,lat,mask)
+    return VectorMask{FT}(lon,lat,mask)
 
 end
 
