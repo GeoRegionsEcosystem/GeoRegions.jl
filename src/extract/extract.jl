@@ -74,6 +74,36 @@ function RegionGrid(
 
 end
 
+function VectorGrid(
+    geo :: GeoRegion,
+    lon :: Vector{<:Real},
+    lat :: Vector{<:Real}
+)
+
+    @info "$(modulelog()) - Creating a RegionMask for the $(geo.name) GeoRegion based on an array of longitude and latitude points"
+
+    if eltype(lon) <: AbstractFloat
+        FT = eltype(lon)
+    end
+
+    if length(lon) != length(lat)
+        error("$(modulelog()) - The size of the longitude and latitude arrays are not the same.")
+    end
+
+    mask = zeros(length(lon))
+
+    for ii in eachindex(lon)
+        ipnt = Point2(lon[ii],lat[ii])
+        if isinGeoRegion(ipnt,geo,throw=false)
+              mask[ii] = 1
+        else; mask[ii] = NaN
+        end
+    end
+
+    return RegionMask{FT}(lon,lat,mask)
+
+end
+
 function RectGrid(
     geo :: RectRegion,
     lon :: Vector{<:Real},
