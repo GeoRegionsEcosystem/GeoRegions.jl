@@ -13,7 +13,7 @@ Other additional features include:
         geo    :: GeoRegion;
         tlon   :: Real = 0,
         tlat   :: Real = 0,
-        throw  :: Bool = true
+        throw  :: Bool = false
     ) -> Bool
 
 Check if a geographical point `point` is within a GeoRegion defined by `geo`.
@@ -23,7 +23,7 @@ Base.in(
     geo   :: GeoRegion;
     tlon   :: Real = 0,
     tlat   :: Real = 0,
-    throw  :: Bool = true
+    throw  :: Bool = false
 ) = isinGeoRegion(point,geo,tlon=tlon,tlat=tlat,throw=throw)
 
 """
@@ -31,7 +31,7 @@ Base.in(
         Child  :: GeoRegion,
         polyG  :: PolyRegion;
         domask :: Bool = false,
-        throw  :: Bool = true
+        throw  :: Bool = false
     ) -> Bool
 
 Check if a child GeoRegion defined by `Child` is within a PolyRegion `polyG`.
@@ -52,14 +52,14 @@ Base.in(
     Child  :: GeoRegion,
     polyG  :: PolyRegion;
     domask :: Bool = false,
-    throw  :: Bool = true
+    throw  :: Bool = false
 ) = isinGeoRegion(Child,polyG,domask=domask,throw=throw)
 
 """
     in(
         Child  :: GeoRegion,
         rectG  :: RectRegion;
-        throw  :: Bool = true
+        throw  :: Bool = false
     ) -> Bool
 
 Check if a child GeoRegion defined by `Child` is within a RectRegion `rectG`.
@@ -78,7 +78,7 @@ Keyword Arguments
 Base.in(
     Child :: GeoRegion,
     rectG :: RectRegion;
-    throw :: Bool = true
+    throw :: Bool = false
 ) = isinGeoRegion(Child,rectG,throw=throw)
 
 """
@@ -170,7 +170,6 @@ function isinGeoRegion(
         return true
     end
 
-
 end
 
 function isinGeoRegion(
@@ -189,7 +188,6 @@ function isinGeoRegion(
     S = GeoReg.S
     E = GeoReg.E
     W = GeoReg.W
-    GeoShape = GeoReg.shape
 
     plon = Point[1]; plon = mod(plon,360)
     plat = Point[2]
