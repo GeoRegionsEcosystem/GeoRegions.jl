@@ -486,7 +486,7 @@ function listgeoregions(fname::AbstractString)
 
     gtype = readlines(fname)[1]
     if     occursin("PolyRegion",gtype)
-          return listpolyregions(fname), "PolyRegion"
+        return listpolyregions(fname), "PolyRegion"
     elseif occursin("TiltRegion",gtype)
         return listtiltregions(fname), "TiltRegion"
     elseif occursin("RectRegion",gtype)
@@ -497,31 +497,31 @@ end
 
 function listpolyregions(fname::AbstractString)
 
-      gcount = -1
-      for l in eachline(fname)
-          if occursin("RegID",l); gcount += 1 end
-      end
+    gcount = -1
+    for l in eachline(fname)
+        if occursin("RegID",l); gcount += 1 end
+    end
 
-      regvec = Vector{String}(undef,gcount)
-      gcount = -1
-      for l in eachline(fname)
-          if occursin("RegID",l)
-              gcount += 1
-              if gcount > 0
-                  l = replace(l," "=>"")
-                  l = replace(l,"RegID"=>"")
-                  regvec[gcount] = split(l,",")[1]
-              end
-          end
-      end
+    regvec = Vector{String}(undef,gcount)
+    gcount = -1
+    for l in eachline(fname)
+        if occursin("RegID",l)
+            gcount += 1
+            if gcount > 0
+                l = replace(l," "=>"")
+                l = replace(l,"RegID"=>"")
+                regvec[gcount] = split(l,",")[1]
+            end
+        end
+    end
 
-      return regvec
+    return regvec
 
 end
 
 function listrectregions(fname::AbstractString)
 
-      return readdlm(fname,',',comments=true,comment_char='#')[:,1]
+    return readdlm(fname,',',comments=true,comment_char='#')[:,1]
 
 end
 
