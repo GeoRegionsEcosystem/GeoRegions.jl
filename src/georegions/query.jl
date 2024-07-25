@@ -13,35 +13,28 @@ Arguments
 Returns
 =======
 
-- `blon` : A vector of longitude points for the bound of the GeoRegion
-- `blat` : A vector of latitude points for the bound of the GeoRegion
-- `slon` : A vector of longitude points for the shape of the GeoRegion
-- `slat` : A vector of latitude points for the shape of the GeoRegion
+- `lon` : A vector of longitude points for the shape of the GeoRegion
+- `lat` : A vector of latitude points for the shape of the GeoRegion
 """
-function coordGeoRegion(GeoReg::PolyRegion)
+function coordGeoRegion(
+    GeoReg :: PolyRegion;
+    n :: Int = 21
+)
 
     shape = GeoReg.shape
     npnt  = length(shape)
-    lon   = zeros(21,npnt-1)
-    lat   = zeros(21,npnt-1)
+    lon   = zeros(n,npnt-1)
+    lat   = zeros(n,npnt-1)
 
     for ipnt = 1 : (npnt-1)
-        lon[:,ipnt] .= collect(range(shape[ipnt][1],shape[ipnt+1][1],21))
-        lat[:,ipnt] .= collect(range(shape[ipnt][2],shape[ipnt+1][2],21))
+        lon[:,ipnt] .= collect(range(shape[ipnt][1],shape[ipnt+1][1],n))
+        lat[:,ipnt] .= collect(range(shape[ipnt][2],shape[ipnt+1][2],n))
     end
 
     lon = lon[:]
     lat = lat[:]
 
-    N = GeoReg.N
-    S = GeoReg.S
-    E = GeoReg.E
-    W = GeoReg.W
-
-    blon = vcat(range(W,E,21),range(E,E,21),range(E,W,21),range(W,W,21))
-    blat = vcat(range(N,N,21),range(N,S,21),range(S,S,21),range(S,N,21))
-
-    return blon,blat,lon,lat
+    return lon,lat
 
 end
 
@@ -58,19 +51,55 @@ Arguments
 Returns
 =======
 
-- `blon` : A vector of longitude points for the bound of the GeoRegion
-- `blat` : A vector of latitude points for the bound of the GeoRegion
+- `lon` : A vector of longitude points for the bound of the GeoRegion
+- `lat` : A vector of latitude points for the bound of the GeoRegion
 """
-function coordGeoRegion(GeoReg::RectRegion)
+function coordGeoRegion(
+    GeoReg :: RectRegion;
+    n :: Int = 21
+)
 
     N = GeoReg.N
     S = GeoReg.S
     E = GeoReg.E
     W = GeoReg.W
 
-    blon = vcat(range(W,E,21),range(E,E,21),range(E,W,21),range(W,W,21))
-    blat = vcat(range(N,N,21),range(N,S,21),range(S,S,21),range(S,N,21))
+    lon = vcat(range(W,E,n),range(E,E,n),range(E,W,n),range(W,W,n))
+    lat = vcat(range(N,N,n),range(N,S,n),range(S,S,n),range(S,N,n))
 
-    return blon,blat
+    return lon,lat
+
+end
+
+"""
+    coordGeoRegion(geo::RectRegion) -> blon::Vector{<:Real}, blat::Vector{<:Real}
+
+For a given RectRegion, extract the [N,S,E,W] bounds and create a longitude and latitude vector.
+
+Arguments
+=========
+
+- `geo` : A RectRegion (i.e. a rectilinear GeoRegion)
+
+Returns
+=======
+
+- `lon` : A vector of longitude points for the bound of the GeoRegion
+- `lat` : A vector of latitude points for the bound of the GeoRegion
+"""
+function coordGeoRegion(
+    GeoReg :: TiltRegion;
+    n :: Int = 21
+)
+
+    N = GeoReg.N
+    S = GeoReg.S
+    E = GeoReg.E
+    W = GeoReg.W
+
+    lon = vcat(range(W,E,n),range(E,E,n),range(E,W,n),range(W,W,n))
+    lat = vcat(range(N,N,n),range(N,S,n),range(S,S,n),range(S,N,n))
+
+    return lon,lat
 
 end
