@@ -185,17 +185,19 @@ struct LandSea{FT<:Real} <: LandSeaTopo
 end
 
 modulelog() = "$(now()) - GeoRegions.jl"
+geodir = joinpath(DEPOT_PATH[1],"files","GeoRegions")
 
 function __init__()
+    mkpath(geodir);
     flist  = [
         "rectlist.txt","polylist.txt","tiltlist.txt",
         "giorgi.txt","srex.txt","ar6.txt"
     ]
 
     for fname in flist
-        if !isfile(joinpath(jfol,fname))
-            copygeoregions(fname)
-            @info "$(modulelog()) - $(fname) does not exist in $(jfol), copying ..."
+        if !isfile(joinpath(geodir,fname))
+            copygeoregions(fname,geodir)
+            @info "$(modulelog()) - $(fname) does not exist in $(geodir), copying ..."
         end
     end
 end

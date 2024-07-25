@@ -4,7 +4,8 @@
         ParID :: AbstractString,
         name  :: AbstractString,
         bound :: Vector{<:Real};
-        savegeo :: Bool = true,
+        save :: Bool = true,
+        path :: AbstractString = "",
         verbose :: Bool = true,
         ST = String,
         FT = Float64
@@ -22,7 +23,7 @@ Arguments
 
 Keyword Arguments
 =========
-- `savegeo` : Save the GeoRegion into the master list? Default is `true`
+- `save` : Save the GeoRegion into the master list? Default is `true`
 - `verbose` : Verbose logging for ease of monitoring? Default is `true`
 """
 function RectRegion(
@@ -30,7 +31,8 @@ function RectRegion(
     ParID :: AbstractString,
     name  :: AbstractString,
     bound :: Vector{<:Real};
-    savegeo :: Bool = true,
+    save :: Bool = true,
+    path :: AbstractString = geodir,
     verbose :: Bool = true,
     ST = String,
     FT = Float64
@@ -57,8 +59,12 @@ function RectRegion(
     par  = GeoRegion(ParID); isinGeoRegion(geo,par)
     name = replace(name," "=>"-")
 
-    if savegeo
-        open(joinpath(DEPOT_PATH[1],"files","GeoRegions","rectlist.txt"),"a") do io
+    if save
+        geofile = joinpath(path,"rectlist.txt")
+        if !isfile(geofile)
+            cp(joinpath(geodir,"recttemplate.txt"),geofile)
+        end
+        open(geofile,"a") do io
             write(io,"$RegID, $ParID, $N, $W, $S, $E, $name\n")
         end
     end
@@ -169,7 +175,8 @@ end
         name  :: AbstractString,
         lonpt :: Vector{<:Real},
         latpt :: Vector{<:Real};
-        savegeo :: Bool = true,
+        save :: Bool = true,
+        path :: AbstractString = "",
         verbose :: Bool = true,
         ST = String,
         FT = Float64
@@ -190,7 +197,7 @@ Arguments
 
 Keyword Arguments
 =========
-- `savegeo` : Save the GeoRegion into the master list? Default is `true`
+- `save` : Save the GeoRegion into the master list? Default is `true`
 - `verbose` : Verbose logging for ease of monitoring? Default is `true`
 
 !!! info "Start and End Points"
@@ -202,7 +209,8 @@ function PolyRegion(
     name  :: AbstractString,
     lonpt :: Vector{<:Real},
     latpt :: Vector{<:Real},;
-    savegeo :: Bool = true,
+    save :: Bool = true,
+    path :: AbstractString = geodir,
     verbose :: Bool = true,
     ST = String,
     FT = Float64
@@ -241,8 +249,12 @@ function PolyRegion(
     name  = replace(name," "=>"-")
 
     npt = length(lonpt)
-    if savegeo
-        open(joinpath(DEPOT_PATH[1],"files","GeoRegions","polylist.txt"),"a") do io
+    if save
+        geofile = joinpath(path,"polylist.txt")
+        if !isfile(geofile)
+            cp(joinpath(geodir,"polytemplate.txt"),geofile)
+        end
+        open(geofile,"a") do io
             write(io,"\n  RegID $(RegID), $(ParID), $name\n")
             write(io,"  RegX  $(lonpt[1])")
             for ipt = 2 : npt; write(io,", $(lonpt[ipt])") end

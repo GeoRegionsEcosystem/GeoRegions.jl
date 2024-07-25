@@ -1,12 +1,12 @@
 """
-    GeoRegion(RegID::AbstractString) -> geo::GeoRegion
+    GeoRegion(geoID::AbstractString) -> geo::GeoRegion
 
-Extracts information of the GeoRegion with the ID `RegID`.  If no GeoRegion with this ID exists, an error is thrown.
+Extracts information of the GeoRegion with the ID `geoID`.  If no GeoRegion with this ID exists, an error is thrown.
 
 Arguments
 =========
 
-- `RegID` : The keyword ID that will be used to identify the GeoRegion.
+- `geoID` : The keyword ID that will be used to identify the GeoRegion.
             If the ID is not valid (i.e. not being used), then an error will be thrown.
 
 Returns
@@ -15,21 +15,21 @@ Returns
 - `geo` : A GeoRegion
 """
 function GeoRegion(
-    RegID::AbstractString,
+    geoID :: AbstractString,
     ST = String,
-    FT = Float64
+    FT = Float64;
+    path  :: AbstractString,
 )
 
-    @info "$(modulelog()) - Retrieving information for the GeoRegion defined by the ID $RegID"
+    @info "$(modulelog()) - Retrieving information for the GeoRegion defined by the ID $geoID"
 
-    regvec,filevec,typevec = listGeoRegions(); isgeoregion(RegID,regvec)
-    ind = findall(RegID.==regvec)[1]
-    return getgeoregion(
-        RegID,
-        joinpath(DEPOT_PATH[1],"files","GeoRegions",filevec[ind]),
-        typevec[ind],
-        ST,FT
-    )
+    regvec,filevec,typevec = listGeoRegions(path); isgeoregion(geoID,regvec)
+    ind = findall(geoID.==regvec)[1]
+    if path == ""
+        return getgeoregion(geoID,joinpath(geodir,filevec[ind]),typevec[ind],ST,FT)
+    else
+        return getgeoregion(geoID,joinpath(path,filevec[ind]),typevec[ind],ST,FT)
+    end
 
 end
 
@@ -52,14 +52,14 @@ function getgeoregion(
 end
 
 function PolyRegion(
-    RegID :: AbstractString,
+    geoID :: AbstractString,
     fname :: AbstractString,
     ST = String,
     FT = Float64
 )
 
     rvec = listpolyregions(fname)
-    ind  = findall(rvec.==RegID)[1]
+    ind  = findall(rvec.==geoID)[1]
     ind  = (ind) * 4 + 1
 
     flines = readlines(fname)
@@ -70,7 +70,7 @@ function PolyRegion(
     is180,is360 = checkbounds(maximum(Y),minimum(Y),maximum(X),minimum(X))
 
     return PolyRegion{ST,FT}(
-        RegID,ParID,RegName,
+        geoID,ParID,RegName,
         maximum(Y),minimum(Y),maximum(X),minimum(X),Point2.(X,Y),
         is180,is360
     )
@@ -78,14 +78,14 @@ function PolyRegion(
 end
 
 function RectRegion(
-    RegID :: AbstractString,
+    geoID :: AbstractString,
     fname :: AbstractString,
     ST = String,
     FT = Float64
 )
 
     rvec = listrectregions(fname)
-    ind  = findall(rvec.==RegID)[1]
+    ind  = findall(rvec.==geoID)[1]
 
     IDinfo = readdlm(fname,',',comments=true,comment_char='#')[ind,:]
     ParID,RegName,regN,regS,regE,regW = IDinfo[[2,7,3,5,6,4]]
@@ -96,7 +96,7 @@ function RectRegion(
     is180,is360 = checkbounds(regN,regS,regE,regW)
 
     return RectRegion{ST,FT}(
-        RegID,ParID,RegName,
+        geoID,ParID,RegName,
         regN,regS,regE,regW,
         is180,is360
     )
@@ -147,7 +147,7 @@ function templateGeoRegions(;
 )
 
     if !isdir(path); mkpath(path) end
-    for fname in ["recttemplate.txt","polytemplate.txt"]
+    for fname in ["recttemplate.txt","polytemplate.txt","tilttemplate.txt"]
 
         ftem = joinpath(@__DIR__,"..","..","extra",fname)
         freg = joinpath(path,fname)
@@ -201,7 +201,9 @@ Output
 - `filevec` : List of the files that the GeoRegion information is stored in
 - `typevec` : List of the `Type` of the `GeoRegion` corresponding to the `geovec` ID list
 """
-function listGeoRegions()
+function listGeoRegions(
+    path :: AbstractString = geodir
+)
 
     flist   = [
         "rectlist.txt","polylist.txt","tiltlist.txt",
@@ -212,8 +214,8 @@ function listGeoRegions()
     typevec = []
 
     for fname in flist
-        copygeoregions(fname)
-        rvec,rtype = listgeoregions(joinpath(DEPOT_PATH[1],"files","GeoRegions",fname))
+        copygeoregions(fname,path)
+        rvec,rtype = listgeoregions(joinpath(path,fname))
         regvec = vcat(regvec,rvec)
         nreg = length(rvec)
         fvec = fill(fname,nreg); filevec = vcat(filevec,fvec)
@@ -234,9 +236,12 @@ Arguments
 
 - `allfiles` : If `true`, reset the GeoRegions defined in Giorgi & Francisco [2000], AR6 Regions (Iturbide et al., 2020; ESSD) and Seneviratne et al. [2012] as well.  If `false`, only reset the custom GeoRegions.
 """
-function resetGeoRegions(;allfiles=false)
+function resetGeoRegions(;
+    path :: AbstractString = geodir,
+    all  :: Bool = false
+)
 
-    if allfiles
+    if all
 
         @info "$(modulelog()) - Resetting both the master and custom lists of GeoRegions back to the default"
         flist = [
@@ -245,11 +250,11 @@ function resetGeoRegions(;allfiles=false)
         ]
     else
         @info "$(modulelog()) - Resetting the custom lists of GeoRegions back to the default"
-        flist = ["rectlist.txt","polylist.txt"]
+        flist = ["rectlist.txt","polylist.txt","tiltlist.txt"]
     end
 
     for fname in flist
-        copygeoregions(fname,overwrite=true)
+        copygeoregions(fname,path,overwrite=true)
     end
 
     return
@@ -259,7 +264,7 @@ end
 """
     addGeoRegions(fname::AbstractString)
 
-Extracts information of the GeoRegion with the ID `RegID`.  If no GeoRegion with this ID exists, an error is thrown.
+Extracts information of the GeoRegion with the ID `geoID`.  If no GeoRegion with this ID exists, an error is thrown.
 
 Arguments
 =========
@@ -267,7 +272,8 @@ Arguments
 - `fname` : name + path of the file containing GeoRegion information
 """
 function addGeoRegions(
-    fname     :: AbstractString;
+    fname :: AbstractString;
+    path  :: AbstractString = geodir,
     overwrite :: Bool = false
 )
 
@@ -305,11 +311,10 @@ function addGeoRegions(
 end
 
 function readGeoRegions(
-    fname   :: AbstractString;
-    savegeo :: Bool = true
+    fname :: AbstractString
 )
 
-    @info "$(modulelog()) - Reading user-defined GeoRegions from the file $fname directly into the custom lists"
+    @info "$(modulelog()) - Loading user-defined GeoRegions from the file $fname"
 
     rvec,rtype = listgeoregions(fname)
     ngeo = length(rvec)
@@ -337,28 +342,31 @@ end
 
 """
     isGeoRegion(
-        RegID :: AbstractString;
+        geoID :: AbstractString;
         throw :: Bool = true
     ) -> tf :: Bool
 
-Extracts information of the GeoRegion with the ID `RegID`.  If no GeoRegion with this ID exists, an error is thrown.
+Extracts information of the GeoRegion with the ID `geoID`.  If no GeoRegion with this ID exists, an error is thrown.
 
 Arguments
 =========
 
-- `RegID` : The keyword ID that will be used to identify the GeoRegion.
+- `geoID` : The keyword ID that will be used to identify the GeoRegion.
         If the ID is not valid (i.e. not being used), then an error will be thrown.
-- `throw` : If `true`, then throws an error if `RegID` is not a valid `GeoRegion` identifier instead of returning the Boolean `tf`
+- `throw` : If `true`, then throws an error if `geoID` is not a valid `GeoRegion` identifier instead of returning the Boolean `tf`
 
 Returns
 =======
 
 - `tf` : True / False
 """
-function isGeoRegion(RegID::AbstractString;throw::Bool=true)
+function isGeoRegion(
+    geoID :: AbstractString;
+    throw :: Bool=true
+)
 
-    regvec,_,_ = listGeoRegions()
-    return isgeoregion(RegID,regvec;throw=throw,dolog=true)
+    rvec,_,_ = listGeoRegions()
+    return isgeoregion(geoID,rvec;throw=throw,dolog=true)
 
 end
 
@@ -431,13 +439,13 @@ function checkbounds(
 end
 
 function copygeoregions(
-    fname::AbstractString;
-    overwrite::Bool=false
+    fname :: AbstractString,
+    path  :: AbstractString;
+    overwrite :: Bool=false
 )
 
-    jfol = joinpath(DEPOT_PATH[1],"files","GeoRegions"); mkpath(jfol);
     ftem = joinpath(@__DIR__,"..","..","extra",fname)
-    freg = joinpath(jfol,fname)
+    freg = joinpath(path,fname)
 
     if !overwrite
         if !isfile(freg)
@@ -532,24 +540,24 @@ function listtiltregions(fname::AbstractString)
 end
 
 function isgeoregion(
-    RegID  :: AbstractString,
+    geoID  :: AbstractString,
     regvec :: AbstractArray;
     throw  :: Bool = true,
     dolog  :: Bool = false)
 
     if dolog
-        @info "$(modulelog()) - Checking to see if the ID $RegID is in use"
+        @info "$(modulelog()) - Checking to see if the ID $geoID is in use"
     end
 
-    if sum(regvec.==RegID) == 0
+    if sum(regvec.==geoID) == 0
         if throw
-            error("$(modulelog()) - $(RegID) is not a valid GeoRegion identifier, use either RectRegion() or PolyRegion() to add this GeoRegion to the list.")
+            error("$(modulelog()) - $(geoID) is not a valid GeoRegion identifier, use RectRegion(), TiltRegion() or PolyRegion() to add this GeoRegion to the list.")
         else
-            @warn "$(modulelog()) - $(RegID) is not a valid GeoRegion identifier, use either RectRegion() or PolyRegion() to add this GeoRegion to the list."
+            @warn "$(modulelog()) - $(geoID) is not a valid GeoRegion identifier, use RectRegion(), TiltRegion() or PolyRegion() to add this GeoRegion to the list."
             return false
         end
     else
-        if dolog; @info "$(modulelog()) - The ID $RegID is already in use" end
+        if dolog; @info "$(modulelog()) - The ID $geoID is already in use" end
         return true
     end
 

@@ -9,10 +9,11 @@ Keyword Arguments
 - `onlycustom` : If true, only custom, user-defined GeoRegions will be displayed. To show all available GeoRegions (including predefined GeoRegions), set `onlycustom` to `false`
 """
 function tableGeoRegions(;
+    path :: AbstractString = geodir,
     onlycustom :: Bool = false
 )
 
-    flist = ["rectlist.txt","polylist.txt"]
+    flist = ["rectlist.txt","polylist.txt","tiltlist.txt"]
     if !onlycustom
         flist = vcat(flist,"giorgi.txt","srex.txt","ar6.txt")
     end
@@ -22,8 +23,8 @@ function tableGeoRegions(;
     typevec = []
 
     for fname in flist
-        copygeoregions(fname)
-        rvec,rtype = listgeoregions(joinpath(DEPOT_PATH[1],"files","GeoRegions",fname))
+        copygeoregions(fname,path)
+        rvec,rtype = listgeoregions(joinpath(path,fname))
         regvec = vcat(regvec,rvec)
         nreg = length(rvec)
         fvec = fill(fname,nreg); filevec = vcat(filevec,fvec)
@@ -36,7 +37,7 @@ function tableGeoRegions(;
     for igeo = 1 : ngeo
         geo = getgeoregion(
             regvec[igeo],
-            joinpath(DEPOT_PATH[1],"files","GeoRegions",filevec[igeo]),
+            joinpath(geodir,filevec[igeo]),
             typevec[igeo]
         )
 
@@ -114,6 +115,7 @@ Keyword Arguments
 - `giorgi` : If true, display Giorgi predefined GeoRegions. Default is `false`
 """
 function tableRectRegions(;
+    path :: AbstractString = geodir,
     custom :: Bool = true,
     giorgi :: Bool = false
 )
@@ -131,8 +133,8 @@ function tableRectRegions(;
     typevec = []
 
     for fname in flist
-        copygeoregions(fname)
-        rvec,rtype = listgeoregions(joinpath(DEPOT_PATH[1],"files","GeoRegions",fname))
+        copygeoregions(fname,path)
+        rvec,rtype = listgeoregions(joinpath(geodir,fname))
         regvec = vcat(regvec,rvec)
         nreg = length(rvec)
         fvec = fill(fname,nreg); filevec = vcat(filevec,fvec)
@@ -145,7 +147,7 @@ function tableRectRegions(;
     for igeo = 1 : ngeo
         geo = getgeoregion(
             regvec[igeo],
-            joinpath(DEPOT_PATH[1],"files","GeoRegions",filevec[igeo]),
+            joinpath(geodir,filevec[igeo]),
             typevec[igeo]
         )
 
@@ -186,6 +188,7 @@ Keyword Arguments
 - `ar6` : If true, display IPCC AR6 predefined GeoRegions. Default is `false`
 """
 function tablePolyRegions(;
+    path :: AbstractString = geodir,
     custom :: Bool = true,
     srex :: Bool = false,
     ar6  :: Bool = false
@@ -207,8 +210,8 @@ function tablePolyRegions(;
     typevec = []
 
     for fname in flist
-        copygeoregions(fname)
-        rvec,rtype = listgeoregions(joinpath(DEPOT_PATH[1],"files","GeoRegions",fname))
+        copygeoregions(fname,path)
+        rvec,rtype = listgeoregions(joinpath(path,fname))
         regvec = vcat(regvec,rvec)
         nreg = length(rvec)
         fvec = fill(fname,nreg); filevec = vcat(filevec,fvec)
@@ -221,7 +224,7 @@ function tablePolyRegions(;
     for igeo = 1 : ngeo
         geo = getgeoregion(
             regvec[igeo],
-            joinpath(DEPOT_PATH[1],"files","GeoRegions",filevec[igeo]),
+            joinpath(path,filevec[igeo]),
             typevec[igeo]
         )
 
