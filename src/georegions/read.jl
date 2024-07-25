@@ -34,7 +34,7 @@ function GeoRegion(
 end
 
 function getgeoregion(
-    RegID :: AbstractString,
+    geoID :: AbstractString,
     fname :: AbstractString,
     GType :: AbstractString,
     ST = String,
@@ -42,8 +42,11 @@ function getgeoregion(
 )
 
     if GType == "PolyRegion"
-          return PolyRegion(RegID,fname,ST,FT)
-    else; return RectRegion(RegID,fname,ST,FT)
+        return PolyRegion(geoID,fname,ST,FT)
+    elseif GType == "RectRegion"
+        return RectRegion(geoID,fname,ST,FT)
+    elseif GType == "TiltRegion"
+        return TiltRegion(geoID,fname,ST,FT)
     end
 
 end
@@ -95,6 +98,33 @@ function RectRegion(
     return RectRegion{ST,FT}(
         RegID,ParID,RegName,
         regN,regS,regE,regW,
+        is180,is360
+    )
+
+end
+
+function TiltRegion(
+    geoID :: AbstractString,
+    fname :: AbstractString,
+    ST = String,
+    FT = Float64
+)
+
+    rvec = listrectregions(fname)
+    ind  = findall(rvec.==geoID)[1]
+
+    IDinfo = readdlm(fname,',',comments=true,comment_char='#')[ind,:]
+    ParID,name,X,Y,ΔX,ΔY,θ = IDinfo[[2,8,3,4,5,6,7]]
+    ParID = replace(ParID," "=>"")
+    name = replace(name," "=>"")
+    name = replace(name,"-"=>" ")
+
+    N,S,E,W = getTiltShape(X,Y,ΔX,ΔY,θ)
+    is180,is360 = checkbounds(N,S,E,W)
+
+    return TiltRegion{ST,FT}(
+        geoID,ParID,name,
+        X,Y,ΔX,ΔY,θ,
         is180,is360
     )
 
@@ -173,7 +203,10 @@ Output
 """
 function listGeoRegions()
 
-    flist   = ["rectlist.txt","polylist.txt","giorgi.txt","srex.txt","ar6.txt"]
+    flist   = [
+        "rectlist.txt","polylist.txt","tiltlist.txt",
+        "giorgi.txt","srex.txt","ar6.txt"
+    ]
     regvec  = []
     filevec = []
     typevec = []
@@ -206,7 +239,10 @@ function resetGeoRegions(;allfiles=false)
     if allfiles
 
         @info "$(modulelog()) - Resetting both the master and custom lists of GeoRegions back to the default"
-        flist = ["rectlist.txt","polylist.txt","giorgi.txt","srex.txt","ar6.txt"]
+        flist = [
+            "rectlist.txt","polylist.txt","tiltlist.txt",
+            "giorgi.txt","srex.txt","ar6.txt"
+        ]
     else
         @info "$(modulelog()) - Resetting the custom lists of GeoRegions back to the default"
         flist = ["rectlist.txt","polylist.txt"]
@@ -241,19 +277,23 @@ function addGeoRegions(
     for reg in rvec
         if !isGeoRegion(reg,throw=false)
             g = getgeoregion(reg,fname,rtype)
-            if rtype == "PolyRegion"
-                  _,_,lon,lat = coordGeoRegion(g)
-                  PolyRegion(g.ID,g.pID,g.name,lon,lat)
-            else; RectRegion(g.ID,g.pID,g.name,[g.N,g.S,g.E,g.W])
+            if     rtype == "PolyRegion"
+                geo = PolyRegion(g.ID,g.pID,g.name,g.lon,g.lat,path=path)
+            elseif rtype == "TiltRegion"
+                geo = TiltRegion(g.ID,g.pID,g.name,g.X,g.Y,g.ΔX,g.ΔY,g.θ,path=path)
+            elseif rtype == "RectRegion"
+                geo = RectRegion(g.ID,g.pID,g.name,[g.N,g.S,g.E,g.W],path=path)
             end
         elseif overwrite
             @warn "$(modulelog()) - The GeoRegion ID $reg is already in use. Overwriting and replacing with new boundaries ..."
             removeGeoRegion(reg)
             g = getgeoregion(reg,fname,rtype)
-            if rtype == "PolyRegion"
-                  _,_,lon,lat = coordGeoRegion(g)
-                  PolyRegion(g.ID,g.pID,g.name,lon,lat)
-            else; RectRegion(g.ID,g.pID,g.name,[g.N,g.S,g.E,g.W])
+            if     rtype == "PolyRegion"
+                geo = PolyRegion(g.ID,g.pID,g.name,g.lon,g.lat,path=path)
+            elseif rtype == "TiltRegion"
+                geo = TiltRegion(g.ID,g.pID,g.name,g.X,g.Y,g.ΔX,g.ΔY,g.θ,path=path)
+            elseif rtype == "RectRegion"
+                geo = RectRegion(g.ID,g.pID,g.name,[g.N,g.S,g.E,g.W],path=path)
             end
         else
             @warn "$(modulelog()) - The GeoRegion ID $reg is already in use. Please use a different ID, or you can remove the ID using removeGeoRegion()."
@@ -278,10 +318,12 @@ function readGeoRegions(
         reg = rvec[igeo]
         if !isGeoRegion(reg,throw=false)
             g = getgeoregion(reg,fname,rtype)
-            if rtype == "PolyRegion"
-                  _,_,lon,lat = coordGeoRegion(g)
-                  geo = PolyRegion(g.ID,g.pID,g.name,lon,lat,savegeo=savegeo)
-            else; geo = RectRegion(g.ID,g.pID,g.name,[g.N,g.S,g.E,g.W],savegeo=savegeo)
+            if     rtype == "PolyRegion"
+                geo = PolyRegion(g.ID,g.pID,g.name,g.lon,g.lat,save=false)
+            elseif rtype == "TiltRegion"
+                geo = TiltRegion(g.ID,g.pID,g.name,g.X,g.Y,g.ΔX,g.ΔY,g.θ,save=false)
+            elseif rtype == "RectRegion"
+                geo = RectRegion(g.ID,g.pID,g.name,[g.N,g.S,g.E,g.W],save=false)
             end
         else
             @warn "$(modulelog()) - The GeoRegion ID $reg is already in use. Please use a different ID, or you can remove the ID using removeGeoRegion()."
@@ -435,9 +477,12 @@ end
 function listgeoregions(fname::AbstractString)
 
     gtype = readlines(fname)[1]
-    if occursin("PolyRegion",gtype)
+    if     occursin("PolyRegion",gtype)
           return listpolyregions(fname), "PolyRegion"
-    else; return listrectregions(fname), "RectRegion"
+    elseif occursin("TiltRegion",gtype)
+        return listtiltregions(fname), "TiltRegion"
+    elseif occursin("RectRegion",gtype)
+        return listrectregions(fname), "RectRegion"
     end
 
 end
@@ -469,6 +514,20 @@ end
 function listrectregions(fname::AbstractString)
 
       return readdlm(fname,',',comments=true,comment_char='#')[:,1]
+
+end
+
+function listtiltregions(fname::AbstractString)
+
+    gcount = 0
+    for l in eachline(fname)
+        if (!occursin("#",l)) || (l == ""); gcount += 1 end
+    end
+
+    if gcount > 0
+         return readdlm(fname,',',comments=true,comment_char='#')[:,1]
+    else return []
+    end
 
 end
 

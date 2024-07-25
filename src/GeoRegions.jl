@@ -18,6 +18,8 @@ export
         RegionGrid, RectGrid, PolyGrid, VectorGrid, RegionMask, VectorMask,
         AbstractLandSea, LandSeaTopo, LandSeaFlat,
 
+        getTiltBounds, getTiltShape,
+
         resetGeoRegions, templateGeoRegions, listGeoRegions, readGeoRegions,
         isGeoRegion, addGeoRegions, removeGeoRegion, coordGeoRegion, isinGeoRegion,
         tableGeoRegions, tableRectRegions, tablePolyRegions,
@@ -74,6 +76,19 @@ struct PolyRegion{ST<:AbstractString, FT<:Real} <: GeoRegion
     E     :: FT
     W     :: FT
     shape :: Vector{Point2{FT}}
+    is180 :: Bool
+    is360 :: Bool
+end
+
+struct TiltRegion{ST<:AbstractString, FT<:Real} <: GeoRegion
+    ID     :: ST
+    pID    :: ST
+    name   :: ST
+    X      :: FT
+    Y      :: FT
+    length :: FT
+    width  :: FT
+    tilt   :: FT
     is180 :: Bool
     is360 :: Bool
 end
@@ -172,8 +187,10 @@ end
 modulelog() = "$(now()) - GeoRegions.jl"
 
 function __init__()
-    jfol = joinpath(DEPOT_PATH[1],"files","GeoRegions"); mkpath(jfol);
-    flist   = ["rectlist.txt","polylist.txt","giorgi.txt","srex.txt","ar6.txt"]
+    flist  = [
+        "rectlist.txt","polylist.txt","tiltlist.txt",
+        "giorgi.txt","srex.txt","ar6.txt"
+    ]
 
     for fname in flist
         if !isfile(joinpath(jfol,fname))
@@ -184,6 +201,7 @@ function __init__()
 end
 
 ## Including other files in the module
+include("georegions/tilt.jl")
 include("georegions/read.jl")
 include("georegions/create.jl")
 include("georegions/query.jl")

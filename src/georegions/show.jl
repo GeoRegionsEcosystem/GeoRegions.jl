@@ -10,6 +10,20 @@ function show(io::IO, geo::RectRegion)
 	)
 end
 
+function show(io::IO, geo::TiltRegion)
+    print(
+		io,
+		"The Rectilinear Region $(geo.ID) has the following properties:\n",
+		"    Region ID    (ID) : ", geo.ID, '\n',
+		"    Parent ID   (pID) : ", geo.pID, '\n',
+		"    Name       (name) : ", geo.name, '\n',
+		"    Position    (X,Y) : ",[geo.X,geo.Y], '\n',
+		"    Size      (ΔX,ΔY) : ",[geo.ΔX,geo.ΔY], '\n',
+		"    Tilt 		   (θ) : ",[geo.θ], '\n',
+        "        (is180,is360) : ",(geo.is180,geo.is360),"\n",
+	)
+end
+
 function show(io::IO, geo::PolyRegion)
     print(
 		io,

@@ -72,6 +72,97 @@ function RectRegion(
 end
 
 """
+    TiltRegion(
+        RegID :: AbstractString,
+        ParID :: AbstractString,
+        name  :: AbstractString,
+        X     :: Real,
+        Y     :: Real,
+        ΔX    :: Real,
+        ΔY    :: Real,
+        θ     :: Real;
+        save :: Bool = true,
+        path :: AbstractString = "",
+        verbose :: Bool = true,
+        ST = String,
+        FT = Float64
+    ) -> TiltRegion{ST,FT}
+
+Creates a tilted rectangular GeoRegion `RegID`.
+
+Arguments
+=========
+- `RegID` : The keyword ID that will be used to identify the GeoRegion.
+            If the ID is already in use, then an error will be thrown.
+- `ParID` : The ID of the parent GeoRegion where information can be extracted from
+- `name`  : A name for the GeoRegion (meta information, can be used in Logging)
+- `X`  : Longitude coordinate of region centre
+- `Y`  : Latitude coordinate of region centre
+- `ΔX` : Half-width in longitude coordinates (before tilting)
+- `ΔY` : Half-width in latitude coordinates (before tilting)
+- `θ`  : Tilt of rectangular region in **degrees**
+
+Keyword Arguments
+=========
+- `save` : Save the GeoRegion into the master list? Default is `true`
+- `verbose` : Verbose logging for ease of monitoring? Default is `true`
+"""
+function TiltRegion(
+    RegID :: AbstractString,
+    ParID :: AbstractString,
+    name  :: AbstractString,
+    X     :: Real,
+    Y     :: Real,
+    ΔX    :: Real,
+    ΔY    :: Real,
+    θ     :: Real;
+    save :: Bool = true,
+    path :: AbstractString = geodir,
+    verbose :: Bool = true,
+    ST = String,
+    FT = Float64
+)
+
+    if !verbose
+        disable_logging(Logging.Warn)
+    end
+
+    if isGeoRegion(RegID,throw=false)
+        error("$(modulelog()) - The GeoRegion $(RegID) has already been defined.  Please use another identifier.")
+    else
+        @info "$(modulelog()) - Adding the GeoRegion $(RegID) to the list."
+    end
+
+    if ParID != "GLB"
+        if !isGeoRegion(ParID,throw=false)
+            error("$(modulelog()) - The GeoRegion $(ParID) was defined to be the parent GeoRegion of $(RegID), but the GeoRegion $(ParID) is not defined.  Please define the GeoRegion $(ParID) and its properties.")
+        end
+    end
+
+    N,S,E,W = getTiltShape(X,Y,ΔX,ΔY,θ); is180,is360 = checkbounds(N,S,E,W)
+    geo  = TiltRegion{ST,FT}(RegID,ParID,name,X,Y,ΔX,ΔY,θ,is180,is360)
+    par  = GeoRegion(ParID); isinGeoRegion(geo,par)
+    name = replace(name," "=>"-")
+
+    if save
+        geofile = joinpath(path,"tiltlist.txt")
+        if !isfile(geofile)
+            cp(joinpath(geodir,"tilttemplate.txt"),geofile)
+        end
+        open(geofile,"a") do io
+            write(io,"$RegID, $ParID, $X, $Y, $ΔX, $ΔY, $θ, $name\n")
+        end
+    end
+
+    if !verbose
+        disable_logging(Logging.Debug)
+    end
+
+    return geo
+
+end
+
+"""
     PolyRegion(
         RegID :: AbstractString,
         ParID :: AbstractString,
