@@ -173,8 +173,8 @@ end
         RegID :: AbstractString,
         ParID :: AbstractString,
         name  :: AbstractString,
-        lonpt :: Vector{<:Real},
-        latpt :: Vector{<:Real};
+        lon :: Vector{<:Real},
+        lat :: Vector{<:Real};
         save :: Bool = true,
         path :: AbstractString = "",
         verbose :: Bool = true,
@@ -192,8 +192,8 @@ Arguments
 
 - `ParID` : The ID of the parent GeoRegion where information can be extracted from
 - `name`  : A name for the GeoRegion (meta information, can be used in Logging)
-- `lonpt` : A vector containing the longitude points
-- `latpt` : A vector containing the latitude points
+- `lon` : A vector containing the longitude points
+- `lat` : A vector containing the latitude points
 
 Keyword Arguments
 =========
@@ -201,14 +201,15 @@ Keyword Arguments
 - `verbose` : Verbose logging for ease of monitoring? Default is `true`
 
 !!! info "Start and End Points"
-    The 1st and last elements of `lonpt` and `latpt` must be equal.
+    The 1st and last elements of `lon` and `lat` must be equal.
 """
 function PolyRegion(
     RegID :: AbstractString,
     ParID :: AbstractString,
     name  :: AbstractString,
-    lonpt :: Vector{<:Real},
-    latpt :: Vector{<:Real},;
+    lon   :: Vector{<:Real},
+    lat   :: Vector{<:Real};
+    join :: Bool = true,
     save :: Bool = true,
     path :: AbstractString = geodir,
     verbose :: Bool = true,
@@ -241,15 +242,15 @@ function PolyRegion(
         end
     end
 
-    N = maximum(latpt); S = minimum(latpt)
-    E = maximum(lonpt); W = minimum(lonpt)
+    N = maximum(lat); S = minimum(lat)
+    E = maximum(lon); W = minimum(lon)
     is180,is360 = checkbounds(N,S,E,W)
-    shape = Point2.(lonpt,latpt)
+    shape = Point2.(lon,lat)
     geo   = PolyRegion{ST,FT}(RegID,ParID,name,N,S,E,W,shape,is180,is360)
     par   = GeoRegion(ParID,path=path); isinGeoRegion(geo,par)
     name  = replace(name," "=>"-")
 
-    npt = length(lonpt)
+    npt = length(lon)
     if save
         geofile = joinpath(path,"polylist.txt")
         if !isfile(geofile)
@@ -257,11 +258,11 @@ function PolyRegion(
         end
         open(geofile,"a") do io
             write(io,"\n  RegID $(RegID), $(ParID), $name\n")
-            write(io,"  RegX  $(lonpt[1])")
-            for ipt = 2 : npt; write(io,", $(lonpt[ipt])") end
+            write(io,"  RegX  $(lon[1])")
+            for ipt = 2 : npt; write(io,", $(lon[ipt])") end
             write(io,"\n")
-            write(io,"  RegY  $(latpt[1])")
-            for ipt = 2 : npt; write(io,", $(latpt[ipt])") end
+            write(io,"  RegY  $(lat[1])")
+            for ipt = 2 : npt; write(io,", $(lat[ipt])") end
             write(io,"\n")
         end
     end
