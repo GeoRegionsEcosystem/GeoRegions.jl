@@ -18,18 +18,14 @@ function GeoRegion(
     geoID :: AbstractString,
     ST = String,
     FT = Float64;
-    path  :: AbstractString,
+    path  :: AbstractString = geodir,
 )
 
     @info "$(modulelog()) - Retrieving information for the GeoRegion defined by the ID $geoID"
 
     regvec,filevec,typevec = listGeoRegions(path); isgeoregion(geoID,regvec)
     ind = findall(geoID.==regvec)[1]
-    if path == ""
-        return getgeoregion(geoID,joinpath(geodir,filevec[ind]),typevec[ind],ST,FT)
-    else
-        return getgeoregion(geoID,joinpath(path,filevec[ind]),typevec[ind],ST,FT)
-    end
+    return getgeoregion(geoID,joinpath(path,filevec[ind]),typevec[ind],ST,FT)
 
 end
 

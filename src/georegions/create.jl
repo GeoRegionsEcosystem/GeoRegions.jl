@@ -56,7 +56,7 @@ function RectRegion(
 
     N,S,E,W = bound; is180,is360 = checkbounds(N,S,E,W)
     geo  = RectRegion{ST,FT}(RegID,ParID,name,N,S,E,W,is180,is360)
-    par  = GeoRegion(ParID); isinGeoRegion(geo,par)
+    par  = GeoRegion(ParID,path=path); isinGeoRegion(geo,par)
     name = replace(name," "=>"-")
 
     if save
@@ -145,9 +145,9 @@ function TiltRegion(
         end
     end
 
-    N,S,E,W = getTiltShape(X,Y,ΔX,ΔY,θ); is180,is360 = checkbounds(N,S,E,W)
-    geo  = TiltRegion{ST,FT}(RegID,ParID,name,X,Y,ΔX,ΔY,θ,is180,is360)
-    par  = GeoRegion(ParID); isinGeoRegion(geo,par)
+    N,S,E,W = getTiltBounds(X,Y,ΔX,ΔY,θ); is180,is360 = checkbounds(N,S,E,W)
+    geo  = TiltRegion{ST,FT}(RegID,ParID,name,X,Y,ΔX,ΔY,θ,N,S,E,W,is180,is360)
+    par  = GeoRegion(ParID,path=path); isinGeoRegion(geo,par)
     name = replace(name," "=>"-")
 
     if save
@@ -245,7 +245,7 @@ function PolyRegion(
     is180,is360 = checkbounds(N,S,E,W)
     shape = Point2.(lonpt,latpt)
     geo   = PolyRegion{ST,FT}(RegID,ParID,name,N,S,E,W,shape,is180,is360)
-    par   = GeoRegion(ParID); isinGeoRegion(geo,par)
+    par   = GeoRegion(ParID,path=path); isinGeoRegion(geo,par)
     name  = replace(name," "=>"-")
 
     npt = length(lonpt)
