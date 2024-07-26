@@ -367,10 +367,11 @@ Returns
 """
 function isGeoRegion(
     geoID :: AbstractString;
+    path  :: AbstractString = geodir,
     throw :: Bool=true
 )
 
-    rvec,_,_ = listGeoRegions()
+    rvec,_,_ = listGeoRegions(path)
     return isgeoregion(geoID,rvec;throw=throw,dolog=true)
 
 end
