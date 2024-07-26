@@ -17,11 +17,11 @@ Returns
 - `lat` : A vector of latitude points for the shape of the GeoRegion
 """
 function coordGeoRegion(
-    GeoReg :: PolyRegion;
+    geo :: PolyRegion;
     n :: Int = 21
 )
 
-    shape = GeoReg.shape
+    shape = geo.shape
     npnt  = length(shape)
     lon   = zeros(n,npnt-1)
     lat   = zeros(n,npnt-1)
@@ -55,14 +55,14 @@ Returns
 - `lat` : A vector of latitude points for the bound of the GeoRegion
 """
 function coordGeoRegion(
-    GeoReg :: RectRegion;
+    geo :: RectRegion;
     n :: Int = 21
 )
 
-    N = GeoReg.N
-    S = GeoReg.S
-    E = GeoReg.E
-    W = GeoReg.W
+    N = geo.N
+    S = geo.S
+    E = geo.E
+    W = geo.W
 
     lon = vcat(range(W,E,n),range(E,E,n),range(E,W,n),range(W,W,n))
     lat = vcat(range(N,N,n),range(N,S,n),range(S,S,n),range(S,N,n))
@@ -88,17 +88,20 @@ Returns
 - `lat` : A vector of latitude points for the bound of the GeoRegion
 """
 function coordGeoRegion(
-    GeoReg :: TiltRegion;
+    geo :: TiltRegion;
     n :: Int = 21
 )
 
-    N = GeoReg.N
-    S = GeoReg.S
-    E = GeoReg.E
-    W = GeoReg.W
+    lon,lat = getTiltShape(geo)
 
-    lon = vcat(range(W,E,n),range(E,E,n),range(E,W,n),range(W,W,n))
-    lat = vcat(range(N,N,n),range(N,S,n),range(S,S,n),range(S,N,n))
+    lon = vcat(
+        range(lon[1],lon[2],n),range(lon[2],lon[3],n),
+        range(lon[3],lon[4],n),range(lon[4],lon[1],n)
+    )
+    lat = vcat(
+        range(lat[1],lat[2],n),range(lat[2],lat[3],n),
+        range(lat[3],lat[4],n),range(lat[4],lat[1],n)
+    )
 
     return lon,lat
 
