@@ -201,10 +201,9 @@ function listGeoRegions(
     path :: AbstractString = geodir
 )
 
-    flist   = [
-        "rectlist.txt","polylist.txt","tiltlist.txt",
-        "giorgi.txt","srex.txt","ar6.txt"
-    ]
+    flist    = ["rectlist.txt","polylist.txt","tiltlist.txt"]
+    fdefined = ["giorgi.txt","srex.txt","ar6.txt"]
+
     regvec  = []
     filevec = []
     typevec = []
@@ -212,6 +211,15 @@ function listGeoRegions(
     for fname in flist
         copygeoregions(fname,path)
         rvec,rtype = listgeoregions(joinpath(path,fname))
+        regvec = vcat(regvec,rvec)
+        nreg = length(rvec)
+        fvec = fill(fname,nreg); filevec = vcat(filevec,fvec)
+        tvec = fill(rtype,nreg); typevec = vcat(typevec,tvec)
+    end
+
+    for fname in fdefined
+        copygeoregions(fname,geodir)
+        rvec,rtype = listgeoregions(joinpath(geodir,fname))
         regvec = vcat(regvec,rvec)
         nreg = length(rvec)
         fvec = fill(fname,nreg); filevec = vcat(filevec,fvec)
@@ -237,20 +245,21 @@ function resetGeoRegions(;
     all  :: Bool = false
 )
 
-    if all
 
-        @info "$(modulelog()) - Resetting both the master and custom lists of GeoRegions back to the default"
-        flist = [
-            "rectlist.txt","polylist.txt","tiltlist.txt",
-            "giorgi.txt","srex.txt","ar6.txt"
-        ]
-    else
-        @info "$(modulelog()) - Resetting the custom lists of GeoRegions back to the default"
-        flist = ["rectlist.txt","polylist.txt","tiltlist.txt"]
-    end
-
+    @info "$(modulelog()) - Resetting the custom lists of GeoRegions back to the default"
+    flist = ["rectlist.txt","polylist.txt","tiltlist.txt"]
     for fname in flist
         copygeoregions(fname,path,overwrite=true)
+    end
+
+    if all
+
+        @info "$(modulelog()) - Resetting the predefined lists of GeoRegions back to the default"
+        fdefined = ["giorgi.txt","srex.txt","ar6.txt"]
+        for fname in fdefined
+            copygeoregions(fname,geodir,overwrite=true)
+        end
+
     end
 
     return
