@@ -20,6 +20,7 @@ function show(io::IO, geo::TiltRegion)
 		"    Position    (X,Y) : ",[geo.X,geo.Y], '\n',
 		"    Size      (ΔX,ΔY) : ",[geo.ΔX,geo.ΔY], '\n',
 		"    Tilt          (θ) : ",[geo.θ], '\n',
+		"    Bounds  (N,S,E,W) : ",[geo.N,geo.S,geo.E,geo.W], '\n',
         "        (is180,is360) : ",(geo.is180,geo.is360),"\n",
 	)
 end

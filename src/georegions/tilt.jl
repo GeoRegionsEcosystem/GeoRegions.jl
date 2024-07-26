@@ -9,12 +9,9 @@ function getTiltBounds(
     θ  :: Real;
 )
 
-    W = X - ΔX * cosd(θ)
-    E = X + ΔX * cosd(θ)
-    S = Y - ΔY * sind(θ)
-    N = Y + ΔY * sind(θ)
+    lon,lat = getTiltShape(X,Y,ΔX,ΔY,θ)
 
-    return N,S,E,W
+    return maximum(lat), minimum(lat) , maximum(lon), minimum(lon)
 
 end
 
