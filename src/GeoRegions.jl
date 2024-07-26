@@ -14,7 +14,7 @@ import Base: show, read, in
 
 ## Exporting the following functions:
 export
-        GeoRegion, RectRegion, PolyRegion,
+        GeoRegion, RectRegion, PolyRegion, TiltRegion,
         RegionGrid, RectGrid, PolyGrid, VectorGrid, RegionMask, VectorMask,
         AbstractLandSea, LandSeaTopo, LandSeaFlat,
 
@@ -81,14 +81,18 @@ struct PolyRegion{ST<:AbstractString, FT<:Real} <: GeoRegion
 end
 
 struct TiltRegion{ST<:AbstractString, FT<:Real} <: GeoRegion
-    ID     :: ST
-    pID    :: ST
-    name   :: ST
-    X      :: FT
-    Y      :: FT
-    length :: FT
-    width  :: FT
-    tilt   :: FT
+    ID    :: ST
+    pID   :: ST
+    name  :: ST
+    X     :: FT
+    Y     :: FT
+    ΔX    :: FT
+    ΔY    :: FT
+    θ     :: FT
+    N     :: FT
+    S     :: FT
+    E     :: FT
+    W     :: FT
     is180 :: Bool
     is360 :: Bool
 end
