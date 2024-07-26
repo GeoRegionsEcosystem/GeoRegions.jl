@@ -179,8 +179,8 @@ function isinGeoRegion(
     
     isin = 0
 
-    for ipnt in npts
-        if in(Point2(lon[ipnt],lat[ipnt]),polyG)
+    for ipnt in 1 : npts
+        if !in(Point2(lon[ipnt],lat[ipnt]),polyG)
             isin += 1
         end
     end
