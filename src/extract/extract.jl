@@ -18,12 +18,18 @@ RegionGrid(
     geo::RectRegion, lon::Vector{<:Real}, lat::Vector{<:Real}
 ) = RectGrid(geo,lon,lat)
 RegionGrid(
+    geo::TiltRegion, lon::Vector{<:Real}, lat::Vector{<:Real}
+) = TiltGrid(geo,lon,lat)
+RegionGrid(
     geo::PolyRegion, lon::Vector{<:Real}, lat::Vector{<:Real}
 ) = PolyGrid(geo,lon,lat)
 
 RegionGrid(
     geo::RectRegion, lon::AbstractRange{<:Real}, lat::AbstractRange{<:Real}
 ) = RectGrid(geo,collect(lon),collect(lat))
+RegionGrid(
+    geo::TiltRegion, lon::AbstractRange{<:Real}, lat::AbstractRange{<:Real}
+) = TiltGrid(geo,collect(lon),collect(lat))
 RegionGrid(
     geo::PolyRegion, lon::AbstractRange{<:Real}, lat::AbstractRange{<:Real}
 ) = PolyGrid(geo,collect(lon),collect(lat))
@@ -144,6 +150,79 @@ function RectGrid(
     while minimum(nlon) < geo.W; nlon .+= 360 end
 
     return RectGrid{eltype(lon)}(igrid,nlon,nlat,iWE,iNS)
+
+end
+
+function TiltGrid(
+    geo :: TiltRegion,
+    lon :: Vector{<:Real},
+    lat :: Vector{<:Real};
+    FT = Float64
+)
+
+    @info "$(modulelog()) - Creating a RegionGrid for the $(geo.name) GeoRegion"
+
+    @debug "$(modulelog()) - Determining indices of longitude and latitude boundaries in the given dataset ..."
+
+    N,S,E,W = getTiltBounds(geo)
+
+    if eltype(lon) <: AbstractFloat
+        FT = eltype(lon)
+    end
+
+    igrid = regiongrid([N,S,E,W],lon,lat);
+    iN = igrid[1]; iS = igrid[2]; iE = igrid[3]; iW = igrid[4]
+    nlon = deepcopy(lon)
+
+    @info "$(modulelog()) - Creating vector of latitude indices to extract ..."
+    if     iN < iS; iNS = vcat(iN:iS)
+    elseif iS < iN; iNS = vcat(iS:iN)
+    else;           iNS = [iN];
+    end
+
+    @info "$(modulelog()) - Creating vector of longitude indices to extract ..."
+    if     iW < iE; iWE = vcat(iW:iE)
+    elseif iW > iE || (iW == iE && E != W)
+          iWE = vcat(iW:length(lon),1:iE); nlon[1:(iW-1)] .+= 360
+    else; iWE = [iW];
+    end
+
+    while maximum(nlon) > 360; nlon .-= 360 end
+
+    @info "$(modulelog()) - Since the $(geo.name) GeoRegion is a TiltRegion, we need to defined a mask as well ..."
+    nlon = nlon[iWE]
+    nlat =  lat[iNS]
+    mask = Array{FT,2}(undef,length(nlon),length(nlat))
+    rotX = Array{FT,2}(undef,length(nlon),length(nlat))
+    rotY = Array{FT,2}(undef,length(nlon),length(nlat))
+
+    tlon,tlat = getTiltShape(geo)
+    tgeo = PolyRegion("","","",tlon,tlat,save=false,verbose=false)
+    
+    X = mod(geo.X,360)
+    Y = mod(geo.Y,360)
+    mlon = mod.(nlon,360)
+    mlat = mod.(nlat,360)
+
+    for ilat in eachindex(nlat), ilon in eachindex(nlon)
+        ipnt = Point2(nlon[ilon],nlat[ilat])
+        if in(ipnt,tgeo)
+            mask[ilon,ilat] = 1
+            ir = sqrt((mlon[ilon]-X)^2 + (mlat[ilat]-Y)^2)
+            iθ = atand(mlat[ilat]-Y, mlon[ilon]-X) - geo.θ
+            rotX[ilon,ilat] = ir * cosd(iθ)
+            rotY[ilon,ilat] = ir * sind(iθ)
+        else
+            mask[ilon,ilat] = NaN
+            rotX[ilon,ilat] = NaN
+            rotY[ilon,ilat] = NaN
+        end
+    end
+
+    while maximum(nlon) > geo.E; nlon .-= 360 end
+    while minimum(nlon) < geo.W; nlon .+= 360 end
+
+    return TiltGrid{FT}(igrid,nlon,nlat,iWE,iNS,mask,rotX,rotY)
 
 end
 

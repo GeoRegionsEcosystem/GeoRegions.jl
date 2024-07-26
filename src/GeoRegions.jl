@@ -140,6 +140,17 @@ struct PolyGrid{FT<:Real} <: RegionGrid
     mask :: Array{FT,2}
 end
 
+struct TiltGrid{FT<:Real} <: RegionGrid
+    grid :: Vector{Int}
+     lon :: Vector{FT}
+     lat :: Vector{FT}
+    ilon :: Vector{Int}
+    ilat :: Vector{Int}
+    mask :: Array{FT,2}
+    rotX :: Array{FT,2}
+    rotY :: Array{FT,2}
+end
+
 struct RegionMask{FT<:Real} <: RegionGrid
      lon :: Array{FT,2}
      lat :: Array{FT,2}

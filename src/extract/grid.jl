@@ -68,7 +68,7 @@ end
 
 function extractGrid(
     odata :: AbstractArray{<:Real,2},
-    ggrd  :: PolyGrid
+    ggrd  :: Union{TiltGrid,PolyGrid}
 )
 
     ilon  = ggrd.ilon; nlon = length(ggrd.ilon)
@@ -86,7 +86,7 @@ end
 function extractGrid!(
     ndata :: AbstractArray{<:Real,2},
     odata :: AbstractArray{<:Real,2},
-    ggrd  :: PolyGrid
+    ggrd  :: Union{TiltGrid,PolyGrid}
 )
 
     ilon  = ggrd.ilon; nlon = length(ggrd.ilon)
@@ -136,7 +136,7 @@ end
 
 function extractGrid(
     odata :: AbstractArray{<:Real,3},
-    ggrd  :: PolyGrid
+    ggrd  :: Union{TiltGrid,PolyGrid}
 )
 
     ilon  = ggrd.ilon; nlon = length(ggrd.ilon)
@@ -155,7 +155,7 @@ end
 function extractGrid!(
     ndata :: AbstractArray{<:Real,3},
     odata :: AbstractArray{<:Real,3},
-    ggrd  :: PolyGrid
+    ggrd  :: Union{TiltGrid,PolyGrid}
 )
 
     ilon  = ggrd.ilon; nlon = length(ggrd.ilon)
@@ -208,7 +208,7 @@ end
 
 function extractGrid(
     odata :: AbstractArray{<:Real,4},
-    ggrd  :: PolyGrid
+    ggrd  :: Union{TiltGrid,PolyGrid}
 )
 
     ilon  = ggrd.ilon; nlon = length(ggrd.ilon)
@@ -228,7 +228,7 @@ end
 function extractGrid!(
     ndata :: AbstractArray{<:Real,4},
     odata :: AbstractArray{<:Real,4},
-    ggrd  :: PolyGrid
+    ggrd  :: Union{TiltGrid,PolyGrid}
 )
 
     ilon  = ggrd.ilon; nlon = length(ggrd.ilon)
