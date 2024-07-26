@@ -232,12 +232,13 @@ function PolyRegion(
         end
     end
 
-    if lonpt[1] != lonpt[end]
-        error("$(modulelog()) - The first and last points of the vector of longitude coordinates must be the same")
-    end
-
-    if latpt[1] != latpt[end]
-        error("$(modulelog()) - The first and last points of the vector of latitude coordinates must be the same")
+    if (lon[1] != lon[end]) || (lat[1] != lat[end])
+        if !join
+            error("$(modulelog()) - The longitude/ latitude coordinates of the first and last points must be the same")
+        else
+            lon = vcat(lon,lon[1])
+            lat = vcat(lat,lat[1])
+        end
     end
 
     N = maximum(latpt); S = minimum(latpt)
