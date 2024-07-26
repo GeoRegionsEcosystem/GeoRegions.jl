@@ -146,6 +146,8 @@ struct VectorMask{FT<:Real} <: RegionGrid
      lon :: Vector{FT}
      lat :: Vector{FT}
     mask :: Vector{FT}
+    olon :: Vector{FT}
+    olat :: Vector{FT}
 end
 
 """
