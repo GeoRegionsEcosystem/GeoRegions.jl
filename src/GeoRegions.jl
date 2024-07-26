@@ -223,6 +223,7 @@ end
 include("georegions/tilt.jl")
 include("georegions/read.jl")
 include("georegions/create.jl")
+include("georegions/remove.jl")
 include("georegions/query.jl")
 include("georegions/show.jl")
 include("georegions/tables.jl")
@@ -233,9 +234,11 @@ include("isin/georegion.jl")
 
 include("extract/extract.jl")
 include("extract/grid.jl")
+include("extract/show.jl")
 
 include("landsea/landsea.jl")
 include("landsea/smooth.jl")
 include("landsea/etopobackend.jl")
+include("landsea/show.jl")
 
 end # module
