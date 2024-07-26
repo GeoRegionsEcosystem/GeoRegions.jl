@@ -1,35 +1,6 @@
 """
     in(
         Child  :: GeoRegion,
-        polyG  :: PolyRegion;
-        domask :: Bool = false,
-        throw  :: Bool = false
-    ) -> Bool
-
-Check if a child GeoRegion defined by `Child` is within a PolyRegion `polyG`.
-
-Arguments
-=========
-
-- `Child` : A GeoRegion that we postulate to be a "child", or a subset of the GeoRegion defined by `polyG`
-- `polyG` : A GeoRegion that we postulate to be a "parent", or containing the GeoRegion defined by `Child`
-
-Keyword Arguments
-=================
-
-- `throw`  : If `true`, then if `Child` is not within `polyG`, an error is thrown and the program stops running
-- `domask` : If `throw` is `false` and `domask` is `true`, return a mask (with bounds defined by the `Child` GeoRegion) showing the region where `Child` and `polyG` do not overlap
-"""
-Base.in(
-    Child  :: GeoRegion,
-    polyG  :: PolyRegion;
-    domask :: Bool = false,
-    throw  :: Bool = false
-) = isinGeoRegion(Child,polyG,domask=domask,throw=throw)
-
-"""
-    in(
-        Child  :: GeoRegion,
         rectG  :: RectRegion;
         throw  :: Bool = false
     ) -> Bool
@@ -40,7 +11,7 @@ Arguments
 =========
 
 - `Child` : A GeoRegion that we postulate to be a "child", or a subset of the GeoRegion defined by `polyG`
-- `polyG` : A GeoRegion that we postulate to be a "parent", or containing the GeoRegion defined by `Child`
+- `rectG` : A GeoRegion that we postulate to be a "parent", or containing the GeoRegion defined by `Child`
 
 Keyword Arguments
 =================
@@ -54,74 +25,33 @@ Base.in(
 ) = isinGeoRegion(Child,rectG,throw=throw)
 
 """
-    isinGeoRegion(
-        Child  :: GeoRegion,
-        polyG  :: PolyRegion;
-        domask :: Bool = false,
-        throw  :: Bool = true
+    in(
+        cgeo  :: GeoRegion,
+        geo   :: Union{TiltRegion,PolyRegion};
+        n     :: Int = 100,
+        throw :: Bool = false
     ) -> Bool
 
-Check if a child GeoRegion defined by `Child` is within a PolyRegion `polyG`.
+Check if a child GeoRegion defined by `cgeo` is within a TiltRegion or PolyRegion `geo`.
 
 Arguments
 =========
 
-- `Child` : A GeoRegion that we postulate to be a "child", or a subset of the GeoRegion defined by `polyG`
-- `polyG` : A GeoRegion that we postulate to be a "parent", or containing the GeoRegion defined by `Child`
+- `cgeo` : A GeoRegion that we postulate to be a "child", or a subset of the GeoRegion defined by `polyG`
+- `geo` : A TiltRegion or PolyRegion that we postulate to be a "parent", or containing the GeoRegion defined by `Child`
 
 Keyword Arguments
 =================
 
-- `throw`  : If `true`, then if `Child` is not within `polyG`, an error is thrown and the program stops running
-- `domask` : If `throw` is `false` and `domask` is `true`, return a mask (with bounds defined by the `Child` GeoRegion) showing the region where `Child` and `polyG` do not overlap
+- `n`  : Number of points per polygon side to test
+- `throw` : If `true`, then if `cgeo` is not within `geo`, an error is thrown and the program stops running
 """
-function isinGeoRegion(
-    Child  :: GeoRegion,
-    polyG  :: PolyRegion;
-    domask :: Bool = false,
-    throw  :: Bool = true
-)
-
-    @info "$(modulelog()) - Performing a check to determine if the $(Child.name) GeoRegion ($(Child.ID)) is inside the $(polyG.name) GeoRegion ($(polyG.ID))"
-
-    N = Child.N
-    S = Child.S
-    E = Child.E
-    W = Child.W
-
-    lon = range(W,E,length=10001); nlon = length(lon)
-    lat = range(S,N,length=10001); nlat = length(lat)
-
-    mask = zeros(Bool,nlon,nlat)
-
-    for ilat in 1 : nlat, ilon = 1 : nlon
-        if in(Point2(lon[ilon],lat[ilat]),Child)
-            if in(Point2(lon[ilon],lat[ilat]),polyG)
-                mask[ilon,ilat] = 1
-            end
-        end
-    end
-
-    if sum(mask) > 0
-
-        if throw
-            error("$(modulelog()) - The GeoRegion $(Child.ID) ($(Child.name)) is not a subset of the GeoRegion $(polyG.ID) ($(polyG.name))")
-        else
-            if domask
-                @warn "$(modulelog()) - The GeoRegion $(Child.ID) ($(Child.name)) is not a subset of the GeoRegion $(polyG.ID) ($(polyG.name)), returning a mask to show which regions do not intersect"
-                return mask
-            else
-                @warn "$(modulelog()) - The GeoRegion $(Child.ID) ($(Child.name)) is not a subset of the GeoRegion $(polyG.ID) ($(polyG.name))"
-                return false
-            end
-        end
-
-    else
-        @info "$(modulelog()) - The GeoRegion $(Child.ID) ($(Child.name)) is indeed a subset of the GeoRegion $(polyG.ID) ($(polyG.name))"
-        return true
-    end
-
-end
+Base.in(
+    cgeo  :: GeoRegion,
+    geo   :: Union{TiltRegion,PolyRegion};
+    n     :: Int = 100,
+    throw :: Bool = false
+) = isinGeoRegion(cgeo,geo,n=n,throw=throw)
 
 """
     isinGeoRegion(
@@ -136,17 +66,17 @@ Arguments
 =========
 
 - `Child` : A GeoRegion that we postulate to be a "child", or a subset of the GeoRegion defined by `polyG`
-- `polyG` : A GeoRegion that we postulate to be a "parent", or containing the GeoRegion defined by `Child`
+- `rectG` : A GeoRegion that we postulate to be a "parent", or containing the GeoRegion defined by `Child`
 
 Keyword Arguments
 =================
 
-- `throw`  : If `true`, then if `Child` is not within `polyG`, an error is thrown and the program stops running
+- `throw`  : If `true`, then if `Child` is not within `rectG`, an error is thrown and the program stops running
 """
 function isinGeoRegion(
     Child :: GeoRegion,
     rectG :: RectRegion;
-    throw :: Bool = true
+    throw :: Bool = true,
 )
 
     @info "$(modulelog()) - Performing a check to determine if the $(Child.name) GeoRegion ($(Child.ID)) is inside the $(rectG.name) GeoRegion ($(rectG.ID))"
@@ -168,6 +98,104 @@ function isinGeoRegion(
 
     else
         @info "$(modulelog()) - The GeoRegion $(Child.ID) ($(Child.name)) is indeed a subset of the GeoRegion $(rectG.ID) ($(rectG.name))"
+        return true
+    end
+
+end
+
+
+
+"""
+    isinGeoRegion(
+        Child :: GeoRegion,
+        tiltG :: TiltRegion;
+        n     :: Int = 100,
+        throw :: Bool = false
+    ) -> Bool
+
+Check if a child GeoRegion defined by `Child` is within a TiltRegion `tiltG`.
+
+Arguments
+=========
+
+- `Child` : A GeoRegion that we postulate to be a "child", or a subset of the GeoRegion defined by `polyG`
+- `tiltG` : A GeoRegion that we postulate to be a "parent", or containing the GeoRegion defined by `Child`
+
+Keyword Arguments
+=================
+
+- `n`  : Number of points per polygon side to test
+- `throw`  : If `true`, then if `Child` is not within `tiltG`, an error is thrown and the program stops running
+"""
+function isinGeoRegion(
+    Child :: GeoRegion,
+    tiltG :: TiltRegion;
+    n     :: Int = 100,
+    throw :: Bool = true,
+)
+
+    @info "$(modulelog()) - Performing a check to determine if the $(Child.name) GeoRegion ($(Child.ID)) is inside the $(rectG.name) GeoRegion ($(rectG.ID))"
+
+    lon,lat = getTiltShape(tiltG)
+    tgeo = PolyRegion("","GLB","",lon,lat,save=false,verbose=false)
+
+    isinGeoRegion(Child,tgeo,n=n,throw=throw)
+
+end
+
+"""
+    isinGeoRegion(
+        Child  :: GeoRegion,
+        polyG  :: PolyRegion;
+        domask :: Bool = false,
+        throw  :: Bool = true
+    ) -> Bool
+
+Check if a child GeoRegion defined by `Child` is within a PolyRegion `polyG`.
+
+Arguments
+=========
+
+- `Child` : A GeoRegion that we postulate to be a "child", or a subset of the GeoRegion defined by `polyG`
+- `polyG` : A GeoRegion that we postulate to be a "parent", or containing the GeoRegion defined by `Child`
+
+Keyword Arguments
+=================
+
+- `n`  : Number of points per polygon side to test
+- `throw`  : If `true`, then if `Child` is not within `polyG`, an error is thrown and the program stops running
+"""
+function isinGeoRegion(
+    Child :: GeoRegion,
+    polyG :: PolyRegion;
+    n     :: Int = 100,
+    throw :: Bool = true,
+)
+
+    @info "$(modulelog()) - Performing a check to determine if the $(Child.name) GeoRegion ($(Child.ID)) is inside the $(polyG.name) GeoRegion ($(polyG.ID))"
+
+    lon,lat = coordGeoRegion(Child,n=n)
+    npts = length(lon)
+    
+    isin = 0
+
+    for ipnt in npts
+        if in(Point2(lon[ipnt],lat[ipnt]),polyG)
+            isin += 1
+        end
+    end
+
+    if isin > 0
+
+        if throw
+            error("$(modulelog()) - The GeoRegion $(Child.ID) ($(Child.name)) is not a subset of the GeoRegion $(polyG.ID) ($(polyG.name))")
+        else
+            @warn "$(modulelog()) - The GeoRegion $(Child.ID) ($(Child.name)) is not a subset of the GeoRegion $(polyG.ID) ($(polyG.name))"
+            return false
+        end
+
+    else
+        @info "$(modulelog()) - The GeoRegion $(Child.ID) ($(Child.name)) is indeed a subset of the GeoRegion $(polyG.ID) ($(polyG.name))"
         return true
     end
 
