@@ -145,10 +145,10 @@ end
 
 """
     isinGeoRegion(
-        Child  :: GeoRegion,
-        polyG  :: PolyRegion;
-        domask :: Bool = false,
-        throw  :: Bool = true
+        Child :: GeoRegion,
+        polyG :: PolyRegion;
+        n     :: Int = 100,
+        throw :: Bool = false
     ) -> Bool
 
 Check if a child GeoRegion defined by `Child` is within a PolyRegion `polyG`.
