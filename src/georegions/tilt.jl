@@ -23,10 +23,10 @@ function getTiltShape(
     θ  :: Real;
 )
 
-    lon1 = X - ΔX * cosd(θ) + ΔY * sind(θ); lat1 = Y + ΔY * cosd(θ) + ΔX * sind(θ)
-    lon2 = X - ΔX * cosd(θ) - ΔY * sind(θ); lat2 = Y - ΔY * cosd(θ) + ΔX * sind(θ)
-    lon3 = X + ΔX * cosd(θ) - ΔY * sind(θ); lat3 = Y - ΔY * cosd(θ) - ΔX * sind(θ)
-    lon4 = X + ΔX * cosd(θ) + ΔY * sind(θ); lat4 = Y + ΔY * cosd(θ) - ΔX * sind(θ)
+    lon1 = X - ΔX * cosd(θ) - ΔY * sind(θ); lat1 = Y + ΔY * cosd(θ) - ΔX * sind(θ)
+    lon2 = X - ΔX * cosd(θ) + ΔY * sind(θ); lat2 = Y - ΔY * cosd(θ) - ΔX * sind(θ)
+    lon3 = X + ΔX * cosd(θ) + ΔY * sind(θ); lat3 = Y - ΔY * cosd(θ) + ΔX * sind(θ)
+    lon4 = X + ΔX * cosd(θ) - ΔY * sind(θ); lat4 = Y + ΔY * cosd(θ) + ΔX * sind(θ)
 
     return [lon1,lon2,lon3,lon4], [lat1,lat2,lat3,lat4]
 
