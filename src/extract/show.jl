@@ -13,6 +13,25 @@ function show(io::IO, grd::RectGrid)
 	)
 end
 
+function show(io::IO, grd::TiltGrid)
+	nlon = length(grd.ilon)
+	nlat = length(grd.ilat)
+	mask = grd.mask
+    print(
+		io,
+		"The Polygonal Grid has the following properties:\n",
+		"    Grid Bounds       (grid) : ", grd.grid, '\n',
+		"    Longitude Indices (ilon) : ", grd.ilon, '\n',
+		"    Latitude Indices  (ilat) : ", grd.ilat, '\n',
+		"    Longitude Points   (lon) : ", grd.lon,  '\n',
+		"    Latitude Points    (lat) : ", grd.lat,  '\n',
+		"    Rotated X Points  (rotX) : ", grd.rotX, '\n',
+		"    Rotated Y Points  (rotX) : ", grd.rotY, '\n',
+		"    Region Size (nlon * nlat) : $(nlon) lon points x $(nlat) lat points\n",
+		"    Region Mask (sum(mask) / (nlon * nlat)) : $(sum(isone.(mask))) / $(nlon*nlat)\n"
+	)
+end
+
 function show(io::IO, grd::PolyGrid)
 	nlon = length(grd.ilon)
 	nlat = length(grd.ilat)
