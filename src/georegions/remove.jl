@@ -20,7 +20,7 @@ function removeGeoRegion(
         @info "$(modulelog()) - Removing the GeoRegion $(geoID) ..."
     end
 
-    regvec,filevec,typevec = listGeoRegions(); isgeoregion(geoID,regvec)
+    regvec,filevec,typevec = listGeoRegions(path); isgeoregion(geoID,regvec)
     ind = findall(geoID.==regvec)[1]
     geo = getgeoregion(geoID,joinpath(path,filevec[ind]), typevec[ind])
     removegeoregion(geo,joinpath(path,filevec[ind]))
