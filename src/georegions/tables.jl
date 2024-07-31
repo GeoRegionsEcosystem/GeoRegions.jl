@@ -14,9 +14,7 @@ function tableGeoRegions(;
 )
 
     flist = ["rectlist.txt","polylist.txt","tiltlist.txt"]
-    if !onlycustom
-        flist = vcat(flist,"giorgi.txt","srex.txt","ar6.txt")
-    end
+    fdefined = vcat(flist,"giorgi.txt","srex.txt","ar6.txt")
 
     regvec  = []
     filevec = []
@@ -29,6 +27,17 @@ function tableGeoRegions(;
         nreg = length(rvec)
         fvec = fill(fname,nreg); filevec = vcat(filevec,fvec)
         tvec = fill(rtype,nreg); typevec = vcat(typevec,tvec)
+    end
+
+    if !onlycustom
+        for fname in fdefined
+            copygeoregions(fname,geodir)
+            rvec,rtype = listgeoregions(joinpath(geodir,fname))
+            regvec = vcat(regvec,rvec)
+            nreg = length(rvec)
+            fvec = fill(fname,nreg); filevec = vcat(filevec,fvec)
+            tvec = fill(rtype,nreg); typevec = vcat(typevec,tvec)
+        end
     end
 
     ngeo = size(regvec,1)
@@ -120,21 +129,22 @@ function tableRectRegions(;
     giorgi :: Bool = false
 )
 
-    flist = []
-    if custom
-        flist = vcat(flist,"rectlist.txt")
-    end
-    if giorgi
-        flist = vcat(flist,"giorgi.txt")
-    end
-
     regvec  = []
     filevec = []
     typevec = []
 
-    for fname in flist
-        copygeoregions(fname,path)
-        rvec,rtype = listgeoregions(joinpath(geodir,fname))
+    if custom
+        copygeoregions("rectlist.txt",path)
+        rvec,rtype = listgeoregions(joinpath(path,"rectlist.txt"))
+        regvec = vcat(regvec,rvec)
+        nreg = length(rvec)
+        fvec = fill(fname,nreg); filevec = vcat(filevec,fvec)
+        tvec = fill(rtype,nreg); typevec = vcat(typevec,tvec)
+    end
+
+    if giorgi
+        copygeoregions("giorgi.txt",geodir)
+        rvec,rtype = listgeoregions(joinpath(geodir,"giorgi.txt"))
         regvec = vcat(regvec,rvec)
         nreg = length(rvec)
         fvec = fill(fname,nreg); filevec = vcat(filevec,fvec)
@@ -193,25 +203,32 @@ function tablePolyRegions(;
     srex :: Bool = false,
     ar6  :: Bool = false
 )
-
-    flist = []
-    if custom
-        flist = vcat(flist,"polylist.txt")
-    end
-    if srex
-        flist = vcat(flist,"srex.txt")
-    end
-    if ar6
-        flist = vcat(flist,"ar6.txt")
-    end
     
     regvec  = []
     filevec = []
     typevec = []
 
-    for fname in flist
-        copygeoregions(fname,path)
-        rvec,rtype = listgeoregions(joinpath(path,fname))
+    if custom
+        copygeoregions("polylist.txt",path)
+        rvec,rtype = listgeoregions(joinpath(path,"polylist.txt"))
+        regvec = vcat(regvec,rvec)
+        nreg = length(rvec)
+        fvec = fill(fname,nreg); filevec = vcat(filevec,fvec)
+        tvec = fill(rtype,nreg); typevec = vcat(typevec,tvec)
+    end
+
+    if srex
+        copygeoregions("srex.txt",geodir)
+        rvec,rtype = listgeoregions(joinpath(path,"srex.txt"))
+        regvec = vcat(regvec,rvec)
+        nreg = length(rvec)
+        fvec = fill(fname,nreg); filevec = vcat(filevec,fvec)
+        tvec = fill(rtype,nreg); typevec = vcat(typevec,tvec)
+    end
+
+    if ar6
+        copygeoregions("ar6.txt",geodir)
+        rvec,rtype = listgeoregions(joinpath(path,"ar6.txt"))
         regvec = vcat(regvec,rvec)
         nreg = length(rvec)
         fvec = fill(fname,nreg); filevec = vcat(filevec,fvec)
