@@ -289,7 +289,8 @@ function addGeoRegions(
         if !isGeoRegion(reg,throw=false)
             g = getgeoregion(reg,fname,rtype)
             if     rtype == "PolyRegion"
-                geo = PolyRegion(g.ID,g.pID,g.name,g.lon,g.lat,path=path)
+                lon,lat = coordGeoRegion(g,n=1)
+                geo = PolyRegion(g.ID,g.pID,g.name,lon,lat,path=path)
             elseif rtype == "TiltRegion"
                 geo = TiltRegion(g.ID,g.pID,g.name,g.X,g.Y,g.ΔX,g.ΔY,g.θ,path=path)
             elseif rtype == "RectRegion"
@@ -300,7 +301,8 @@ function addGeoRegions(
             removeGeoRegion(reg)
             g = getgeoregion(reg,fname,rtype)
             if     rtype == "PolyRegion"
-                geo = PolyRegion(g.ID,g.pID,g.name,g.lon,g.lat,path=path)
+                lon,lat = coordGeoRegion(g,n=1)
+                geo = PolyRegion(g.ID,g.pID,g.name,lon,lat,path=path)
             elseif rtype == "TiltRegion"
                 geo = TiltRegion(g.ID,g.pID,g.name,g.X,g.Y,g.ΔX,g.ΔY,g.θ,path=path)
             elseif rtype == "RectRegion"
@@ -329,7 +331,8 @@ function readGeoRegions(
         if !isGeoRegion(reg,throw=false)
             g = getgeoregion(reg,fname,rtype)
             if     rtype == "PolyRegion"
-                geo = PolyRegion(g.ID,g.pID,g.name,g.lon,g.lat,save=false)
+                lon,lat = coordGeoRegion(g,n=1)
+                geo = PolyRegion(g.ID,g.pID,g.name,lon,lat,save=false)
             elseif rtype == "TiltRegion"
                 geo = TiltRegion(g.ID,g.pID,g.name,g.X,g.Y,g.ΔX,g.ΔY,g.θ,save=false)
             elseif rtype == "RectRegion"
