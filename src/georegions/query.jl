@@ -35,8 +35,8 @@ function coordGeoRegion(
         lon = zeros(npnt)
         lat = zeros(npnt)
         for ipnt = 1 : npnt
-            lon[ipnt] .= shape[ipnt][1]
-            lat[ipnt] .= shape[ipnt][2]
+            lon[ipnt] = shape[ipnt][1]
+            lat[ipnt] = shape[ipnt][2]
         end
     end
 
