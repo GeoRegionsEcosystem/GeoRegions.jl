@@ -13,7 +13,7 @@ end
 function show(io::IO, geo::TiltRegion)
     print(
 		io,
-		"The Rectilinear Region $(geo.ID) has the following properties:\n",
+		"The Tilted Rectilinear Region $(geo.ID) has the following properties:\n",
 		"    Region ID    (ID) : ", geo.ID, '\n',
 		"    Parent ID   (pID) : ", geo.pID, '\n',
 		"    Name       (name) : ", geo.name, '\n',
