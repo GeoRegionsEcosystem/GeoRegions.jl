@@ -85,8 +85,8 @@ function getLandSea(
                 tW = geo.W - (ceil(σlon*20*mulf)+1); if tW < -180; tW = -180 end
                 if (tE - tW) > 360; tW = 0; tE = 360 end
                 geo = RectRegion(
-                    "TMP", "GLB", "Temporary GeoRegion",
-                    [tN,tS,tE,tW], savegeo = false
+                    "", "", "",
+                    [tN,tS,tE,tW], save = false
                 )
             end
 
@@ -178,7 +178,7 @@ function getLandSea(
             if (tE - tW) > 360; tW = 0; tE = 360 end
             geo = RectRegion(
                 "TMP", "GLB", "Temporary GeoRegion",
-                [tN,tS,tE,tW], savegeo = false
+                [tN,tS,tE,tW], save = false
             )
         end
 

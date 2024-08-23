@@ -115,7 +115,7 @@ function TiltRegion(
     name = replace(name," "=>"")
     name = replace(name,"-"=>" ")
 
-    N,S,E,W = getTiltShape(X,Y,ΔX,ΔY,θ)
+    N,S,E,W = getTiltBounds(X,Y,ΔX,ΔY,θ)
     is180,is360 = checkbounds(N,S,E,W)
 
     return TiltRegion{ST,FT}(
