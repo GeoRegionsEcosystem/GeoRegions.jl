@@ -120,7 +120,7 @@ function TiltRegion(
 
     return TiltRegion{ST,FT}(
         geoID,ParID,name,
-        X,Y,ΔX,ΔY,θ,
+        X,Y,ΔX,ΔY,θ,N,S,E,W,
         is180,is360
     )
 
