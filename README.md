@@ -1,5 +1,5 @@
 <p align="center">
-<img alt="NASAPrecipitation.jl Logo" src=https://raw.githubusercontent.com/JuliaClimate/GeoRegions.jl/main/src/logosmall.png />
+<img alt="NASAPrecipitation.jl Logo" src=https://raw.githubusercontent.com/GeoRegionsEcosystem/GeoRegions.jl/main/src/logosmall.png />
 </p>
 
 # **<div align="center">GeoRegions.jl</div>**
@@ -8,7 +8,7 @@
   <a href="https://www.repostatus.org/#active">
     <img alt="Repo Status" src="https://www.repostatus.org/badges/latest/active.svg?style=flat-square" />
   </a>
-  <a href="https://github.com/JuliaClimate/GeoRegions.jl/actions/workflows/ci.yml">
+  <a href="https://github.com/GeoRegionsEcosystem/GeoRegions.jl/actions/workflows/ci.yml">
     <img alt="GitHub Actions" src="https://github.com/JuliaClimate/GeoRegions.jl/actions/workflows/ci.yml/badge.svg?branch=main&style=flat-square">
   </a>
   <br>
@@ -16,10 +16,10 @@
     <img alt="MIT License" src="https://img.shields.io/badge/License-MIT-blue.svg?style=flat-square">
   </a>
 	<img alt="MIT License" src="https://img.shields.io/github/v/release/JuliaClimate/GeoRegions.jl.svg?style=flat-square">
-  <a href="https://juliaclimate.github.io/GeoRegions.jl/stable/">
+  <a href="https://georegionsecosystem.github.io/GeoRegions.jl/stable/">
     <img alt="Latest Documentation" src="https://img.shields.io/badge/docs-stable-blue.svg?style=flat-square">
   </a>
-  <a href="https://juliaclimate.github.io/GeoRegions.jl/dev/">
+  <a href="https://georegionsecosystem.github.io/GeoRegions.jl/dev/">
     <img alt="Latest Documentation" src="https://img.shields.io/badge/docs-latest-blue.svg?style=flat-square">
   </a>
 </p>
@@ -42,4 +42,4 @@ In general, these boundaries can be specified either using `[N,S,E,W]` coordinat
 
 ## **Usage**
 
-Please refer to the [documentation](https://juliaclimate.github.io/GeoRegions.jl/dev/) for instructions and examples.
+Please refer to the [documentation](https://georegionsecosystem.github.io/GeoRegions.jl/dev/) for instructions and examples.
