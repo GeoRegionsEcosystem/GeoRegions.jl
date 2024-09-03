@@ -97,110 +97,6 @@ struct TiltRegion{ST<:AbstractString, FT<:Real} <: GeoRegion
     is360 :: Bool
 end
 
-"""
-    RegionGrid
-
-Abstract supertype for geographical region gridded information, with the following subtypes:
-    
-    RectGrid{FT<:Real} <: RegionGrid
-    PolyGrid{FT<:Real} <: RegionGrid
-    RegionMask{FT<:Real} <: RegionGrid
-
-Both `RectGrid` and `PolyGrid` types contain the following fields:
-* `grid` - A vector of `Int`s defining the gridpoint indices of the [N,S,E,W] points respectively
-* `lon` - A vector of `Float`s defining the latitude vector describing the region
-* `lat` - A vector of `Float`s defining the latitude vector describing the region
-* `ilon` - A vector of `Int`s defining indices of the parent longitude vector describing the region
-* `ilat` - A vector of `Int`s defining indices of the parent latitude vector describing the region
-
-A `PolyGrid` type will also contain the following field:
-* `mask` - An array of 0s and 1s defining a non-rectilinear shape within a rectilinear grid where data is valid (only available in PolyGrid types)
-
-A `RegionMask` type will contain the following fields:
-* `lon` - An array of longitude points
-* `lat` - An array of latitude points
-* `mask` - An array of NaNs and 1s defining the region within the original field in which data points are valid
-"""
-abstract type RegionGrid end
-
-struct RectGrid{FT<:Real} <: RegionGrid
-    grid :: Vector{Int}
-     lon :: Vector{FT}
-     lat :: Vector{FT}
-    ilon :: Vector{Int}
-    ilat :: Vector{Int}
-end
-
-struct PolyGrid{FT<:Real} <: RegionGrid
-    grid :: Vector{Int}
-     lon :: Vector{FT}
-     lat :: Vector{FT}
-    ilon :: Vector{Int}
-    ilat :: Vector{Int}
-    mask :: Array{FT,2}
-end
-
-struct TiltGrid{FT<:Real} <: RegionGrid
-    grid :: Vector{Int}
-     lon :: Vector{FT}
-     lat :: Vector{FT}
-    ilon :: Vector{Int}
-    ilat :: Vector{Int}
-    mask :: Array{FT,2}
-    rotX :: Array{FT,2}
-    rotY :: Array{FT,2}
-end
-
-struct RegionMask{FT<:Real} <: RegionGrid
-     lon :: Array{FT,2}
-     lat :: Array{FT,2}
-    mask :: Array{FT,2}
-end
-
-struct VectorMask{FT<:Real} <: RegionGrid
-     lon :: Vector{FT}
-     lat :: Vector{FT}
-    mask :: Vector{FT}
-    olon :: Vector{FT}
-    olat :: Vector{FT}
-end
-
-"""
-    AbstractLandSea
-
-Abstract supertype for LandSea Datasets, with the following subtypes:
-
-    LandSeaTopo <: AbstractLandSea
-    LandSeaFlat <: AbstractLandSea
-
-Both `LandSeaTopo` and `LandSeaFlat` types contain the following fields:
-* `lon` - Vector containing the longitude points for the Land-Sea Dataset
-* `lat` - Vector containing the latitude points for the Land-Sea Dataset
-* `lsm` - Array containing data regarding the Land-Sea Mask.  1 is Land, 0 is Ocean, NaN is outside the bounds of the GeoRegion
-* `mask` - Mask determining if point is within the GeoRegion or not. 1 is `true`, 0 is `false`.
-
-A `LandSeaTopo` type will also contain the following field:
-* `z` - Array containing data regarding the Orographic Height in meters.  NaN is outside the bounds of the GeoRegion
-"""
-abstract type AbstractLandSea end
-
-abstract type LandSeaTopo <: AbstractLandSea end
-
-abstract type LandSeaFlat <: AbstractLandSea end
-
-"""
-    GeoRegion.LandSea <: LandSeaTopo
-
-Object containing information on the ETOPO 2022 Land Sea mask for a GeoRegion.
-"""
-struct LandSea{FT<:Real} <: LandSeaTopo
-    lon  :: Vector{Float32}
-    lat  :: Vector{Float32}
-    lsm  :: Array{Float32,2}
-    z    :: Array{Float32,2}
-    mask :: Array{Int16,2}
-end
-
 modulelog() = "$(now()) - GeoRegions.jl"
 geodir = joinpath(DEPOT_PATH[1],"files","GeoRegions")
 
@@ -231,14 +127,5 @@ include("georegions/tables.jl")
 include("isin/isin.jl")
 include("isin/point.jl")
 include("isin/georegion.jl")
-
-include("extract/extract.jl")
-include("extract/grid.jl")
-include("extract/show.jl")
-
-include("landsea/landsea.jl")
-include("landsea/smooth.jl")
-include("landsea/etopobackend.jl")
-include("landsea/show.jl")
 
 end # module
