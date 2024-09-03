@@ -4,9 +4,7 @@ module GeoRegions
 using Dates
 using DelimitedFiles
 using GeometryBasics
-using ImageFiltering
 using Logging
-using NCDatasets
 using PolygonOps
 using PrettyTables
 
