@@ -1,10 +1,10 @@
 using Documenter
 using DocumenterVitepress
 using GeoRegions
-using CairoMakie
-using Literate
+# using CairoMakie
+# using Literate
 
-CairoMakie.activate!(type = "svg")
+# CairoMakie.activate!(type = "svg")
 
 DocMeta.setdocmeta!(GeoRegions, :DocTestSetup, :(using GeoRegions); recursive=true)
 

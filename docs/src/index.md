@@ -4,8 +4,8 @@ layout: home
 
 hero:
   name: "GeoRegions.jl"
-  text: "Geographic Regions for Gridded Data"
-  tagline: Extract and analyze gridded Earth Observation data in a few simple steps.
+  text: "Geographic Regions for Geospatial Data"
+  tagline: Defining Geographic Regions of Interest for Geospatial Data in Geoscience and Climate.
   image:
     src: /logo.png
     alt: GeoRegions
