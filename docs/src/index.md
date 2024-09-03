@@ -18,7 +18,7 @@ hero:
       link: /using/isin
     - theme: alt
       text: View on Github
-      link: https://github.com/juliaclimate/GeoRegions.jl
+      link: https://github.com/georegionsecosystem/GeoRegions.jl
       
 
 features:

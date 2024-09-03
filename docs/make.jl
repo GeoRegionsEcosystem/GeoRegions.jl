@@ -1,53 +1,40 @@
 using Documenter
 using DocumenterVitepress
 using GeoRegions
+using CairoMakie
 using Literate
 
-using CairoMakie # to avoid capturing precompilation output by Literate
 CairoMakie.activate!(type = "svg")
 
-pages_using = [
-    "Is it in a GeoRegion?"           => "isin",
-    "Custom GeoRegions"               => "custom",
-]
+DocMeta.setdocmeta!(GeoRegions, :DocTestSetup, :(using GeoRegions); recursive=true)
 
-const DIR_LIT      = joinpath(@__DIR__, "literate")
-const DIR_USING    = joinpath(@__DIR__, "src/using")
+# pages_using = [
+#     "Is it in a GeoRegion?"           => "isin",
+#     "Custom GeoRegions"               => "custom",
+# ]
 
-scripts_using    = [ filename * ".jl" for (title, filename) in pages_using ]
+# const DIR_LIT      = joinpath(@__DIR__, "literate")
+# const DIR_USING    = joinpath(@__DIR__, "src/using")
 
-for scripts in scripts_using
-    scripts_filepath = joinpath(DIR_LIT, scripts)
-    Literate.markdown(scripts_filepath, DIR_USING; flavor = Literate.DocumenterFlavor())
-end
+# scripts_using    = [ filename * ".jl" for (title, filename) in pages_using ]
 
-makedocs(
+# for scripts in scripts_using
+#     scripts_filepath = joinpath(DIR_LIT, scripts)
+#     Literate.markdown(scripts_filepath, DIR_USING; flavor = Literate.DocumenterFlavor())
+# end
+
+makedocs(;
     modules  = [GeoRegions],
+    authors  = "Nathanael Wong <natgeo.wong@outlook.com>",
+    sitename = "GeoRegions.jl",
     doctest  = false,
     warnonly = true,
     format   = DocumenterVitepress.MarkdownVitepress(
         repo       = "https://github.com/GeoRegionsEcosystem/GeoRegions.jl",
-        devurl     = "dev",
     ),
-    authors  = "Nathanael Wong",
-    sitename = "GeoRegions.jl",
-    pages    = [
-        "Home"       => "index.md",
-        "GeoRegions" => [
-            "What is a GeoRegion?"  => "georegions/intro.md",
-            "Creating GeoRegions"   => "georegions/create.md",
-            "Predefined GeoRegions" => "georegions/predefined.md",
-            "Retrieving GeoRegions" => "georegions/read.md",
-        ],
-        "Tutorials" => [
-            "Is it in a GeoRegion?" => "using/isin.md",
-            "Custom GeoRegions"     => "using/custom.md",
-        ],
-        "Custom Lists"   => [
-            "API"     => "lists/api.md",
-            "Default" => "lists/default.md",
-        ],
-    ]
+    pages=[
+        "Home" => "index.md",
+    ],
 )
 
 recursive_find(directory, pattern) =
@@ -64,7 +51,9 @@ for file in files
     rm(file)
 end
 
-deploydocs(
-    repo = "github.com/GeoRegionsEcosystem/GeoRegions.jl.git",
-    devbranch = "main"
+deploydocs(;
+    repo      = "github.com/GeoRegionsEcosystem/GeoRegions.jl.git",
+    target    = "build", # this is where Vitepress stores its output
+    devbranch = "main",
+    branch    = "gh-pages",
 )
