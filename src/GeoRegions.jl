@@ -10,23 +10,17 @@ using NCDatasets
 using PolygonOps
 using PrettyTables
 
-import Base: show, read, in
+import Base: show, in
 
 ## Exporting the following functions:
 export
         GeoRegion, RectRegion, PolyRegion, TiltRegion,
-        RegionGrid, RectGrid, PolyGrid, VectorGrid, RegionMask, VectorMask,
-        AbstractLandSea, LandSeaTopo, LandSeaFlat,
 
         getTiltBounds, getTiltShape,
 
         resetGeoRegions, templateGeoRegions, listGeoRegions, readGeoRegions,
         isGeoRegion, addGeoRegions, removeGeoRegion, coordGeoRegion, isinGeoRegion,
         tableGeoRegions, tableRectRegions, tablePolyRegions,
-
-        extractGrid, extractGrid!,
-
-        getLandSea, smooth, smooth!, smoothlsm,
         
         in, Point2
 
