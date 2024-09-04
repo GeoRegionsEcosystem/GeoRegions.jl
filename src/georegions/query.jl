@@ -1,5 +1,5 @@
 """
-    coordGeoRegion(
+    coordinates(
         geo :: GeoRegion;
         n :: Int = 21
     ) -> lon :: Vector{<:Real}, lat :: Vector{<:Real}
@@ -16,7 +16,7 @@ Returns
 - `lon` : A vector of longitude points for the shape of the GeoRegion
 - `lat` : A vector of latitude points for the shape of the GeoRegion
 """
-function coordGeoRegion(
+function coordinates(
     geo :: PolyRegion;
     n :: Int = 21
 )
@@ -47,7 +47,7 @@ function coordGeoRegion(
 
 end
 
-function coordGeoRegion(
+function coordinates(
     geo :: RectRegion;
     n :: Int = 21
 )
@@ -69,25 +69,34 @@ function coordGeoRegion(
 
 end
 
-function coordGeoRegion(
+function coordinates(
     geo :: TiltRegion;
     n :: Int = 21
 )
 
-    lon,lat = getTiltShape(geo)
+    X  = geo.X
+    Y  = geo.Y
+    θ  = geo.θ
+    ΔX = geo.ΔX
+    ΔY = geo.ΔY
+
+    lon1 = X - ΔX * cosd(θ) - ΔY * sind(θ); lat1 = Y + ΔY * cosd(θ) - ΔX * sind(θ)
+    lon2 = X - ΔX * cosd(θ) + ΔY * sind(θ); lat2 = Y - ΔY * cosd(θ) - ΔX * sind(θ)
+    lon3 = X + ΔX * cosd(θ) + ΔY * sind(θ); lat3 = Y - ΔY * cosd(θ) + ΔX * sind(θ)
+    lon4 = X + ΔX * cosd(θ) - ΔY * sind(θ); lat4 = Y + ΔY * cosd(θ) + ΔX * sind(θ)
 
     if n > 1
         lon = vcat(
-            range(lon[1],lon[2],n),range(lon[2],lon[3],n),
-            range(lon[3],lon[4],n),range(lon[4],lon[1],n)
+            range(lon1,lon2,n),range(lon2,lon3,n),
+            range(lon3,lon4,n),range(lon4,lon1,n)
         )
         lat = vcat(
-            range(lat[1],lat[2],n),range(lat[2],lat[3],n),
-            range(lat[3],lat[4],n),range(lat[4],lat[1],n)
+            range(lat1,lat2,n),range(lat2,lat3,n),
+            range(lat3,lat4,n),range(lat4,lat1,n)
         )
     else
-        lon = vcat(lon,lon[1])
-        lat = vcat(lat,lat[1])
+        lon = [lon1,lon2,lon3,lon4,lon1]
+        lat = [lat1,lat2,lat3,lat4,lat1]
     end
 
     return lon,lat
