@@ -163,7 +163,7 @@ function TiltRegion(
         path = geodir
     end
 
-    N,S,E,W = getTiltBounds(X,Y,ΔX,ΔY,θ); is180,is360 = checkbounds(N,S,E,W)
+    N,S,E,W = tilt2bounds(X,Y,ΔX,ΔY,θ); is180,is360 = checkbounds(N,S,E,W)
     geo  = TiltRegion{ST,FT}(RegID,ParID,name,X,Y,ΔX,ΔY,θ,N,S,E,W,is180,is360)
 
     if save
@@ -298,5 +298,68 @@ function PolyRegion(
     end
 
     return geo
+
+end
+
+function checkbounds(
+    regN :: Real,
+    regS :: Real,
+    regE :: Real,
+    regW :: Real
+)
+
+    if (regN>90) || (regN<-90)
+        error("$(modulelog()) - The latitude of the GeoRegion's northern bound at $regN is not valid.")
+    end
+
+    if (regS>90) || (regS<-90)
+        error("$(modulelog()) - The latitude of the GeoRegion's southern bound at $regS is not valid.")
+    end
+
+    if (regE>360) || (regE<-180)
+        error("$(modulelog()) - The longitude of the GeoRegion's eastern bound at $regE is not valid.")
+    end
+
+    if (regW>360) || (regW<-180)
+        error("$(modulelog()) - The longitude of the GeoRegion's western bound at $regW is not valid.")
+    end
+
+    if (regE - regW) > 360
+        error("$(modulelog()) - The GeoRegion cannot be more than 360º in Longitude.")
+    end
+
+    if regE < regW
+        error("$(modulelog()) - The eastern bound of the GeoRegion cannot be west of the western bound.")
+    end
+
+    if regN < regS
+        error("$(modulelog()) - The northern bound of the GeoRegion cannot be south of the southern bound.")
+    end
+
+    if regE > 180; is360 = true; else is360 = false end
+    if regW < 0;   is180 = true; else is180 = false end
+    if !(is180) && !(is360); is360 = true end
+
+    return is180,is360
+
+end
+
+function tilt2bounds(
+    X  :: Real,
+    Y  :: Real,
+    ΔX :: Real,
+    ΔY :: Real,
+    θ  :: Real
+)
+
+    lon1 = X - ΔX * cosd(θ) - ΔY * sind(θ); lat1 = Y + ΔY * cosd(θ) - ΔX * sind(θ)
+    lon2 = X - ΔX * cosd(θ) + ΔY * sind(θ); lat2 = Y - ΔY * cosd(θ) - ΔX * sind(θ)
+    lon3 = X + ΔX * cosd(θ) + ΔY * sind(θ); lat3 = Y - ΔY * cosd(θ) + ΔX * sind(θ)
+    lon4 = X + ΔX * cosd(θ) - ΔY * sind(θ); lat4 = Y + ΔY * cosd(θ) + ΔX * sind(θ)
+
+    lon = [lon1,lon2,lon3,lon4]
+    lat = [lat1,lat2,lat3,lat4]
+
+    return maximum(lat), minimum(lat) , maximum(lon), minimum(lon)
 
 end
