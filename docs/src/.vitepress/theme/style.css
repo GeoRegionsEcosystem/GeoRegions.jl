@@ -12,21 +12,34 @@ https://github.com/vuejs/vitepress/blob/main/src/client/theme-default/styles/var
   --vp-layout-max-width: 1440px;
 } */
 
-.VPHero .image {
-  max-width: 250px;
+.VPHero .clip {
+  white-space: pre;
+  max-width: 500px;
 }
 
 /* Fonts */
 
- :root {
+:root {
   /* Typography */
   --vp-font-family-base: "Barlow", "Inter var experimental", "Inter var",
     -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu,
     Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
 
   /* Code Snippet font */
-  --vp-font-family-mono: "Space Mono", Menlo, Monaco, Consolas, "Courier New",
-    monospace;
+  --vp-font-family-mono: JuliaMono-Regular, monospace;
+}
+
+.mono {
+
+  pre {
+    font-family: JuliaMono-Light;
+  }
+
+  code {
+    font-family: JuliaMono-Light;
+  }
+
+  ;
 }
 
 /* Colors */
