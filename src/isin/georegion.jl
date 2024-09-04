@@ -9,13 +9,11 @@ Check if a child GeoRegion defined by `Child` is within a RectRegion `rectG`.
 
 Arguments
 =========
-
 - `Child` : A GeoRegion that we postulate to be a "child", or a subset of the GeoRegion defined by `polyG`
 - `rectG` : A GeoRegion that we postulate to be a "parent", or containing the GeoRegion defined by `Child`
 
 Keyword Arguments
 =================
-
 - `throw`  : If `true`, then if `Child` is not within `polyG`, an error is thrown and the program stops running
 """
 Base.in(
@@ -36,13 +34,11 @@ Check if a child GeoRegion defined by `cgeo` is within a TiltRegion or PolyRegio
 
 Arguments
 =========
-
 - `cgeo` : A GeoRegion that we postulate to be a "child", or a subset of the GeoRegion defined by `polyG`
 - `geo` : A TiltRegion or PolyRegion that we postulate to be a "parent", or containing the GeoRegion defined by `Child`
 
 Keyword Arguments
 =================
-
 - `n`  : Number of points per polygon side to test
 - `throw` : If `true`, then if `cgeo` is not within `geo`, an error is thrown and the program stops running
 """
@@ -64,13 +60,11 @@ Check if a child GeoRegion defined by `Child` is within a RectRegion `rectG`.
 
 Arguments
 =========
-
 - `Child` : A GeoRegion that we postulate to be a "child", or a subset of the GeoRegion defined by `polyG`
 - `rectG` : A GeoRegion that we postulate to be a "parent", or containing the GeoRegion defined by `Child`
 
 Keyword Arguments
 =================
-
 - `throw`  : If `true`, then if `Child` is not within `rectG`, an error is thrown and the program stops running
 """
 function isinGeoRegion(
@@ -108,7 +102,7 @@ end
 """
     isinGeoRegion(
         Child :: GeoRegion,
-        tiltG :: TiltRegion;
+        tiltG :: Union{TiltRegion,PolyRegion};
         n     :: Int = 100,
         throw :: Bool = false
     ) -> Bool
@@ -117,13 +111,11 @@ Check if a child GeoRegion defined by `Child` is within a TiltRegion `tiltG`.
 
 Arguments
 =========
-
 - `Child` : A GeoRegion that we postulate to be a "child", or a subset of the GeoRegion defined by `polyG`
 - `tiltG` : A GeoRegion that we postulate to be a "parent", or containing the GeoRegion defined by `Child`
 
 Keyword Arguments
 =================
-
 - `n`  : Number of points per polygon side to test
 - `throw`  : If `true`, then if `Child` is not within `tiltG`, an error is thrown and the program stops running
 """
@@ -143,28 +135,6 @@ function isinGeoRegion(
 
 end
 
-"""
-    isinGeoRegion(
-        Child :: GeoRegion,
-        polyG :: PolyRegion;
-        n     :: Int = 100,
-        throw :: Bool = false
-    ) -> Bool
-
-Check if a child GeoRegion defined by `Child` is within a PolyRegion `polyG`.
-
-Arguments
-=========
-
-- `Child` : A GeoRegion that we postulate to be a "child", or a subset of the GeoRegion defined by `polyG`
-- `polyG` : A GeoRegion that we postulate to be a "parent", or containing the GeoRegion defined by `Child`
-
-Keyword Arguments
-=================
-
-- `n`  : Number of points per polygon side to test
-- `throw`  : If `true`, then if `Child` is not within `polyG`, an error is thrown and the program stops running
-"""
 function isinGeoRegion(
     Child :: GeoRegion,
     polyG :: PolyRegion;

@@ -8,6 +8,17 @@
     ) -> Bool
 
 Check if a geographical point `point` is within a GeoRegion defined by `geo`.
+
+Arguments
+=========
+- `Point` : A geographical point of Type `Point2`.  Pass `Point2(plon,plat)`, where `plon` and `plat` are the longitude and latitudes of the point.
+- `geo`   : The GeoRegion struct container
+
+Keyword Arguments
+=================
+- `tlon`  : Threshold for the longitude bound
+- `tlat`  : Threshold for the latitude bound
+- `throw` : If `true`, then if `Point` is not within `geo`, an error is thrown and the program stops running.
 """
 Base.in(
     point :: Point2{<:Real},
