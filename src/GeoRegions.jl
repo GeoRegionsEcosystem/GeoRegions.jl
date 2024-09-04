@@ -18,7 +18,7 @@ export
 
         resetGeoRegions, templateGeoRegions, listGeoRegions, readGeoRegions,
         isGeoRegion, addGeoRegions, removeGeoRegion, coordGeoRegion, isinGeoRegion,
-        tableGeoRegions, tableRectRegions, tablePolyRegions,
+        tableGeoRegions, tableRectRegions, tableTiltRegions, tablePolyRegions,
         
         in, Point2
 

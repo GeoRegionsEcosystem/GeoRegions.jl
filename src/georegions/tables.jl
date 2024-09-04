@@ -120,9 +120,7 @@ end
 
 """
     tableRectRegions(;
-        path :: AbstractString = geodir,
-        custom :: Bool = true,
-        giorgi :: Bool = false
+        path :: AbstractString = geodir
     ) -> nothing
 
 Display all available RectRegions in tabular format.
@@ -131,8 +129,6 @@ Keyword Arguments
 =================å
 - `path` : The path where the list of custom GeoRegions will be retrieved from.
            Defaults to the `local` package variable `geodir`
-- `custom` : If true, display custom user-defined GeoRegions. Default is `true`
-- `giorgi` : If true, display Giorgi predefined GeoRegions. Default is `false`
 """
 function tableRectRegions(;
     path :: AbstractString = geodir,
@@ -149,7 +145,7 @@ function tableRectRegions(;
         rvec,rtype = listgeoregions(joinpath(path,"rectlist.txt"))
         regvec = vcat(regvec,rvec)
         nreg = length(rvec)
-        fvec = fill(fname,nreg); filevec = vcat(filevec,fvec)
+        fvec = fill("rectlist.txt",nreg); filevec = vcat(filevec,fvec)
         tvec = fill(rtype,nreg); typevec = vcat(typevec,tvec)
     end
 
@@ -158,9 +154,68 @@ function tableRectRegions(;
         rvec,rtype = listgeoregions(joinpath(geodir,"giorgi.txt"))
         regvec = vcat(regvec,rvec)
         nreg = length(rvec)
-        fvec = fill(fname,nreg); filevec = vcat(filevec,fvec)
+        fvec = fill("giorgi.txt",nreg); filevec = vcat(filevec,fvec)
         tvec = fill(rtype,nreg); typevec = vcat(typevec,tvec)
     end
+
+    ngeo = size(regvec,1)
+    fmat = Array{Any,2}(undef,ngeo,5)
+
+    for igeo = 1 : ngeo
+        geo = getgeoregion(
+            regvec[igeo],
+            joinpath(geodir,filevec[igeo]),
+            typevec[igeo]
+        )
+
+        fmat[igeo,1] = geo.ID
+        fmat[igeo,2] = typevec[igeo]
+        fmat[igeo,3] = geo.name
+        fmat[igeo,4] = geo.pID
+        fmat[igeo,5] = filevec[igeo]
+
+    end
+
+    head = ["ID","Type","Name","Parent","File"];
+
+    pretty_table(
+        fmat,header=head,
+        alignment=[:c,:c,:l,:c,:c],
+        crop = :none, tf = tf_compact
+    );
+
+    return nothing
+
+end
+
+"""
+    tableTiltRegions(;
+        path :: AbstractString = geodir,
+    ) -> nothing
+
+Display all available RectRegions in tabular format.
+
+Keyword Arguments
+=================å
+- `path` : The path where the list of custom GeoRegions will be retrieved from.
+           Defaults to the `local` package variable `geodir`
+- `custom` : If true, display custom user-defined GeoRegions. Default is `true`
+- `giorgi` : If true, display Giorgi predefined GeoRegions. Default is `false`
+"""
+function tableTiltRegions(;
+    path :: AbstractString = geodir,
+)
+
+    regvec  = []
+    filevec = []
+    typevec = []
+
+    copygeoregions("tiltlist.txt",path)
+    rvec,rtype = listgeoregions(joinpath(path,"tiltlist.txt"))
+    regvec = vcat(regvec,rvec)
+    nreg = length(rvec)
+    fvec = fill("tiltlist.txt",nreg); filevec = vcat(filevec,fvec)
+    tvec = fill(rtype,nreg); typevec = vcat(typevec,tvec)
 
     ngeo = size(regvec,1)
     fmat = Array{Any,2}(undef,ngeo,5)
@@ -226,7 +281,7 @@ function tablePolyRegions(;
         rvec,rtype = listgeoregions(joinpath(path,"polylist.txt"))
         regvec = vcat(regvec,rvec)
         nreg = length(rvec)
-        fvec = fill(fname,nreg); filevec = vcat(filevec,fvec)
+        fvec = fill("polylist.txt",nreg); filevec = vcat(filevec,fvec)
         tvec = fill(rtype,nreg); typevec = vcat(typevec,tvec)
     end
 
@@ -235,7 +290,7 @@ function tablePolyRegions(;
         rvec,rtype = listgeoregions(joinpath(path,"srex.txt"))
         regvec = vcat(regvec,rvec)
         nreg = length(rvec)
-        fvec = fill(fname,nreg); filevec = vcat(filevec,fvec)
+        fvec = fill("srex.txt",nreg); filevec = vcat(filevec,fvec)
         tvec = fill(rtype,nreg); typevec = vcat(typevec,tvec)
     end
 
@@ -244,7 +299,7 @@ function tablePolyRegions(;
         rvec,rtype = listgeoregions(joinpath(path,"ar6.txt"))
         regvec = vcat(regvec,rvec)
         nreg = length(rvec)
-        fvec = fill(fname,nreg); filevec = vcat(filevec,fvec)
+        fvec = fill("ar6.txt",nreg); filevec = vcat(filevec,fvec)
         tvec = fill(rtype,nreg); typevec = vcat(typevec,tvec)
     end
 
