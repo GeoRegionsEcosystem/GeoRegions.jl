@@ -97,43 +97,48 @@ function templateGeoRegions(;
 end
 
 """
-    resetGeoRegions(;
-        path :: AbstractString = geodir,
-        all  :: Bool = false
-    ) -> nothing
+    readGeoRegions(
+        fname :: AbstractString
+    ) -> gvec :: Vector{<:GeoRegion}
 
-Reset all the files containing GeoRegion information back to the default.
+Extracts information of the GeoRegion with the ID `geoID`.  If no GeoRegion with this ID exists, an error is thrown.
 
-Keyword Arguments
-=================
-- `path` : The path where the list of custom GeoRegions will be retrieved from.
-           Defaults to the `local` package variable `geodir`
-- `all` : If `true`, reset the GeoRegions defined in Giorgi & Francisco [2000], AR6 Regions (Iturbide et al., 2020; ESSD) and Seneviratne et al. [2012] as well.
-          If `false`, only reset the custom GeoRegions.
+Arguments
+=========
+- `fname` : String specifying name + path of the file containing GeoRegion information
+
+Returns
+=======
+- `gvec` : Vector containing all the GeoRegions in the file `fname`
 """
-function resetGeoRegions(;
-    path :: AbstractString = geodir,
-    all  :: Bool = false
+function readGeoRegions(
+    fname :: AbstractString
 )
 
+    @info "$(modulelog()) - Loading user-defined GeoRegions from the file $fname"
 
-    @info "$(modulelog()) - Resetting the custom lists of GeoRegions back to the default"
-    flist = ["rectlist.txt","polylist.txt","tiltlist.txt"]
-    for fname in flist
-        copygeoregions(fname,path,overwrite=true)
-    end
-
-    if all
-
-        @info "$(modulelog()) - Resetting the predefined lists of GeoRegions back to the default"
-        fdefined = ["giorgi.txt","srex.txt","ar6.txt"]
-        for fname in fdefined
-            copygeoregions(fname,geodir,overwrite=true)
+    rvec,rtype = listgeoregions(fname)
+    ngeo = length(rvec)
+    gvec = Vector{GeoRegion}(undef,ngeo)
+    for igeo in 1 : ngeo
+        reg = rvec[igeo]
+        if !isGeoRegion(reg,throw=false)
+            g = getgeoregion(reg,fname,rtype)
+            if     rtype == "PolyRegion"
+                lon,lat = coordGeoRegion(g,n=1)
+                geo = PolyRegion(g.ID,g.pID,g.name,lon,lat,save=false)
+            elseif rtype == "TiltRegion"
+                geo = TiltRegion(g.ID,g.pID,g.name,g.X,g.Y,g.ΔX,g.ΔY,g.θ,save=false)
+            elseif rtype == "RectRegion"
+                geo = RectRegion(g.ID,g.pID,g.name,[g.N,g.S,g.E,g.W],save=false)
+            end
+        else
+            @warn "$(modulelog()) - The GeoRegion ID $reg is already in use. Please use a different ID, or you can remove the ID using removeGeoRegion()."
         end
-
+        gvec[igeo] = geo
     end
 
-    return
+    return gvec
 
 end
 
@@ -184,48 +189,43 @@ function addGeoRegions(
 end
 
 """
-    readGeoRegions(
-        fname :: AbstractString
-    ) -> gvec :: Vector{<:GeoRegion}
+    resetGeoRegions(;
+        path :: AbstractString = geodir,
+        all  :: Bool = false
+    ) -> nothing
 
-Extracts information of the GeoRegion with the ID `geoID`.  If no GeoRegion with this ID exists, an error is thrown.
+Reset all the files containing GeoRegion information back to the default.
 
-Arguments
-=========
-- `fname` : String specifying name + path of the file containing GeoRegion information
-
-Returns
-=======
-- `gvec` : Vector containing all the GeoRegions in the file `fname`
+Keyword Arguments
+=================
+- `path` : The path where the list of custom GeoRegions will be retrieved from.
+           Defaults to the `local` package variable `geodir`
+- `all` : If `true`, reset the GeoRegions defined in Giorgi & Francisco [2000], AR6 Regions (Iturbide et al., 2020; ESSD) and Seneviratne et al. [2012] as well.
+          If `false`, only reset the custom GeoRegions.
 """
-function readGeoRegions(
-    fname :: AbstractString
+function resetGeoRegions(;
+    path :: AbstractString = geodir,
+    all  :: Bool = false
 )
 
-    @info "$(modulelog()) - Loading user-defined GeoRegions from the file $fname"
 
-    rvec,rtype = listgeoregions(fname)
-    ngeo = length(rvec)
-    gvec = Vector{GeoRegion}(undef,ngeo)
-    for igeo in 1 : ngeo
-        reg = rvec[igeo]
-        if !isGeoRegion(reg,throw=false)
-            g = getgeoregion(reg,fname,rtype)
-            if     rtype == "PolyRegion"
-                lon,lat = coordGeoRegion(g,n=1)
-                geo = PolyRegion(g.ID,g.pID,g.name,lon,lat,save=false)
-            elseif rtype == "TiltRegion"
-                geo = TiltRegion(g.ID,g.pID,g.name,g.X,g.Y,g.ΔX,g.ΔY,g.θ,save=false)
-            elseif rtype == "RectRegion"
-                geo = RectRegion(g.ID,g.pID,g.name,[g.N,g.S,g.E,g.W],save=false)
-            end
-        else
-            @warn "$(modulelog()) - The GeoRegion ID $reg is already in use. Please use a different ID, or you can remove the ID using removeGeoRegion()."
-        end
-        gvec[igeo] = geo
+    @info "$(modulelog()) - Resetting the custom lists of GeoRegions back to the default"
+    flist = ["rectlist.txt","polylist.txt","tiltlist.txt"]
+    for fname in flist
+        copygeoregions(fname,path,overwrite=true)
     end
 
-    return gvec
+    if all
+
+        @info "$(modulelog()) - Resetting the predefined lists of GeoRegions back to the default"
+        fdefined = ["giorgi.txt","srex.txt","ar6.txt"]
+        for fname in fdefined
+            copygeoregions(fname,geodir,overwrite=true)
+        end
+
+    end
+
+    return
 
 end
 

@@ -4,7 +4,7 @@ using Test
 @testset "Test that all predefined GeoRegions work" begin
 
     # Test all predefined GeoRegions
-    geov,_,_ = listGeoRegions()
+    geov,_,_ = GeoRegions.listall()
     for geo in geov
         @test isGeoRegion(geo);
     end
