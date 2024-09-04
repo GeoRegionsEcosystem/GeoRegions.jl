@@ -8,19 +8,21 @@ using Logging
 using PolygonOps
 using PrettyTables
 
-import Base: show, in
+import Base: show, rm, in
 
 ## Exporting the following functions:
 export
-        GeoRegion, RectRegion, PolyRegion, TiltRegion,
+        GeoRegion,
+        RectRegion, PolyRegion, TiltRegion,
 
-        getTiltBounds, getTiltShape,
+        is, add, rm,
+        isGeoRegion, addGeoRegion, removeGeoRegion, 
+        templateGeoRegions, readGeoRegions, addGeoRegions, resetGeoRegions,
+        listGeoRegions, tableGeoRegions,
+        tableRectRegions, tableTiltRegions, tablePolyRegions,
+        isinGeoRegion, 
 
-        resetGeoRegions, templateGeoRegions, listGeoRegions, readGeoRegions,
-        isGeoRegion, addGeoRegions, removeGeoRegion, coordGeoRegion, isinGeoRegion,
-        tableGeoRegions, tableRectRegions, tableTiltRegions, tablePolyRegions,
-        
-        in, Point2
+        coordinates, in, Point2
 
 ## Abstract types
 """
@@ -116,9 +118,12 @@ function __init__()
 end
 
 ## Including other files in the module
-include("georegions/tilt.jl")
-include("georegions/read.jl")
 include("georegions/create.jl")
+include("georegions/add.jl")
+include("georegions/get.jl")
+include("georegions/is.jl")
+include("georegions/list.jl")
+include("georegions/read.jl")
 include("georegions/remove.jl")
 include("georegions/query.jl")
 include("georegions/show.jl")
