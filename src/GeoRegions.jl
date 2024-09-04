@@ -29,9 +29,10 @@ export
 Abstract supertype for geographical regions, with the following subtypes:
     
     RectRegion{ST<:AbstractString, FT<:Real} <: GeoRegion
+    TiltRegion{ST<:AbstractString, FT<:Real} <: GeoRegion
     PolyRegion{ST<:AbstractString, FT<:Real} <: GeoRegion
 
-Both `RectRegion` and `PolyRegion` types contain the following fields:
+All `GeoRegion` types contain the following fields:
 * `ID` - A `String` Type, the identifier for the GeoRegion
 * `pID` - A `String` Type, the identifier for the parent GeoRegion
 * `name` - A `String` Type, the full name of the GeoRegion
@@ -44,6 +45,13 @@ Both `RectRegion` and `PolyRegion` types contain the following fields:
 
 A `PolyRegion` type will also contain the following field:
 * `shape` - A vector of `Point2` Types, defining a non-rectilinear shape of the GeoRegion
+
+A `TiltRegion` type will also contain the following field:
+- `X`  : Longitude coordinate of region centre
+- `Y`  : Latitude coordinate of region centre
+- `θ`  : Tilt of rectangular region in **degrees** in the clockwise direction
+- `ΔX` : Half-width in longitude coordinates (before tilting)
+- `ΔY` : Half-width in latitude coordinates (before tilting)
 """
 abstract type GeoRegion end
 
@@ -76,15 +84,15 @@ struct TiltRegion{ST<:AbstractString, FT<:Real} <: GeoRegion
     ID    :: ST
     pID   :: ST
     name  :: ST
-    X     :: FT
-    Y     :: FT
-    ΔX    :: FT
-    ΔY    :: FT
-    θ     :: FT
     N     :: FT
     S     :: FT
     E     :: FT
     W     :: FT
+    X     :: FT
+    Y     :: FT
+    θ     :: FT
+    ΔX    :: FT
+    ΔY    :: FT
     is180 :: Bool
     is360 :: Bool
 end

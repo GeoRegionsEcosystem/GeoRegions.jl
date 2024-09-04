@@ -34,6 +34,20 @@ makedocs(;
     ),
     pages=[
         "Home" => "index.md",
+        "GeoRegions" => [
+            "What is a GeoRegion?"  => "georegions/intro.md",
+            # "Creating GeoRegions"   => "georegions/create.md",
+            # "Predefined GeoRegions" => "georegions/predefined.md",
+            # "Retrieving GeoRegions" => "georegions/read.md",
+        ],
+        # "Tutorials" => [
+        #     "Is it in a GeoRegion?" => "using/isin.md",
+        #     "Custom GeoRegions"     => "using/custom.md",
+        # ],
+        "Listing `GeoRegion`s"   => [
+            # "API"     => "lists/api.md",
+            "Default" => "lists/default.md",
+        ],
     ],
 )
 
