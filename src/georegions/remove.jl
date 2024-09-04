@@ -1,13 +1,20 @@
 """
-    removeGeoRegion(geoID::AbstractString)
+    removeGeoRegion(
+        geoID :: AbstractString;
+        path  :: AbstractString = geodir
+    )
 
 Creates the GeoRegion associated with the ID `geoID`.
 
 Arguments
 =========
-
 - `geoID` : The keyword ID that will be used to identify the GeoRegion.
             If the ID is not valid (i.e. not being used), then an error will be thrown.
+
+Keyword Arguments
+=================
+- `path` : The path where the list of custom GeoRegions will be retrieved from.
+           Defaults to the `local` package variable `geodir`
 """
 function removeGeoRegion(
     geoID :: AbstractString;

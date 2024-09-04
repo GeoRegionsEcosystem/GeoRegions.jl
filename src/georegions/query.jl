@@ -1,18 +1,18 @@
 """
-    coordGeoRegion(geo::PolyRegion) ->
-        blon::Vector{<:Real}, blat::Vector{<:Real},
-        slon::Vector{<:Real}, slat::Vector{<:Real},
+    coordGeoRegion(
+        geo :: GeoRegion;
+        n :: Int = 21
+    ) -> lon :: Vector{<:Real}, lat :: Vector{<:Real}
 
-For a given RectRegion, extract the [N,S,E,W] bounds and create a longitude and latitude vectors for the bound and the shape of the GeoRegion
+For a given GeoRegion, create longitude and latitude vectors of the shape.
 
 Arguments
 =========
-
-- `geo` : A PolyRegion (i.e. a polygonal GeoRegion)
+- `geo` : A GeoRegion
+- `n` : The number of points on each side of the shape (a vertex counts as half a point)
 
 Returns
 =======
-
 - `lon` : A vector of longitude points for the shape of the GeoRegion
 - `lat` : A vector of latitude points for the shape of the GeoRegion
 """
@@ -47,22 +47,6 @@ function coordGeoRegion(
 
 end
 
-"""
-    coordGeoRegion(geo::RectRegion) -> blon::Vector{<:Real}, blat::Vector{<:Real}
-
-For a given RectRegion, extract the [N,S,E,W] bounds and create a longitude and latitude vector.
-
-Arguments
-=========
-
-- `geo` : A RectRegion (i.e. a rectilinear GeoRegion)
-
-Returns
-=======
-
-- `lon` : A vector of longitude points for the bound of the GeoRegion
-- `lat` : A vector of latitude points for the bound of the GeoRegion
-"""
 function coordGeoRegion(
     geo :: RectRegion;
     n :: Int = 21
@@ -85,22 +69,6 @@ function coordGeoRegion(
 
 end
 
-"""
-    coordGeoRegion(geo::RectRegion) -> blon::Vector{<:Real}, blat::Vector{<:Real}
-
-For a given RectRegion, extract the [N,S,E,W] bounds and create a longitude and latitude vector.
-
-Arguments
-=========
-
-- `geo` : A RectRegion (i.e. a rectilinear GeoRegion)
-
-Returns
-=======
-
-- `lon` : A vector of longitude points for the bound of the GeoRegion
-- `lat` : A vector of latitude points for the bound of the GeoRegion
-"""
 function coordGeoRegion(
     geo :: TiltRegion;
     n :: Int = 21

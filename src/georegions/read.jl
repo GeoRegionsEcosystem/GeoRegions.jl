@@ -1,17 +1,23 @@
 """
-    GeoRegion(geoID::AbstractString) -> geo::GeoRegion
+    GeoRegion(
+        geoID :: AbstractString;
+        path  :: AbstractString = geodir
+    ) -> geo :: GeoRegion
 
 Extracts information of the GeoRegion with the ID `geoID`.  If no GeoRegion with this ID exists, an error is thrown.
 
 Arguments
 =========
-
-- `geoID` : The keyword ID that will be used to identify the GeoRegion.
+- `geoID` : The ID that will be used to identify the GeoRegion.
             If the ID is not valid (i.e. not being used), then an error will be thrown.
+
+Keyword Arguments
+=================
+- `path` : The path where the list of custom GeoRegions will be retrieved from.
+           Defaults to the `local` package variable `geodir`
 
 Returns
 =======
-
 - `geo` : A GeoRegion
 """
 function GeoRegion(
@@ -127,19 +133,21 @@ function TiltRegion(
 end
 
 """
-    templateGeoRegions(; path::AbstractString, overwrite::Bool=false)
+    templateGeoRegions(;
+        path :: AbstractString = pwd(),
+        overwrite :: Bool = false
+    ) -> nothing
 
 Copies the template files for defining GeoRegions in textfiles, that can then be added as a batch using addGeoRegions()
 
 Keyword Arguments
 =================
-
-- `path`      : The folder to copy the files to
+- `path` : The folder to copy the files to
 - `overwrite` : If template files exist in this folder, overwrite?
 """
 function templateGeoRegions(;
-    path      :: AbstractString=pwd(),
-    overwrite :: Bool=false
+    path :: AbstractString = pwd(),
+    overwrite :: Bool = false
 )
 
     if !isdir(path); mkpath(path) end
@@ -186,16 +194,20 @@ function templateGeoRegions(;
 end
 
 """
-    listGeoRegions()
+    listGeoRegions() -> gvec :: Vector{String}, fvec :: Vector{String}, tvec :: Vector{String}
 
 List all GeoRegions, files the data are stored in, and the `Type` of `GeoRegion` they are.
 
-Output
-======
+Arguments
+=========
+- `path` : The path where the list of custom GeoRegions will be retrieved from.
+           Defaults to the `local` package variable `geodir`
 
-- `geovec`  : List of all the GeoRegion IDs
-- `filevec` : List of the files that the GeoRegion information is stored in
-- `typevec` : List of the `Type` of the `GeoRegion` corresponding to the `geovec` ID list
+Returns
+=======
+- `gvec` : List of all the GeoRegion IDs
+- `fvec` : List of the files that the GeoRegion information is stored in
+- `tvec` : List of the `Type` of the `GeoRegion` corresponding to the `geovec` ID list
 """
 function listGeoRegions(
     path :: AbstractString = geodir
@@ -231,14 +243,19 @@ function listGeoRegions(
 end
 
 """
-    resetGeoRegions(; allfiles::Bool = false)
+    resetGeoRegions(;
+        path :: AbstractString = geodir,
+        all  :: Bool = false
+    ) -> nothing
 
 Reset all the files containing GeoRegion information back to the default.
 
-Arguments
-=========
-
-- `allfiles` : If `true`, reset the GeoRegions defined in Giorgi & Francisco [2000], AR6 Regions (Iturbide et al., 2020; ESSD) and Seneviratne et al. [2012] as well.  If `false`, only reset the custom GeoRegions.
+Keyword Arguments
+=================
+- `path` : The path where the list of custom GeoRegions will be retrieved from.
+           Defaults to the `local` package variable `geodir`
+- `all` : If `true`, reset the GeoRegions defined in Giorgi & Francisco [2000], AR6 Regions (Iturbide et al., 2020; ESSD) and Seneviratne et al. [2012] as well.
+          If `false`, only reset the custom GeoRegions.
 """
 function resetGeoRegions(;
     path :: AbstractString = geodir,
@@ -267,14 +284,23 @@ function resetGeoRegions(;
 end
 
 """
-    addGeoRegions(fname::AbstractString)
+    addGeoRegions(
+        fname :: AbstractString;
+        path  :: AbstractString = geodir,
+        overwrite :: Bool = false
+    ) -> nothing
 
 Extracts information of the GeoRegion with the ID `geoID`.  If no GeoRegion with this ID exists, an error is thrown.
 
 Arguments
 =========
-
 - `fname` : name + path of the file containing GeoRegion information
+
+Keyword Arguments
+=================
+- `path` : The path where the list of custom GeoRegions will be retrieved from.
+           Defaults to the `local` package variable `geodir`
+- `overwrite` : If `true`, override any custom GeoRegions that have the same `ID`s as those in the file `fname`
 """
 function addGeoRegions(
     fname :: AbstractString;
@@ -317,6 +343,21 @@ function addGeoRegions(
 
 end
 
+"""
+    readGeoRegions(
+        fname :: AbstractString
+    ) -> gvec :: Vector{<:GeoRegion}
+
+Extracts information of the GeoRegion with the ID `geoID`.  If no GeoRegion with this ID exists, an error is thrown.
+
+Arguments
+=========
+- `fname` : String specifying name + path of the file containing GeoRegion information
+
+Returns
+=======
+- `gvec` : Vector containing all the GeoRegions in the file `fname`
+"""
 function readGeoRegions(
     fname :: AbstractString
 )
@@ -351,6 +392,7 @@ end
 """
     isGeoRegion(
         geoID :: AbstractString;
+        path  :: AbstractString = geodir,
         throw :: Bool = true
     ) -> tf :: Bool
 
@@ -358,14 +400,17 @@ Extracts information of the GeoRegion with the ID `geoID`.  If no GeoRegion with
 
 Arguments
 =========
-
 - `geoID` : The keyword ID that will be used to identify the GeoRegion.
         If the ID is not valid (i.e. not being used), then an error will be thrown.
+
+Keyword Arguments
+=================
+- `path` : The path where the list of custom GeoRegions will be retrieved from.
+           Defaults to the `local` package variable `geodir`
 - `throw` : If `true`, then throws an error if `geoID` is not a valid `GeoRegion` identifier instead of returning the Boolean `tf`
 
 Returns
 =======
-
 - `tf` : True / False
 """
 function isGeoRegion(
