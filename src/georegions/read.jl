@@ -29,106 +29,9 @@ function GeoRegion(
 
     @info "$(modulelog()) - Retrieving information for the GeoRegion defined by the ID $geoID"
 
-    regvec,filevec,typevec = listGeoRegions(path); isgeoregion(geoID,regvec)
+    regvec,filevec,typevec = listall(path); isgeoregion(geoID,regvec)
     ind = findall(geoID.==regvec)[1]
     return getgeoregion(geoID,joinpath(path,filevec[ind]),typevec[ind],ST,FT)
-
-end
-
-function getgeoregion(
-    geoID :: AbstractString,
-    fname :: AbstractString,
-    GType :: AbstractString,
-    ST = String,
-    FT = Float64
-)
-
-    if GType == "PolyRegion"
-        return PolyRegion(geoID,fname,ST,FT)
-    elseif GType == "RectRegion"
-        return RectRegion(geoID,fname,ST,FT)
-    elseif GType == "TiltRegion"
-        return TiltRegion(geoID,fname,ST,FT)
-    end
-
-end
-
-function PolyRegion(
-    geoID :: AbstractString,
-    fname :: AbstractString,
-    ST = String,
-    FT = Float64
-)
-
-    rvec = listpolyregions(fname)
-    ind  = findall(rvec.==geoID)[1]
-    ind  = (ind) * 4 + 1
-
-    flines = readlines(fname)
-    IDinfo = flines[ind];   ParID,RegName = getpolymeta(IDinfo)
-    regIDX = flines[ind+1]; X = getpolyx(regIDX)
-    regIDY = flines[ind+2]; Y = getpolyy(regIDY)
-
-    is180,is360 = checkbounds(maximum(Y),minimum(Y),maximum(X),minimum(X))
-
-    return PolyRegion{ST,FT}(
-        geoID,ParID,RegName,
-        maximum(Y),minimum(Y),maximum(X),minimum(X),Point2.(X,Y),
-        is180,is360
-    )
-
-end
-
-function RectRegion(
-    geoID :: AbstractString,
-    fname :: AbstractString,
-    ST = String,
-    FT = Float64
-)
-
-    rvec = listrectregions(fname)
-    ind  = findall(rvec.==geoID)[1]
-
-    IDinfo = readdlm(fname,',',comments=true,comment_char='#')[ind,:]
-    ParID,RegName,regN,regS,regE,regW = IDinfo[[2,7,3,5,6,4]]
-    ParID = replace(ParID," "=>"")
-    RegName = replace(RegName," "=>"")
-    RegName = replace(RegName,"-"=>" ")
-
-    is180,is360 = checkbounds(regN,regS,regE,regW)
-
-    return RectRegion{ST,FT}(
-        geoID,ParID,RegName,
-        regN,regS,regE,regW,
-        is180,is360
-    )
-
-end
-
-function TiltRegion(
-    geoID :: AbstractString,
-    fname :: AbstractString,
-    ST = String,
-    FT = Float64
-)
-
-    rvec = listrectregions(fname)
-    ind  = findall(rvec.==geoID)[1]
-
-    IDinfo = readdlm(fname,',',comments=true,comment_char='#')[ind,:]
-    ParID,name,X,Y,ΔX,ΔY,θ = IDinfo[[2,8,3,4,5,6,7]]
-    ParID = replace(ParID," "=>"")
-    name = replace(name," "=>"")
-    name = replace(name,"-"=>" ")
-
-    N,S,E,W = getTiltBounds(X,Y,ΔX,ΔY,θ)
-    is180,is360 = checkbounds(N,S,E,W)
-
-    return TiltRegion{ST,FT}(
-        geoID,ParID,name,
-        X,Y,ΔX,ΔY,θ,N,S,E,W,
-        is180,is360
-    )
 
 end
 
@@ -190,55 +93,6 @@ function templateGeoRegions(;
     end
 
     return nothing
-
-end
-
-"""
-    listGeoRegions() -> gvec :: Vector{String}, fvec :: Vector{String}, tvec :: Vector{String}
-
-List all GeoRegions, files the data are stored in, and the `Type` of `GeoRegion` they are.
-
-Arguments
-=========
-- `path` : The path where the list of custom GeoRegions will be retrieved from.
-           Defaults to the `local` package variable `geodir`
-
-Returns
-=======
-- `gvec` : List of all the GeoRegion IDs
-- `fvec` : List of the files that the GeoRegion information is stored in
-- `tvec` : List of the `Type` of the `GeoRegion` corresponding to the `geovec` ID list
-"""
-function listGeoRegions(
-    path :: AbstractString = geodir
-)
-
-    flist    = ["rectlist.txt","polylist.txt","tiltlist.txt"]
-    fdefined = ["giorgi.txt","srex.txt","ar6.txt"]
-
-    regvec  = []
-    filevec = []
-    typevec = []
-
-    for fname in flist
-        copygeoregions(fname,path)
-        rvec,rtype = listgeoregions(joinpath(path,fname))
-        regvec = vcat(regvec,rvec)
-        nreg = length(rvec)
-        fvec = fill(fname,nreg); filevec = vcat(filevec,fvec)
-        tvec = fill(rtype,nreg); typevec = vcat(typevec,tvec)
-    end
-
-    for fname in fdefined
-        copygeoregions(fname,geodir)
-        rvec,rtype = listgeoregions(joinpath(geodir,fname))
-        regvec = vcat(regvec,rvec)
-        nreg = length(rvec)
-        fvec = fill(fname,nreg); filevec = vcat(filevec,fvec)
-        tvec = fill(rtype,nreg); typevec = vcat(typevec,tvec)
-    end
-
-    return regvec,filevec,typevec
 
 end
 
@@ -314,26 +168,12 @@ function addGeoRegions(
     for reg in rvec
         if !isGeoRegion(reg,throw=false)
             g = getgeoregion(reg,fname,rtype)
-            if     rtype == "PolyRegion"
-                lon,lat = coordGeoRegion(g,n=1)
-                geo = PolyRegion(g.ID,g.pID,g.name,lon,lat,path=path)
-            elseif rtype == "TiltRegion"
-                geo = TiltRegion(g.ID,g.pID,g.name,g.X,g.Y,g.ΔX,g.ΔY,g.θ,path=path)
-            elseif rtype == "RectRegion"
-                geo = RectRegion(g.ID,g.pID,g.name,[g.N,g.S,g.E,g.W],path=path)
-            end
+            addGeoRegion(g,path=path)
         elseif overwrite
             @warn "$(modulelog()) - The GeoRegion ID $reg is already in use. Overwriting and replacing with new boundaries ..."
             removeGeoRegion(reg)
             g = getgeoregion(reg,fname,rtype)
-            if     rtype == "PolyRegion"
-                lon,lat = coordGeoRegion(g,n=1)
-                geo = PolyRegion(g.ID,g.pID,g.name,lon,lat,path=path)
-            elseif rtype == "TiltRegion"
-                geo = TiltRegion(g.ID,g.pID,g.name,g.X,g.Y,g.ΔX,g.ΔY,g.θ,path=path)
-            elseif rtype == "RectRegion"
-                geo = RectRegion(g.ID,g.pID,g.name,[g.N,g.S,g.E,g.W],path=path)
-            end
+            addGeoRegion(g,path=path)
         else
             @warn "$(modulelog()) - The GeoRegion ID $reg is already in use. Please use a different ID, or you can remove the ID using removeGeoRegion()."
         end
@@ -389,109 +229,6 @@ function readGeoRegions(
 
 end
 
-"""
-    isGeoRegion(
-        geoID :: AbstractString;
-        path  :: AbstractString = geodir,
-        throw :: Bool = true
-    ) -> tf :: Bool
-
-Extracts information of the GeoRegion with the ID `geoID`.  If no GeoRegion with this ID exists, an error is thrown.
-
-Arguments
-=========
-- `geoID` : The keyword ID that will be used to identify the GeoRegion.
-        If the ID is not valid (i.e. not being used), then an error will be thrown.
-
-Keyword Arguments
-=================
-- `path` : The path where the list of custom GeoRegions will be retrieved from.
-           Defaults to the `local` package variable `geodir`
-- `throw` : If `true`, then throws an error if `geoID` is not a valid `GeoRegion` identifier instead of returning the Boolean `tf`
-
-Returns
-=======
-- `tf` : True / False
-"""
-function isGeoRegion(
-    geoID :: AbstractString;
-    path  :: AbstractString = geodir,
-    throw :: Bool=true
-)
-
-    rvec,_,_ = listGeoRegions(path)
-    return isgeoregion(geoID,rvec;throw=throw,dolog=true)
-
-end
-
-function getpolymeta(metastring::AbstractString)
-
-    metastring = replace(metastring," "=>"")
-    metastring = replace(metastring,"RegID"=>"")
-    metastring = replace(metastring,"-"=>" ")
-    return split(metastring,",")[2:3]
-
-end
-
-function getpolyx(xstring::AbstractString)
-
-    xstring = replace(xstring," "=>"")
-    xstring = replace(xstring,"RegX"=>"")
-    return parse.(Float64,split(xstring,","))
-
-end
-
-function getpolyy(ystring::AbstractString)
-
-    ystring = replace(ystring," "=>"")
-    ystring = replace(ystring,"RegY"=>"")
-    return parse.(Float64,split(ystring,","))
-
-end
-
-function checkbounds(
-    regN :: Real,
-    regS :: Real,
-    regE :: Real,
-    regW :: Real
-)
-
-    if (regN>90) || (regN<-90)
-        error("$(modulelog()) - The latitude of the GeoRegion's northern bound at $regN is not valid.")
-    end
-
-    if (regS>90) || (regS<-90)
-        error("$(modulelog()) - The latitude of the GeoRegion's southern bound at $regS is not valid.")
-    end
-
-    if (regE>360) || (regE<-180)
-        error("$(modulelog()) - The longitude of the GeoRegion's eastern bound at $regE is not valid.")
-    end
-
-    if (regW>360) || (regW<-180)
-        error("$(modulelog()) - The longitude of the GeoRegion's western bound at $regW is not valid.")
-    end
-
-    if (regE - regW) > 360
-        error("$(modulelog()) - The GeoRegion cannot be more than 360º in Longitude.")
-    end
-
-    if regE < regW
-        error("$(modulelog()) - The eastern bound of the GeoRegion cannot be west of the western bound.")
-    end
-
-    if regN < regS
-        error("$(modulelog()) - The northern bound of the GeoRegion cannot be south of the southern bound.")
-    end
-
-    if regE > 180; is360 = true; else is360 = false end
-    if regW < 0;   is180 = true; else is180 = false end
-    if !(is180) && !(is360); is360 = true end
-
-    return is180,is360
-
-end
-
 function copygeoregions(
     fname :: AbstractString,
     path  :: AbstractString;
@@ -533,86 +270,5 @@ function copygeoregions(
     end
 
     return
-
-end
-
-function listgeoregions(fname::AbstractString)
-
-    gtype = readlines(fname)[1]
-    if     occursin("PolyRegion",gtype)
-        return listpolyregions(fname), "PolyRegion"
-    elseif occursin("TiltRegion",gtype)
-        return listtiltregions(fname), "TiltRegion"
-    elseif occursin("RectRegion",gtype)
-        return listrectregions(fname), "RectRegion"
-    end
-
-end
-
-function listpolyregions(fname::AbstractString)
-
-    gcount = -1
-    for l in eachline(fname)
-        if occursin("RegID",l); gcount += 1 end
-    end
-
-    regvec = Vector{String}(undef,gcount)
-    gcount = -1
-    for l in eachline(fname)
-        if occursin("RegID",l)
-            gcount += 1
-            if gcount > 0
-                l = replace(l," "=>"")
-                l = replace(l,"RegID"=>"")
-                regvec[gcount] = split(l,",")[1]
-            end
-        end
-    end
-
-    return regvec
-
-end
-
-function listrectregions(fname::AbstractString)
-
-    return readdlm(fname,',',comments=true,comment_char='#')[:,1]
-
-end
-
-function listtiltregions(fname::AbstractString)
-
-    gcount = 0
-    for l in eachline(fname)
-        if (!occursin("#",l)) || (l == ""); gcount += 1 end
-    end
-
-    if gcount > 0
-         return readdlm(fname,',',comments=true,comment_char='#')[:,1]
-    else return []
-    end
-
-end
-
-function isgeoregion(
-    geoID  :: AbstractString,
-    regvec :: AbstractArray;
-    throw  :: Bool = true,
-    dolog  :: Bool = false)
-
-    if dolog
-        @info "$(modulelog()) - Checking to see if the ID $geoID is in use"
-    end
-
-    if sum(regvec.==geoID) == 0
-        if throw
-            error("$(modulelog()) - $(geoID) is not a valid GeoRegion identifier, use RectRegion(), TiltRegion() or PolyRegion() to add this GeoRegion to the list.")
-        else
-            @warn "$(modulelog()) - $(geoID) is not a valid GeoRegion identifier, use RectRegion(), TiltRegion() or PolyRegion() to add this GeoRegion to the list."
-            return false
-        end
-    else
-        if dolog; @info "$(modulelog()) - The ID $geoID is already in use" end
-        return true
-    end
 
 end
