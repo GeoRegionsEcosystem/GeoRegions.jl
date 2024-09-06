@@ -55,8 +55,18 @@ function rmID(
 
     regvec,filevec,typevec = listall(path); isID(geoID,regvec)
     ind = findall(geoID.==regvec)[1]
-    geo = getgeoregion(geoID,joinpath(path,filevec[ind]), typevec[ind])
-    removegeoregion(geo,joinpath(path,filevec[ind]))
+
+    fdefined = ["giorgi.txt","srex.txt","ar6.txt"]
+    if !any(filevec[ind].==fdefined)
+        geo = getgeoregion(geoID,joinpath(path,filevec[ind]), typevec[ind])
+        removegeoregion(geo,joinpath(path,filevec[ind]))
+    else
+        if force
+            @warn "$(modulelog()) - You are forcefully removing the predefined GeoRegion \"$geoID\". If you want to restore this predefined GeoRegion, please do `resetGeoRegions(all=true)`"
+        else
+            error("$(modulelog()) - You are trying to remove the predefined GeoRegion \"$geoID\". If you really want to remove this GeoRegion, please do `force = true`")
+        end
+    end
 
 end
 
