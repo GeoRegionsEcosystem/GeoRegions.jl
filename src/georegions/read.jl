@@ -48,13 +48,17 @@ Keyword Arguments
 - `path` : The folder to copy the files to
 - `overwrite` : If template files exist in this folder, overwrite?
 """
-function templateGeoRegions(;
+function setupGeoRegions(;
     path :: AbstractString = pwd(),
     overwrite :: Bool = false
 )
 
     if !isdir(path); mkpath(path) end
-    for fname in ["recttemplate.txt","polytemplate.txt","tilttemplate.txt"]
+    for fname in [
+        "recttemplate.txt", "rectlist.txt",
+        "polytemplate.txt", "polylist.txt",
+        "tilttemplate.txt", "tiltlist.txt",
+    ]
 
         ftem = joinpath(@__DIR__,"..","..","extra",fname)
         freg = joinpath(path,fname)
