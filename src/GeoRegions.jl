@@ -8,15 +8,15 @@ using Logging
 using PolygonOps
 using PrettyTables
 
-import Base: show, isdefined, rm, in
+import Base: show, rm, in
 
 ## Exporting the following functions:
 export
         GeoRegion,
         RectRegion, PolyRegion, TiltRegion,
 
-        isdefined, add, rm, overwrite,
-        isGeoRegion, addGeoRegion, removeGeoRegion, 
+        add, rm, overwrite,
+        isGeoRegion, isID, addGeoRegion, removeGeoRegion, 
         templateGeoRegions, readGeoRegions, addGeoRegions, resetGeoRegions,
         tableGeoRegions, tableRectRegions, tableTiltRegions, tablePolyRegions,
         isinGeoRegion, 

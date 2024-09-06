@@ -1,4 +1,4 @@
-function isdefined(
+function isGeoRegion(
     geo   :: GeoRegion;
     path  :: AbstractString = geodir,
     throw :: Bool = true
@@ -47,18 +47,18 @@ Returns
 =======
 - `tf` : True / False
 """
-function isGeoRegion(
+function isID(
     geoID :: AbstractString;
     path  :: AbstractString = geodir,
     throw :: Bool=true
 )
 
     rvec,_,_ = listall(path)
-    return isgeoregion(geoID,rvec;throw=throw,dolog=true)
+    return isID(geoID,rvec;throw=throw,dolog=true)
 
 end
 
-function isgeoregion(
+function isID(
     geoID  :: AbstractString,
     regvec :: AbstractArray;
     throw  :: Bool = true,
