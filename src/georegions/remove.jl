@@ -19,16 +19,16 @@ rm(
     geo  :: GeoRegion;
     path :: AbstractString = geodir
 ) = if isGeoRegion(geo,path=path)
-    removeGeoRegion(geo.ID,path=path)
+    rmID(geo.ID,path=path)
 end
 
 """
-    removeGeoRegion(
+    rmID(
         geoID :: AbstractString;
         path  :: AbstractString = geodir
     )
 
-Creates the GeoRegion associated with the ID `geoID`.
+Removes any GeoRegion associated with the ID `geoID`. ID must be exact.
 
 Arguments
 =========
@@ -40,7 +40,7 @@ Keyword Arguments
 - `path` : The path where the list of custom GeoRegions will be retrieved from.
            Defaults to the `local` package variable `geodir`
 """
-function removeGeoRegion(
+function rmID(
     geoID :: AbstractString;
     path  :: AbstractString = geodir
 )
