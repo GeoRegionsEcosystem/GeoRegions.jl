@@ -16,10 +16,11 @@ Keyword Arguments
            Defaults to the `local` package variable `geodir`
 """
 rm(
-    geo  :: GeoRegion;
-    path :: AbstractString = geodir
+    geo   :: GeoRegion;
+    path  :: AbstractString = dirname(geo.path),
+    force :: Bool = false
 ) = if isGeoRegion(geo,path=path)
-    rmID(geo.ID,path=path)
+    rmID(geo.ID,path=path,force=force)
 end
 
 """
@@ -42,7 +43,8 @@ Keyword Arguments
 """
 function rmID(
     geoID :: AbstractString;
-    path  :: AbstractString = geodir
+    path  :: AbstractString = geodir,
+    force :: Bool = false
 )
 
     if geoID == "GLB"
