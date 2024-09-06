@@ -1,22 +1,31 @@
+==(a::T, b::T) where T <: RectRegion =
+    getfield.(Ref(a),fieldnames(T)) == getfield.(Ref(b),fieldnames(T))
+
+==(a::T, b::T) where T <: PolyRegion =
+    getfield.(Ref(a),fieldnames(T)) == getfield.(Ref(b),fieldnames(T))
+
+==(a::T, b::T) where T <: TiltRegion =
+    getfield.(Ref(a),fieldnames(T)) == getfield.(Ref(b),fieldnames(T))
+
 function isGeoRegion(
     geo   :: GeoRegion;
-    path  :: AbstractString = geodir,
+    path  :: AbstractString = dirname(geo.path),
     throw :: Bool = true
 )
 
-    if isGeoRegion(geo.ID,path=path,throw=throw)
+    if isID(geo.ID,path=path,throw=throw)
 
         tgeo = GeoRegion(geo.ID,path=path)
-        if tgeo !== geo
+        if tgeo == geo
+            @info "$(modulelog()) - The GeoRegion \"$(geo.ID)\" we have defined shares the same properties as the custom GeoRegion \"$(tgeo.ID)\" from the lists in $path"
+            return true
+        else
             if throw
                 error("$(modulelog()) - The custom GeoRegion \"$(tgeo.ID)\" from the lists in $path does not have the same properties as the GeoRegion \"$(geo.ID)\" we have defined despite having the same ID.")
             else
                 @warn "$(modulelog()) - The custom GeoRegion \"$(tgeo.ID)\" from the lists in $path does not have the same properties as the GeoRegion \"$(geo.ID)\" we have defined despite having the same ID."
                 return false
             end
-        else
-            @info "$(modulelog()) - The GeoRegion \"$(geo.ID)\" we have defined shares the same properties as the custom GeoRegion \"$(tgeo.ID)\" from the lists in $path"
-            return true
         end
 
     end
