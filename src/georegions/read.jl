@@ -122,20 +122,8 @@ function readGeoRegions(
     gvec = Vector{GeoRegion}(undef,ngeo)
     for igeo in 1 : ngeo
         reg = rvec[igeo]
-        if !isGeoRegion(reg,throw=false)
-            g = getgeoregion(reg,fname,rtype)
-            if     rtype == "PolyRegion"
-                lon,lat = coordGeoRegion(g,n=1)
-                geo = PolyRegion(g.ID,g.pID,g.name,lon,lat,save=false)
-            elseif rtype == "TiltRegion"
-                geo = TiltRegion(g.ID,g.pID,g.name,g.X,g.Y,g.ΔX,g.ΔY,g.θ,save=false)
-            elseif rtype == "RectRegion"
-                geo = RectRegion(g.ID,g.pID,g.name,[g.N,g.S,g.E,g.W],save=false)
-            end
-        else
-            @warn "$(modulelog()) - The GeoRegion ID $reg is already in use. Please use a different ID, or you can remove the ID using removeGeoRegion()."
-        end
-        gvec[igeo] = geo
+        g = getgeoregion(reg,fname,rtype)
+        gvec[igeo] = g
     end
 
     return gvec
@@ -171,14 +159,14 @@ function addGeoRegions(
 
     rvec,rtype = listgeoregions(fname)
     for reg in rvec
-        if !isGeoRegion(reg,throw=false)
+        if !isID(reg,throw=false)
             g = getgeoregion(reg,fname,rtype)
-            addGeoRegion(g,path=path)
+            add(g,path=path)
         elseif overwrite
             @warn "$(modulelog()) - The GeoRegion ID $reg is already in use. Overwriting and replacing with new boundaries ..."
-            removeGeoRegion(reg)
+            rmID(reg)
             g = getgeoregion(reg,fname,rtype)
-            addGeoRegion(g,path=path)
+            add(g,path=path)
         else
             @warn "$(modulelog()) - The GeoRegion ID $reg is already in use. Please use a different ID, or you can remove the ID using removeGeoRegion()."
         end
