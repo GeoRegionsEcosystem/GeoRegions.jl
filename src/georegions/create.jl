@@ -49,13 +49,13 @@ function RectRegion(
     end
 
     if save
-        if isGeoRegion(RegID,path=path,throw=false)
+        if isID(RegID,path=path,throw=false)
             error("$(modulelog()) - The GeoRegion $(RegID) has already been defined.  Please use another identifier.")
         else
             @info "$(modulelog()) - Adding the GeoRegion $(RegID) to the list."
         end
         if ParID != "GLB"
-            if !isGeoRegion(ParID,path=path,throw=false)
+            if !isID(ParID,path=path,throw=false)
                 error("$(modulelog()) - The GeoRegion $(ParID) was defined to be the parent GeoRegion of $(RegID), but the GeoRegion $(ParID) is not defined.  Please define the GeoRegion $(ParID) and its properties.")
             end
         end
@@ -149,13 +149,13 @@ function TiltRegion(
     end
 
     if save
-        if isGeoRegion(RegID,path=path,throw=false)
+        if isID(RegID,path=path,throw=false)
             error("$(modulelog()) - The GeoRegion $(RegID) has already been defined.  Please use another identifier.")
         else
             @info "$(modulelog()) - Adding the GeoRegion $(RegID) to the list."
         end
         if ParID != "GLB"
-            if !isGeoRegion(ParID,path=path,throw=false)
+            if !isID(ParID,path=path,throw=false)
                 error("$(modulelog()) - The GeoRegion $(ParID) was defined to be the parent GeoRegion of $(RegID), but the GeoRegion $(ParID) is not defined.  Please define the GeoRegion $(ParID) and its properties.")
             end
         end
@@ -245,13 +245,13 @@ function PolyRegion(
     end
     
     if save
-        if isGeoRegion(RegID,path=path,throw=false)
+        if isID(RegID,path=path,throw=false)
             error("$(modulelog()) - The GeoRegion $(RegID) has already been defined.  Please use another identifier.")
         else
             @info "$(modulelog()) - Adding the GeoRegion $(RegID) to the list."
         end
         if ParID != "GLB"
-            if !isGeoRegion(ParID,path=path)
+            if !isID(ParID,path=path)
                 error("$(modulelog()) - The GeoRegion $(ParID) was defined to be the parent GeoRegion of $(RegID), but the GeoRegion $(ParID) is not defined.  Please define the GeoRegion $(ParID) and its properties.")
             end
         end
