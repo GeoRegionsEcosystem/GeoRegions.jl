@@ -19,15 +19,15 @@ end
     geo2 = RectRegion("TRP_DTP","GLB","Deep Tropics",[10,-10,360,0])
     @test  isID("TRP",throw=false)
     @test  isGeoRegion(geo1,throw=false)
-    @test  rm(geo1)
+    @test  rm(geo1) === nothing
     @test !isGeoRegion(geo1,throw=false)
     @test  isGeoRegion(geo2,throw=false)
-    @test  rmID("TRP_DTP")
+    @test  rmID("TRP_DTP") === nothing
     @test !isGeoRegion(geo2,throw=false)
 
     geo = RectRegion("TRP","GLB","Tropics",[30,-30,360,0],save=false)
     @test !isGeoRegion(geo,throw=false)
-    @test add(geo)
+    @test add(geo) === nothing
     @test isGeoRegion(geo,throw=false)
     rm(geo)
 
@@ -41,8 +41,8 @@ end
     @test  isID("TRP",path=pwd(),throw=false)
     @test  isGeoRegion(geo1,throw=false)
     @test !isGeoRegion(geo1,path=homedir(),throw=false)
-    @test !rm(geo1,path=homedir())
-    @test  rm(geo1)
+    @test ! (rm(geo1,path=homedir()) === nothing)
+    @test  rm(geo1) === nothing
     @test !isGeoRegion(geo1,throw=false)
 
 end

@@ -28,6 +28,10 @@ function isGeoRegion(
             end
         end
 
+    else
+
+        return false
+
     end
 
 end
