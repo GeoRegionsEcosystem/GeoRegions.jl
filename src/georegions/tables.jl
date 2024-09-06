@@ -20,31 +20,37 @@ function tableGeoRegions(;
 )
 
     flist = ["rectlist.txt","polylist.txt","tiltlist.txt"]
-    fdefined = vcat(flist,"giorgi.txt","srex.txt","ar6.txt")
+    fdefined = ["giorgi.txt","srex.txt","ar6.txt"]
 
     regvec  = []
     filevec = []
+    dirvec  = []
     typevec = []
 
-    if defined
+    if custom
         for fname in flist
-            copygeoregions(fname,path)
-            rvec,rtype = listgeoregions(joinpath(path,fname))
-            regvec = vcat(regvec,rvec)
-            nreg = length(rvec)
-            fvec = fill(fname,nreg); filevec = vcat(filevec,fvec)
-            tvec = fill(rtype,nreg); typevec = vcat(typevec,tvec)
+            fID = joinpath(path,fname)
+            if isfile(fID)
+                rvec,rtype = listgeoregions(fID)
+                regvec = vcat(regvec,rvec)
+                nreg = length(rvec)
+                fvec = fill(fname,nreg); filevec = vcat(filevec,fvec)
+                tvec = fill(rtype,nreg); typevec = vcat(typevec,tvec)
+                dvec = fill(path,nreg);  dirvec = vcat(dirvec,dvec)
+            else
+                @warn "$(modulelog()) - The custom file does \"$fname\" does not exist in $path, use `setupGeoRegions()` to copy templates and empty custom lists to $path"
+            end
         end
     end
 
-    if custom
+    if defined
         for fname in fdefined
-            copygeoregions(fname,geodir)
             rvec,rtype = listgeoregions(joinpath(geodir,fname))
             regvec = vcat(regvec,rvec)
             nreg = length(rvec)
             fvec = fill(fname,nreg); filevec = vcat(filevec,fvec)
             tvec = fill(rtype,nreg); typevec = vcat(typevec,tvec)
+            dvec = fill(geodir,nreg); dirvec = vcat(dirvec,dvec)
         end
     end
 
@@ -54,7 +60,7 @@ function tableGeoRegions(;
     for igeo = 1 : ngeo
         geo = getgeoregion(
             regvec[igeo],
-            joinpath(geodir,filevec[igeo]),
+            joinpath(dirvec[igeo],filevec[igeo]),
             typevec[igeo]
         )
 
@@ -138,24 +144,30 @@ function tableRectRegions(;
 
     regvec  = []
     filevec = []
+    dirvec  = []
     typevec = []
 
     if custom
-        copygeoregions("rectlist.txt",path)
-        rvec,rtype = listgeoregions(joinpath(path,"rectlist.txt"))
-        regvec = vcat(regvec,rvec)
-        nreg = length(rvec)
-        fvec = fill("rectlist.txt",nreg); filevec = vcat(filevec,fvec)
-        tvec = fill(rtype,nreg); typevec = vcat(typevec,tvec)
+        fID = joinpath(path,"rectlist.txt")
+        if isfile(fID)
+            rvec,rtype = listgeoregions(fID)
+            regvec = vcat(regvec,rvec)
+            nreg = length(rvec)
+            fvec = fill("rectlist.txt",nreg); filevec = vcat(filevec,fvec)
+            tvec = fill(rtype,nreg); typevec = vcat(typevec,tvec)
+            dvec = fill(path,nreg);  dirvec  = vcat(dirvec,dvec)
+        else
+            @warn "$(modulelog()) - The custom file \"rectlist.txt\" does not exist in $path, use `setupGeoRegions()` to copy templates and empty custom lists to $path"
+        end
     end
 
     if giorgi
-        copygeoregions("giorgi.txt",geodir)
         rvec,rtype = listgeoregions(joinpath(geodir,"giorgi.txt"))
         regvec = vcat(regvec,rvec)
         nreg = length(rvec)
         fvec = fill("giorgi.txt",nreg); filevec = vcat(filevec,fvec)
         tvec = fill(rtype,nreg); typevec = vcat(typevec,tvec)
+        dvec = fill(geodir,nreg);  dirvec  = vcat(dirvec,dvec)
     end
 
     ngeo = size(regvec,1)
@@ -164,7 +176,7 @@ function tableRectRegions(;
     for igeo = 1 : ngeo
         geo = getgeoregion(
             regvec[igeo],
-            joinpath(geodir,filevec[igeo]),
+            joinpath(dirvec[igeo],filevec[igeo]),
             typevec[igeo]
         )
 
@@ -210,12 +222,16 @@ function tableTiltRegions(;
     filevec = []
     typevec = []
 
-    copygeoregions("tiltlist.txt",path)
-    rvec,rtype = listgeoregions(joinpath(path,"tiltlist.txt"))
-    regvec = vcat(regvec,rvec)
-    nreg = length(rvec)
-    fvec = fill("tiltlist.txt",nreg); filevec = vcat(filevec,fvec)
-    tvec = fill(rtype,nreg); typevec = vcat(typevec,tvec)
+    fID = joinpath(path,"tiltlist.txt")
+    if isfile(fID)
+        rvec,rtype = listgeoregions(joinpath(path,"tiltlist.txt"))
+        regvec = vcat(regvec,rvec)
+        nreg = length(rvec)
+        fvec = fill("tiltlist.txt",nreg); filevec = vcat(filevec,fvec)
+        tvec = fill(rtype,nreg); typevec = vcat(typevec,tvec)
+    else
+        @warn "$(modulelog()) - The custom file \"tiltlist.txt\" does not exist in $path, use `setupGeoRegions()` to copy templates and empty custom lists to $path"
+    end
 
     ngeo = size(regvec,1)
     fmat = Array{Any,2}(undef,ngeo,5)
@@ -223,7 +239,7 @@ function tableTiltRegions(;
     for igeo = 1 : ngeo
         geo = getgeoregion(
             regvec[igeo],
-            joinpath(geodir,filevec[igeo]),
+            joinpath(path,filevec[igeo]),
             typevec[igeo]
         )
 
@@ -274,33 +290,39 @@ function tablePolyRegions(;
     
     regvec  = []
     filevec = []
+    dirvec  = []
     typevec = []
 
     if custom
-        copygeoregions("polylist.txt",path)
-        rvec,rtype = listgeoregions(joinpath(path,"polylist.txt"))
-        regvec = vcat(regvec,rvec)
-        nreg = length(rvec)
-        fvec = fill("polylist.txt",nreg); filevec = vcat(filevec,fvec)
-        tvec = fill(rtype,nreg); typevec = vcat(typevec,tvec)
+        fID = joinpath(path,"polylist.txt")
+        if isfile(fID)
+            rvec,rtype = listgeoregions(fID)
+            regvec = vcat(regvec,rvec)
+            nreg = length(rvec)
+            fvec = fill("polylist.txt",nreg); filevec = vcat(filevec,fvec)
+            tvec = fill(rtype,nreg); typevec = vcat(typevec,tvec)
+            dvec = fill(path,nreg);  dirvec  = vcat(dirvec,dvec)
+        else
+            @warn "$(modulelog()) - The custom file \"polylist.txt\" does not exist in $path, use `setupGeoRegions()` to copy templates and empty custom lists to $path"
+        end
     end
 
     if srex
-        copygeoregions("srex.txt",geodir)
-        rvec,rtype = listgeoregions(joinpath(path,"srex.txt"))
+        rvec,rtype = listgeoregions(joinpath(geodir,"srex.txt"))
         regvec = vcat(regvec,rvec)
         nreg = length(rvec)
         fvec = fill("srex.txt",nreg); filevec = vcat(filevec,fvec)
         tvec = fill(rtype,nreg); typevec = vcat(typevec,tvec)
+        dvec = fill(geodir,nreg); dirvec = vcat(dirvec,dvec)
     end
 
     if ar6
-        copygeoregions("ar6.txt",geodir)
-        rvec,rtype = listgeoregions(joinpath(path,"ar6.txt"))
+        rvec,rtype = listgeoregions(joinpath(geodir,"ar6.txt"))
         regvec = vcat(regvec,rvec)
         nreg = length(rvec)
         fvec = fill("ar6.txt",nreg); filevec = vcat(filevec,fvec)
         tvec = fill(rtype,nreg); typevec = vcat(typevec,tvec)
+        dvec = fill(geodir,nreg); dirvec = vcat(dirvec,dvec)
     end
 
     ngeo = size(regvec,1)
@@ -309,7 +331,7 @@ function tablePolyRegions(;
     for igeo = 1 : ngeo
         geo = getgeoregion(
             regvec[igeo],
-            joinpath(path,filevec[igeo]),
+            joinpath(dirvec[igeo],filevec[igeo]),
             typevec[igeo]
         )
 
