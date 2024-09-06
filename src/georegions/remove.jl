@@ -16,7 +16,7 @@ Keyword Arguments
            Defaults to the `local` package variable `geodir`
 """
 rm(
-    geo  :: GeoRegion,
+    geo  :: GeoRegion;
     path :: AbstractString = geodir
 ) = if isGeoRegion(geo,path=path)
     removeGeoRegion(geo.ID,path=path)
