@@ -64,7 +64,10 @@ function RectRegion(
     end
 
     N,S,E,W = bound; is180,is360 = checkbounds(N,S,E,W)
-    geo  = RectRegion{ST,FT}(RegID,ParID,name,N,S,E,W,is180,is360)
+    geo  = RectRegion{ST,FT}(
+        RegID, ParID, name, joinpath(path,"rectlist.txt"),
+        N, S, E, W, is180,is360
+    )
 
     if save
         par  = GeoRegion(ParID,path=path); isinGeoRegion(geo,par)
@@ -164,7 +167,11 @@ function TiltRegion(
     end
 
     N,S,E,W = tilt2bounds(X,Y,ΔX,ΔY,θ); is180,is360 = checkbounds(N,S,E,W)
-    geo  = TiltRegion{ST,FT}(RegID,ParID,name,X,Y,ΔX,ΔY,θ,N,S,E,W,is180,is360)
+    geo  = TiltRegion{ST,FT}(
+        RegID, ParID, name, joinpath(path,"tiltlist.txt"),
+        N, S, E, W, is180, is360,
+        X, Y, ΔX, ΔY, θ,
+    )
 
     if save
         par  = GeoRegion(ParID,path=path); isinGeoRegion(geo,par)
@@ -272,7 +279,11 @@ function PolyRegion(
     E = maximum(lon); W = minimum(lon)
     is180,is360 = checkbounds(N,S,E,W)
     shape = Point2.(lon,lat)
-    geo   = PolyRegion{ST,FT}(RegID,ParID,name,N,S,E,W,shape,is180,is360)
+    geo   = PolyRegion{ST,FT}(
+        RegID, ParID, name, joinpath(path,"polylist.txt"),
+        N, S, E, W, is180, is360,
+        shape
+    )
     
     if save
         par  = GeoRegion(ParID,path=path); isinGeoRegion(geo,par)

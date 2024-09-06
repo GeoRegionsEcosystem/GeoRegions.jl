@@ -27,17 +27,16 @@ function getrectregion(
     ind  = findall(rvec.==geoID)[1]
 
     IDinfo = readdlm(fname,',',comments=true,comment_char='#')[ind,:]
-    ParID,RegName,regN,regS,regE,regW = IDinfo[[2,7,3,5,6,4]]
+    ParID,name,N,S,E,W = IDinfo[[2,7,3,5,6,4]]
     ParID = replace(ParID," "=>"")
-    RegName = replace(RegName," "=>"")
-    RegName = replace(RegName,"-"=>" ")
+    name = replace(name," "=>"")
+    name = replace(name,"-"=>" ")
 
-    is180,is360 = checkbounds(regN,regS,regE,regW)
+    is180,is360 = checkbounds(N,S,E,W)
 
     return RectRegion{ST,FT}(
-        geoID,ParID,RegName,
-        regN,regS,regE,regW,
-        is180,is360
+        geoID, ParID, name, fname,
+        N, S, E, W, is180, is360,
     )
 
 end
@@ -62,9 +61,9 @@ function gettiltregion(
     is180,is360 = checkbounds(N,S,E,W)
 
     return TiltRegion{ST,FT}(
-        geoID,ParID,name,
-        X,Y,ΔX,ΔY,θ,N,S,E,W,
-        is180,is360
+        geoID, ParID, name, fname,
+        N, S, E, W, is180, is360,
+        X, Y, ΔX, ΔY, θ,
     )
 
 end
@@ -88,9 +87,9 @@ function getpolyregion(
     is180,is360 = checkbounds(maximum(Y),minimum(Y),maximum(X),minimum(X))
 
     return PolyRegion{ST,FT}(
-        geoID,ParID,RegName,
-        maximum(Y),minimum(Y),maximum(X),minimum(X),Point2.(X,Y),
-        is180,is360
+        geoID, ParID, RegName, fname,
+        maximum(Y), minimum(Y), maximum(X), minimum(X), is180, is360,
+        Point2.(X,Y)
     )
 
 end

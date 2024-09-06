@@ -63,6 +63,7 @@ struct RectRegion{ST<:AbstractString, FT<:Real} <: GeoRegion
     ID    :: ST
     pID   :: ST
     name  :: ST
+    path  :: ST
     N     :: FT
     S     :: FT
     E     :: FT
@@ -75,30 +76,32 @@ struct PolyRegion{ST<:AbstractString, FT<:Real} <: GeoRegion
     ID    :: ST
     pID   :: ST
     name  :: ST
+    path  :: ST
     N     :: FT
     S     :: FT
     E     :: FT
     W     :: FT
-    shape :: Vector{Point2{FT}}
     is180 :: Bool
     is360 :: Bool
+    shape :: Vector{Point2{FT}}
 end
 
 struct TiltRegion{ST<:AbstractString, FT<:Real} <: GeoRegion
     ID    :: ST
     pID   :: ST
     name  :: ST
+    path  :: ST
     N     :: FT
     S     :: FT
     E     :: FT
     W     :: FT
+    is180 :: Bool
+    is360 :: Bool
     X     :: FT
     Y     :: FT
     θ     :: FT
     ΔX    :: FT
     ΔY    :: FT
-    is180 :: Bool
-    is360 :: Bool
 end
 
 modulelog() = "$(now()) - GeoRegions.jl"
