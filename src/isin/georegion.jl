@@ -97,8 +97,6 @@ function isinGeoRegion(
 
 end
 
-
-
 """
     isinGeoRegion(
         Child :: GeoRegion,
