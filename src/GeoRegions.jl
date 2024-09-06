@@ -22,9 +22,10 @@ export
 
         templateGeoRegions, readGeoRegions, addGeoRegions, resetGeoRegions,
         tableGeoRegions, tableRectRegions, tableTiltRegions, tablePolyRegions,
-        isinGeoRegion, 
 
-        coordinates, in, Point2
+        isinGeoRegion, in,
+        coordinates,
+        Point2
 
 ## Abstract types
 """
