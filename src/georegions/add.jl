@@ -4,6 +4,19 @@ add(
     verbose :: Bool = true
 ) = addGeoRegion(geo;path=path,verbose=verbose)
 
+function overwrite(
+    geo  :: GeoRegion;
+    path :: AbstractString,
+    verbose :: Bool = true
+)
+
+     rm(geo,path=path)
+    add(geo,path=path,verbose=verbose)
+    
+    return nothing
+
+end
+
 function addGeoRegion(
     geo  :: RectRegion;
     path :: AbstractString,
