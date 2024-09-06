@@ -1,4 +1,4 @@
-function isGeoRegion(
+function isdefined(
     geo   :: GeoRegion;
     path  :: AbstractString = geodir,
     throw :: Bool = true
