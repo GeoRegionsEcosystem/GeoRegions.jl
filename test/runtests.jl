@@ -6,8 +6,8 @@ using Test
     # Test all predefined GeoRegions
     IDvec,_,_ = GeoRegions.listall()
     for ID in IDvec
-        @test isID(ID,verbose=false);
-        @test isGeoRegion(GeoRegion(ID,verbose=false));
+        @test isID(ID,throw=false);
+        @test isGeoRegion(GeoRegion(ID),throw=false);
     end
 
 end
@@ -16,7 +16,7 @@ end
 
     @test !isGeoRegion("TRP",throw=false)
     geo1 = RectRegion("TRP","GLB","Tropics",[30,-30,360,0])
-    geo2 = RectRegion("TRP_DTP","GLB","Tropics",[10,-10,360,0])
+    geo2 = RectRegion("TRP_DTP","GLB","Deep Tropics",[10,-10,360,0])
     @test  isID("TRP",throw=false)
     @test  isGeoRegion(geo1,throw=false)
     @test  rm(geo1)
@@ -37,11 +37,12 @@ end
 
     @test !isGeoRegion("TRP",path=pwd(),throw=false)
     geo1 = RectRegion("TRP","GLB","Tropics",[30,-30,360,0],path=pwd())
+    @test  isID("TRP",throw=false)
     @test  isID("TRP",path=pwd(),throw=false)
-    @test  isGeoRegion(geo1,path=pwd(),throw=false)
-    @test !isGeoRegion(geo1,throw=false)
-    @test !rm(geo1,throw=false)
-    @test  rm(geo1,path=pwd())
+    @test  isGeoRegion(geo1,throw=false)
+    @test !isGeoRegion(geo1,path=homedir(),throw=false)
+    @test !rm(geo1,path=homedir())
+    @test  rm(geo1)
     @test !isGeoRegion(geo1,throw=false)
 
 end
