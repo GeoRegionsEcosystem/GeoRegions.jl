@@ -1,23 +1,4 @@
-add(
-    geo  :: GeoRegion;
-    path :: AbstractString = dirname(geo.path),
-    verbose :: Bool = true
-) = addGeoRegion(geo,path,verbose=verbose)
-
-function overwrite(
-    geo  :: GeoRegion;
-    path :: AbstractString,
-    verbose :: Bool = true
-)
-
-    rmID(geo.ID,path=path)
-    add(geo,path=path,verbose=verbose)
-    
-    return nothing
-
-end
-
-function addGeoRegion(
+function add(
     geo  :: RectRegion,
     path :: AbstractString = dirname(geo.path);
     verbose :: Bool = true
@@ -33,7 +14,7 @@ function addGeoRegion(
 
 end
 
-function addGeoRegion(
+function add(
     geo  :: TiltRegion,
     path :: AbstractString = dirname(geo.path);
     verbose :: Bool = true
@@ -49,7 +30,7 @@ function addGeoRegion(
 
 end
 
-function addGeoRegion(
+function add(
     geo  :: PolyRegion,
     path :: AbstractString = dirname(geo.path);
     verbose :: Bool = true
@@ -63,6 +44,19 @@ function addGeoRegion(
         path = path, verbose = verbose, save = true
     )
 
+    return nothing
+
+end
+
+function overwrite(
+    geo  :: GeoRegion;
+    path :: AbstractString,
+    verbose :: Bool = true
+)
+
+    rmID(geo.ID,path=path)
+    add(geo,path=path,verbose=verbose)
+    
     return nothing
 
 end
