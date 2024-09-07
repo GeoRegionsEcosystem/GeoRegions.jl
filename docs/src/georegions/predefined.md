@@ -13,7 +13,7 @@ GeoRegion("GLB")
 
 Add the `GF_` prefix to the 3-letter IDs given in Giorgi & Francisco [2000] to call GeoRegions adapted from this paper.  All GeoRegions are defined as the `RectRegion` type.
 
-!!! compat "Defined in GeoRegions > 1.1"
+!!! tip "Defined in GeoRegions > 1.1"
     All `GF_*` domains are defined only in versions ≥1.1
 
 ```@repl
@@ -27,7 +27,7 @@ To see the full list of predefined GeoRegions from Giorgi & Francisco [2000], go
 
 Add the `SRX_` prefix to the 3-letter IDs given in Seneviratne et al. [2012] to call GeoRegions adapted from this paper.  All GeoRegions are defined as the `PolyRegion` type, even though many of them are rectilinear.
 
-!!! compat "Defined in GeoRegions ≧ 2"
+!!! tip "Defined in GeoRegions ≧ 2"
     All `SRX_*` domains are defined only in versions ≥2
 
 ```@repl
@@ -41,7 +41,7 @@ To see the full list of predefined GeoRegions from Seneviratne et al. [2012], go
 
 Add the `AR6_` prefix to the 3-letter IDs given in Iturbide et al., [2020] to call GeoRegions adapted from this paper.  All GeoRegions are defined as the `PolyRegion` type.
 
-!!! compat "Defined in GeoRegions ≧ 2"
+!!! tip "Defined in GeoRegions ≧ 2"
     All `AR6_*` domains are defined only in versions ≥2
 
 ```@repl
