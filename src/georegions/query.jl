@@ -1,7 +1,7 @@
 """
     coordinates(
         geo :: GeoRegion;
-        n :: Int = 21
+        n :: Int = 1
     ) -> lon :: Vector{<:Real}, lat :: Vector{<:Real}
 
 For a given GeoRegion, create longitude and latitude vectors of the shape.

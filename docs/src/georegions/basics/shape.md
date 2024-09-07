@@ -27,7 +27,7 @@ geo = GeoRegion("AR6_NWN")
 Using the function `coordinates()`, we are able to retrieve the coordinates of the vertices that define the shape of the `GeoRegion`. In the below example, we plot the longitude and latitude points.
 
 ```@example properties
-lon,lat = coordGeoRegion(geo)
+lon,lat = coordinates(geo)
 
 aspect = (maximum(slon)-minimum(slon))/(maximum(slat)-minimum(slat))
 fig = Figure()
@@ -44,7 +44,7 @@ fig
 This plotting works on maps where the projection is equirectangular. However, there are many different map projections, and so we can specify the number of points on each side of the shape using the keyword argument `n` in order to ensure during plotting that is plotted correctly on the projection.
 
 ```@example properties
-nlon,nlat = coordGeoRegion(geo,n=50)
+nlon,nlat = coordinates(geo,n=50)
 length(lon), length(nlon)
 ```
 
