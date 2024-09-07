@@ -1,7 +1,7 @@
 """
     RectRegion(
-        RegID :: AbstractString,
-        ParID :: AbstractString,
+        ID :: AbstractString,
+        pID :: AbstractString,
         name  :: AbstractString,
         bound :: Vector{<:Real};
         save :: Bool = false,
@@ -15,10 +15,10 @@ Creates a rectilinear GeoRegion.
 
 Arguments
 =========
-- `RegID` : The keyword ID that will be used to identify the GeoRegion.
+- `ID` : The keyword ID that will be used to identify the GeoRegion.
             If the ID is already in use, then an error will be thrown.
-- `ParID` : The ID of the parent GeoRegion where information can be extracted from
-- `name`  : A name for the GeoRegion (meta information, can be used in Logging)
+- `pID` : The ID of the parent GeoRegion where information can be extracted from
+- `name` : A name for the GeoRegion (meta information, can be used in Logging)
 - `bound` : The [N,S,E,W] coordinates defining the region
 
 Keyword Arguments
@@ -33,8 +33,8 @@ Returns
 - `geo` : A rectilinear GeoRegion
 """
 function RectRegion(
-    RegID :: AbstractString,
-    ParID :: AbstractString,
+    ID    :: AbstractString,
+    pID   :: AbstractString,
     name  :: AbstractString,
     bound :: Vector{<:Real};
     save :: Bool = false,
@@ -49,14 +49,14 @@ function RectRegion(
     end
 
     if save
-        if isID(RegID,path=path,throw=false)
-            error("$(modulelog()) - The GeoRegion $(RegID) has already been defined.  Please use another identifier.")
+        if isID(ID,path=path,throw=false)
+            error("$(modulelog()) - The GeoRegion $(ID) has already been defined.  Please use another identifier.")
         else
-            @info "$(modulelog()) - Adding the GeoRegion $(RegID) to the list."
+            @info "$(modulelog()) - Adding the GeoRegion $(ID) to the list."
         end
-        if ParID != "GLB"
-            if !isID(ParID,path=path,throw=false)
-                error("$(modulelog()) - The GeoRegion $(ParID) was defined to be the parent GeoRegion of $(RegID), but the GeoRegion $(ParID) is not defined.  Please define the GeoRegion $(ParID) and its properties.")
+        if pID != "GLB"
+            if !isID(pID,path=path,throw=false)
+                error("$(modulelog()) - The GeoRegion $(pID) was defined to be the parent GeoRegion of $(ID), but the GeoRegion $(pID) is not defined.  Please define the GeoRegion $(pID) and its properties.")
             end
         end
     else
@@ -65,19 +65,19 @@ function RectRegion(
 
     N,S,E,W = bound; is180,is360 = checkbounds(N,S,E,W)
     geo  = RectRegion{ST,FT}(
-        RegID, ParID, name, joinpath(path,"rectlist.txt"),
+        ID, pID, name, joinpath(path,"rectlist.txt"),
         N, S, E, W, is180,is360
     )
 
     if save
-        par  = GeoRegion(ParID,path=path); isinGeoRegion(geo,par)
+        par  = GeoRegion(pID,path=path); isinGeoRegion(geo,par)
         name = replace(name," "=>"-")
         geofile = joinpath(path,"rectlist.txt")
         if !isfile(geofile)
             cp(joinpath(geodir,"recttemplate.txt"),geofile)
         end
         open(geofile,"a") do io
-            write(io,"$RegID, $ParID, $N, $W, $S, $E, $name\n")
+            write(io,"$ID, $pID, $N, $W, $S, $E, $name\n")
         end
     end
 
@@ -91,14 +91,14 @@ end
 
 """
     TiltRegion(
-        RegID :: AbstractString,
-        ParID :: AbstractString,
-        name  :: AbstractString,
-        X     :: Real,
-        Y     :: Real,
-        ΔX    :: Real,
-        ΔY    :: Real,
-        θ     :: Real;
+        ID   :: AbstractString,
+        pID  :: AbstractString,
+        name :: AbstractString,
+        X    :: Real,
+        Y    :: Real,
+        ΔX   :: Real,
+        ΔY   :: Real,
+        θ    :: Real;
         save :: Bool = false,
         path :: AbstractString = geodir,
         verbose :: Bool = true,
@@ -110,10 +110,10 @@ Creates a tilted rectangular GeoRegion.
 
 Arguments
 =========
-- `RegID` : The keyword ID that will be used to identify the GeoRegion.
+- `ID` : The keyword ID that will be used to identify the GeoRegion.
             If the ID is already in use, then an error will be thrown.
-- `ParID` : The ID of the parent GeoRegion where information can be extracted from
-- `name`  : A name for the GeoRegion (meta information, can be used in Logging)
+- `pID` : The ID of the parent GeoRegion where information can be extracted from
+- `name` : A name for the GeoRegion (meta information, can be used in Logging)
 - `X`  : Longitude coordinate of region centre
 - `Y`  : Latitude coordinate of region centre
 - `ΔX` : Half-width in longitude coordinates (before tilting)
@@ -132,14 +132,14 @@ Returns
 - `geo` : A tilted rectangular GeoRegion
 """
 function TiltRegion(
-    RegID :: AbstractString,
-    ParID :: AbstractString,
-    name  :: AbstractString,
-    X     :: Real,
-    Y     :: Real,
-    ΔX    :: Real,
-    ΔY    :: Real,
-    θ     :: Real;
+    ID   :: AbstractString,
+    pID  :: AbstractString,
+    name :: AbstractString,
+    X    :: Real,
+    Y    :: Real,
+    ΔX   :: Real,
+    ΔY   :: Real,
+    θ    :: Real;
     save :: Bool = false,
     path :: AbstractString = geodir,
     verbose :: Bool = true,
@@ -152,14 +152,14 @@ function TiltRegion(
     end
 
     if save
-        if isID(RegID,path=path,throw=false)
-            error("$(modulelog()) - The GeoRegion $(RegID) has already been defined.  Please use another identifier.")
+        if isID(ID,path=path,throw=false)
+            error("$(modulelog()) - The GeoRegion $(ID) has already been defined.  Please use another identifier.")
         else
-            @info "$(modulelog()) - Adding the GeoRegion $(RegID) to the list."
+            @info "$(modulelog()) - Adding the GeoRegion $(ID) to the list."
         end
-        if ParID != "GLB"
-            if !isID(ParID,path=path,throw=false)
-                error("$(modulelog()) - The GeoRegion $(ParID) was defined to be the parent GeoRegion of $(RegID), but the GeoRegion $(ParID) is not defined.  Please define the GeoRegion $(ParID) and its properties.")
+        if pID != "GLB"
+            if !isID(pID,path=path,throw=false)
+                error("$(modulelog()) - The GeoRegion $(pID) was defined to be the parent GeoRegion of $(ID), but the GeoRegion $(pID) is not defined.  Please define the GeoRegion $(pID) and its properties.")
             end
         end
     else
@@ -168,20 +168,20 @@ function TiltRegion(
 
     N,S,E,W = tilt2bounds(X,Y,ΔX,ΔY,θ); is180,is360 = checkbounds(N,S,E,W)
     geo  = TiltRegion{ST,FT}(
-        RegID, ParID, name, joinpath(path,"tiltlist.txt"),
+        ID, pID, name, joinpath(path,"tiltlist.txt"),
         N, S, E, W, is180, is360,
         X, Y, ΔX, ΔY, θ,
     )
 
     if save
-        par  = GeoRegion(ParID,path=path); isinGeoRegion(geo,par)
+        par  = GeoRegion(pID,path=path); isinGeoRegion(geo,par)
         name = replace(name," "=>"-")
         geofile = joinpath(path,"tiltlist.txt")
         if !isfile(geofile)
             cp(joinpath(geodir,"tilttemplate.txt"),geofile)
         end
         open(geofile,"a") do io
-            write(io,"$RegID, $ParID, $X, $Y, $ΔX, $ΔY, $θ, $name\n")
+            write(io,"$ID, $pID, $X, $Y, $ΔX, $ΔY, $θ, $name\n")
         end
     end
 
@@ -195,11 +195,11 @@ end
 
 """
     PolyRegion(
-        RegID :: AbstractString,
-        ParID :: AbstractString,
-        name  :: AbstractString,
-        lon :: Vector{<:Real},
-        lat :: Vector{<:Real};
+        ID   :: AbstractString,
+        pID  :: AbstractString,
+        name :: AbstractString,
+        lon  :: Vector{<:Real},
+        lat  :: Vector{<:Real};
         join :: Bool = true,
         save :: Bool = false,
         path :: AbstractString = geodir,
@@ -213,10 +213,10 @@ Creates a polygonal GeoRegion.
 Arguments
 =========
 
-- `RegID` : The keyword ID that will be used to identify the GeoRegion.
+- `ID` : The keyword ID that will be used to identify the GeoRegion.
             If the ID is already in use, then an error will be thrown.
 
-- `ParID` : The ID of the parent GeoRegion where information can be extracted from.
+- `pID` : The ID of the parent GeoRegion where information can be extracted from.
 - `name`  : A name for the GeoRegion (meta information, can be used in Logging).
 - `lon` : A vector containing the longitude points.
 - `lat` : A vector containing the latitude points.
@@ -234,11 +234,11 @@ Returns
 - `geo` : A polygonal GeoRegion
 """
 function PolyRegion(
-    RegID :: AbstractString,
-    ParID :: AbstractString,
-    name  :: AbstractString,
-    lon   :: Vector{<:Real},
-    lat   :: Vector{<:Real};
+    ID   :: AbstractString,
+    pID  :: AbstractString,
+    name :: AbstractString,
+    lon  :: Vector{<:Real},
+    lat  :: Vector{<:Real};
     join :: Bool = true,
     save :: Bool = false,
     path :: AbstractString = geodir,
@@ -252,14 +252,14 @@ function PolyRegion(
     end
     
     if save
-        if isID(RegID,path=path,throw=false)
-            error("$(modulelog()) - The GeoRegion $(RegID) has already been defined.  Please use another identifier.")
+        if isID(ID,path=path,throw=false)
+            error("$(modulelog()) - The GeoRegion $(ID) has already been defined.  Please use another identifier.")
         else
-            @info "$(modulelog()) - Adding the GeoRegion $(RegID) to the list."
+            @info "$(modulelog()) - Adding the GeoRegion $(ID) to the list."
         end
-        if ParID != "GLB"
-            if !isID(ParID,path=path)
-                error("$(modulelog()) - The GeoRegion $(ParID) was defined to be the parent GeoRegion of $(RegID), but the GeoRegion $(ParID) is not defined.  Please define the GeoRegion $(ParID) and its properties.")
+        if pID != "GLB"
+            if !isID(pID,path=path)
+                error("$(modulelog()) - The GeoRegion $(pID) was defined to be the parent GeoRegion of $(ID), but the GeoRegion $(pID) is not defined.  Please define the GeoRegion $(pID) and its properties.")
             end
         end
     else
@@ -280,13 +280,13 @@ function PolyRegion(
     is180,is360 = checkbounds(N,S,E,W)
     shape = Point2.(lon,lat)
     geo   = PolyRegion{ST,FT}(
-        RegID, ParID, name, joinpath(path,"polylist.txt"),
+        ID, pID, name, joinpath(path,"polylist.txt"),
         N, S, E, W, is180, is360,
         shape
     )
     
     if save
-        par  = GeoRegion(ParID,path=path); isinGeoRegion(geo,par)
+        par  = GeoRegion(pID,path=path); isinGeoRegion(geo,par)
         name = replace(name," "=>"-")
         npt  = length(lon)
         geofile = joinpath(path,"polylist.txt")
@@ -294,7 +294,7 @@ function PolyRegion(
             cp(joinpath(geodir,"polytemplate.txt"),geofile)
         end
         open(geofile,"a") do io
-            write(io,"\n  RegID $(RegID), $(ParID), $name\n")
+            write(io,"\n  RegID $(ID), $(pID), $name\n")
             write(io,"  RegX  $(lon[1])")
             for ipt = 2 : npt; write(io,", $(lon[ipt])") end
             write(io,"\n")
