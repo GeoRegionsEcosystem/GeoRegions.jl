@@ -36,8 +36,8 @@ makedocs(;
         "Home" => "index.md",
         "GeoRegions" => [
             "What is a GeoRegion?"  => "georegions/intro.md",
-            # "Creating GeoRegions"   => "georegions/create.md",
             "Predefined GeoRegions" => "georegions/predefined.md",
+            "Creating GeoRegions"   => "georegions/create.md",
             # "Retrieving GeoRegions" => "georegions/read.md",
         ],
         # "Tutorials" => [
@@ -45,8 +45,8 @@ makedocs(;
         #     "Custom GeoRegions"     => "using/custom.md",
         # ],
         "Tables of GeoRegions"   => [
-            # "API"     => "lists/api.md",
-            "Default" => "lists/default.md",
+            "Lists of predefined GeoRegions" => "lists/default.md",
+            # "Customized Lists of GeoRegions"     => "lists/api.md",
         ],
     ],
 )
