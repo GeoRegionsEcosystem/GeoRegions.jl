@@ -1,8 +1,8 @@
 """
     tableGeoRegions(;
         path :: AbstractString = geodir,
-        defined :: Bool = true,
-        custom  :: Bool = true
+        predefined :: Bool = true,
+        custom     :: Bool = true
     ) -> nothing
 
 Display all available GeoRegions in tabular format.
@@ -10,13 +10,13 @@ Keyword Arguments
 =================
 - `path` : The path where the list of custom GeoRegions will be retrieved from.
            Defaults to the `local` package variable `geodir`
-- `defined` : If true, pre-defined Giorgi, SREX and IPPC AR6 list of GeoRegions will be displayed.
-- `custom`  : If true, custom, user-defined list of GeoRegions will be displayed.
+- `predefined` : If true, predefined Giorgi, SREX and IPPC AR6 list of GeoRegions will be displayed.
+- `custom` : If true, custom, user-defined list of GeoRegions will be displayed.
 """
 function tableGeoRegions(;
     path :: AbstractString = geodir,
-    defined :: Bool = true,
-    custom  :: Bool = true
+    predefined :: Bool = true,
+    custom     :: Bool = true
 )
 
     flist = ["rectlist.txt","polylist.txt","tiltlist.txt"]
@@ -43,7 +43,7 @@ function tableGeoRegions(;
         end
     end
 
-    if defined
+    if predefined
         for fname in fdefined
             rvec,rtype = listgeoregions(joinpath(geodir,fname))
             regvec = vcat(regvec,rvec)
@@ -126,15 +126,19 @@ end
 
 """
     tableRectRegions(;
-        path :: AbstractString = geodir
+        path :: AbstractString = geodir,
+        custom :: Bool = true,
+        giorgi :: Bool = false
     ) -> nothing
 
 Display all available RectRegions in tabular format.
 
 Keyword Arguments
-=================å
-- `path` : The path where the list of custom GeoRegions will be retrieved from.
+=================
+- `path` : The path where the list of custom RectRegions will be retrieved from.
            Defaults to the `local` package variable `geodir`
+- `custom` : If true, display custom user-defined RectRegions. Default is `true`
+- `giorgi` : If true, display GF predefined RectRegions. Default is `false`
 """
 function tableRectRegions(;
     path :: AbstractString = geodir,
@@ -205,14 +209,12 @@ end
         path :: AbstractString = geodir,
     ) -> nothing
 
-Display all available RectRegions in tabular format.
+Display all available TiltRegions in tabular format.
 
 Keyword Arguments
-=================å
-- `path` : The path where the list of custom GeoRegions will be retrieved from.
+=================
+- `path` : The path where the list of custom TiltRegions will be retrieved from.
            Defaults to the `local` package variable `geodir`
-- `custom` : If true, display custom user-defined GeoRegions. Default is `true`
-- `giorgi` : If true, display Giorgi predefined GeoRegions. Default is `false`
 """
 function tableTiltRegions(;
     path :: AbstractString = geodir,
@@ -275,11 +277,11 @@ Display all available PolyRegions in tabular format.
 
 Keyword Arguments
 =================
-- `path` : The path where the list of custom GeoRegions will be retrieved from.
+- `path` : The path where the list of custom PolyRegions will be retrieved from.
            Defaults to the `local` package variable `geodir`
-- `custom` : If true, display custom user-defined GeoRegions. Default is `true`
-- `srex` : If true, display SREX predefined GeoRegions. Default is `false`
-- `ar6` : If true, display IPCC AR6 predefined GeoRegions. Default is `false`
+- `custom` : If true, display custom user-defined PolyRegions. Default is `true`
+- `srex` : If true, display SREX predefined PolyRegions. Default is `false`
+- `ar6` : If true, display IPCC AR6 predefined PolyRegions. Default is `false`
 """
 function tablePolyRegions(;
     path :: AbstractString = geodir,

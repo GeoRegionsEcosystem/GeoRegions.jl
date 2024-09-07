@@ -7,7 +7,7 @@ resetGeoRegions(all=true);
 ## GeoRegions.jl's default region is the Globe
 
 ```@example listgeo
-tableGeoRegions(custom=false)
+tableGeoRegions(predefined=false)
 ```
 
 ## Giorgi & Francisco [2000]
