@@ -180,3 +180,9 @@ mjx-container > svg {
   --vp-c-sponsor: #91dd33;
   --vitest-c-sponsor-hover: #e51370;
 }
+
+/**
+ * Reducing lists padding
+ * -------------------------------------------------------------------------- */
+
+ul, li { margin: 0; padding: 0; }
