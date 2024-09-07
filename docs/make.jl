@@ -36,26 +36,26 @@ makedocs(;
         "Home" => "index.md",
         "What is a GeoRegion?"  => "georegions.md",
         "Basic Functionality" => [
-            "Retrieving GeoRegions" => "basics/read.md",
-            "Predefined GeoRegions" => "basics/predefined.md",
-            "GeoRegion Properties"  => "basics/shape.md",
+            "Retrieving GeoRegions"  => "basics/read.md",
+            "Predefined GeoRegions"  => "basics/predefined.md",
+            "GeoRegion Properties"   => "basics/shape.md",
+            "Table of GeoRegions"    => "basics/tables.md",
+            "Listing All GeoRegions" => "basics/listall.md",
         ],
         "Customizing GeoRegions.jl" => [
-            "Setup GeoRegions.jl"    => "custom/setup.md",
             "Create, Save, Retrieve" => "custom/overview.md",
-            "Defining RectRegions"   => "custom/rectregion.md",
-            "Defining PolyRegions"   => "custom/polyregion.md",
-            # "Defining TiltRegions"   => "custom/tiltregion.md",
+            "Project Setup"          => "custom/setup.md",
+            "More on Creation" => [
+                "Creating RectRegions"   => "custom/create/rectregion.md",
+                "Creating PolyRegions"   => "custom/create/polyregion.md",
+                # "Creating TiltRegions"   => "custom/create/tiltregion.md",
+            ],
             "Custom GeoRegion Files" => "custom/files.md",
         ],
         # "Tutorials" => [
         #     "Is it in a GeoRegion?" => "using/isin.md",
         #     "Custom GeoRegions"     => "using/custom.md",
         # ],
-        "Tables of GeoRegions"   => [
-            "Lists of predefined GeoRegions" => "lists/default.md",
-            # "Customized Lists of GeoRegions"     => "lists/api.md",
-        ],
     ],
 )
 

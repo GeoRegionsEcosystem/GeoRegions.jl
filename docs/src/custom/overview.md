@@ -15,6 +15,11 @@ TiltRegion(ID, pID, name, ...)
 PolyRegion(ID, pID, name, ...)
 ```
 
+Please refer to the respective pages dedicated to each of the `GeoRegion` subtypes:
+* [RectRegion](/custom/create/rectregion)
+* [PolyRegion](/custom/create/polyregion)
+* [TiltRegion](/custom/create/tiltregion)
+
 !!! warning "Constraints on `ID` and `pID` when `save = true`"
     When `save = true`, the GeoRegion `pID` must already have been previously defined, and the region defined by the GeoRegion `ID` must be entirely within the region defined by the GeoRegion `pID`.
 
@@ -36,7 +41,11 @@ You can also add a `GeoRegion` variable in the workspace that you have not yet s
 
 ```julia
 geo = PolyRegion(ID, pID, name, ...)
-add(geo, path = "<directory>")
+add(geo, path = ...)
+```
+
+```@docs
+add
 ```
 
 ## Calling saved GeoRegions
@@ -45,4 +54,20 @@ If a GeoRegion has been saved to a `path`, it and its properties can be called u
 
 ```julia
 geo = GeoRegion(ID, path = "<directory>")
+```
+
+```@docs
+GeoRegion(ID::AbstractString; path::AbstractString)
+```
+
+## Table of user-defined GeoRegions
+
+You can create a table of all the `GeoRegion`s that have been saved to `path` using `tableGeoRegions()` as follows.
+
+```julia
+tableGeoRegions(;path = ...)
+```
+
+```@docs
+tableGeoRegions(; path::AbstractString, predefined::Bool, custom::Bool)
 ```
