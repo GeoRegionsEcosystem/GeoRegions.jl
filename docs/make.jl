@@ -37,7 +37,7 @@ makedocs(;
         "GeoRegions" => [
             "What is a GeoRegion?"  => "georegions/intro.md",
             # "Creating GeoRegions"   => "georegions/create.md",
-            # "Predefined GeoRegions" => "georegions/predefined.md",
+            "Predefined GeoRegions" => "georegions/predefined.md",
             # "Retrieving GeoRegions" => "georegions/read.md",
         ],
         # "Tutorials" => [
