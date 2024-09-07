@@ -55,7 +55,7 @@ function tableGeoRegions(;
     end
 
     ngeo = size(regvec,1)
-    fmat = Array{Any,2}(undef,ngeo,5)
+    fmat = Array{Any,2}(undef,ngeo,6)
 
     for igeo = 1 : ngeo
         geo = getgeoregion(
@@ -68,15 +68,16 @@ function tableGeoRegions(;
         fmat[igeo,2] = typevec[igeo]
         fmat[igeo,3] = geo.name
         fmat[igeo,4] = geo.pID
-        fmat[igeo,5] = filevec[igeo]
+        fmat[igeo,5] = [geo.N, geo.S, geo.E, geo.W]
+        fmat[igeo,6] = filevec[igeo]
 
     end
 
-    head = ["ID","Type","Name","Parent","File"];
+    head = ["ID","Type","Name","Parent","Bounds [N,S,E,W]","File"];
 
     pretty_table(
         fmat,header=head,
-        alignment=[:c,:c,:l,:c,:c],
+        alignment=[:c,:c,:l,:c,:c,:c],
         crop = :none, tf = tf_compact
     );
 
@@ -101,7 +102,7 @@ function tableGeoRegions(
 
     rvec,rtype = listgeoregions(fname)
     ngeo = size(rvec,1)
-    fmat = Array{Any,2}(undef,ngeo,5)
+    fmat = Array{Any,2}(undef,ngeo,6)
 
     for igeo = 1 : ngeo
         g = getgeoregion(rvec[igeo],fname,rtype)
@@ -109,14 +110,15 @@ function tableGeoRegions(
         fmat[igeo,2] = rtype
         fmat[igeo,3] = g.name
         fmat[igeo,4] = g.pID
-        fmat[igeo,5] = basename(fname)
+        fmat[igeo,5] = [g.N, g.S, g.E, g.W]
+        fmat[igeo,6] = basename(fname)
     end
 
-    head = ["ID","Type","Name","Parent","File"];
+    head = ["ID","Type","Name","Parent","Bounds [N,S,E,W]","File"];
 
     pretty_table(
         fmat,header=head,
-        alignment=[:c,:c,:l,:c,:c],
+        alignment=[:c,:c,:l,:c,:c,:c],
         crop = :none, tf = tf_compact
     );
 
@@ -175,7 +177,7 @@ function tableRectRegions(;
     end
 
     ngeo = size(regvec,1)
-    fmat = Array{Any,2}(undef,ngeo,5)
+    fmat = Array{Any,2}(undef,ngeo,6)
 
     for igeo = 1 : ngeo
         geo = getgeoregion(
@@ -188,15 +190,16 @@ function tableRectRegions(;
         fmat[igeo,2] = typevec[igeo]
         fmat[igeo,3] = geo.name
         fmat[igeo,4] = geo.pID
-        fmat[igeo,5] = filevec[igeo]
+        fmat[igeo,5] = [geo.N, geo.S, geo.E, geo.W]
+        fmat[igeo,6] = filevec[igeo]
 
     end
 
-    head = ["ID","Type","Name","Parent","File"];
+    head = ["ID","Type","Name","Parent","Bounds [N,S,E,W]","File"];
 
     pretty_table(
         fmat,header=head,
-        alignment=[:c,:c,:l,:c,:c],
+        alignment=[:c,:c,:l,:c,:c,:c],
         crop = :none, tf = tf_compact
     );
 
@@ -236,7 +239,7 @@ function tableTiltRegions(;
     end
 
     ngeo = size(regvec,1)
-    fmat = Array{Any,2}(undef,ngeo,5)
+    fmat = Array{Any,2}(undef,ngeo,6)
 
     for igeo = 1 : ngeo
         geo = getgeoregion(
@@ -249,15 +252,16 @@ function tableTiltRegions(;
         fmat[igeo,2] = typevec[igeo]
         fmat[igeo,3] = geo.name
         fmat[igeo,4] = geo.pID
-        fmat[igeo,5] = filevec[igeo]
+        fmat[igeo,5] = [geo.N, geo.S, geo.E, geo.W]
+        fmat[igeo,6] = filevec[igeo]
 
     end
 
-    head = ["ID","Type","Name","Parent","File"];
+    head = ["ID","Type","Name","Parent","Bounds [N,S,E,W]","File"];
 
     pretty_table(
         fmat,header=head,
-        alignment=[:c,:c,:l,:c,:c],
+        alignment=[:c,:c,:l,:c,:c,:c],
         crop = :none, tf = tf_compact
     );
 
@@ -328,7 +332,7 @@ function tablePolyRegions(;
     end
 
     ngeo = size(regvec,1)
-    fmat = Array{Any,2}(undef,ngeo,5)
+    fmat = Array{Any,2}(undef,ngeo,6)
 
     for igeo = 1 : ngeo
         geo = getgeoregion(
@@ -341,15 +345,16 @@ function tablePolyRegions(;
         fmat[igeo,2] = typevec[igeo]
         fmat[igeo,3] = geo.name
         fmat[igeo,4] = geo.pID
-        fmat[igeo,5] = filevec[igeo]
+        fmat[igeo,5] = [geo.N, geo.S, geo.E, geo.W]
+        fmat[igeo,6] = filevec[igeo]
 
     end
 
-    head = ["ID","Type","Name","Parent","File"];
+    head = ["ID","Type","Name","Parent","Bounds [N,S,E,W]","File"];
 
     pretty_table(
         fmat,header=head,
-        alignment=[:c,:c,:l,:c,:c],
+        alignment=[:c,:c,:l,:c,:c,:c],
         crop = :none, tf = tf_compact
     );
 
