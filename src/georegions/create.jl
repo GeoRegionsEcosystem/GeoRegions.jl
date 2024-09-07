@@ -4,7 +4,7 @@
         ParID :: AbstractString,
         name  :: AbstractString,
         bound :: Vector{<:Real};
-        save :: Bool = true,
+        save :: Bool = false,
         path :: AbstractString = geodir,
         verbose :: Bool = true,
         ST = String,
@@ -37,7 +37,7 @@ function RectRegion(
     ParID :: AbstractString,
     name  :: AbstractString,
     bound :: Vector{<:Real};
-    save :: Bool = true,
+    save :: Bool = false,
     path :: AbstractString = geodir,
     verbose :: Bool = true,
     ST = String,
@@ -99,7 +99,7 @@ end
         ΔX    :: Real,
         ΔY    :: Real,
         θ     :: Real;
-        save :: Bool = true,
+        save :: Bool = false,
         path :: AbstractString = geodir,
         verbose :: Bool = true,
         ST = String,
@@ -140,7 +140,7 @@ function TiltRegion(
     ΔX    :: Real,
     ΔY    :: Real,
     θ     :: Real;
-    save :: Bool = true,
+    save :: Bool = false,
     path :: AbstractString = geodir,
     verbose :: Bool = true,
     ST = String,
@@ -201,7 +201,7 @@ end
         lon :: Vector{<:Real},
         lat :: Vector{<:Real};
         join :: Bool = true,
-        save :: Bool = true,
+        save :: Bool = false,
         path :: AbstractString = geodir,
         verbose :: Bool = true,
         ST = String,
@@ -240,7 +240,7 @@ function PolyRegion(
     lon   :: Vector{<:Real},
     lat   :: Vector{<:Real};
     join :: Bool = true,
-    save :: Bool = true,
+    save :: Bool = false,
     path :: AbstractString = geodir,
     verbose :: Bool = true,
     ST = String,

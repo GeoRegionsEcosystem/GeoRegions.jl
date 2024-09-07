@@ -4,10 +4,17 @@ using Test
 
 @testset "Test Creation, Detection and Removal of GeoRegions" begin
 
+    geo = RectRegion("TRP","GLB","Tropics",[30,-30,360,0])
+    @test !isGeoRegion(geo,throw=false)
+    @test add(geo) === nothing
+    @test isGeoRegion(geo,throw=false)
+    rm(geo)
+    disable_logging(Logging.Debug)
+
     disable_logging(Logging.Warn)
     @test !isID("TRP",throw=false)
-    geo1 = RectRegion("TRP","GLB","Tropics",[30,-30,360,0])
-    geo2 = RectRegion("TRP_DTP","GLB","Deep Tropics",[10,-10,360,0])
+    geo1 = RectRegion("TRP","GLB","Tropics",[30,-30,360,0],save=true)
+    geo2 = RectRegion("TRP_DTP","GLB","Deep Tropics",[10,-10,360,0],save=true)
     @test  isID("TRP",throw=false)
     @test  isGeoRegion(geo1,throw=false)
     @test  rm(geo1) === nothing
@@ -16,20 +23,13 @@ using Test
     @test  rmID("TRP_DTP") === nothing
     @test !isGeoRegion(geo2,throw=false)
 
-    geo = RectRegion("TRP","GLB","Tropics",[30,-30,360,0],save=false)
-    @test !isGeoRegion(geo,throw=false)
-    @test add(geo) === nothing
-    @test isGeoRegion(geo,throw=false)
-    rm(geo)
-    disable_logging(Logging.Debug)
-
 end
 
 @testset "Testing Directory Specification for Custom GeoRegions" begin
 
     disable_logging(Logging.Warn)
     @test !isID("TRP",path=pwd(),throw=false)
-    geo1 = RectRegion("TRP","GLB","Tropics",[30,-30,360,0],path=pwd())
+    geo1 = RectRegion("TRP","GLB","Tropics",[30,-30,360,0],path=pwd(),save=true)
     @test !isID("TRP",throw=false)
     @test  isID("TRP",path=pwd(),throw=false)
     @test  isGeoRegion(geo1,throw=false)

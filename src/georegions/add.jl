@@ -26,7 +26,7 @@ function addGeoRegion(
     RectRegion(
         geo.ID, geo.pID, geo.name,
         [geo.N,geo.S,geo.E,geo.W],
-        path = path, verbose = verbose
+        path = path, verbose = verbose, save = true
     )
 
     return nothing
@@ -42,7 +42,7 @@ function addGeoRegion(
     TiltRegion(
         geo.ID, geo.pID, geo.name,
         geo.X, geo.Y, geo.ΔX, geo.ΔY, geo.θ,
-        path = path, verbose = verbose
+        path = path, verbose = verbose, save = true
     )
 
     return nothing
@@ -60,7 +60,7 @@ function addGeoRegion(
     PolyRegion(
         geo.ID, geo.pID, geo.name,
         lon, lat,
-        path = path, verbose = verbose
+        path = path, verbose = verbose, save = true
     )
 
     return nothing
