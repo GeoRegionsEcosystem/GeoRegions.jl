@@ -31,13 +31,7 @@ export
 """
     GeoRegion
 
-Abstract supertype for geographical regions, with the following subtypes:
-    
-    RectRegion{ST<:AbstractString, FT<:Real} <: GeoRegion
-    TiltRegion{ST<:AbstractString, FT<:Real} <: GeoRegion
-    PolyRegion{ST<:AbstractString, FT<:Real} <: GeoRegion
-
-All `GeoRegion` types contain the following fields:
+Abstract supertype for geographical regions. All `GeoRegion` types contain the following fields:
 * `ID` - A `String` Type, the identifier for the GeoRegion
 * `pID` - A `String` Type, the identifier for the parent GeoRegion
 * `name` - A `String` Type, the full name of the GeoRegion
@@ -47,19 +41,14 @@ All `GeoRegion` types contain the following fields:
 * `W` - A `Float` Type, the est boundary of the GeoRegion
 * `is180` - A `Bool` Type, is `W` < 0
 * `is360` - A `Bool` Type, is `E` > 180
-
-A `PolyRegion` type will also contain the following field:
-* `shape` - A vector of `Point2` Types, defining a non-rectilinear shape of the GeoRegion
-
-A `TiltRegion` type will also contain the following field:
-- `X`  : Longitude coordinate of region centre
-- `Y`  : Latitude coordinate of region centre
-- `θ`  : Tilt of rectangular region in **degrees** in the clockwise direction
-- `ΔX` : Half-width in longitude coordinates (before tilting)
-- `ΔY` : Half-width in latitude coordinates (before tilting)
 """
 abstract type GeoRegion end
 
+"""
+    RectRegion{ST<:AbstractString, FT<:Real} <: GeoRegion
+
+A rectangular region on a rectilinear grid. Defined by its N,S,E,W boundaries.
+"""
 struct RectRegion{ST<:AbstractString, FT<:Real} <: GeoRegion
     ID    :: ST
     pID   :: ST
@@ -73,6 +62,14 @@ struct RectRegion{ST<:AbstractString, FT<:Real} <: GeoRegion
     is360 :: Bool
 end
 
+"""
+    PolyRegion{ST<:AbstractString, FT<:Real} <: GeoRegion
+
+A polygonal region on a rectilinear lon-lat grid, defined by the (lon,lat) coordinates of its vertices.
+
+In addition to all the fields common to the `GeoRegion` `abstract type`, `PolyRegion`s will also contain the following field:
+* `shape` - A vector of `Point2` Types, defining a non-rectilinear shape of the GeoRegion
+"""
 struct PolyRegion{ST<:AbstractString, FT<:Real} <: GeoRegion
     ID    :: ST
     pID   :: ST
@@ -87,6 +84,21 @@ struct PolyRegion{ST<:AbstractString, FT<:Real} <: GeoRegion
     shape :: Vector{Point2{FT}}
 end
 
+"""
+    TiltRegion{ST<:AbstractString, FT<:Real} <: GeoRegion
+
+A **tilted** rectangular region on a rectilinear grid. Defined by
+* the (lon,lat) coordinates of its centre
+* the width in both the longitude and latitude directions (pre-rotation)
+* the angle of tilt in degrees (clockwise)
+
+In addition to all the fields common to the `GeoRegion` `abstract type`, `TiltRegion`s will also contain the following field:
+- `X`  : Longitude coordinate of region centre
+- `Y`  : Latitude coordinate of region centre
+- `θ`  : Tilt of rectangular region in **degrees** in the clockwise direction
+- `ΔX` : Half-width in longitude coordinates (before tilting)
+- `ΔY` : Half-width in latitude coordinates (before tilting)
+"""
 struct TiltRegion{ST<:AbstractString, FT<:Real} <: GeoRegion
     ID    :: ST
     pID   :: ST

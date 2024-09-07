@@ -44,7 +44,7 @@ makedocs(;
         #     "Is it in a GeoRegion?" => "using/isin.md",
         #     "Custom GeoRegions"     => "using/custom.md",
         # ],
-        "Listing `GeoRegion`s"   => [
+        "Tables of GeoRegions"   => [
             # "API"     => "lists/api.md",
             "Default" => "lists/default.md",
         ],
