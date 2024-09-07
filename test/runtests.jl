@@ -35,14 +35,14 @@ end
 
 @testset "Testing Directory Specification for Custom GeoRegions" begin
 
-    @test !isGeoRegion("TRP",path=pwd(),throw=false)
+    @test !isID("TRP",path=pwd(),throw=false)
     geo1 = RectRegion("TRP","GLB","Tropics",[30,-30,360,0],path=pwd())
-    @test  isID("TRP",throw=false)
+    @test !isID("TRP",throw=false)
     @test  isID("TRP",path=pwd(),throw=false)
     @test  isGeoRegion(geo1,throw=false)
     @test !isGeoRegion(geo1,path=homedir(),throw=false)
-    @test !(rm(geo1,path=homedir()) === nothing)
-    @test   rm(geo1) === nothing
+    @test_throws "not a valid GeoRegion identifier" rm(geo1,path=homedir())
+    @test  rm(geo1) === nothing
     @test !isGeoRegion(geo1,throw=false)
 
 end
