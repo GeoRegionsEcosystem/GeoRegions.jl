@@ -14,7 +14,7 @@ end
 
 @testset "Test Creation, Detection and Removal of GeoRegions" begin
 
-    @test !isGeoRegion("TRP",throw=false)
+    @test !isID("TRP",throw=false)
     geo1 = RectRegion("TRP","GLB","Tropics",[30,-30,360,0])
     geo2 = RectRegion("TRP_DTP","GLB","Deep Tropics",[10,-10,360,0])
     @test  isID("TRP",throw=false)
@@ -41,8 +41,8 @@ end
     @test  isID("TRP",path=pwd(),throw=false)
     @test  isGeoRegion(geo1,throw=false)
     @test !isGeoRegion(geo1,path=homedir(),throw=false)
-    @test ! (rm(geo1,path=homedir()) === nothing)
-    @test  rm(geo1) === nothing
+    @test !(rm(geo1,path=homedir()) === nothing)
+    @test   rm(geo1) === nothing
     @test !isGeoRegion(geo1,throw=false)
 
 end
