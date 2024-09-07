@@ -6,7 +6,7 @@ In essence, a `GeoRegion` is:
 * a subregion of a **parent** `GeoRegion` (identified by `pID`, which must also be a valid `ID`)
 
 !!! tip "Default GeoRegions"
-    When using `GeoRegions.jl`, the default `GeoRegion` should generally be the global domain, specified by `GLB` and given by the `[N,S,E,W]` coordinates `[90,-90,360,0]`.  The Global GeoRegion `GLB` is considered to be a subset of itself.
+    When using GeoRegions.jl, the default `GeoRegion` should generally be the global domain, specified by `GLB` and given by the `[N,S,E,W]` coordinates `[90,-90,360,0]`.  The Global GeoRegion `GLB` is considered to be a subset of itself.
 
 ```@docs
 GeoRegion

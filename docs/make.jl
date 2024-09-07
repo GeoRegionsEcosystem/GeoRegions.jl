@@ -37,7 +37,12 @@ makedocs(;
         "GeoRegions" => [
             "What is a GeoRegion?"  => "georegions/intro.md",
             "Predefined GeoRegions" => "georegions/predefined.md",
-            "Creating GeoRegions"   => "georegions/create.md",
+            "Using GeoRegions.jl"   => [
+                "An Overview"        => "georegions/using/overview.md",
+                "RectRegion Example" => "georegions/using/rectregion.md",
+                "PolyRegion Example" => "georegions/using/polyregion.md",
+                "TiltRegion Example" => "georegions/using/tiltregion.md",
+            ]
             # "Retrieving GeoRegions" => "georegions/read.md",
         ],
         # "Tutorials" => [
