@@ -142,7 +142,7 @@ function isinGeoRegion(
 
     @info "$(modulelog()) - Performing a check to determine if the $(Child.name) GeoRegion ($(Child.ID)) is inside the $(polyG.name) GeoRegion ($(polyG.ID))"
 
-    lon,lat = coordGeoRegion(Child,n=n)
+    lon,lat = coordinates(Child,n=n)
     npts = length(lon)
     
     isin = 0

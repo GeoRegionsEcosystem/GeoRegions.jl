@@ -121,6 +121,23 @@ end
 
 function isinGeoRegion(
     Point  :: Point2{<:Real},
+    GeoReg :: TiltRegion;
+    tlon   :: Real = 0,
+    tlat   :: Real = 0,
+    throw  :: Bool = true
+)
+
+    @info "$(modulelog()) - Performing a check to determine if the $(Child.name) GeoRegion ($(Child.ID)) is inside the $(tiltG.name) GeoRegion ($(tiltG.ID))"
+
+    lon,lat = getTiltShape(GeoReg)
+    tgeo = PolyRegion("","","",lon,lat,save=false,verbose=false)
+
+    isinGeoRegion(Point,tgeo,tlon=tlon,tlat=tlat,throw=throw)
+
+end
+
+function isinGeoRegion(
+    Point  :: Point2{<:Real},
     GeoReg :: PolyRegion;
     tlon   :: Real = 0,
     tlat   :: Real = 0,
