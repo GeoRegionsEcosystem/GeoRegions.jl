@@ -1,6 +1,6 @@
 function add(
-    geo  :: RectRegion,
-    path :: AbstractString = dirname(geo.path);
+    geo  :: RectRegion;
+    path :: AbstractString = dirname(geo.path),
     verbose :: Bool = true
 )
 
@@ -15,8 +15,8 @@ function add(
 end
 
 function add(
-    geo  :: TiltRegion,
-    path :: AbstractString = dirname(geo.path);
+    geo  :: TiltRegion;
+    path :: AbstractString = dirname(geo.path),
     verbose :: Bool = true
 )
 
@@ -31,8 +31,8 @@ function add(
 end
 
 function add(
-    geo  :: PolyRegion,
-    path :: AbstractString = dirname(geo.path);
+    geo  :: PolyRegion;
+    path :: AbstractString = dirname(geo.path),
     verbose :: Bool = true
 )
 
