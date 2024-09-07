@@ -153,7 +153,12 @@ function isinGeoRegion(
         end
     end
 
-    if isin > 0
+    if iszero(isin)
+
+        @info "$(modulelog()) - The GeoRegion $(Child.ID) ($(Child.name)) is indeed a subset of the GeoRegion $(polyG.ID) ($(polyG.name))"
+        return true
+        
+    else
 
         if throw
             error("$(modulelog()) - The GeoRegion $(Child.ID) ($(Child.name)) is not a subset of the GeoRegion $(polyG.ID) ($(polyG.name))")
@@ -162,9 +167,6 @@ function isinGeoRegion(
             return false
         end
 
-    else
-        @info "$(modulelog()) - The GeoRegion $(Child.ID) ($(Child.name)) is indeed a subset of the GeoRegion $(polyG.ID) ($(polyG.name))"
-        return true
     end
 
 end
