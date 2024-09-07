@@ -34,20 +34,22 @@ makedocs(;
     ),
     pages=[
         "Home" => "index.md",
-        "GeoRegions.jl Basics" => [
-            "What is a GeoRegion?"  => "georegions/intro.md",
-            "Predefined GeoRegions" => "georegions/predefined.md",
-            "Basic Functionality"   => [
-                "Create, Save, Retrieve" => "georegions/basics/overview.md",
-                "Defining RectRegions"   => "georegions/basics/rectregion.md",
-                "Defining PolyRegions"   => "georegions/basics/polyregion.md",
-                # "Defining TiltRegions"   => "georegions/using/tiltregion.md",
-                "GeoRegion Properties"   => "georegions/basics/shape.md",
-            ],
+        "What is a GeoRegion?"  => "georegions.md",
+        "Basic Functionality" => [
+            "Retrieving GeoRegions" => "basics/read.md",
+            "Predefined GeoRegions" => "basics/predefined.md",
+            "GeoRegion Properties"  => "basics/shape.md",
+        ],
+        "Customizing GeoRegions.jl" => [
+            "Setup GeoRegions.jl"    => "custom/setup.md",
+            "Create, Save, Retrieve" => "custom/overview.md",
+            "Defining RectRegions"   => "custom/rectregion.md",
+            "Defining PolyRegions"   => "custom/polyregion.md",
+            # "Defining TiltRegions"   => "custom/tiltregion.md",
+            "Custom GeoRegion Files" => "custom/files.md",
         ],
         "GeoRegions.jl in Projects"   => [
             "Setup GeoRegions.jl" => "projects/setup.md",
-            "Read Custom Lists"   => "projects/read.md",
         ],
         # "Tutorials" => [
         #     "Is it in a GeoRegion?" => "using/isin.md",

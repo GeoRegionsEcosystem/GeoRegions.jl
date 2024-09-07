@@ -1,13 +1,6 @@
-# List of Available GeoRegions
+# Predefined `GeoRegion`s in GeoRegions.jl
 
-This page contains a list of the GeoRegions that are currently available in `GeoRegions.jl`.
-
-The default GeoRegion covers the global domain identified as `GLB`
-
-```@repl
-using GeoRegions
-GeoRegion("GLB")
-```
+In GeoRegions.jl, there are a predefined set of `GeoRegion`s.
 
 ## Adapted from Giorgi & Francisco [2000]
 
@@ -16,8 +9,7 @@ Add the `GF_` prefix to the 3-letter IDs given in Giorgi & Francisco [2000] to c
 !!! tip "Defined in GeoRegions.jl ≥ v1.1"
     All `GF_*` domains are defined only in versions ≥1.1
 
-```@repl
-using GeoRegions
+```@example readpredefined
 GeoRegion("GF_WAF")
 ```
 
@@ -30,8 +22,7 @@ Add the `SRX_` prefix to the 3-letter IDs given in Seneviratne et al. [2012] to 
 !!! tip "Defined in GeoRegions.jl ≥ v2"
     All `SRX_*` domains are defined only in versions ≥2
 
-```@repl
-using GeoRegions
+```@example readpredefined
 GeoRegion("SRX_CNA")
 ```
 
@@ -44,8 +35,7 @@ Add the `AR6_` prefix to the 3-letter IDs given in Iturbide et al., [2020] to ca
 !!! tip "Defined in GeoRegions.jl ≥ v2"
     All `AR6_*` domains are defined only in versions ≥2
 
-```@repl
-using GeoRegions
+```@example readpredefined
 GeoRegion("AR6_EAS")
 ```
 
