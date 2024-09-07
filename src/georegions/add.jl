@@ -1,3 +1,22 @@
+"""
+    add(
+        geo  :: GeoRegion;
+        path :: AbstractString = dirname(geo.path),
+        verbose :: Bool = true
+    ) -> nothing
+
+Saves information on the GeoRegion `geo` to a directory specified by `path`.
+
+Arguments
+=========
+- `geo` : The GeoRegion to be saved into the custom lists in `path`
+
+Keyword Arguments
+=================
+- `path` : The path where the list of custom GeoRegions will be retrieved from.
+           Defaults to the `local` package variable `geodir`
+- `verbose` : Verbose logging for ease of monitoring? Default is `true`
+"""
 function add(
     geo  :: RectRegion;
     path :: AbstractString = dirname(geo.path),
@@ -48,6 +67,25 @@ function add(
 
 end
 
+"""
+    overwrite(
+        geo  :: GeoRegion;
+        path :: AbstractString = dirname(geo.path),
+        verbose :: Bool = true
+    ) -> nothing
+
+Overwrites preexisting information associated with the ID `geo.ID` in `path`, with new information from the `GeoRegion` specified by `geo`
+
+Arguments
+=========
+- `geo` : The GeoRegion to be saved into the custom lists in `path`, overwriting any preexisting information associated with the ID `geo.ID`.
+
+Keyword Arguments
+=================
+- `path` : The path where the list of custom GeoRegions will be retrieved from.
+           Defaults to the `local` package variable `geodir`
+- `verbose` : Verbose logging for ease of monitoring? Default is `true`
+"""
 function overwrite(
     geo  :: GeoRegion;
     path :: AbstractString,
