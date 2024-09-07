@@ -48,9 +48,6 @@ makedocs(;
             # "Defining TiltRegions"   => "custom/tiltregion.md",
             "Custom GeoRegion Files" => "custom/files.md",
         ],
-        "GeoRegions.jl in Projects"   => [
-            "Setup GeoRegions.jl" => "projects/setup.md",
-        ],
         # "Tutorials" => [
         #     "Is it in a GeoRegion?" => "using/isin.md",
         #     "Custom GeoRegions"     => "using/custom.md",

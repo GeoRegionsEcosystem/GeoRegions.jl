@@ -9,7 +9,7 @@ For a given GeoRegion, create longitude and latitude vectors of the shape.
 Arguments
 =========
 - `geo` : A GeoRegion
-- `n` : The number of points on each side of the shape (a vertex counts as half a point)
+- `n` : The number of segments on each side of the shape (a vertex counts as half a point)
 
 Returns
 =======
@@ -35,13 +35,12 @@ function coordinates(
         lon = zeros(n,npnt-1)
         lat = zeros(n,npnt-1)
         for ipnt = 1 : (npnt-1)
-            lon[:,ipnt] .= collect(range(shape[ipnt][1],shape[ipnt+1][1],n))
-            lat[:,ipnt] .= collect(range(shape[ipnt][2],shape[ipnt+1][2],n))
+            lon[:,ipnt] .= collect(range(shape[ipnt][1],shape[ipnt+1][1],n+1))[1:(end-1)]
+            lat[:,ipnt] .= collect(range(shape[ipnt][2],shape[ipnt+1][2],n+1))[1:(end-1)]
         end
+        lon = vcat(lon[:],lon[1])
+        lat = vcat(lat[:],lat[1])
     end
-
-    lon = lon[:]
-    lat = lat[:]
 
     return lon,lat
 
@@ -61,8 +60,16 @@ function coordinates(
         lon = [W,E,E,W,W]
         lat = [N,N,S,S,N]
     else
-        lon = vcat(range(W,E,n),range(E,E,n),range(E,W,n),range(W,W,n))
-        lat = vcat(range(N,N,n),range(N,S,n),range(S,S,n),range(S,N,n))
+        lon = vcat(
+            range(W,E,n+1)[1:(end-1)], range(E,E,n+1)[1:(end-1)],
+            range(E,W,n+1)[1:(end-1)], range(W,W,n+1)[1:(end-1)],
+            W
+        )
+        lat = vcat(
+            range(N,N,n+1)[1:(end-1)], range(N,S,n+1)[1:(end-1)],
+            range(S,S,n+1)[1:(end-1)], range(S,N,n+1)[1:(end-1)],
+            N
+        )
     end
 
     return lon,lat
@@ -90,12 +97,14 @@ function coordinates(
         lat = [lat1,lat2,lat3,lat4,lat1]
     else
         lon = vcat(
-            range(lon1,lon2,n),range(lon2,lon3,n),
-            range(lon3,lon4,n),range(lon4,lon1,n)
+            range(lon1,lon2,n+1)[1:(end-1)], range(lon2,lon3,n+1)[1:(end-1)],
+            range(lon3,lon4,n+1)[1:(end-1)], range(lon4,lon1,n+1)[1:(end-1)],
+            lon1
         )
         lat = vcat(
-            range(lat1,lat2,n),range(lat2,lat3,n),
-            range(lat3,lat4,n),range(lat4,lat1,n)
+            range(lat1,lat2,n+1)[1:(end-1)], range(lat2,lat3,n+1)[1:(end-1)],
+            range(lat3,lat4,n+1)[1:(end-1)], range(lat4,lat1,n+1)[1:(end-1)],
+            lat1
         )
     end
 

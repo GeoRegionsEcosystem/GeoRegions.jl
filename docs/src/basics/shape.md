@@ -41,12 +41,15 @@ resize_to_layout!(fig)
 fig
 ```
 
-This plotting works on maps where the projection is equirectangular. However, there are many different map projections, and so we can specify the number of points on each side of the shape using the keyword argument `n` in order to ensure during plotting that is plotted correctly on the projection.
+This plotting works on maps where the projection is equirectangular. However, there are many different map projections, and so we can specify the number of segments `n` on each side of the shape using the keyword argument `n` in order to ensure during plotting that is plotted correctly on the projection.
 
 ```@example properties
 nlon,nlat = coordinates(geo,n=50)
 length(lon), length(nlon)
 ```
+
+!!! info "Number of Points"
+    The shape is defined by 8 sides. Therefore there are by default 8 + 1 = 9 coordinate points to close the polygon. If we specify 50 segments a side, we therefore have 400 + 1 = 401 coordinate points to close the polygon.
 
 ## API
 
