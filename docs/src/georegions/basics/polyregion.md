@@ -9,12 +9,16 @@ Out of all three `GeoRegion` types currently available, the `PolyRegion` grants 
 PolyRegion(ID, pID, name, lon, lat)
 ```
 
+## Example
+
 For example, we construct the sample `RectRegion` `TPR`, with longitude (`lon`) and latitude (`lat`) vectors of `[30,40,50,40,30]` and `[20,30,20,10,20]`
 
 ```@repl
 using GeoRegions
 PolyRegion("TPR","GLB","Test Polygonal Region",[30,40,50,40,30],[20,30,20,10,20])
 ```
+
+## API
 
 ```@docs
 PolyRegion(
