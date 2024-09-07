@@ -1,7 +1,7 @@
 """
     RectRegion(
-        ID :: AbstractString,
-        pID :: AbstractString,
+        ID    :: AbstractString,
+        pID   :: AbstractString,
         name  :: AbstractString,
         bound :: Vector{<:Real};
         save :: Bool = false,
@@ -217,7 +217,7 @@ Arguments
             If the ID is already in use, then an error will be thrown.
 
 - `pID` : The ID of the parent GeoRegion where information can be extracted from.
-- `name`  : A name for the GeoRegion (meta information, can be used in Logging).
+- `name` : A name for the GeoRegion (meta information, can be used in Logging).
 - `lon` : A vector containing the longitude points.
 - `lat` : A vector containing the latitude points.
 
@@ -313,42 +313,42 @@ function PolyRegion(
 end
 
 function checkbounds(
-    regN :: Real,
-    regS :: Real,
-    regE :: Real,
-    regW :: Real
+    N :: Real,
+    S :: Real,
+    E :: Real,
+    W :: Real
 )
 
-    if (regN>90) || (regN<-90)
-        error("$(modulelog()) - The latitude of the GeoRegion's northern bound at $regN is not valid.")
+    if (N>90) || (N<-90)
+        error("$(modulelog()) - The latitude of the GeoRegion's northern bound at $N is not valid.")
     end
 
-    if (regS>90) || (regS<-90)
-        error("$(modulelog()) - The latitude of the GeoRegion's southern bound at $regS is not valid.")
+    if (S>90) || (S<-90)
+        error("$(modulelog()) - The latitude of the GeoRegion's southern bound at $S is not valid.")
     end
 
-    if (regE>360) || (regE<-180)
-        error("$(modulelog()) - The longitude of the GeoRegion's eastern bound at $regE is not valid.")
+    if (E>360) || (E<-180)
+        error("$(modulelog()) - The longitude of the GeoRegion's eastern bound at $E is not valid.")
     end
 
-    if (regW>360) || (regW<-180)
-        error("$(modulelog()) - The longitude of the GeoRegion's western bound at $regW is not valid.")
+    if (W>360) || (W<-180)
+        error("$(modulelog()) - The longitude of the GeoRegion's western bound at $W is not valid.")
     end
 
-    if (regE - regW) > 360
+    if (E - W) > 360
         error("$(modulelog()) - The GeoRegion cannot be more than 360º in Longitude.")
     end
 
-    if regE < regW
+    if E < W
         error("$(modulelog()) - The eastern bound of the GeoRegion cannot be west of the western bound.")
     end
 
-    if regN < regS
+    if N < S
         error("$(modulelog()) - The northern bound of the GeoRegion cannot be south of the southern bound.")
     end
 
-    if regE > 180; is360 = true; else is360 = false end
-    if regW < 0;   is180 = true; else is180 = false end
+    if E > 180; is360 = true; else is360 = false end
+    if W < 0;   is180 = true; else is180 = false end
     if !(is180) && !(is360); is360 = true end
 
     return is180,is360

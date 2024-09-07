@@ -18,12 +18,20 @@ Regardless of `GeoRegion` type, the **first three inputs are always the same**, 
 
 Out of all three `GeoRegion` types currently available, the `RectRegion` is most straightforward to define. All you need to do is specify the `[N, S, E, W]` boundaries, in that order.
 
-For example, we construct the sample `RectRegion` `TRC`
+For example, we construct the sample `RectRegion` `TRR`
 
 ```@repl
 using GeoRegions
-RectRegion("TRC","GLB","Test Rectangle Region",[30,20,50,10])
+RectRegion("TRR","GLB","Test Rectangle Region",[30,20,50,10])
 ```
+
+!!! tip "Constraints on N, S, E, W bounds"
+    The following are the constraints on the North, South, East and West bounds:
+    1. N > S
+    2. E > W
+    3. -90 ≤ N,S ≤ 90
+    4. -180 ≤ E,W ≤ 360
+    5. (E - W) < 360
 
 ```@docs
 RectRegion(
@@ -34,7 +42,17 @@ RectRegion(
 
 ## Defining New `PolyRegion`s
 
-Out of all three `GeoRegion` types currently available, the `PolyRegion` grants the most flexibility in terms of specification of the domain shape. With it, you can specify any closed polygon on a rectilinear grid.
+Out of all three `GeoRegion` types currently available, the `PolyRegion` grants the most flexibility in terms of specification of the domain shape. With it, you can specify any closed polygon on a rectilinear grid using two vectors, for `lon` and `lat` respectively.
+
+For example, we construct the sample `RectRegion` `TPR`, with longitude (`lon`) and latitude (`lat`) vectors of `[30,40,50,40,30]` and `[20,30,20,10,20]`
+
+```@repl
+using GeoRegions
+PolyRegion("TPR","GLB","Test Polygonal Region",[30,40,50,40,30],[20,30,20,10,20])
+```
+
+!!! tip "Longitude and Latitude Vectors must be the same length"
+    As state in the header, the `lon` and `lat` vectors must be of the same length.
 
 ```@docs
 PolyRegion(
