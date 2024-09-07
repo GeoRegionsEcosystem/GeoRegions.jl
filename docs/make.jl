@@ -41,7 +41,7 @@ makedocs(;
                 "An Overview"        => "georegions/using/overview.md",
                 "RectRegion Example" => "georegions/using/rectregion.md",
                 "PolyRegion Example" => "georegions/using/polyregion.md",
-                "TiltRegion Example" => "georegions/using/tiltregion.md",
+                # "TiltRegion Example" => "georegions/using/tiltregion.md",
             ]
             # "Retrieving GeoRegions" => "georegions/read.md",
         ],
