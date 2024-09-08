@@ -17,10 +17,9 @@ Keyword Arguments
 """
 rm(
     geo   :: GeoRegion;
-    path  :: AbstractString = dirname(geo.path),
-    force :: Bool = false
+    path  :: AbstractString = dirname(geo.path)
 ) = if isGeoRegion(geo,path=path)
-    rmID(geo.ID,path=path,force=force)
+    rmID(geo.ID,path=path)
 end
 
 """
@@ -60,11 +59,7 @@ function rmID(
         geo = getgeoregion(geoID,joinpath(path,filevec[ind]), typevec[ind])
         removegeoregion(geo,joinpath(path,filevec[ind]))
     else
-        if force
-            @warn "$(modulelog()) - You are forcefully removing the predefined GeoRegion \"$geoID\". If you want to restore this predefined GeoRegion, please do `resetGeoRegions(all=true)`"
-        else
-            error("$(modulelog()) - You are trying to remove the predefined GeoRegion \"$geoID\". If you really want to remove this GeoRegion, please do `force = true`")
-        end
+        error("$(modulelog()) - You are trying to remove the predefined GeoRegion \"$geoID\". If you really want to remove this GeoRegion, please do `force = true`")
     end
 
 end
