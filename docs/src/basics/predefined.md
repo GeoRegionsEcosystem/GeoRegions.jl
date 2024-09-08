@@ -28,7 +28,7 @@ using GeoRegions
 GeoRegion("SRX_CNA")
 ```
 
-To see the full list of predefined GeoRegions from Seneviratne et al. [2012], go [here](/basics/listallt#SREX-Regions-from-Seneviratne-et-al.-[2012])
+To see the full list of predefined GeoRegions from Seneviratne et al. [2012], go [here]basics/listall#SREX-Regions-from-Seneviratne-et-al.-[2012])
 
 ## AR6 Regions adapted from Iturbide et al., [2020]
 

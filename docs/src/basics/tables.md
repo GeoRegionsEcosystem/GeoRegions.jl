@@ -1,6 +1,6 @@
 # Tabular Listings of GeoRegions
 
-A list of GeoRegions and their basic properties can be called using the function `tableGeoRegions()`, which lists all available GeoRegions, both predefined and [custom/user-defined](/custom/overview). You can also choose to list only predefined or user-customized GeoRegions by setting their respective keywords arguments to `true/false`.
+A list of GeoRegions and their basic properties can be called using the function `tableGeoRegions()`, which lists all available GeoRegions, both predefined and [user-defined](/tutorials/overview). You can also choose to list only predefined or user-customized GeoRegions by setting their respective keywords arguments to `true/false`.
 
 ```julia
 tableGeoRegions()
