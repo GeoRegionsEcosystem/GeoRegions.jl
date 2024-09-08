@@ -1,5 +1,0 @@
-# TiltRegion
-# Template for User-Defined TiltRegion GeoRegions
-# (1)ID, (2)pID, (3)X, (4)Y, (5)Length, (6)Width, (7)Tilt, (8)Description, (9)Notes
-
-# TST_TLT, GLB, 180, 0, 360, 180, 0, Test-TiltRegion
