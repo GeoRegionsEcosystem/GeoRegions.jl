@@ -5,29 +5,44 @@ function listall(
     flist    = ["rectlist.txt","polylist.txt","tiltlist.txt"]
     fdefined = ["giorgi.txt","srex.txt","ar6.txt"]
 
-    regvec  = []
-    filevec = []
-    typevec = []
+    rvec  = []
+    fvec = []
+    tvec = []
 
     for fname in flist
-        copygeoregions(fname,path)
-        rvec,rtype = listgeoregions(joinpath(path,fname))
-        regvec = vcat(regvec,rvec)
-        nreg = length(rvec)
-        fvec = fill(fname,nreg); filevec = vcat(filevec,fvec)
-        tvec = fill(rtype,nreg); typevec = vcat(typevec,tvec)
+        rvec,fvec,tvec = fillinfo(rvec,fvec,tvec,joinpath(path,fname))
     end
 
     for fname in fdefined
-        copygeoregions(fname,geodir)
-        rvec,rtype = listgeoregions(joinpath(geodir,fname))
-        regvec = vcat(regvec,rvec)
-        nreg = length(rvec)
-        fvec = fill(fname,nreg); filevec = vcat(filevec,fvec)
-        tvec = fill(rtype,nreg); typevec = vcat(typevec,tvec)
+        rvec,fvec,tvec = fillinfo(rvec,fvec,tvec,joinpath(geodir,fname))
     end
 
+    return rvec,fvec,tvec
+
+end
+
+function fillinfo(regvec,filevec,typevec,fID)
+
+    rvec,rtype = listgeoregions(fID)
+    regvec = vcat(regvec,rvec)
+    nreg = length(rvec)
+    fvec = fill(basename(fID),nreg); filevec = vcat(filevec,fvec)
+    tvec = fill(rtype,nreg);         typevec = vcat(typevec,tvec)
+
     return regvec,filevec,typevec
+
+end
+
+function fillinfo(regvec,filevec,typevec,dirvec,fID)
+
+    rvec,rtype = listgeoregions(fID)
+    regvec = vcat(regvec,rvec)
+    nreg = length(rvec)
+    fvec = fill(basename(fID),nreg); filevec = vcat(filevec,fvec)
+    tvec = fill(rtype,nreg);         typevec = vcat(typevec,tvec)
+    dvec = fill(dirname(fID),nreg);  dirvec  = vcat(dirvec,dvec)
+
+    return regvec,filevec,typevec,dirvec
 
 end
 
