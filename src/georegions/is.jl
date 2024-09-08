@@ -39,7 +39,7 @@ end
 """
     isGeoRegion(
         geoID :: AbstractString;
-        path  :: AbstractString = geodir,
+        path  :: AbstractString = homedir(),
         throw :: Bool = true
     ) -> tf :: Bool
 
@@ -53,7 +53,7 @@ Arguments
 Keyword Arguments
 =================
 - `path` : The path where the list of custom GeoRegions will be retrieved from.
-           Defaults to the `local` package variable `geodir`
+           Defaults to the current directory `pwd()`
 - `throw` : If `true`, then throws an error if `geoID` is not a valid `GeoRegion` identifier instead of returning the Boolean `tf`
 
 Returns
@@ -62,7 +62,7 @@ Returns
 """
 function isID(
     geoID :: AbstractString;
-    path  :: AbstractString = geodir,
+    path  :: AbstractString = homedir(),
     throw :: Bool=true
 )
 

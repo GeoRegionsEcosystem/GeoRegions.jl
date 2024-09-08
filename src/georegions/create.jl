@@ -5,7 +5,7 @@
         name  :: AbstractString,
         bound :: Vector{<:Real};
         save :: Bool = false,
-        path :: AbstractString = geodir,
+        path :: AbstractString = pwd(),
         verbose :: Bool = true,
         ST = String,
         FT = Float64
@@ -25,7 +25,7 @@ Keyword Arguments
 =========
 - `save` : If `true`, save the GeoRegion into the list of custom GeoRegions in the path specified by `path`.
 - `path` : The path where the list of custom GeoRegions will be retrieved from.
-           Defaults to the `local` package variable `geodir`
+           Defaults to the user's home directory `homedir()`
 - `verbose` : Verbose logging for ease of monitoring? Default is `true`
 
 Returns
@@ -38,7 +38,7 @@ function RectRegion(
     name  :: AbstractString,
     bound :: Vector{<:Real};
     save :: Bool = false,
-    path :: AbstractString = geodir,
+    path :: AbstractString = homedir(),
     verbose :: Bool = true,
     ST = String,
     FT = Float64
@@ -49,6 +49,10 @@ function RectRegion(
     end
 
     if save
+        geofile = joinpath(path,"rectlist.txt")
+        if !isfile(geofile)
+            cp(joinpath(geodir,"rectlist.txt"),geofile)
+        end
         if isID(ID,path=path,throw=false)
             error("$(modulelog()) - The GeoRegion $(ID) has already been defined.  Please use another identifier.")
         else
@@ -60,7 +64,7 @@ function RectRegion(
             end
         end
     else
-        path = geodir
+        path = homedir()
     end
 
     N,S,E,W = bound; is180,is360 = checkbounds(N,S,E,W)
@@ -72,10 +76,6 @@ function RectRegion(
     if save
         par  = GeoRegion(pID,path=path); isinGeoRegion(geo,par)
         name = replace(name," "=>"-")
-        geofile = joinpath(path,"rectlist.txt")
-        if !isfile(geofile)
-            cp(joinpath(geodir,"recttemplate.txt"),geofile)
-        end
         open(geofile,"a") do io
             write(io,"$ID, $pID, $N, $W, $S, $E, $name\n")
         end
@@ -100,7 +100,7 @@ end
         ΔY   :: Real,
         θ    :: Real;
         save :: Bool = false,
-        path :: AbstractString = geodir,
+        path :: AbstractString = pwd(),
         verbose :: Bool = true,
         ST = String,
         FT = Float64
@@ -124,7 +124,7 @@ Keyword Arguments
 =========
 - `save` : If `true`, save the GeoRegion into the list of custom GeoRegions in the path specified by `path`.
 - `path` : The path where the list of custom GeoRegions will be retrieved from.
-           Defaults to the `local` package variable `geodir`
+           Defaults to the user's home directory `homedir()`
 - `verbose` : Verbose logging for ease of monitoring? Default is `true`
 
 Returns
@@ -141,7 +141,7 @@ function TiltRegion(
     ΔY   :: Real,
     θ    :: Real;
     save :: Bool = false,
-    path :: AbstractString = geodir,
+    path :: AbstractString = homedir(),
     verbose :: Bool = true,
     ST = String,
     FT = Float64
@@ -152,6 +152,10 @@ function TiltRegion(
     end
 
     if save
+        geofile = joinpath(path,"tiltlist.txt")
+        if !isfile(geofile)
+            cp(joinpath(geodir,"tiltlist.txt"),geofile)
+        end
         if isID(ID,path=path,throw=false)
             error("$(modulelog()) - The GeoRegion $(ID) has already been defined.  Please use another identifier.")
         else
@@ -163,7 +167,7 @@ function TiltRegion(
             end
         end
     else
-        path = geodir
+        path = homedir()
     end
 
     N,S,E,W = tilt2bounds(X,Y,ΔX,ΔY,θ); is180,is360 = checkbounds(N,S,E,W)
@@ -176,10 +180,6 @@ function TiltRegion(
     if save
         par  = GeoRegion(pID,path=path); isinGeoRegion(geo,par)
         name = replace(name," "=>"-")
-        geofile = joinpath(path,"tiltlist.txt")
-        if !isfile(geofile)
-            cp(joinpath(geodir,"tilttemplate.txt"),geofile)
-        end
         open(geofile,"a") do io
             write(io,"$ID, $pID, $X, $Y, $ΔX, $ΔY, $θ, $name\n")
         end
@@ -202,7 +202,7 @@ end
         lat  :: Vector{<:Real};
         join :: Bool = true,
         save :: Bool = false,
-        path :: AbstractString = geodir,
+        path :: AbstractString = pwd(),
         verbose :: Bool = true,
         ST = String,
         FT = Float64
@@ -226,7 +226,7 @@ Keyword Arguments
 - `join` : If `true`, if the first and last coordinate points do not match, append the first coordinate again to close the shape.
 - `save` : If `true`, save the GeoRegion into the list of custom GeoRegions in the path specified by `path`.
 - `path` : The path where the list of custom GeoRegions will be retrieved from.
-           Defaults to the `local` package variable `geodir`
+           Defaults to the user's home directory `homedir()`
 - `verbose` : If `true`, verbose logging for ease of monitoring.
 
 Returns
@@ -241,7 +241,7 @@ function PolyRegion(
     lat  :: Vector{<:Real};
     join :: Bool = true,
     save :: Bool = false,
-    path :: AbstractString = geodir,
+    path :: AbstractString = homedir(),
     verbose :: Bool = true,
     ST = String,
     FT = Float64
@@ -252,6 +252,10 @@ function PolyRegion(
     end
     
     if save
+        geofile = joinpath(path,"polylist.txt")
+        if !isfile(geofile)
+            cp(joinpath(geodir,"polylist.txt"),geofile)
+        end
         if isID(ID,path=path,throw=false)
             error("$(modulelog()) - The GeoRegion $(ID) has already been defined.  Please use another identifier.")
         else
@@ -263,7 +267,7 @@ function PolyRegion(
             end
         end
     else
-        path = geodir
+        path = homedir()
     end
 
     if (lon[1] != lon[end]) || (lat[1] != lat[end])
@@ -289,10 +293,6 @@ function PolyRegion(
         par  = GeoRegion(pID,path=path); isinGeoRegion(geo,par)
         name = replace(name," "=>"-")
         npt  = length(lon)
-        geofile = joinpath(path,"polylist.txt")
-        if !isfile(geofile)
-            cp(joinpath(geodir,"polytemplate.txt"),geofile)
-        end
         open(geofile,"a") do io
             write(io,"\n  RegID $(ID), $(pID), $name\n")
             write(io,"  RegX  $(lon[1])")

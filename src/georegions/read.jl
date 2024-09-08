@@ -1,7 +1,7 @@
 """
     GeoRegion(
         geoID :: AbstractString;
-        path  :: AbstractString = geodir
+        path  :: AbstractString = homedir()
     ) -> geo :: GeoRegion
 
 Extracts information of the GeoRegion with the ID `geoID`.  If no GeoRegion with this ID exists, an error is thrown.
@@ -14,7 +14,7 @@ Arguments
 Keyword Arguments
 =================
 - `path` : The path where the list of custom GeoRegions will be retrieved from.
-           Defaults to the `local` package variable `geodir`
+           Defaults to the user's home directory `homedir()`
 
 Returns
 =======
@@ -24,7 +24,7 @@ function GeoRegion(
     geoID :: AbstractString,
     ST = String,
     FT = Float64;
-    path  :: AbstractString = geodir,
+    path  :: AbstractString = homedir(),
 )
 
     @info "$(modulelog()) - Retrieving information for the GeoRegion defined by the ID $geoID"

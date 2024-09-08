@@ -39,12 +39,11 @@ Arguments
 Keyword Arguments
 =================
 - `path` : The path where the list of custom GeoRegions will be retrieved from.
-           Defaults to the `local` package variable `geodir`
+           Defaults to the home directory `homedir()`
 """
 function rmID(
     geoID :: AbstractString;
-    path  :: AbstractString = geodir,
-    force :: Bool = false
+    path  :: AbstractString = homedir(),
 )
 
     if geoID == "GLB"
