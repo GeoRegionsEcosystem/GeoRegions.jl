@@ -36,12 +36,16 @@ makedocs(;
         "Home" => "index.md",
         "What is a GeoRegion?"  => "georegions.md",
         "Basic Functionality" => [
-            "Retrieving GeoRegions"  => "basics/read.md",
-            "Predefined GeoRegions"  => "basics/predefined.md",
-            "GeoRegion Properties"   => "basics/shape.md",
-            "Is it in a GeoRegion?"  => "basics/isin.md",
-            "Table of GeoRegions"    => "basics/tables.md",
-            "Listing All GeoRegions" => "basics/listall.md",
+            "Retrieving GeoRegions"  => [
+                "Overview (START HERE)"  => "basics/read.md",
+                "Predefined GeoRegions"  => "basics/predefined.md",
+                "Tabulating GeoRegions"  => "basics/tables.md",
+                "Listing All GeoRegions" => "basics/listall.md",
+            ]
+            "GeoRegion Properties"   => [
+                "Shape of a GeoRegion"  => "basics/shape.md",
+                "Is it in a GeoRegion?" => "basics/isin.md",
+            ]
         ],
         "GeoRegions.jl Tutorials" => [
             "Setup (START HERE)"     => "tutorials/setup.md",
@@ -53,6 +57,7 @@ makedocs(;
             ],
             "Custom GeoRegion Files" => "tutorials/files.md",
         ],
+        "Ecosystem"  => "ecosystem.md",
     ],
 )
 
