@@ -49,7 +49,7 @@ makedocs(;
             "More on Creation" => [
                 "Creating RectRegions"   => "tutorials/create/rectregion.md",
                 "Creating PolyRegions"   => "tutorials/create/polyregion.md",
-                # "Creating TiltRegions"   => "tutorials/create/tiltregion.md",
+                "Creating TiltRegions"   => "tutorials/create/tiltregion.md",
             ],
             "Custom GeoRegion Files" => "tutorials/files.md",
         ],
