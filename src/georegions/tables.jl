@@ -27,6 +27,8 @@ function tableGeoRegions(;
     dvec = []
     tvec = []
 
+    rvec,fvec,tvec,dvec = fillinfo(rvec,fvec,tvec,dvec,joinpath(geodir,"global.txt"))
+
     if custom
         for fname in flist
             fID = joinpath(path,fname)
@@ -138,6 +140,8 @@ function tableRectRegions(;
     dvec = []
     tvec = []
 
+    rvec,fvec,tvec,dvec = fillinfo(rvec,fvec,tvec,dvec,joinpath(geodir,"global.txt"))
+
     if custom
         fID = joinpath(path,"rectlist.txt")
         if isfile(fID)
@@ -196,6 +200,8 @@ function tableTiltRegions(;
     fvec = []
     dvec = []
     tvec = []
+
+    rvec,fvec,tvec,dvec = fillinfo(rvec,fvec,tvec,dvec,joinpath(geodir,"global.txt"))
 
     fID = joinpath(path,"tiltlist.txt")
     if isfile(fID)
@@ -258,6 +264,8 @@ function tablePolyRegions(;
     fvec = []
     dvec = []
     tvec = []
+
+    rvec,fvec,tvec,dvec = fillinfo(rvec,fvec,tvec,dvec,joinpath(geodir,"global.txt"))
 
     if custom
         fID = joinpath(path,"polylist.txt")

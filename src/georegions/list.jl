@@ -1,9 +1,9 @@
 function listall(
-    path :: AbstractString = geodir
+    path :: AbstractString = homedir()
 )
 
     flist    = ["rectlist.txt","polylist.txt","tiltlist.txt"]
-    fdefined = ["giorgi.txt","srex.txt","ar6.txt"]
+    fdefined = ["global.txt","giorgi.txt","srex.txt","ar6.txt"]
 
     rvec  = []
     fvec = []
@@ -85,7 +85,15 @@ end
 
 function listrectregions(fname::AbstractString)
 
-    return readdlm(fname,',',comments=true,comment_char='#')[:,1]
+    gcount = 0
+    for l in eachline(fname)
+        if (!occursin("#",l)) || (l == ""); gcount += 1 end
+    end
+
+    if gcount > 0
+         return readdlm(fname,',',comments=true,comment_char='#')[:,1]
+    else return []
+    end
 
 end
 
