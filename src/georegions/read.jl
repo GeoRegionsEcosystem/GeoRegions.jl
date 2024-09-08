@@ -168,9 +168,8 @@ function addGeoRegions(
             add(g,path=path)
         elseif overwrite
             @warn "$(modulelog()) - The GeoRegion ID $reg is already in use. Overwriting and replacing with new boundaries ..."
-            rmID(reg)
             g = getgeoregion(reg,fname,rtype)
-            add(g,path=path)
+            overwrite(g,path=path)
         else
             @warn "$(modulelog()) - The GeoRegion ID $reg is already in use. Please use a different ID, or you can remove the ID using removeGeoRegion()."
         end

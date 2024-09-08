@@ -88,7 +88,7 @@ Keyword Arguments
 """
 function overwrite(
     geo  :: GeoRegion;
-    path :: AbstractString,
+    path :: AbstractString = dirname(geo.path),
     verbose :: Bool = true
 )
 
