@@ -18,7 +18,7 @@ export
         ==, isGeoRegion, isID,
         add, rm, rmID, overwrite,
 
-        templateGeoRegions, readGeoRegions, addGeoRegions, resetGeoRegions,
+        setupGeoRegions, readGeoRegions, addGeoRegions, resetGeoRegions, deleteGeoRegions,
         tableGeoRegions, tableRectRegions, tableTiltRegions, tablePolyRegions,
 
         isinGeoRegion, in,
@@ -119,12 +119,12 @@ modulelog() = "$(now()) - GeoRegions.jl"
 geodir = joinpath(@__DIR__,"files")
 
 ## Including other files in the module
-include("georegions/create.jl")
+include("georegions/define.jl")
 include("georegions/add.jl")
 include("georegions/get.jl")
 include("georegions/is.jl")
 include("georegions/list.jl")
-include("georegions/read.jl")
+include("georegions/project.jl")
 include("georegions/remove.jl")
 include("georegions/query.jl")
 include("georegions/show.jl")

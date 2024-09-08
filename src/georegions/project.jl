@@ -1,41 +1,4 @@
 """
-    GeoRegion(
-        geoID :: AbstractString;
-        path  :: AbstractString = homedir()
-    ) -> geo :: GeoRegion
-
-Extracts information of the GeoRegion with the ID `geoID`.  If no GeoRegion with this ID exists, an error is thrown.
-
-Arguments
-=========
-- `geoID` : The ID that will be used to identify the GeoRegion.
-            If the ID is not valid (i.e. not being used), then an error will be thrown.
-
-Keyword Arguments
-=================
-- `path` : The path where the list of custom GeoRegions will be retrieved from.
-           Defaults to the user's home directory `homedir()`
-
-Returns
-=======
-- `geo` : A GeoRegion
-"""
-function GeoRegion(
-    geoID :: AbstractString,
-    ST = String,
-    FT = Float64;
-    path  :: AbstractString = homedir(),
-)
-
-    @info "$(modulelog()) - Retrieving information for the GeoRegion defined by the ID $geoID"
-
-    regvec,filevec,typevec = listall(path); isID(geoID,regvec)
-    ind = findall(geoID.==regvec)[1]
-    return getgeoregion(geoID,joinpath(path,filevec[ind]),typevec[ind],ST,FT)
-
-end
-
-"""
     templateGeoRegions(;
         path :: AbstractString = pwd(),
         overwrite :: Bool = false
