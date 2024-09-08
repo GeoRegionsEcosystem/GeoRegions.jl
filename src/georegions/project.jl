@@ -4,7 +4,7 @@
         overwrite :: Bool = false
     ) -> nothing
 
-Copies the template files for defining GeoRegions in textfiles, that can then be added as a batch using addGeoRegions()
+Setup the directory specified by `path` with files for custom `GeoRegion`s. If `overwrite = true`, then any preexisting files are overwritten
 
 Keyword Arguments
 =================
@@ -18,11 +18,7 @@ function setupGeoRegions(;
 )
 
     if !isdir(path); mkpath(path) end
-    for fname in [
-        "recttemplate.txt", "rectlist.txt",
-        "polytemplate.txt", "polylist.txt",
-        "tilttemplate.txt", "tiltlist.txt",
-    ]
+    for fname in ["rectlist.txt","polylist.txt","tiltlist.txt"]
 
         ftem = joinpath(geodir,fname)
         freg = joinpath(path,fname)
@@ -144,33 +140,6 @@ function addGeoRegions(
 end
 
 """
-    resetGeoRegions(;
-        path :: AbstractString = pwd()
-    ) -> nothing
-
-Reset all the files containing GeoRegion information back to the default.
-
-Keyword Arguments
-=================
-- `path` : The path where the list of custom GeoRegions will be retrieved from.
-           Defaults to the current working directory `pwd()`
-"""
-function resetGeoRegions(;
-    path :: AbstractString = pwd(),
-)
-
-
-    @info "$(modulelog) - Resetting the custom lists of GeoRegions back to the default"
-    flist = ["rectlist.txt","polylist.txt","tiltlist.txt"]
-    for fname in flist
-        copygeoregions(fname,path,overwrite=true)
-    end
-
-    return nothing
-
-end
-
-"""
     deleteGeoRegions(;
         path :: AbstractString = pwd()
     ) -> nothing
@@ -191,50 +160,6 @@ function deleteGeoRegions(;
     flist = ["rectlist.txt","polylist.txt","tiltlist.txt"]
     for fname in flist
         rm(joinpath(path,fname),force=true)
-    end
-
-    return
-
-end
-
-function copygeoregions(
-    fname :: AbstractString,
-    path  :: AbstractString;
-    overwrite :: Bool = false
-)
-
-    ftem = joinpath(geodir,fname)
-    freg = joinpath(path,fname)
-
-    if !overwrite
-        if !isfile(freg)
-
-            @debug "$(modulelog) - Unable to find $freg, copying data from $ftem ..."
-
-            open(freg,"w") do io
-                open(ftem) do f
-                    for line in readlines(f)
-                        write(io,"$line\n")
-                    end
-                end
-            end
-
-        end
-    else
-
-        if isfile(freg)
-            @warn "$(modulelog) - Overwriting $freg with original file in $ftem ..."
-            rm(freg,force=true)
-        end
-
-        open(freg,"w") do io
-            open(ftem) do f
-                for line in readlines(f)
-                    write(io,"$line\n")
-                end
-            end
-        end
-
     end
 
     return

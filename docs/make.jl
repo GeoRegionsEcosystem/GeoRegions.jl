@@ -39,23 +39,20 @@ makedocs(;
             "Retrieving GeoRegions"  => "basics/read.md",
             "Predefined GeoRegions"  => "basics/predefined.md",
             "GeoRegion Properties"   => "basics/shape.md",
+            # "Is it in a GeoRegion?"  => "basics/isin.md",
             "Table of GeoRegions"    => "basics/tables.md",
             "Listing All GeoRegions" => "basics/listall.md",
         ],
-        "Customizing GeoRegions.jl" => [
-            "Create, Save, Retrieve" => "custom/overview.md",
-            "Project Setup"          => "custom/setup.md",
+        "GeoRegions.jl Tutorials" => [
+            "Setup (START HERE)"     => "tutorials/setup.md",
+            "Create, Save, Retrieve" => "tutorials/overview.md",
             "More on Creation" => [
-                "Creating RectRegions"   => "custom/create/rectregion.md",
-                "Creating PolyRegions"   => "custom/create/polyregion.md",
-                # "Creating TiltRegions"   => "custom/create/tiltregion.md",
+                "Creating RectRegions"   => "tutorials/create/rectregion.md",
+                "Creating PolyRegions"   => "tutorials/create/polyregion.md",
+                # "Creating TiltRegions"   => "tutorials/create/tiltregion.md",
             ],
-            "Custom GeoRegion Files" => "custom/files.md",
+            "Custom GeoRegion Files" => "tutorials/files.md",
         ],
-        # "Tutorials" => [
-        #     "Is it in a GeoRegion?" => "using/isin.md",
-        #     "Custom GeoRegions"     => "using/custom.md",
-        # ],
     ],
 )
 
