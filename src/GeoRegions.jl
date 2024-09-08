@@ -116,22 +116,7 @@ struct TiltRegion{ST<:AbstractString, FT<:Real} <: GeoRegion
 end
 
 modulelog() = "$(now()) - GeoRegions.jl"
-geodir = joinpath(DEPOT_PATH[1],"files","GeoRegions")
-
-function __init__()
-    mkpath(geodir);
-    flist  = [
-        "rectlist.txt","polylist.txt","tiltlist.txt",
-        "giorgi.txt","srex.txt","ar6.txt"
-    ]
-
-    for fname in flist
-        if !isfile(joinpath(geodir,fname))
-            copygeoregions(fname,geodir)
-            @info "$(modulelog()) - $(fname) does not exist in $(geodir), copying ..."
-        end
-    end
-end
+geodir = joinpath(@__DIR__,"files")
 
 ## Including other files in the module
 include("georegions/create.jl")
