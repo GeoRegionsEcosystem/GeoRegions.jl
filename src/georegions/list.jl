@@ -10,7 +10,10 @@ function listall(
     tvec = []
 
     for fname in flist
-        rvec,fvec,tvec = fillinfo(rvec,fvec,tvec,joinpath(path,fname))
+        fID = joinpath(path,fname)
+        if isfile(fID)
+            rvec,fvec,tvec = fillinfo(rvec,fvec,tvec,fID)
+        end
     end
 
     for fname in fdefined
