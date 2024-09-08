@@ -30,7 +30,7 @@ makedocs(;
     doctest  = false,
     warnonly = true,
     format   = DocumenterVitepress.MarkdownVitepress(
-        repo       = "https://github.com/GeoRegionsEcosystem/GeoRegions.jl",
+        repo = "https://github.com/GeoRegionsEcosystem/GeoRegions.jl",
     ),
     pages=[
         "Home" => "index.md",

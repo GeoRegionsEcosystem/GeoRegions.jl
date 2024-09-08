@@ -9,17 +9,17 @@
     <img alt="Repo Status" src="https://www.repostatus.org/badges/latest/active.svg?style=flat-square" />
   </a>
   <a href="https://github.com/GeoRegionsEcosystem/GeoRegions.jl/actions/workflows/ci.yml">
-    <img alt="GitHub Actions" src="https://github.com/JuliaClimate/GeoRegions.jl/actions/workflows/ci.yml/badge.svg?branch=main&style=flat-square">
+    <img alt="GitHub Actions" src="https://github.com/GeoRegionsEcosystem/GeoRegions.jl/actions/workflows/ci.yml/badge.svg?branch=main&style=flat-square">
   </a>
   <br>
   <a href="https://mit-license.org">
     <img alt="MIT License" src="https://img.shields.io/badge/License-MIT-blue.svg?style=flat-square">
   </a>
 	<img alt="MIT License" src="https://img.shields.io/github/v/release/JuliaClimate/GeoRegions.jl.svg?style=flat-square">
-  <a href="https://georegionsecosystem.github.io/GeoRegions.jl/stable/">
+  <a href="https://GeoRegionsEcosystem.github.io/GeoRegions.jl/stable/">
     <img alt="Latest Documentation" src="https://img.shields.io/badge/docs-stable-blue.svg?style=flat-square">
   </a>
-  <a href="https://georegionsecosystem.github.io/GeoRegions.jl/dev/">
+  <a href="https://GeoRegionsEcosystem.github.io/GeoRegions.jl/dev/">
     <img alt="Latest Documentation" src="https://img.shields.io/badge/docs-latest-blue.svg?style=flat-square">
   </a>
 </p>
