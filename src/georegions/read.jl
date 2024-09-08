@@ -45,7 +45,8 @@ Copies the template files for defining GeoRegions in textfiles, that can then be
 
 Keyword Arguments
 =================
-- `path` : The folder to copy the files to
+- `path` : The path where the template list of custom GeoRegions will be copied to.
+           Defaults to the current working directory `pwd()`.
 - `overwrite` : If template files exist in this folder, overwrite?
 """
 function setupGeoRegions(;
@@ -60,7 +61,7 @@ function setupGeoRegions(;
         "tilttemplate.txt", "tiltlist.txt",
     ]
 
-        ftem = joinpath(@__DIR__,"..","..","extra",fname)
+        ftem = joinpath(geodir,fname)
         freg = joinpath(path,fname)
 
         if !overwrite
@@ -137,7 +138,7 @@ end
 """
     addGeoRegions(
         fname :: AbstractString;
-        path  :: AbstractString = geodir,
+        path  :: AbstractString = pwd(),
         overwrite :: Bool = false
     ) -> nothing
 
@@ -150,12 +151,12 @@ Arguments
 Keyword Arguments
 =================
 - `path` : The path where the list of custom GeoRegions will be retrieved from.
-           Defaults to the `local` package variable `geodir`
+           Defaults to the current working directory `pwd()`
 - `overwrite` : If `true`, override any custom GeoRegions that have the same `ID`s as those in the file `fname`
 """
 function addGeoRegions(
     fname :: AbstractString;
-    path  :: AbstractString = geodir,
+    path  :: AbstractString = pwd(),
     overwrite :: Bool = false
 )
 
@@ -181,8 +182,7 @@ end
 
 """
     resetGeoRegions(;
-        path :: AbstractString = geodir,
-        all  :: Bool = false
+        path :: AbstractString = pwd()
     ) -> nothing
 
 Reset all the files containing GeoRegion information back to the default.
@@ -190,13 +190,10 @@ Reset all the files containing GeoRegion information back to the default.
 Keyword Arguments
 =================
 - `path` : The path where the list of custom GeoRegions will be retrieved from.
-           Defaults to the `local` package variable `geodir`
-- `all` : If `true`, reset the GeoRegions defined in Giorgi & Francisco [2000], AR6 Regions (Iturbide et al., 2020; ESSD) and Seneviratne et al. [2012] as well.
-          If `false`, only reset the custom GeoRegions.
+           Defaults to the current working directory `pwd()`
 """
 function resetGeoRegions(;
-    path :: AbstractString = geodir,
-    all  :: Bool = false
+    path :: AbstractString = pwd(),
 )
 
 
@@ -206,14 +203,31 @@ function resetGeoRegions(;
         copygeoregions(fname,path,overwrite=true)
     end
 
-    if all
+    return nothing
 
-        @info "$(modulelog()) - Resetting the predefined lists of GeoRegions back to the default"
-        fdefined = ["giorgi.txt","srex.txt","ar6.txt"]
-        for fname in fdefined
-            copygeoregions(fname,geodir,overwrite=true)
-        end
+end
 
+"""
+    deleteGeoRegions(;
+        path :: AbstractString = pwd()
+    ) -> nothing
+
+Reset all the files containing GeoRegion information back to the default.
+
+Keyword Arguments
+=================
+- `path` : The path where the list of custom GeoRegions will be retrieved from.
+           Defaults to the current working directory `pwd()`
+"""
+function deleteGeoRegions(;
+    path :: AbstractString = pwd()
+)
+
+
+    @warn "$(modulelog()) - Removing custom GeoRegions.jl files from $path, all GeoRegion information saved into these files will be permanently lost"
+    flist = ["rectlist.txt","polylist.txt","tiltlist.txt"]
+    for fname in flist
+        rm(joinpath(path,fname),force=true)
     end
 
     return
@@ -223,10 +237,10 @@ end
 function copygeoregions(
     fname :: AbstractString,
     path  :: AbstractString;
-    overwrite :: Bool=false
+    overwrite :: Bool = false
 )
 
-    ftem = joinpath(@__DIR__,"..","..","extra",fname)
+    ftem = joinpath(geodir,fname)
     freg = joinpath(path,fname)
 
     if !overwrite
