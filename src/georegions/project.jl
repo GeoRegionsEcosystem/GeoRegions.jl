@@ -127,7 +127,7 @@ function addGeoRegions(
 
     rvec,rtype = listgeoregions(fname)
     for reg in rvec
-        if !isID(reg,throw=false)
+        if !isID(reg,path=path,throw=false)
             g = getgeoregion(reg,fname,rtype)
             add(g,path=path)
         elseif overwrite
