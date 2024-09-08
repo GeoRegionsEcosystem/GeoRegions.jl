@@ -14,7 +14,7 @@ using GeoRegions
 GeoRegion("GF_WAF")
 ```
 
-To see the full list of predefined GeoRegions from Giorgi & Francisco [2000], go [here](/lists/default#Giorgi-and-Francisco-[2000])
+To see the full list of predefined GeoRegions from Giorgi & Francisco [2000], go [here](/basics/listall#Giorgi-and-Francisco-[2000])
 
 ## SREX Regions adapted from Seneviratne et al. [2012]
 
@@ -28,7 +28,7 @@ using GeoRegions
 GeoRegion("SRX_CNA")
 ```
 
-To see the full list of predefined GeoRegions from Seneviratne et al. [2012], go [here](/lists/default#SREX-Regions-from-Seneviratne-et-al.-[2012])
+To see the full list of predefined GeoRegions from Seneviratne et al. [2012], go [here](/basics/listallt#SREX-Regions-from-Seneviratne-et-al.-[2012])
 
 ## AR6 Regions adapted from Iturbide et al., [2020]
 
@@ -42,4 +42,4 @@ using GeoRegions
 GeoRegion("AR6_EAS")
 ```
 
-To see the full list of predefined GeoRegions from Iturbide et al., [2020], go [here](/lists/default#IPCC-AR6-Regions-from-Iturbide-et-al.,-[2020])
+To see the full list of predefined GeoRegions from Iturbide et al., [2020], go [here](/basics/listall#IPCC-AR6-Regions-from-Iturbide-et-al.,-[2020])

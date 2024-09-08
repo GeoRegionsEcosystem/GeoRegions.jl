@@ -15,4 +15,4 @@ using GeoRegions
 geo = GeoRegion("GLB")
 ```
 
-This is the most basic, and yet the most important, functionality of GeoRegions.jl. For the full API of the function `GeoRegion()` that talks about more advanced uses, see the section on [reading custom GeoRegions](/custom/overview)
+This is the most basic, and yet the most important, functionality of GeoRegions.jl. For the full API of the function `GeoRegion()` that talks about more advanced uses, see the section on [reading custom GeoRegions](/tutorials/overview)

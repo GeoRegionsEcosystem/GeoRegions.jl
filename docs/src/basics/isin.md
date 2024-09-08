@@ -49,7 +49,7 @@ resize_to_layout!(fig)
 fig
 ```
 
-By eye it is easy to see that Point A is inside the GeoRegion.  However, C is not.  Let us now see if we are able to corroborate this with GeoRegions.jl using the function `isinGeoRegion()`
+By eye it is easy to see that Point A is inside the GeoRegion.  However, C is not.  Let us now see if we are able to corroborate this with GeoRegions.jl using the function `in()`
 
 ```@example isin
 in(A,geo), # Point A
@@ -59,7 +59,7 @@ in(C,geo)  # Point C
 But what about Point B?  Point B is also very obvious within the bounds of the GeoRegion, it is simply that the longitude of Point A is shifted by 360º such that it is now in the (0,360) coordinates frame.  We see that this is of no concern to GeoRegions.jl, which can detect that it is within the bounds of the GeoRegion anyway.
 
 ```@example isin
-isinGeoRegion(B,geo,throw=false)
+in(B,geo)
 ```
 
 ## Is a GeoRegion inside a GeoRegion?
