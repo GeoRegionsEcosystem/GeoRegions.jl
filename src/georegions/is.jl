@@ -66,7 +66,7 @@ function isID(
     throw :: Bool=true
 )
 
-    rvec,_,_ = listall(path)
+    rvec,_,_,_ = listall(path)
     return isID(geoID,rvec;throw=throw,dolog=true)
 
 end

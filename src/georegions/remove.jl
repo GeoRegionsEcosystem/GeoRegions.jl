@@ -51,13 +51,13 @@ function rmID(
         @info "$(modulelog) - Removing the GeoRegion $(geoID) ..."
     end
 
-    regvec,filevec,typevec = listall(path); isID(geoID,regvec)
-    ind = findall(geoID.==regvec)[1]
+    rvec,fvec,tvec,dvec = listall(path); isID(geoID,rvec)
+    ind = findall(geoID.==rvec)[1]
 
-    fdefined = ["giorgi.txt","srex.txt","ar6.txt"]
-    if !any(filevec[ind].==fdefined)
-        geo = getgeoregion(geoID,joinpath(path,filevec[ind]), typevec[ind])
-        removegeoregion(geo,joinpath(path,filevec[ind]))
+    fdefined = ["global.txt","giorgi.txt","srex.txt","ar6.txt"]
+    if !any(fvec[ind].==fdefined)
+        geo = getgeoregion(geoID,joinpath(dvec[ind],fvec[ind]),tvec[ind])
+        removegeoregion(geo,joinpath(dvec[ind],fvec[ind]))
     else
         error("$(modulelog) - You are trying to remove the predefined GeoRegion \"$geoID\". If you really want to remove this GeoRegion, please do `force = true`")
     end
