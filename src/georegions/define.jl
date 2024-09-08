@@ -27,7 +27,7 @@ function GeoRegion(
     path  :: AbstractString = homedir(),
 )
 
-    @info "$(modulelog) - Retrieving information for the GeoRegion defined by the ID $geoID"
+    @info "$(modulelog()) - Retrieving information for the GeoRegion defined by the ID $geoID"
 
     rvec,fvec,tvec,dvec = listall(path); isID(geoID,rvec)
     ind = findall(geoID.==rvec)[1]
@@ -91,13 +91,13 @@ function RectRegion(
             cp(joinpath(geodir,"rectlist.txt"),geofile)
         end
         if isID(ID,path=path,throw=false)
-            error("$(modulelog) - The GeoRegion $(ID) has already been defined.  Please use another identifier.")
+            error("$(modulelog()) - The GeoRegion $(ID) has already been defined.  Please use another identifier.")
         else
-            @info "$(modulelog) - Adding the GeoRegion $(ID) to the list."
+            @info "$(modulelog()) - Adding the GeoRegion $(ID) to the list."
         end
         if pID != "GLB"
             if !isID(pID,path=path,throw=false)
-                error("$(modulelog) - The GeoRegion $(pID) was defined to be the parent GeoRegion of $(ID), but the GeoRegion $(pID) is not defined.  Please define the GeoRegion $(pID) and its properties.")
+                error("$(modulelog()) - The GeoRegion $(pID) was defined to be the parent GeoRegion of $(ID), but the GeoRegion $(pID) is not defined.  Please define the GeoRegion $(pID) and its properties.")
             end
         end
     else
@@ -194,13 +194,13 @@ function TiltRegion(
             cp(joinpath(geodir,"tiltlist.txt"),geofile)
         end
         if isID(ID,path=path,throw=false)
-            error("$(modulelog) - The GeoRegion $(ID) has already been defined.  Please use another identifier.")
+            error("$(modulelog()) - The GeoRegion $(ID) has already been defined.  Please use another identifier.")
         else
-            @info "$(modulelog) - Adding the GeoRegion $(ID) to the list."
+            @info "$(modulelog()) - Adding the GeoRegion $(ID) to the list."
         end
         if pID != "GLB"
             if !isID(pID,path=path,throw=false)
-                error("$(modulelog) - The GeoRegion $(pID) was defined to be the parent GeoRegion of $(ID), but the GeoRegion $(pID) is not defined.  Please define the GeoRegion $(pID) and its properties.")
+                error("$(modulelog()) - The GeoRegion $(pID) was defined to be the parent GeoRegion of $(ID), but the GeoRegion $(pID) is not defined.  Please define the GeoRegion $(pID) and its properties.")
             end
         end
     else
@@ -294,13 +294,13 @@ function PolyRegion(
             cp(joinpath(geodir,"polylist.txt"),geofile)
         end
         if isID(ID,path=path,throw=false)
-            error("$(modulelog) - The GeoRegion $(ID) has already been defined.  Please use another identifier.")
+            error("$(modulelog()) - The GeoRegion $(ID) has already been defined.  Please use another identifier.")
         else
-            @info "$(modulelog) - Adding the GeoRegion $(ID) to the list."
+            @info "$(modulelog()) - Adding the GeoRegion $(ID) to the list."
         end
         if pID != "GLB"
             if !isID(pID,path=path)
-                error("$(modulelog) - The GeoRegion $(pID) was defined to be the parent GeoRegion of $(ID), but the GeoRegion $(pID) is not defined.  Please define the GeoRegion $(pID) and its properties.")
+                error("$(modulelog()) - The GeoRegion $(pID) was defined to be the parent GeoRegion of $(ID), but the GeoRegion $(pID) is not defined.  Please define the GeoRegion $(pID) and its properties.")
             end
         end
     else
@@ -309,7 +309,7 @@ function PolyRegion(
 
     if (lon[1] != lon[end]) || (lat[1] != lat[end])
         if !join
-            error("$(modulelog) - The longitude/ latitude coordinates of the first and last points must be the same")
+            error("$(modulelog()) - The longitude/ latitude coordinates of the first and last points must be the same")
         else
             lon = vcat(lon,lon[1])
             lat = vcat(lat,lat[1])
@@ -357,31 +357,31 @@ function checkbounds(
 )
 
     if (N>90) || (N<-90)
-        error("$(modulelog) - The latitude of the GeoRegion's northern bound at $N is not valid.")
+        error("$(modulelog()) - The latitude of the GeoRegion's northern bound at $N is not valid.")
     end
 
     if (S>90) || (S<-90)
-        error("$(modulelog) - The latitude of the GeoRegion's southern bound at $S is not valid.")
+        error("$(modulelog()) - The latitude of the GeoRegion's southern bound at $S is not valid.")
     end
 
     if (E>360) || (E<-180)
-        error("$(modulelog) - The longitude of the GeoRegion's eastern bound at $E is not valid.")
+        error("$(modulelog()) - The longitude of the GeoRegion's eastern bound at $E is not valid.")
     end
 
     if (W>360) || (W<-180)
-        error("$(modulelog) - The longitude of the GeoRegion's western bound at $W is not valid.")
+        error("$(modulelog()) - The longitude of the GeoRegion's western bound at $W is not valid.")
     end
 
     if (E - W) > 360
-        error("$(modulelog) - The GeoRegion cannot be more than 360º in Longitude.")
+        error("$(modulelog()) - The GeoRegion cannot be more than 360º in Longitude.")
     end
 
     if E < W
-        error("$(modulelog) - The eastern bound of the GeoRegion cannot be west of the western bound.")
+        error("$(modulelog()) - The eastern bound of the GeoRegion cannot be west of the western bound.")
     end
 
     if N < S
-        error("$(modulelog) - The northern bound of the GeoRegion cannot be south of the southern bound.")
+        error("$(modulelog()) - The northern bound of the GeoRegion cannot be south of the southern bound.")
     end
 
     if E > 180; is360 = true; else is360 = false end

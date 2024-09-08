@@ -119,8 +119,7 @@ end
     tableRectRegions(;
         path :: AbstractString = homedir(),
         custom :: Bool = true,
-        giorgi :: Bool = false,
-        warn   :: Bool = true
+        giorgi :: Bool = false
     ) -> nothing
 
 Display all available RectRegions in tabular format.
@@ -131,7 +130,6 @@ Keyword Arguments
            Defaults to the user's home directory `homedir()`
 - `custom` : If true, display custom user-defined RectRegions. Default is `true`
 - `giorgi` : If true, display GF predefined RectRegions. Default is `false`
-- `warn` : If true, display warnings if custom files do not exist
 """
 function tableRectRegions(;
     path :: AbstractString = homedir(),
@@ -186,8 +184,7 @@ end
 
 """
     tableTiltRegions(;
-        path :: AbstractString = homedir(),
-        warn   :: Bool = true
+        path :: AbstractString = homedir()
     ) -> nothing
 
 Display all available TiltRegions in tabular format.
@@ -196,11 +193,9 @@ Keyword Arguments
 =================
 - `path` : The path where the list of custom TiltRegions will be retrieved from.
            Defaults to the user's home directory `homedir()`
-- `warn` : If true, display warnings if custom files do not exist
 """
 function tableTiltRegions(;
-    path :: AbstractString = homedir(),
-    warn :: Bool = true
+    path :: AbstractString = homedir()
 )
 
     rvec = []
@@ -214,9 +209,7 @@ function tableTiltRegions(;
     if isfile(fID)
         rvec,fvec,tvec,dvec = fillinfo(rvec,fvec,tvec,dvec,fID)
     else
-        if warn
-            @warn "$(modulelog) - The custom file \"tiltlist.txt\" does not exist in $path, use `setupGeoRegions()` to copy templates and empty custom lists to $path"
-        end
+        @warn "$(modulelog) - The custom file \"tiltlist.txt\" does not exist in $path, use `setupGeoRegions()` to copy templates and empty custom lists to $path"
     end
 
     ngeo = size(rvec,1)
@@ -249,8 +242,7 @@ end
         path :: AbstractString = homedir(),
         custom :: Bool = true,
         srex :: Bool = false,
-        ar6  :: Bool = false,
-        warn   :: Bool = true
+        ar6  :: Bool = false
     ) -> nothing
 
 Display all available PolyRegions in tabular format.
@@ -262,14 +254,12 @@ Keyword Arguments
 - `custom` : If true, display custom user-defined PolyRegions. Default is `true`
 - `srex` : If true, display SREX predefined PolyRegions. Default is `false`
 - `ar6` : If true, display IPCC AR6 predefined PolyRegions. Default is `false`
-- `warn` : If true, display warnings if custom files do not exist
 """
 function tablePolyRegions(;
     path :: AbstractString = homedir(),
     custom :: Bool = true,
     srex   :: Bool = false,
-    ar6    :: Bool = false,
-    warn   :: Bool = true
+    ar6    :: Bool = false
 )
     
     rvec = []

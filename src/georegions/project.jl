@@ -26,7 +26,7 @@ function setupGeoRegions(;
         if !overwrite
             if !isfile(freg)
 
-                @debug "$(modulelog) - Unable to find $freg, copying data from $ftem ..."
+                @debug "$(modulelog()) - Unable to find $freg, copying data from $ftem ..."
 
                 open(freg,"w") do io
                     open(ftem) do f
@@ -40,7 +40,7 @@ function setupGeoRegions(;
         else
 
             if isfile(freg)
-                @warn "$(modulelog) - Overwriting $freg with original file in $ftem ..."
+                @warn "$(modulelog()) - Overwriting $freg with original file in $ftem ..."
                 rm(freg,force=true)
             end
 
@@ -79,7 +79,7 @@ function readGeoRegions(
     fname :: AbstractString
 )
 
-    @info "$(modulelog) - Loading user-defined GeoRegions from the file $fname"
+    @info "$(modulelog()) - Loading user-defined GeoRegions from the file $fname"
 
     rvec,rtype = listgeoregions(fname)
     ngeo = length(rvec)
@@ -119,7 +119,7 @@ function addGeoRegions(
     overwrite :: Bool = false
 )
 
-    @info "$(modulelog) - Importing user-defined GeoRegions from the file $fname directly into the custom lists"
+    @info "$(modulelog()) - Importing user-defined GeoRegions from the file $fname directly into the custom lists"
 
     rvec,rtype = listgeoregions(fname)
     for reg in rvec
@@ -127,11 +127,11 @@ function addGeoRegions(
             g = getgeoregion(reg,fname,rtype)
             add(g,path=path)
         elseif overwrite
-            @warn "$(modulelog) - The GeoRegion ID $reg is already in use. Overwriting and replacing with new boundaries ..."
+            @warn "$(modulelog()) - The GeoRegion ID $reg is already in use. Overwriting and replacing with new boundaries ..."
             g = getgeoregion(reg,fname,rtype)
             overwrite(g,path=path)
         else
-            @warn "$(modulelog) - The GeoRegion ID $reg is already in use. Please use a different ID, or you can remove the ID using removeGeoRegion()."
+            @warn "$(modulelog()) - The GeoRegion ID $reg is already in use. Please use a different ID, or you can remove the ID using removeGeoRegion()."
         end
     end
 
@@ -156,12 +156,12 @@ function deleteGeoRegions(;
 )
 
 
-    @warn "$(modulelog) - Removing custom GeoRegions.jl files from $path, all GeoRegion information saved into these files will be permanently lost"
+    @warn "$(modulelog()) - Removing custom GeoRegions.jl files from $path, all GeoRegion information saved into these files will be permanently lost"
     flist = ["rectlist.txt","polylist.txt","tiltlist.txt"]
     for fname in flist
         rm(joinpath(path,fname),force=true)
     end
 
-    return
+    return nothing
 
 end

@@ -17,13 +17,13 @@ function isGeoRegion(
 
         tgeo = GeoRegion(geo.ID,path=path)
         if tgeo == geo
-            @info "$(modulelog) - The GeoRegion \"$(geo.ID)\" we have defined shares the same properties as the custom GeoRegion \"$(tgeo.ID)\" from the lists in $path"
+            @info "$(modulelog()) - The GeoRegion \"$(geo.ID)\" we have defined shares the same properties as the custom GeoRegion \"$(tgeo.ID)\" from the lists in $path"
             return true
         else
             if throw
-                error("$(modulelog) - The custom GeoRegion \"$(tgeo.ID)\" from the lists in $path does not have the same properties as the GeoRegion \"$(geo.ID)\" we have defined despite having the same ID.")
+                error("$(modulelog()) - The custom GeoRegion \"$(tgeo.ID)\" from the lists in $path does not have the same properties as the GeoRegion \"$(geo.ID)\" we have defined despite having the same ID.")
             else
-                @warn "$(modulelog) - The custom GeoRegion \"$(tgeo.ID)\" from the lists in $path does not have the same properties as the GeoRegion \"$(geo.ID)\" we have defined despite having the same ID."
+                @warn "$(modulelog()) - The custom GeoRegion \"$(tgeo.ID)\" from the lists in $path does not have the same properties as the GeoRegion \"$(geo.ID)\" we have defined despite having the same ID."
                 return false
             end
         end
@@ -78,18 +78,18 @@ function isID(
     dolog  :: Bool = false)
 
     if dolog
-        @info "$(modulelog) - Checking to see if the ID $geoID is in use"
+        @info "$(modulelog()) - Checking to see if the ID $geoID is in use"
     end
 
     if sum(regvec.==geoID) == 0
         if throw
-            error("$(modulelog) - $(geoID) is not a valid GeoRegion identifier, use RectRegion(), TiltRegion() or PolyRegion() to add this GeoRegion to the list.")
+            error("$(modulelog()) - $(geoID) is not a valid GeoRegion identifier, use RectRegion(), TiltRegion() or PolyRegion() to add this GeoRegion to the list.")
         else
-            @warn "$(modulelog) - $(geoID) is not a valid GeoRegion identifier, use RectRegion(), TiltRegion() or PolyRegion() to add this GeoRegion to the list."
+            @warn "$(modulelog()) - $(geoID) is not a valid GeoRegion identifier, use RectRegion(), TiltRegion() or PolyRegion() to add this GeoRegion to the list."
             return false
         end
     else
-        if dolog; @info "$(modulelog) - The ID $geoID is already in use" end
+        if dolog; @info "$(modulelog()) - The ID $geoID is already in use" end
         return true
     end
 
