@@ -46,9 +46,9 @@ function rmID(
 )
 
     if geoID == "GLB"
-        error("$(modulelog()) - The Global GeoRegion \"GLB\" is an integral part of the GeoRegions.jl package and cannot be removed.")
+        error("$(modulelog) - The Global GeoRegion \"GLB\" is an integral part of the GeoRegions.jl package and cannot be removed.")
     else
-        @info "$(modulelog()) - Removing the GeoRegion $(geoID) ..."
+        @info "$(modulelog) - Removing the GeoRegion $(geoID) ..."
     end
 
     regvec,filevec,typevec = listall(path); isID(geoID,regvec)
@@ -59,7 +59,7 @@ function rmID(
         geo = getgeoregion(geoID,joinpath(path,filevec[ind]), typevec[ind])
         removegeoregion(geo,joinpath(path,filevec[ind]))
     else
-        error("$(modulelog()) - You are trying to remove the predefined GeoRegion \"$geoID\". If you really want to remove this GeoRegion, please do `force = true`")
+        error("$(modulelog) - You are trying to remove the predefined GeoRegion \"$geoID\". If you really want to remove this GeoRegion, please do `force = true`")
     end
 
 end

@@ -115,7 +115,7 @@ struct TiltRegion{ST<:AbstractString, FT<:Real} <: GeoRegion
     ΔY    :: FT
 end
 
-modulelog() = "$(now()) - GeoRegions.jl"
+modulelog = "$(now()) - GeoRegions.jl"
 geodir = joinpath(@__DIR__,"files")
 
 ## Including other files in the module

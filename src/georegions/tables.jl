@@ -35,7 +35,7 @@ function tableGeoRegions(;
             if isfile(fID)
                 rvec,fvec,tvec,dvec = fillinfo(rvec,fvec,tvec,dvec,fID)
             else
-                @warn "$(modulelog()) - The custom file does \"$fname\" does not exist in $path, use `setupGeoRegions()` to copy templates and empty custom lists to $path"
+                @warn "$(modulelog) - The custom file does \"$fname\" does not exist in $path, use `setupGeoRegions()` to copy templates and empty custom lists to $path"
             end
         end
     end
@@ -147,7 +147,7 @@ function tableRectRegions(;
         if isfile(fID)
             rvec,fvec,tvec,dvec = fillinfo(rvec,fvec,tvec,dvec,fID)
         else
-            @warn "$(modulelog()) - The custom file \"rectlist.txt\" does not exist in $path, use `setupGeoRegions()` to copy templates and empty custom lists to $path"
+            @warn "$(modulelog) - The custom file \"rectlist.txt\" does not exist in $path, use `setupGeoRegions()` to copy templates and empty custom lists to $path"
         end
     end
 
@@ -207,7 +207,7 @@ function tableTiltRegions(;
     if isfile(fID)
         rvec,fvec,tvec,dvec = fillinfo(rvec,fvec,tvec,dvec,fID)
     else
-        @warn "$(modulelog()) - The custom file \"tiltlist.txt\" does not exist in $path, use `setupGeoRegions()` to copy templates and empty custom lists to $path"
+        @warn "$(modulelog) - The custom file \"tiltlist.txt\" does not exist in $path, use `setupGeoRegions()` to copy templates and empty custom lists to $path"
     end
 
     ngeo = size(rvec,1)
@@ -272,7 +272,7 @@ function tablePolyRegions(;
         if isfile(fID)
             rvec,fvec,tvec,dvec = fillinfo(rvec,fvec,tvec,dvec,fID)
         else
-            @warn "$(modulelog()) - The custom file \"polylist.txt\" does not exist in $path, use `setupGeoRegions()` to copy templates and empty custom lists to $path"
+            @warn "$(modulelog) - The custom file \"polylist.txt\" does not exist in $path, use `setupGeoRegions()` to copy templates and empty custom lists to $path"
         end
     end
 
