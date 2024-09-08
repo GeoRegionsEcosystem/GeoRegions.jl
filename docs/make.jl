@@ -39,7 +39,7 @@ makedocs(;
             "Retrieving GeoRegions"  => "basics/read.md",
             "Predefined GeoRegions"  => "basics/predefined.md",
             "GeoRegion Properties"   => "basics/shape.md",
-            # "Is it in a GeoRegion?"  => "basics/isin.md",
+            "Is it in a GeoRegion?"  => "basics/isin.md",
             "Table of GeoRegions"    => "basics/tables.md",
             "Listing All GeoRegions" => "basics/listall.md",
         ],
