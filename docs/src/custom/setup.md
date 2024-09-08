@@ -5,9 +5,5 @@ setupGeoRegions
 ```
 
 ```@docs
-resetGeoRegions
-```
-
-```@docs
 deleteGeoRegions
 ```
