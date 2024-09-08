@@ -18,8 +18,7 @@ Keyword Arguments
 function tableGeoRegions(;
     path :: AbstractString = homedir(),
     predefined :: Bool = true,
-    custom     :: Bool = true,
-    warn       :: Bool = true
+    custom     :: Bool = true
 )
 
     flist = ["rectlist.txt","polylist.txt","tiltlist.txt"]
@@ -38,9 +37,7 @@ function tableGeoRegions(;
             if isfile(fID)
                 rvec,fvec,tvec,dvec = fillinfo(rvec,fvec,tvec,dvec,fID)
             else
-                if warn
-                    @warn "$(modulelog) - The custom file does \"$fname\" does not exist in $path, use `setupGeoRegions()` to copy templates and empty custom lists to $path"
-                end
+                @warn "$(modulelog) - The custom file does \"$fname\" does not exist in $path, use `setupGeoRegions()` to copy templates and empty custom lists to $path"
             end
         end
     end
@@ -139,8 +136,7 @@ Keyword Arguments
 function tableRectRegions(;
     path :: AbstractString = homedir(),
     custom :: Bool = true,
-    giorgi :: Bool = false,
-    warn   :: Bool = true
+    giorgi :: Bool = false
 )
 
     rvec = []
@@ -155,9 +151,7 @@ function tableRectRegions(;
         if isfile(fID)
             rvec,fvec,tvec,dvec = fillinfo(rvec,fvec,tvec,dvec,fID)
         else
-            if warn
-                @warn "$(modulelog) - The custom file \"rectlist.txt\" does not exist in $path, use `setupGeoRegions()` to copy templates and empty custom lists to $path"
-            end
+            @warn "$(modulelog) - The custom file \"rectlist.txt\" does not exist in $path, use `setupGeoRegions()` to copy templates and empty custom lists to $path"
         end
     end
 
@@ -290,9 +284,7 @@ function tablePolyRegions(;
         if isfile(fID)
             rvec,fvec,tvec,dvec = fillinfo(rvec,fvec,tvec,dvec,fID)
         else
-            if warn
-                @warn "$(modulelog) - The custom file \"polylist.txt\" does not exist in $path, use `setupGeoRegions()` to copy templates and empty custom lists to $path"
-            end
+            @warn "$(modulelog) - The custom file \"polylist.txt\" does not exist in $path, use `setupGeoRegions()` to copy templates and empty custom lists to $path"
         end
     end
 
