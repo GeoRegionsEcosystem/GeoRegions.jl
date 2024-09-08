@@ -16,9 +16,9 @@ PolyRegion(ID, pID, name, ...)
 ```
 
 Please refer to the respective pages dedicated to each of the `GeoRegion` subtypes:
-* [RectRegion](/custom/create/rectregion)
-* [PolyRegion](/custom/create/polyregion)
-* [TiltRegion](/custom/create/tiltregion)
+* [RectRegion](/tutorials/create/rectregion)
+* [PolyRegion](/tutorials/create/polyregion)
+* [TiltRegion](/tutorials/create/tiltregion)
 
 !!! warning "Constraints on `ID` and `pID` when `save = true`"
     When `save = true`, the GeoRegion `pID` must already have been previously defined, and the region defined by the GeoRegion `ID` must be entirely within the region defined by the GeoRegion `pID`.
