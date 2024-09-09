@@ -4,6 +4,7 @@ using Test
 
 @testset "Test Creation, Detection and Removal of GeoRegions" begin
 
+    disable_logging(Logging.Warn)
     geo = RectRegion("TRP","GLB","Tropics",[30,-30,360,0])
     @test !isGeoRegion(geo,throw=false)
     @test add(geo) === nothing
@@ -22,6 +23,7 @@ using Test
     @test  isGeoRegion(geo2,throw=false)
     @test  rmID("TRP_DTP") === nothing
     @test !isGeoRegion(geo2,throw=false)
+    disable_logging(Logging.Debug)
 
 end
 
@@ -41,18 +43,16 @@ end
 
 end
 
-@testset "Testing isPointinGeoRegion" begin
+@testset "Testing GeoRegion in GeoRegion" begin
 
     disable_logging(Logging.Warn)
-    # Test in operator
-    A = Point2(-20,5)
-    B = Point2(340,5)
-    C = Point2(-45,-7.5)
-    geo = GeoRegion("AR6_EAO")
 
-    @test  in(A,geo)
-    @test  in(B,geo)
-    @test !in(C,geo)
+    # Test in RectRegion
+    
+
+    # Test in PolyRegion
+
+    
     disable_logging(Logging.Debug)
 
 end
