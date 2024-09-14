@@ -18,31 +18,33 @@ makedocs(;
         repo = "https://github.com/GeoRegionsEcosystem/GeoRegions.jl",
     ),
     pages=[
-        "Home" => "index.md",
-        "What is a GeoRegion?"  => "georegions.md",
+        "Home"                      => "index.md",
+        "What is a GeoRegion?"      => "georegions.md",
         "Basic Functionality" => [
-            "Retrieving GeoRegions"  => [
+            "Retrieving GeoRegions" => [
                 "Overview (START HERE)"  => "basics/read/overview.md",
                 "Predefined GeoRegions"  => "basics/read/predefined.md",
                 "Tabulating GeoRegions"  => "basics/read/tables.md",
                 "Listing All GeoRegions" => "basics/read/listall.md",
-            ]
-            "GeoRegion Properties"   => [
+            ],
+            "Creating GeoRegions"   => "basics/create.md",
+            "GeoRegion Properties"  => [
                 "Shape of a GeoRegion"  => "basics/properties/shape.md",
                 "Is it in a GeoRegion?" => "basics/properties/isin.md",
             ]
         ],
-        "GeoRegions.jl Tutorials" => [
+        "GeoRegions.jl Tutorials"   => [
             "Setup (START HERE)"     => "tutorials/setup.md",
             "Create, Save, Retrieve" => "tutorials/overview.md",
-            "More on Creation" => [
-                "Creating RectRegions"   => "tutorials/create/rectregion.md",
-                "Creating PolyRegions"   => "tutorials/create/polyregion.md",
-                "Creating TiltRegions"   => "tutorials/create/tiltregion.md",
-            ],
             "Custom GeoRegion Files" => "tutorials/files.md",
         ],
-        "Ecosystem"  => "ecosystem.md",
+        "API"                       => [
+            "Creation" => "api/create.md",
+            # "Add"      => "api/add.md",
+            # "Read"     => "api/read.md",
+            # "Tables"   => "api/tables.md",
+        ],
+        "Ecosystem"                 => "ecosystem.md",
     ],
 )
 
