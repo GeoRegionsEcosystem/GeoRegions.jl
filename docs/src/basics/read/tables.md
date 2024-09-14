@@ -3,7 +3,7 @@
 A list of GeoRegions and their basic properties can be called using the function `tableGeoRegions()`, which lists all available GeoRegions, both predefined and [user-defined](/tutorials/overview). You can also choose to list only predefined or user-customized GeoRegions by setting their respective keywords arguments to `true/false`.
 
 ```julia
-tableGeoRegions()
+tableGeoRegions(predefined = true/false, custom = true/false)
 ```
 
 !!! tip "Additional Functionality for `tableGeoRegions()`"
@@ -13,8 +13,38 @@ tableGeoRegions()
 
 Besides listing all available GeoRegions, it is also possible to list a variety of different subtypes of GeoRegions with the `tableRectRegions()`, `tableTiltRegions()` and `tablePolyRegions()`.
 
-```@docs
-tableRectRegions
-tableTiltRegions
-tablePolyRegions
+```julia
+tableRectRegions(giorgi = true/false, custom = true/false)
+tableTiltRegions()
+tablePolyRegions(srex = true/false, ar6 = true/false, custom = true/false)
 ```
+
+## Use Case Examples
+
+:::tabs
+
+== tableGeoRegions()
+
+```@example tablesimple
+tableGeoRegions()
+```
+
+== tableRectRegions()
+
+```@example tablesimple
+tableRectRegions()
+```
+
+== tablePolyRegions()
+
+```@example tablesimple
+tablePolyRegions()
+```
+
+== tableTiltRegions()
+
+```@example tablesimple
+tableTiltRegions()
+```
+
+:::

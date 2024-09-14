@@ -8,21 +8,6 @@ using GeoRegions
 
 DocMeta.setdocmeta!(GeoRegions, :DocTestSetup, :(using GeoRegions); recursive=true)
 
-# pages_using = [
-#     "Is it in a GeoRegion?"           => "isin",
-#     "Custom GeoRegions"               => "custom",
-# ]
-
-# const DIR_LIT      = joinpath(@__DIR__, "literate")
-# const DIR_USING    = joinpath(@__DIR__, "src/using")
-
-# scripts_using    = [ filename * ".jl" for (title, filename) in pages_using ]
-
-# for scripts in scripts_using
-#     scripts_filepath = joinpath(DIR_LIT, scripts)
-#     Literate.markdown(scripts_filepath, DIR_USING; flavor = Literate.DocumenterFlavor())
-# end
-
 makedocs(;
     modules  = [GeoRegions],
     authors  = "Nathanael Wong <natgeo.wong@outlook.com>",
@@ -37,14 +22,14 @@ makedocs(;
         "What is a GeoRegion?"  => "georegions.md",
         "Basic Functionality" => [
             "Retrieving GeoRegions"  => [
-                "Overview (START HERE)"  => "basics/read.md",
-                "Predefined GeoRegions"  => "basics/predefined.md",
-                "Tabulating GeoRegions"  => "basics/tables.md",
-                "Listing All GeoRegions" => "basics/listall.md",
+                "Overview (START HERE)"  => "basics/read/overview.md",
+                "Predefined GeoRegions"  => "basics/read/predefined.md",
+                "Tabulating GeoRegions"  => "basics/read/tables.md",
+                "Listing All GeoRegions" => "basics/read/listall.md",
             ]
             "GeoRegion Properties"   => [
-                "Shape of a GeoRegion"  => "basics/shape.md",
-                "Is it in a GeoRegion?" => "basics/isin.md",
+                "Shape of a GeoRegion"  => "basics/properties/shape.md",
+                "Is it in a GeoRegion?" => "basics/properties/isin.md",
             ]
         ],
         "GeoRegions.jl Tutorials" => [
