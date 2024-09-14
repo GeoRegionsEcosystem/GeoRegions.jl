@@ -129,12 +129,12 @@ Keyword Arguments
 - `path` : The path where the list of custom RectRegions will be retrieved from.
            Defaults to the user's home directory `homedir()`
 - `custom` : If true, display custom user-defined RectRegions. Default is `true`
-- `giorgi` : If true, display GF predefined RectRegions. Default is `false`
+- `giorgi` : If true, display GF predefined RectRegions. Default is `true`
 """
 function tableRectRegions(;
     path :: AbstractString = homedir(),
     custom :: Bool = true,
-    giorgi :: Bool = false
+    giorgi :: Bool = true
 )
 
     rvec = []
@@ -252,14 +252,14 @@ Keyword Arguments
 - `path` : The path where the list of custom PolyRegions will be retrieved from.
            Defaults to the user's home directory `homedir()`
 - `custom` : If true, display custom user-defined PolyRegions. Default is `true`
-- `srex` : If true, display SREX predefined PolyRegions. Default is `false`
-- `ar6` : If true, display IPCC AR6 predefined PolyRegions. Default is `false`
+- `srex` : If true, display SREX predefined PolyRegions. Default is `true`
+- `ar6` : If true, display IPCC AR6 predefined PolyRegions. Default is `true`
 """
 function tablePolyRegions(;
     path :: AbstractString = homedir(),
     custom :: Bool = true,
-    srex   :: Bool = false,
-    ar6    :: Bool = false
+    srex   :: Bool = true,
+    ar6    :: Bool = true
 )
     
     rvec = []
