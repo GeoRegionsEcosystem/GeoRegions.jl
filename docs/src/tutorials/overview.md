@@ -20,7 +20,7 @@ add(geo, path = ...)
 ```
 
 ```@example using
-
+using GeoRegions
 ```
 
 ## Calling saved GeoRegions
@@ -32,7 +32,7 @@ geo = GeoRegion(ID, path = "<directory>")
 ```
 
 ```@example using
-
+using GeoRegions
 ```
 
 ## Table of user-defined GeoRegions
@@ -44,5 +44,5 @@ tableGeoRegions(;path = ...)
 ```
 
 ```@example using
-
+using GeoRegions
 ```

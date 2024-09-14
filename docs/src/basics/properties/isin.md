@@ -87,11 +87,11 @@ geo_TS4 = PolyRegion(
     [-10,-5,0,-10,-30,-35,-20,-10]
 )
 
-blon_b,blat_b,slon_b,slat_b = coordGeoRegion(geo_BIG)
-              slon_1,slat_1 = coordGeoRegion(geo_TS1)
-blon_2,blat_2,slon_2,slat_2 = coordGeoRegion(geo_TS2)
-blon_3,blat_3,slon_3,slat_3 = coordGeoRegion(geo_TS3)
-blon_4,blat_4,slon_4,slat_4 = coordGeoRegion(geo_TS4)
+slon_b,slat_b = coordinates(geo_BIG)
+slon_1,slat_1 = coordinates(geo_TS1)
+slon_2,slat_2 = coordinates(geo_TS2)
+slon_3,slat_3 = coordinates(geo_TS3)
+slon_4,slat_4 = coordinates(geo_TS4)
 
 fig = Figure()
 
@@ -101,14 +101,10 @@ ax = Axis(
 )
 
 lines!(ax,clon,clat,color=:black,linewidth=3)
-lines!(ax,blon_b,blat_b,linewidth=5,color=:blue,linestyle=:dot)
 lines!(ax,slon_b,slat_b,linewidth=5,color=:blue)
 lines!(ax,slon_1,slat_1,linewidth=5,color=:red)
-lines!(ax,blon_2,blat_2,linewidth=5,color=:green,linestyle=:dot)
 lines!(ax,slon_2,slat_2,linewidth=5,color=:green)
-lines!(ax,blon_3,blat_3,linewidth=5,color=:red,linestyle=:dot)
 lines!(ax,slon_3,slat_3,linewidth=5,color=:red)
-lines!(ax,blon_4.-360,blat_4,linewidth=5,color=:green,linestyle=:dot)
 lines!(ax,slon_4.-360,slat_4,linewidth=5,color=:green)
 
 resize_to_layout!(fig)

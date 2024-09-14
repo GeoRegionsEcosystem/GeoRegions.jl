@@ -1,7 +1,7 @@
 # Default List of Predefined GeoRegions
 ```@example listgeo
 using GeoRegions
-resetGeoRegions(all=true);
+setupGeoRegions(overwrite=true);
 ```
 
 ## GeoRegions.jl's default region is the Globe

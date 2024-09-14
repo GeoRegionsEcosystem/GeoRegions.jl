@@ -18,7 +18,7 @@ export
         ==, isGeoRegion, isID,
         add, rm, rmID, overwrite,
 
-        setupGeoRegions, readGeoRegions, addGeoRegions, resetGeoRegions, deleteGeoRegions,
+        setupGeoRegions, readGeoRegions, addGeoRegions, deleteGeoRegions,
         tableGeoRegions, tableRectRegions, tableTiltRegions, tablePolyRegions,
 
         isinGeoRegion, in,

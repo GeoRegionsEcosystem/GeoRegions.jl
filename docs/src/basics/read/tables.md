@@ -26,24 +26,28 @@ tablePolyRegions(srex = true/false, ar6 = true/false, custom = true/false)
 == tableGeoRegions()
 
 ```@example tablesimple
+using GeoRegions
 tableGeoRegions()
 ```
 
 == tableRectRegions()
 
 ```@example tablesimple
+using GeoRegions
 tableRectRegions()
 ```
 
 == tablePolyRegions()
 
 ```@example tablesimple
+using GeoRegions
 tablePolyRegions()
 ```
 
 == tableTiltRegions()
 
 ```@example tablesimple
+using GeoRegions
 tableTiltRegions()
 ```
 
