@@ -29,6 +29,7 @@ Add the `SRX_` prefix to the 3-letter IDs given in Seneviratne et al. [2012] to 
     All `SRX_*` domains are defined only in versions ≥2
 
 ```@example listgeo
+tablePolyRegions(srex=true,ar6=false,custom=false)
 ```
 
 ## IPCC AR6 Regions from Iturbide et al., [2020]
@@ -39,4 +40,5 @@ Add the `AR6_` prefix to the 3-letter IDs given in Iturbide et al., [2020] to ca
     All `AR6_*` domains are defined only in versions ≥2
 
 ```@example listgeo
+tablePolyRegions(ar6=true,srex=false,custom=false)
 ```
