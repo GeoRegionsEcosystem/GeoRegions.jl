@@ -1,5 +1,5 @@
 <p align="center">
-<img alt="NASAPrecipitation.jl Logo" src=https://raw.githubusercontent.com/GeoRegionsEcosystem/GeoRegions.jl/main/src/logosmall.png />
+<img alt="GeoRegions.jl Logo" src=https://raw.githubusercontent.com/GeoRegionsEcosystem/GeoRegions.jl/main/src/logosmall.png />
 </p>
 
 # **<div align="center">GeoRegions.jl</div>**

@@ -1,11 +1,11 @@
-==(a::T, b::T) where T <: RectRegion =
-    getfield.(Ref(a),fieldnames(T)) == getfield.(Ref(b),fieldnames(T))
+==(geo1::T, geo2::T) where T <: RectRegion =
+    getfield.(Ref(geo1),fieldnames(T)) == getfield.(Ref(geo2),fieldnames(T))
 
-==(a::T, b::T) where T <: PolyRegion =
-    getfield.(Ref(a),fieldnames(T)) == getfield.(Ref(b),fieldnames(T))
+==(geo1::T, geo2::T) where T <: PolyRegion =
+    getfield.(Ref(geo1),fieldnames(T)) == getfield.(Ref(geo2),fieldnames(T))
 
-==(a::T, b::T) where T <: TiltRegion =
-    getfield.(Ref(a),fieldnames(T)) == getfield.(Ref(b),fieldnames(T))
+==(geo1::T, geo2::T) where T <: TiltRegion =
+    getfield.(Ref(geo1),fieldnames(T)) == getfield.(Ref(geo2),fieldnames(T))
 
 function isGeoRegion(
     geo   :: GeoRegion;
