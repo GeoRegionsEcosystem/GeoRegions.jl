@@ -19,6 +19,9 @@ tableTiltRegions()
 tablePolyRegions(srex = true/false, ar6 = true/false, custom = true/false)
 ```
 
+!!! tip "`GLB` Region will always appear"
+    The `GLB` GeoRegion will always appear in the table, because it is the ultimate parent GeoRegion. All other `GeoRegion`s will always in some manner be a subset of the `GLB` GeoRegion.
+
 ## Use Case Examples
 
 :::tabs

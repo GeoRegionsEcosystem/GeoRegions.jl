@@ -2,8 +2,6 @@
 
 Recall that there are three different types of `GeoRegion`s: (a) `RectRegion`s, (b) `TiltRegion`s and (c) `PolyRegion`s.
 
-## Creating new GeoRegions
-
 We use the functions `RectRegion()`, `TiltRegion()` and `PolyRegion` to create new `GeoRegion`s of their respective types. Regardless of `GeoRegion` type, the **first three inputs are always the same**, in respective order:
 1. The ID (`ID`)
 2. parent `GeoRegion` ID, (`pID`)
@@ -14,6 +12,8 @@ RectRegion(ID, pID, name, ...)
 TiltRegion(ID, pID, name, ...)
 PolyRegion(ID, pID, name, ...)
 ```
+
+Each of these functions have specific inputs, as seen in the respective sections below.
 
 ## Defining New `RectRegion`s
 
@@ -58,7 +58,7 @@ PolyRegion("TPR","GLB","Test Polygonal Region",[30,40,50,40,30],[20,30,20,10,20]
 
 ## Defining New `TiltRegion`s
 
-Text
+A `TiltRegion` is basically a rectangular region that is rotated. The specification of a `TiltRegion` and its respective `TiltGrid` in [RegionGrids.jl](https://github.com/GeoRegionsEcosystem/RegionGrids.jl) allows us to more easily obtain Hovmoller diagrams for a region of interest that is tilted.
 
 ```julia
 TiltRegion(ID, pID, name, X, Y, ΔX, ΔY, θ)
@@ -68,5 +68,5 @@ As an example construct the sample `TiltRegion`, with `ID` `TTR`, `pID` `GLB` an
 
 ```@repl
 using GeoRegions
-RectRegion("TTR","GLB","Test Rectangle Region",10,5,50,20,30)
+TiltRegion("TTR","GLB","Test Rectangle Region",10,5,50,20,30)
 ```
