@@ -55,7 +55,7 @@ function add(
     verbose :: Bool = true
 )
 
-    lon,lat = coordGeoRegion(geo,n=1)
+    lon,lat = coordinates(geo)
 
     PolyRegion(
         geo.ID, geo.pID, geo.name,
