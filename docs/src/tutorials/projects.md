@@ -52,10 +52,17 @@ geo = PolyRegion(ID, pID, name, ...)
 add(geo, path = ...)
 ```
 
+For example, we can do
+
 ```@example projects
-RectRegion("TSR","GLB","Test Save RectRegion",[40,-20,14,-60],save=true,path=pwd())
 geo = PolyRegion("TSP","GLB","Test Save PolyRegion",[10,100,-50,10],[20,10,0,20])
 add(geo,path=pwd())
+```
+
+Or we can just directly add the GeoRegion simultaneously when it is defined, as follows:
+
+```@example projects
+RectRegion("TSR","GLB","Test Save RectRegion",[40,-20,14,-60],save=true,path=pwd())
 ```
 
 ## 3. Listing out the custom `GeoRegion`s for your Project
