@@ -34,9 +34,8 @@ makedocs(;
             ]
         ],
         "GeoRegions.jl Tutorials"   => [
-            "Setup (START HERE)"     => "tutorials/setup.md",
-            "Create, Save, Retrieve" => "tutorials/overview.md",
-            "Custom GeoRegion Files" => "tutorials/files.md",
+            "Project Setup (START HERE)" => "tutorials/projects.md",
+            "Custom GeoRegion Files"     => "tutorials/files.md",
         ],
         "API"                       => [
             "Creation" => "api/create.md",

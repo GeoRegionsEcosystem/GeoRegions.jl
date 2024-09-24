@@ -49,6 +49,9 @@ tablePolyRegions()
 
 == tableTiltRegions()
 
+!!! info "No predefined `TiltRegion`s"
+    There are no predefined `TiltRegion`s in GeoRegions.jl, so calling `tableTiltRegions()` will only return the `GLB` GeoRegion.
+
 ```@example tablesimple
 using GeoRegions
 tableTiltRegions()

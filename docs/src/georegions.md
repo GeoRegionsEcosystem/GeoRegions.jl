@@ -12,24 +12,26 @@ In essence, a `GeoRegion` is:
 GeoRegion
 ```
 
+## Types of GeoRegions
+
 In GeoRegions.jl, we differentiate between several different types of GeoRegions:
 * Rectilinear GeoRegions are denoted by the `RectRegion` type, available in all version of GeoRegions.jl
 * Tilted rectangular GeoRegions are denoted by the `TiltRegion` type, available in ≥v6
 * Polygonal GeoRegions are denoted by the `PolyRegion` type, available in ≥v2
 
-## RectRegions
+### RectRegions
 
 ```@docs
 RectRegion
 ```
 
-## TiltRegions
+### TiltRegions
 
 ```@docs
 TiltRegion
 ```
 
-## PolyRegions
+### PolyRegions
 
 ```@docs
 PolyRegion
