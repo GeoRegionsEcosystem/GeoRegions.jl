@@ -1,13 +1,13 @@
 # Tabular Listings of GeoRegions
 
-A list of GeoRegions and their basic properties can be called using the function `tableGeoRegions()`, which lists all available GeoRegions, both predefined and [user-defined](/tutorials/overview). You can also choose to list only predefined or user-customized GeoRegions by setting their respective keywords arguments to `true/false`.
+A list of GeoRegions and their basic properties can be called using the function `tableGeoRegions()`, which lists all available GeoRegions, both predefined and [user-defined](/basics/create). You can also choose to list only predefined or user-customized GeoRegions by setting their respective keywords arguments to `true/false`.
 
 ```julia
 tableGeoRegions(predefined = true/false, custom = true/false)
 ```
 
 !!! tip "Additional Functionality for `tableGeoRegions()`"
-    It is possible to use `tableGeoRegions()` to list user-defined `GeoRegion`s in specific paths/directories. By default, it will list user-defined `GeoRegion`s saved into the path `joinpath(DEPOT_PATH[1],"files","GeoRegions")`. For more on user-defined GeoRegions and saving them as part of a larger project, refer to how to [setup](/tutorials/setup) GeoRegions.jl for a project. Full API documentation for `tableGeoRegions()` is given [here](/tutorials/overview#Table-of-user-defined-GeoRegions).
+    It is possible to use `tableGeoRegions()` to list user-defined `GeoRegion`s in specific paths/directories. By default, it will list user-defined `GeoRegion`s saved into the path `joinpath(DEPOT_PATH[1],"files","GeoRegions")`. For more on user-defined GeoRegions and saving them as part of a larger project, refer to how to [setup](/tutorials/projects) GeoRegions.jl for a project. Full API documentation for `tableGeoRegions()` is given [here](/api/tables).
 
 ## More specific lists of GeoRegions
 

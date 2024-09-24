@@ -31,41 +31,7 @@ If any of these files already exist in `path`, they will not be overwritten. To 
 setupGeoRegions(path=pwd(),overwrite=true)
 ```
 
-## 2. Adding custom `GeoRegion`s to your Project
-
-If you wish to automatically save a new GeoRegions **as it is created**, specify the keyword argument `save = true`. To specify the directory to which the GeoRegion information is saved to, use the `path` keyword.
-
-* `RectRegion(ID, pID, name, ..., save = true, path = ...)` writes to `$path/rectlist.txt`
-* `TiltRegion(ID, pID, name, ..., save = true, path = ...)` writes to `$path/tiltlist.txt`
-* `PolyRegion(ID, pID, name, ..., save = true, path = ...)` writes to `$path/polylist.txt`
-
-!!! tip "Default `path` Directory"
-    By default, `path = joinpath(DEPOT_PATH[1],"files","GeoRegions")`. If `path` is not specified, the information will be saved in the respective custom lists in this directory.
-
-!!! warning "Modification of Custom Lists"
-    While it is possible to do manually modify the lists, it is not recommended to do so, especially for `polylist.txt`, which is pretty complicated. Instead, you should let GeoRegions.jl do most of the heavy lifting.
-
-You can also add a `GeoRegion` variable in the workspace that you have not yet saved into the custom lists
-
-```julia
-geo = PolyRegion(ID, pID, name, ...)
-add(geo, path = ...)
-```
-
-For example, we can do
-
-```@example projects
-geo = PolyRegion("TSP","GLB","Test Save PolyRegion",[10,100,-50,10],[20,10,0,20])
-add(geo,path=pwd())
-```
-
-Or we can just directly add the GeoRegion simultaneously when it is defined, as follows:
-
-```@example projects
-RectRegion("TSR","GLB","Test Save RectRegion",[40,-20,14,-60],save=true,path=pwd())
-```
-
-## 3. Listing out the custom `GeoRegion`s for your Project
+## 2. Listing out the custom `GeoRegion`s for your Project
 
 You can create a table of all the `GeoRegion`s that have been saved to `path` using `tableGeoRegions()` as follows.
 
@@ -79,8 +45,10 @@ For example, we create a table of user-defined and predefined GeoRegions for the
     We always specify the custom user-defined GeoRegions first, because those are most relevant to a project.
 
 ```@example projects
-tableGeoRegions(path=pwd(),crop=true)
+tableGeoRegions(path=pwd(),predefined=false)
 ```
+
+Note, we have no custom GeoRegions added, so there is nothing to list right now even though the files exist. If any of `rectlist.txt`, `polylist.txt` and `tiltlist.txt` are not present, a warning will be shown unless the keyword `warn = false` is set.
 
 ## 4. Removing a the custom GeoRegions list from your Project
 
@@ -99,11 +67,4 @@ And then we see if `rectlist.txt` exists!
 isfile(joinpath(pwd(),"rectlist.txt")),
 isfile(joinpath(pwd(),"polylist.txt")),
 isfile(joinpath(pwd(),"tiltlist.txt"))
-```
-
-```@docs
-setupGeoRegions
-add
-tableGeoRegions
-deleteGeoRegions
 ```

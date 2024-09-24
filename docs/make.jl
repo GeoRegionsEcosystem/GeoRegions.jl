@@ -31,17 +31,19 @@ makedocs(;
             "GeoRegion Properties"  => [
                 "Shape of a GeoRegion"  => "basics/properties/shape.md",
                 "Is it in a GeoRegion?" => "basics/properties/isin.md",
+                "Equivalent GeoRegions" => "basics/properties/isequal.md",
             ]
         ],
         "Tutorials"   => [
             "Project Setup (START HERE)" => "tutorials/projects.md",
+            "Add, Read, Remove"          => "tutorials/addreadrm.md",
             "Custom GeoRegion Files"     => "tutorials/files.md",
         ],
         "API"                       => [
-            "Creation" => "api/create.md",
-            # "Add"      => "api/add.md",
-            # "Read"     => "api/read.md",
-            # "Tables"   => "api/tables.md",
+            "Creation"          => "api/create.md",
+            "Add, Read, Remove" => "api/addreadrm.md",
+            "Project Setup"     => "api/project.md",
+            "Tables"            => "api/tables.md",
         ],
         "Ecosystem"                 => "ecosystem.md",
     ],
