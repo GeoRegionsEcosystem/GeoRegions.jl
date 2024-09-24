@@ -20,7 +20,7 @@ makedocs(;
     pages=[
         "Home"                      => "index.md",
         "What is a GeoRegion?"      => "georegions.md",
-        "Basic Functionality" => [
+        "Basics" => [
             "Retrieving GeoRegions" => [
                 "Overview (START HERE)"  => "basics/read/overview.md",
                 "Predefined GeoRegions"  => "basics/read/predefined.md",
@@ -33,7 +33,7 @@ makedocs(;
                 "Is it in a GeoRegion?" => "basics/properties/isin.md",
             ]
         ],
-        "GeoRegions.jl Tutorials"   => [
+        "Tutorials"   => [
             "Project Setup (START HERE)" => "tutorials/projects.md",
             "Custom GeoRegion Files"     => "tutorials/files.md",
         ],
