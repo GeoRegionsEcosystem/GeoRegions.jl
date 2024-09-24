@@ -79,7 +79,7 @@ For example, we create a table of user-defined and predefined GeoRegions for the
     We always specify the custom user-defined GeoRegions first, because those are most relevant to a project.
 
 ```@example projects
-tableGeoRegions(path=pwd())
+tableGeoRegions(path=pwd(),crop=true)
 ```
 
 ## 4. Removing a the custom GeoRegions list from your Project

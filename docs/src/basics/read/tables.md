@@ -30,7 +30,7 @@ tablePolyRegions(srex = true/false, ar6 = true/false, custom = true/false)
 
 ```@example tablesimple
 using GeoRegions
-tableGeoRegions()
+tableGeoRegions(warn=false)
 ```
 
 == tableRectRegions()
