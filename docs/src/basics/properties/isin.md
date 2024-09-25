@@ -62,7 +62,7 @@ But what about Point B?  Point B is also very obvious within the bounds of the G
 in(B,geo)
 ```
 
-See the API [here](/api/isin)
+See the API [here](/api/isin#Base.in-Tuple{Point2{%3C:Real},%20GeoRegion})
 
 ## Is a GeoRegion inside a GeoRegion?
 
@@ -124,4 +124,4 @@ in(geo_TS4,geo_BIG)
 
 And we see that this is indeed the case.
 
-See the API [here](/api/isin)
+See the API for `RectRegion` type [here](/api/isin#Base.in-Tuple{GeoRegion,%20RectRegion}), and for the `TiltRegion` and `PolyRegion` types [here](/api/isin#Base.in-Tuple{GeoRegion,%20Union{PolyRegion,%20TiltRegion}}).

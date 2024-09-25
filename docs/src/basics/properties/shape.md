@@ -51,4 +51,4 @@ length(lon), length(nlon)
 !!! info "Number of Points"
     The shape is defined by 8 sides. Therefore there are by default 8 + 1 = 9 coordinate points to close the polygon. If we specify 50 segments a side, we therefore have 400 + 1 = 401 coordinate points to close the polygon.
 
-See the API [here](/api/isin)
+See the API [here](/api/properties#GeoRegions.coordinates)
