@@ -52,6 +52,13 @@ tableGeoRegions(path=joinpath(pwd(),"test"),crop=true)
 
 And we see that yes, we can confirm their addition to the files.
 
+Alternatively, we can check if the `ID`s have been added using the function `isID`:
+
+```@example addreadremove
+isID("TSR",path=joinpath(pwd(),"test")),
+isID("TSP",path=joinpath(pwd(),"test"))
+```
+
 ## 3. Reading and Retrieving GeoRegions for your Project
 
 So now that we have saved information on the abovementioned user-defined GeoRegions, let's see if we can retrieve the information on these GeoRegions:
@@ -66,12 +73,69 @@ Let's try retrieving the shape of this `PolyRegion`
 lon,lat = coordinates(ply)
 ```
 
-## 4. Removing a the custom GeoRegions list from your Project
+## 4. Overwriting Information for a Previously Defined GeoRegion
 
-Say you want to completely clear your project of custom GeoRegions, replacing them with new lists. You can just delete the files directly, or you can do `deleteGeoRegions()`.
+Once a GeoRegion associated with an `ID` has been saved into the directory named `path`, this `ID` can no longer be used in association with another GeoRegion for this Project. Therefore, you cannot save another GeoRegion of this `ID` into the same project.
 
-!!! tip "Default `path` is `pwd()`"
-    For `deleteGeoRegions()`, the default `path` is the current directory `pwd()`.
+```@repl addreadremove
+geo = PolyRegion("TSP","GLB","Test Save PolyRegion 2",[10,90,-50,10],[20,10,0,20])
+add(geo,path=joinpath(pwd(),"test"))
+```
+
+In order to replace the GeoRegion associated with this `ID` with another set of information, you need to _**overwrite**_ the preexisting information with `overwrite()`
+
+```@example addreadremove
+overwrite(geo,path=joinpath(pwd(),"test"))
+```
+
+And we reload the GeoRegion associated with the `ID = TSP`
+
+```@example addreadremove
+ply = GeoRegion("TSP",path=joinpath(pwd(),"test"))
+```
+
+## 5. Removing a custom GeoRegions from your Project
+
+Now, we've realized that you don't really need a `GeoRegion` anymore, or for some reason you want to delete the information of a particular `GeoRegion` associate with a certain `ID` and replace it with a new information, there are two ways to do it:
+
+### 5.1 Removing a GeoRegion that has been loaded
+
+THe first method is to remove a GeoRegion `geo` that has already been loaded into the workspace. We use the function `rm()` to do this
+
+```@example addreadremove
+rm(ply,path=joinpath(pwd(),"test"))
+```
+
+And now we check if the `GeoRegion` `TSP` now exists:
+
+```@example addreadremove
+isID("TSP",path=joinpath(pwd(),"test"))
+```
+
+And we see that it does not.
+
+### 5.2 Removing a GeoRegion based on its `ID`
+
+The second method is to remove a `GeoRegion` based on an `ID`, or its `string` identifier. We do this with the function `rmID()`
+
+```@example addreadremove
+rmID("TSR",path=joinpath(pwd(),"test"))
+```
+
+```@repl addreadremove
+isID("TSR",path=joinpath(pwd(),"test"))
+```
+
+!!! tip "Predefined `GeoRegion`s cannot be removed"
+    You cannot remove `GLB`, `GF_*`, `SRX_*` or `AR6_*` that have been predefined in GeoRegions.jl
+
+## 6. Removing a the custom GeoRegions lists from your Project
+
+If you use `deleteGeoRegions()` to remove all the custom lists, you will remove **all** the custom GeoRegions for the projects and they cannot be retrieved.
+
+```@example addreadremove
+TiltRegion("TST","GLB","Test Save TiltRegion",10,5,50,20,30,path=joinpath(pwd(),"test"))
+```
 
 ```@example addreadremove
 deleteGeoRegions(path=joinpath(pwd(),"test"))
@@ -79,6 +143,6 @@ deleteGeoRegions(path=joinpath(pwd(),"test"))
 
 Let's test and see if we can retrieve the user-defined GeoRegions now we have deleted their information from the project.
 
-```@example addreadremove
-GeoRegion("TSR",path=joinpath(pwd(),"test"))
+```@repl addreadremove
+isID("TST",path=joinpath(pwd(),"test"),throw=false)
 ```

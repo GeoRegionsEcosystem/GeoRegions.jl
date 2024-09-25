@@ -24,7 +24,7 @@ tablePolyRegions(srex = true/false, ar6 = true/false, custom = true/false)
 
 ## Use Case Examples
 
-:::tabs
+::::tabs
 
 == tableGeoRegions()
 
@@ -49,12 +49,15 @@ tablePolyRegions()
 
 == tableTiltRegions()
 
-!!! info "No predefined `TiltRegion`s"
-    There are no predefined `TiltRegion`s in GeoRegions.jl, so calling `tableTiltRegions()` will only return the `GLB` GeoRegion.
+::: info "No predefined `TiltRegion`s"
+
+There are no predefined `TiltRegion`s in GeoRegions.jl, so calling `tableTiltRegions()` will only return the `GLB` GeoRegion.
+
+:::
 
 ```@example tablesimple
 using GeoRegions
 tableTiltRegions()
 ```
 
-:::
+::::

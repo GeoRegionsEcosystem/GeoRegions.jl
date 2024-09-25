@@ -68,5 +68,5 @@ As an example construct the sample `TiltRegion`, with `ID` `TTR`, `pID` `GLB` an
 
 ```@repl
 using GeoRegions
-TiltRegion("TTR","GLB","Test Rectangle Region",10,5,50,20,30)
+TiltRegion("TTR","GLB","Test Tilt Region",10,5,50,20,30)
 ```

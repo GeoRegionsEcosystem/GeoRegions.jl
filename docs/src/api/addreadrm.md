@@ -2,18 +2,18 @@
 
 ```@docs
 GeoRegion(
-        geoID :: AbstractString;
-        path  :: AbstractString = homedir()
-    ) -> geo :: GeoRegion
+    geoID :: AbstractString;
+    path  :: AbstractString = homedir()
+)
 ```
 
 ```@docs
 add
+overwrite
 rm
 ```
 
-You can also remove a GeoRegion associated with an `ID`.
-
 ```@docs
+isID
 rmID
 ```

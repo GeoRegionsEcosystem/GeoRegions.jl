@@ -1,26 +1,26 @@
 """
     in(
-        Child  :: GeoRegion,
-        rectG  :: RectRegion;
-        throw  :: Bool = false
+        cgeo  :: GeoRegion,
+        geo   :: RectRegion;
+        throw :: Bool = false
     ) -> Bool
 
-Check if a child GeoRegion defined by `Child` is within a RectRegion `rectG`.
+Check if a child GeoRegion defined by `cgeo` is within a RectRegion `geo`.
 
 Arguments
 =========
-- `Child` : A GeoRegion that we postulate to be a "child", or a subset of the GeoRegion defined by `polyG`
-- `rectG` : A GeoRegion that we postulate to be a "parent", or containing the GeoRegion defined by `Child`
+- `cgeo` : A GeoRegion that we postulate to be a "child", or a subset of the GeoRegion defined by `polyG`
+- `geo` : A GeoRegion that we postulate to be a "parent", or containing the GeoRegion defined by `Child`
 
 Keyword Arguments
 =================
 - `throw`  : If `true`, then if `Child` is not within `polyG`, an error is thrown and the program stops running
 """
 Base.in(
-    Child :: GeoRegion,
-    rectG :: RectRegion;
+    cgeo  :: GeoRegion,
+    geo   :: RectRegion;
     throw :: Bool = false
-) = isinGeoRegion(Child,rectG,throw=throw)
+) = isinGeoRegion(cgeo,geo,throw=throw)
 
 """
     in(
