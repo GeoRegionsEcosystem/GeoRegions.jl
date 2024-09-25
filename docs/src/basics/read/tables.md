@@ -33,6 +33,8 @@ using GeoRegions
 tableGeoRegions(warn=false)
 ```
 
+See the API [here](/api/addreadrm#GeoRegions.GeoRegion-Tuple{AbstractString})
+
 == tableRectRegions()
 
 ```@example tablesimple
@@ -40,12 +42,16 @@ using GeoRegions
 tableRectRegions()
 ```
 
+See the API [here](/api/tables#GeoRegions.tableRectRegions)
+
 == tablePolyRegions()
 
 ```@example tablesimple
 using GeoRegions
 tablePolyRegions()
 ```
+
+See the API [here](/api/tables#GeoRegions.tablePolyRegions)
 
 == tableTiltRegions()
 
@@ -59,5 +65,7 @@ There are no predefined `TiltRegion`s in GeoRegions.jl, so calling `tableTiltReg
 using GeoRegions
 tableTiltRegions()
 ```
+
+See the API [here](/api/tables#GeoRegions.tableTiltRegions)
 
 ::::

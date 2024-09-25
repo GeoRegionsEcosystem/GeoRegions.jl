@@ -62,6 +62,8 @@ But what about Point B?  Point B is also very obvious within the bounds of the G
 in(B,geo)
 ```
 
+See the API [here](/api/isin)
+
 ## Is a GeoRegion inside a GeoRegion?
 
 Since any arbitrary geographic region can be defined as a `GeoRegion`, the natural extension now is to determine if a GeoRegion is wholly within another GeoRegion.
@@ -121,3 +123,5 @@ in(geo_TS4,geo_BIG)
 ```
 
 And we see that this is indeed the case.
+
+See the API [here](/api/isin)

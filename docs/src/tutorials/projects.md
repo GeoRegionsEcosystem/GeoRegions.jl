@@ -31,6 +31,8 @@ If any of these files already exist in `path`, they will not be overwritten. To 
 setupGeoRegions(path=pwd(),overwrite=true)
 ```
 
+See the API [here](/api/project#GeoRegions.setupGeoRegions)
+
 ## 2. Listing out the custom `GeoRegion`s for your Project
 
 You can create a table of all the `GeoRegion`s that have been saved to `path` using `tableGeoRegions()` as follows.
@@ -50,6 +52,8 @@ tableGeoRegions(path=pwd(),predefined=false)
 
 Note, we have no custom GeoRegions added, so there is nothing to list right now even though the files exist. If any of `rectlist.txt`, `polylist.txt` and `tiltlist.txt` are not present, a warning will be shown unless the keyword `warn = false` is set.
 
+See the API [here](/api/project#GeoRegions.deleteGeoRegions)
+
 ## 3. Removing a the custom GeoRegions list from your Project
 
 Say you want to completely clear your project of custom GeoRegions, replacing them with new lists. You can just delete the files directly, or you can do `deleteGeoRegions()`.
@@ -68,3 +72,5 @@ isfile(joinpath(pwd(),"rectlist.txt")),
 isfile(joinpath(pwd(),"polylist.txt")),
 isfile(joinpath(pwd(),"tiltlist.txt"))
 ```
+
+See the API [here](/api/project#GeoRegions.deleteGeoRegions)

@@ -1,8 +1,12 @@
 # API for Project-Handling in GeoRegions.jl
 
-
 ```@docs
 setupGeoRegions
-tableGeoRegions
 deleteGeoRegions
+```
+
+```@docs
+tableGeoRegions(
+    fname :: AbstractString
+)
 ```

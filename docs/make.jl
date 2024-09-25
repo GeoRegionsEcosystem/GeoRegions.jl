@@ -44,6 +44,7 @@ makedocs(;
             "Add, Read, Remove" => "api/addreadrm.md",
             "Project Setup"     => "api/project.md",
             "Tables"            => "api/tables.md",
+            "Is In?"            => "api/isin.md",
         ],
         "Ecosystem"                 => "ecosystem.md",
     ],

@@ -36,11 +36,15 @@ geo = PolyRegion("TSP","GLB","Test Save PolyRegion",[10,100,-50,10],[20,10,0,20]
 add(geo,path=joinpath(pwd(),"test"))
 ```
 
+See the API [here](/api/addreadrm#GeoRegions.add)
+
 Or we can just directly add the GeoRegion simultaneously when it is defined, as follows:
 
 ```@example addreadremove
 RectRegion("TSR","GLB","Test Save RectRegion",[40,-20,14,-60],save=true,path=joinpath(pwd(),"test"))
 ```
+
+See the API [here](/api/create)
 
 ## 2. Check if GeoRegions have been added
 
@@ -59,6 +63,8 @@ isID("TSR",path=joinpath(pwd(),"test")),
 isID("TSP",path=joinpath(pwd(),"test"))
 ```
 
+See the API [here](/api/addreadrm#GeoRegions.isID)
+
 ## 3. Reading and Retrieving GeoRegions for your Project
 
 So now that we have saved information on the abovementioned user-defined GeoRegions, let's see if we can retrieve the information on these GeoRegions:
@@ -72,6 +78,8 @@ Let's try retrieving the shape of this `PolyRegion`
 ```@example addreadremove
 lon,lat = coordinates(ply)
 ```
+
+See the API [here](/api/addreadrm#GeoRegions.GeoRegion-Tuple{AbstractString})
 
 ## 4. Overwriting Information for a Previously Defined GeoRegion
 
@@ -94,6 +102,8 @@ And we reload the GeoRegion associated with the `ID = TSP`
 ply = GeoRegion("TSP",path=joinpath(pwd(),"test"))
 ```
 
+See the API [here](/api/addreadrm#GeoRegions.overwrite)
+
 ## 5. Removing a custom GeoRegions from your Project
 
 Now, we've realized that you don't really need a `GeoRegion` anymore, or for some reason you want to delete the information of a particular `GeoRegion` associate with a certain `ID` and replace it with a new information, there are two ways to do it:
@@ -114,6 +124,8 @@ isID("TSP",path=joinpath(pwd(),"test"))
 
 And we see that it does not.
 
+See the API [here](/api/addreadrm#Base.Filesystem.rm)
+
 ### 5.2 Removing a GeoRegion based on its `ID`
 
 The second method is to remove a `GeoRegion` based on an `ID`, or its `string` identifier. We do this with the function `rmID()`
@@ -128,6 +140,8 @@ isID("TSR",path=joinpath(pwd(),"test"))
 
 !!! tip "Predefined `GeoRegion`s cannot be removed"
     You cannot remove `GLB`, `GF_*`, `SRX_*` or `AR6_*` that have been predefined in GeoRegions.jl
+
+See the API [here](/api/addreadrm#GeoRegions.rmID)
 
 ## 6. Removing a the custom GeoRegions lists from your Project
 

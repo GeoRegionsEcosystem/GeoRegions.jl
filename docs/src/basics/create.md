@@ -38,6 +38,8 @@ using GeoRegions
 RectRegion("TRR","GLB","Test Rectangle Region",[30,20,50,10])
 ```
 
+See the API [here](/api/create#GeoRegions.RectRegion-Tuple{AbstractString,%20AbstractString,%20AbstractString,%20Vector{%3C:Real}})
+
 ## Defining New `PolyRegion`s
 
 Out of all three `GeoRegion` types currently available, the `PolyRegion` grants the most flexibility in terms of specification of the domain shape. With it, you can specify any closed polygon on a rectilinear grid using two vectors, for `lon` and `lat` respectively.
@@ -56,6 +58,8 @@ using GeoRegions
 PolyRegion("TPR","GLB","Test Polygonal Region",[30,40,50,40,30],[20,30,20,10,20])
 ```
 
+See the API [here](/api/create#GeoRegions.PolyRegion-Tuple{AbstractString,%20AbstractString,%20AbstractString,%20Vector{%3C:Real},%20Vector{%3C:Real}})
+
 ## Defining New `TiltRegion`s
 
 A `TiltRegion` is basically a rectangular region that is rotated. The specification of a `TiltRegion` and its respective `TiltGrid` in [RegionGrids.jl](https://github.com/GeoRegionsEcosystem/RegionGrids.jl) allows us to more easily obtain Hovmoller diagrams for a region of interest that is tilted.
@@ -70,3 +74,5 @@ As an example construct the sample `TiltRegion`, with `ID` `TTR`, `pID` `GLB` an
 using GeoRegions
 TiltRegion("TTR","GLB","Test Tilt Region",10,5,50,20,30)
 ```
+
+See the API [here](/api/create#GeoRegions.TiltRegion-Tuple{AbstractString,%20AbstractString,%20AbstractString,%20Vararg{Real,%205}})
