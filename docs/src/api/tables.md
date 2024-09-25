@@ -1,4 +1,4 @@
-# API for Project-Handling in GeoRegions.jl
+# API for Tables in GeoRegions.jl
 
 
 ```@docs

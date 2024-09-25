@@ -121,26 +121,3 @@ in(geo_TS4,geo_BIG)
 ```
 
 And we see that this is indeed the case.
-
-## API
-
-```@docs
-in(
-    :: Point2{<:Real},
-    :: GeoRegion;
-    :: Real = 0,
-    :: Real = 0,
-    :: Bool = false
-)
-in(
-    cgeo  :: GeoRegion,
-    geo   :: RectRegion;
-    throw :: Bool = false
-)
-in(
-    cgeo  :: GeoRegion,
-    geo   :: Union{TiltRegion,PolyRegion};
-    n     :: Int = 100,
-    throw :: Bool = false
-)
-```
