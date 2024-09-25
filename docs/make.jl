@@ -45,6 +45,7 @@ makedocs(;
             "Project Setup"     => "api/project.md",
             "Tables"            => "api/tables.md",
             "Is In?"            => "api/isin.md",
+            "Properties"        => "api/properties.md",
         ],
         "Ecosystem"                 => "ecosystem.md",
     ],
