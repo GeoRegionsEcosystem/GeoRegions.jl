@@ -196,7 +196,7 @@ mjx-container > svg {
 }
 
 /* https://bddxg.top/article/note/vitepress优化/一些细节上的优化.html#文档页面调整-加宽 */
-
+/* 
 @media (min-width: 1440px) {
   .VPSidebar {
     padding-left: 20px !important;
@@ -239,7 +239,7 @@ mjx-container > svg {
   .VPContent.has-sidebar {
     padding-left: 255px !important;
   }
-}
+} */
 
 .VPNavBar {
   padding-right: 0px !important;
@@ -260,7 +260,7 @@ mjx-container > svg {
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
-  max-width: 200px;
+  max-width: 300px;
 }
 
 .VPNavBar .title {
