@@ -7,7 +7,7 @@
 ==(geo1::T, geo2::T) where T <: TiltRegion =
     getfield.(Ref(geo1),fieldnames(T)) == getfield.(Ref(geo2),fieldnames(T))
 
-function isGeoRegion(
+function isgeo(
     geo   :: GeoRegion;
     path  :: AbstractString = dirname(geo.path),
     throw :: Bool = true
@@ -37,7 +37,7 @@ function isGeoRegion(
 end
 
 """
-    isGeoRegion(
+    isID(
         geoID :: AbstractString;
         path  :: AbstractString = homedir(),
         throw :: Bool = true

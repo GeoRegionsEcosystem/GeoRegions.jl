@@ -18,7 +18,7 @@ Keyword Arguments
 rm(
     geo   :: GeoRegion;
     path  :: AbstractString = dirname(geo.path)
-) = if isGeoRegion(geo,path=path)
+) = if isgeo(geo,path=path)
     rmID(geo.ID,path=path)
 end
 

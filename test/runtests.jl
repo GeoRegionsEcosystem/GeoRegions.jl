@@ -6,9 +6,9 @@ using Test
 
     disable_logging(Logging.Warn)
     geo = RectRegion("TRP","GLB","Tropics",[30,-30,360,0])
-    @test !isGeoRegion(geo,throw=false)
+    @test !isgeo(geo,throw=false)
     @test add(geo) === nothing
-    @test isGeoRegion(geo,throw=false)
+    @test isgeo(geo,throw=false)
     rm(geo)
     disable_logging(Logging.Debug)
 
@@ -17,12 +17,12 @@ using Test
     geo1 = RectRegion("TRP","GLB","Tropics",[30,-30,360,0],save=true)
     geo2 = RectRegion("TRP_DTP","GLB","Deep Tropics",[10,-10,360,0],save=true)
     @test  isID("TRP",throw=false)
-    @test  isGeoRegion(geo1,throw=false)
+    @test  isgeo(geo1,throw=false)
     @test  rm(geo1) === nothing
-    @test !isGeoRegion(geo1,throw=false)
-    @test  isGeoRegion(geo2,throw=false)
+    @test !isgeo(geo1,throw=false)
+    @test  isgeo(geo2,throw=false)
     @test  rmID("TRP_DTP") === nothing
-    @test !isGeoRegion(geo2,throw=false)
+    @test !isgeo(geo2,throw=false)
     disable_logging(Logging.Debug)
 
 end
@@ -34,11 +34,11 @@ end
     geo1 = RectRegion("TRP","GLB","Tropics",[30,-30,360,0],path=pwd(),save=true)
     @test !isID("TRP",throw=false)
     @test  isID("TRP",path=pwd(),throw=false)
-    @test  isGeoRegion(geo1,throw=false)
-    @test !isGeoRegion(geo1,path=homedir(),throw=false)
+    @test  isgeo(geo1,throw=false)
+    @test !isgeo(geo1,path=homedir(),throw=false)
     @test_throws "not a valid GeoRegion identifier" rm(geo1,path=homedir())
     @test  rm(geo1) === nothing
-    @test !isGeoRegion(geo1,throw=false)
+    @test !isgeo(geo1,throw=false)
     disable_logging(Logging.Debug)
 
 end
@@ -63,7 +63,7 @@ end
     IDvec,_,_ = GeoRegions.listall()
     for ID in IDvec
         @test isID(ID,throw=false);
-        @test isGeoRegion(GeoRegion(ID),throw=false);
+        @test isgeo(GeoRegion(ID),throw=false);
     end
     disable_logging(Logging.Debug)
 

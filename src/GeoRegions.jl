@@ -15,7 +15,7 @@ export
         GeoRegion,
         RectRegion, PolyRegion, TiltRegion,
 
-        ==, isGeoRegion, isID,
+        ==, isgeo, isID,
         add, rm, rmID, overwrite,
 
         setupGeoRegions, readGeoRegions, addGeoRegions, deleteGeoRegions,
