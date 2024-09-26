@@ -5,23 +5,23 @@ function listall(
     flist    = ["rectlist.txt","polylist.txt","tiltlist.txt"]
     fdefined = ["global.txt","giorgi.txt","srex.txt","ar6.txt"]
 
-    rvec = []
-    fvec = []
-    tvec = []
-    dvec = []
+    IDs   = []
+    fIDs  = []
+    types = []
+    dirs  = []
 
     for fname in flist
         fID = joinpath(path,fname)
         if isfile(fID)
-            rvec,fvec,tvec,dvec = fillinfo(rvec,fvec,tvec,dvec,fID)
+            IDs,fIDs,types,dirs = fillinfo(IDs,fIDs,types,dirs,fID)
         end
     end
 
     for fname in fdefined
-        rvec,fvec,tvec,dvec = fillinfo(rvec,fvec,tvec,dvec,joinpath(geodir,fname))
+        IDs,fIDs,types,dirs = fillinfo(IDs,fIDs,types,dirs,joinpath(geodir,fname))
     end
 
-    return rvec,fvec,tvec,dvec
+    return IDs,fIDs,types,dirs
 
 end
 

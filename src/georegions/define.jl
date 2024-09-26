@@ -25,9 +25,12 @@ function GeoRegion(
     ST = String,
     FT = Float64;
     path  :: AbstractString = homedir(),
+    verbose :: Bool = true
 )
 
-    @info "$(modulelog()) - Retrieving information for the GeoRegion defined by the ID $geoID"
+    if verbose
+        @info "$(modulelog()) - Retrieving information for the GeoRegion defined by the ID $geoID"
+    end
 
     rvec,fvec,tvec,dvec = listall(path); isID(geoID,rvec)
     ind = findall(geoID.==rvec)[1]

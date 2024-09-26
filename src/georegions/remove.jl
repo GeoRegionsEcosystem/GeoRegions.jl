@@ -20,6 +20,12 @@ rm(
     path  :: AbstractString = dirname(geo.path)
 ) = if isgeo(geo,path=path)
     rmID(geo.ID,path=path)
+else
+    if isID(geo,path=path)
+        error("$(modulelog()) - The GeoRegion in $path which has the ID \"$(geo.ID)\" does not have the same properties as our GeoRegion \"$(geo.ID)\" that we have defined, and thus cannot be removed.")
+    else
+        error("$(modulelog()) - There is no GeoRegion in $path which has the ID \"$(geo.ID)\".")
+    end
 end
 
 """
