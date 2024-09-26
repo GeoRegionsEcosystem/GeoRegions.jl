@@ -18,31 +18,7 @@ Returns
 - `tf` : True / False
 """
 ==(geo1 :: GeoRegion, geo2 :: GeoRegion) = isequal(geo1,geo2)
-
-function isequal(
-    geo1 :: RectRegion,
-    geo2 :: RectRegion;
-    strict :: Bool = true
-)
-
-    tf = equalshape(geo1,geo2)
-
-    if geo1.ID !== geo2.ID
-        tf = false
-    end
-
-    if strict
-        if (geo1.pID !== geo2.ID) || 
-            (geo1.bound !== geo2.bound) || 
-            (geo1.is180 !== geo2.is180) || 
-            (geo1.is360 !== geo2.is360)
-            tf = false
-        end
-    end
-
-    return tf
-
-end
+!==(geo1 :: GeoRegion, geo2 :: GeoRegion) = !isequal(geo1,geo2)
 
 """
     isequal(
@@ -69,6 +45,31 @@ Returns
 - `tf` : True / False
 """
 function isequal(
+    geo1 :: RectRegion,
+    geo2 :: RectRegion;
+    strict :: Bool = true
+)
+
+    tf = equalshape(geo1,geo2)
+
+    if geo1.ID !== geo2.ID
+        tf = false
+    end
+
+    if strict
+        if (geo1.pID !== geo2.pID) || 
+            !isequal(geo1.bound,geo2.bound) || 
+            (geo1.is180 !== geo2.is180) || 
+            (geo1.is360 !== geo2.is360)
+            tf = false
+        end
+    end
+
+    return tf
+
+end
+
+function isequal(
     geo1 :: PolyRegion,
     geo2 :: PolyRegion;
     strict :: Bool = true
@@ -81,8 +82,8 @@ function isequal(
     end
 
     if strict
-        if (geo1.pID !== geo2.ID) || 
-            (geo1.bound !== geo2.bound) || 
+        if (geo1.pID !== geo2.pID) || 
+            !isequal(geo1.bound,geo2.bound) || 
             (geo1.is180 !== geo2.is180) || 
             (geo1.is360 !== geo2.is360)
             tf = false
@@ -106,8 +107,8 @@ function isequal(
     end
 
     if strict
-        if (geo1.pID !== geo2.ID) || 
-            (geo1.bound !== geo2.bound) || 
+        if (geo1.pID !== geo2.pID) || 
+            !isequal(geo1.bound,geo2.bound) || 
             (geo1.is180 !== geo2.is180) || 
             (geo1.is360 !== geo2.is360) || 
             (geo1.geometry !== geo2.geometry)
@@ -123,7 +124,7 @@ isequal(
     geo1 :: RectRegion,
     geo2 :: Union{TiltRegion, PolyRegion};
     strict :: Bool = true
-) = if strict || (geo1.ID !== geo2.ID)
+) = if strict || (geo1.ID !== geo2.ID) || (geo1.pID !== geo2.pID)
     return false
 else
     return equalshape(geo1,geo2)
@@ -133,7 +134,7 @@ isequal(
     geo1 :: TiltRegion,
     geo2 :: Union{RectRegion, PolyRegion};
     strict :: Bool = true
-) = if strict || (geo1.ID !== geo2.ID)
+) = if strict || (geo1.ID !== geo2.ID) || (geo1.pID !== geo2.pID)
     return false
 else
     return equalshape(geo1,geo2)
@@ -143,7 +144,7 @@ isequal(
     geo1 :: PolyRegion,
     geo2 :: Union{RectRegion, TiltRegion};
     strict :: Bool = true
-) = if strict || (geo1.ID !== geo2.ID)
+) = if strict || (geo1.ID !== geo2.ID) || (geo1.pID !== geo2.pID)
     return false
 else
     return equalshape(geo1,geo2)
@@ -336,7 +337,7 @@ Returns
 function isID(
     ID :: AbstractString;
     path  :: AbstractString = homedir(),
-    throw :: Bool=true
+    throw :: Bool = true
 )
 
     IDvec,_,_,_ = listall(path)

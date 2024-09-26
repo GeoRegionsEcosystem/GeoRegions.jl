@@ -8,14 +8,14 @@ using Logging
 using PolygonOps
 using PrettyTables
 
-import Base: show, rm, in, ==
+import Base: show, rm, in, ==, !==, isequal
 
 ## Exporting the following functions:
 export
         GeoRegion,
         RectRegion, PolyRegion, TiltRegion,
 
-        ==, isgeo, isgeoshape, isID,
+        ==, !==, isequal, isgeo, isgeoshape, isID,
         add, rm, rmID, overwrite,
 
         setupGeoRegions, readGeoRegions, addGeoRegions, deleteGeoRegions,
