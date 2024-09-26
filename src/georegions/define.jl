@@ -96,7 +96,7 @@ function RectRegion(
         if isID(ID,path=path,throw=false)
             error("$(modulelog()) - The GeoRegion $(ID) has already been defined.  Please use another identifier.")
         end
-        lon,lat = rect2shape(N,S,E,W)
+        N,S,E,W = bound; lon,lat = rect2shape(N,S,E,W)
         if isgeoshape(lon,lat,path=path)
             oID = isgeoshape(lon,lat,path=path,returnID=true)
             error("$(modulelog()) - The GeoRegion $(oID) in $path has the same shape. Use it instead.")

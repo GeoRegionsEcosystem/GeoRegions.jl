@@ -57,7 +57,7 @@ function rmID(
         @info "$(modulelog()) - Removing the GeoRegion $(geoID) ..."
     end
 
-    rvec,fvec,tvec,dvec = listall(path); isID(geoID,rvec)
+    rvec,fvec,tvec,dvec = listall(path); isID(geoID,path)
     ind = findall(geoID.==rvec)[1]
 
     fdefined = ["global.txt","giorgi.txt","srex.txt","ar6.txt"]
