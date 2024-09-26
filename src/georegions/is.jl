@@ -36,6 +36,34 @@ function isgeo(
 
 end
 
+function isgeoshape(
+    geo   :: GeoRegion;
+    path  :: AbstractString = dirname(geo.path),
+    returnID :: Bool = false
+)
+
+    IDvec,_,_,_ = listall(path); ngeo = length(IDvec)
+    tf = zeros(Bool,ngeo)
+
+    disable_logging(Logging.Warn)
+    for igeo in 1 : ngeo
+        tgeo = GeoRegion(IDvec[igeo],path=path)
+        tf[igeo] = equalshape(geo,tgeo)
+    end
+    disable_logging(Logging.Debug)
+
+    if !iszero(sum(tf))
+        if returnID
+            return IDvec[tf][1]
+        else
+            return true
+        end
+    else
+        return false
+    end
+
+end
+
 """
     isID(
         geoID :: AbstractString;
@@ -90,6 +118,34 @@ function isID(
         end
     else
         if dolog; @info "$(modulelog()) - The ID $geoID is already in use" end
+        return true
+    end
+
+end
+
+function equalshape(geo1::GeoRegion, geo2::GeoRegion)
+
+    lon1,lat1 = coordinates(geo1,n=2); pop!(lon1); pop!(lat1)
+    lon2,lat2 = coordinates(geo2,n=2); pop!(lon2); pop!(lat2)
+    
+    lon1 = mod.(lon1,360); npnt1 = length(lon1)
+    lon2 = mod.(lon2,360); npnt2 = length(lon2)
+
+    isin = 0
+
+    for ii = 1 : npnt1
+        ipnt = Point(lon1[ii],lat1[ii])
+        isin += inpolygon(ipnt,geo2.shape,in=1,on=0,out=1)
+    end
+
+    for ii = 1 : npnt2
+        ipnt = Point(lon2[ii],lat2[ii])
+        isin += inpolygon(ipnt,geo1.shape,in=1,on=0,out=1)
+    end
+
+    if !iszero(isin)
+        return false
+    else
         return true
     end
 
