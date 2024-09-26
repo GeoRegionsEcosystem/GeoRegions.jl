@@ -92,14 +92,20 @@ function RectRegion(
         end
         if isID(ID,path=path,throw=false)
             error("$(modulelog()) - The GeoRegion $(ID) has already been defined.  Please use another identifier.")
-        else
-            @info "$(modulelog()) - Adding the GeoRegion $(ID) to the list."
+        end
+        lon,lat = rect2shape(N,S,E,W)
+        if isgeoshape(lon,lat,path=path)
+            oID = isgeoshape(lon,lat,path=path,returnID=true)
+            error("$(modulelog()) - The GeoRegion $(oID) in $path has the same shape. Use it instead.")
         end
         if pID != "GLB"
             if !isID(pID,path=path,throw=false)
                 error("$(modulelog()) - The GeoRegion $(pID) was defined to be the parent GeoRegion of $(ID), but the GeoRegion $(pID) is not defined.  Please define the GeoRegion $(pID) and its properties.")
+            else
+                pgeo = GeoRegion(pID,path=path); isinGeoRegion(geo,pgeo)
             end
         end
+        @info "$(modulelog()) - Adding the GeoRegion $(ID) to the list."
     else
         path = homedir()
     end
@@ -112,7 +118,6 @@ function RectRegion(
     )
 
     if save
-        par  = GeoRegion(pID,path=path); isinGeoRegion(geo,par)
         name = replace(name," "=>"-")
         open(geofile,"a") do io
             write(io,"$ID, $pID, $N, $W, $S, $E, $name\n")
@@ -196,14 +201,20 @@ function TiltRegion(
         end
         if isID(ID,path=path,throw=false)
             error("$(modulelog()) - The GeoRegion $(ID) has already been defined.  Please use another identifier.")
-        else
-            @info "$(modulelog()) - Adding the GeoRegion $(ID) to the list."
+        end
+        lon,lat = tilt2shape(X,Y,ΔX,ΔY,θ)
+        if isgeoshape(lon,lat,path=path)
+            oID = isgeoshape(lon,lat,path=path,returnID=true)
+            error("$(modulelog()) - The GeoRegion $(oID) in $path has the same shape. Use it instead.")
         end
         if pID != "GLB"
             if !isID(pID,path=path,throw=false)
                 error("$(modulelog()) - The GeoRegion $(pID) was defined to be the parent GeoRegion of $(ID), but the GeoRegion $(pID) is not defined.  Please define the GeoRegion $(pID) and its properties.")
+            else
+                pgeo = GeoRegion(pID,path=path); isinGeoRegion(geo,pgeo)
             end
         end
+        @info "$(modulelog()) - Adding the GeoRegion $(ID) to the list."
     else
         path = homedir()
     end
@@ -213,11 +224,10 @@ function TiltRegion(
     geo  = TiltRegion{ST,FT}(
         ID, pID, name, joinpath(path,"tiltlist.txt"),
         [N, S, E, W], Point2.(lon,lat), is180, is360,
-        X, Y, ΔX, ΔY, θ,
+        [X, Y, ΔX, ΔY, θ]
     )
 
     if save
-        par  = GeoRegion(pID,path=path); isinGeoRegion(geo,par)
         name = replace(name," "=>"-")
         open(geofile,"a") do io
             write(io,"$ID, $pID, $X, $Y, $ΔX, $ΔY, $θ, $name\n")
@@ -289,25 +299,6 @@ function PolyRegion(
     if !verbose
         disable_logging(Logging.Warn)
     end
-    
-    if save
-        geofile = joinpath(path,"polylist.txt")
-        if !isfile(geofile)
-            cp(joinpath(geodir,"polylist.txt"),geofile)
-        end
-        if isID(ID,path=path,throw=false)
-            error("$(modulelog()) - The GeoRegion $(ID) has already been defined.  Please use another identifier.")
-        else
-            @info "$(modulelog()) - Adding the GeoRegion $(ID) to the list."
-        end
-        if pID != "GLB"
-            if !isID(pID,path=path)
-                error("$(modulelog()) - The GeoRegion $(pID) was defined to be the parent GeoRegion of $(ID), but the GeoRegion $(pID) is not defined.  Please define the GeoRegion $(pID) and its properties.")
-            end
-        end
-    else
-        path = homedir()
-    end
 
     if (lon[1] != lon[end]) || (lat[1] != lat[end])
         if !join
@@ -316,6 +307,30 @@ function PolyRegion(
             lon = vcat(lon,lon[1])
             lat = vcat(lat,lat[1])
         end
+    end
+    
+    if save
+        geofile = joinpath(path,"polylist.txt")
+        if !isfile(geofile)
+            cp(joinpath(geodir,"polylist.txt"),geofile)
+        end
+        if isID(ID,path=path,throw=false)
+            error("$(modulelog()) - The GeoRegion $(ID) has already been defined.  Please use another identifier.")
+        end
+        if isgeoshape(lon,lat,path=path)
+            oID = isgeoshape(lon,lat,path=path,returnID=true)
+            error("$(modulelog()) - The GeoRegion $(oID) in $path has the same shape. Use it instead.")
+        end
+        if pID != "GLB"
+            if !isID(pID,path=path)
+                error("$(modulelog()) - The GeoRegion $(pID) was defined to be the parent GeoRegion of $(ID), but the GeoRegion $(pID) is not defined.  Please define the GeoRegion $(pID) and its properties.")
+            else
+                pgeo = GeoRegion(pID,path=path); isinGeoRegion(geo,pgeo)
+            end
+        end
+        @info "$(modulelog()) - Adding the GeoRegion $(ID) to the list."
+    else
+        path = homedir()
     end
 
     N = maximum(lat); S = minimum(lat)
@@ -327,7 +342,6 @@ function PolyRegion(
     )
     
     if save
-        par  = GeoRegion(pID,path=path); isinGeoRegion(geo,par)
         name = replace(name," "=>"-")
         npt  = length(lon)
         open(geofile,"a") do io
