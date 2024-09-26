@@ -33,10 +33,8 @@ Abstract supertype for geographical regions. All `GeoRegion` types contain the f
 * `ID` - A `String` Type, the identifier for the GeoRegion
 * `pID` - A `String` Type, the identifier for the parent GeoRegion
 * `name` - A `String` Type, the full name of the GeoRegion
-* `N` - A `Float` Type, the north boundary of the GeoRegion
-* `S` - A `Float` Type, the south boundary of the GeoRegion
-* `E` - A `Float` Type, the east boundary of the GeoRegion
-* `W` - A `Float` Type, the west boundary of the GeoRegion
+* `bound` - A vector of `Float` Types, defining the [North, South, East, West] boundaries of the GeoRegion
+* `shape` - A vector of `Point2` Types, defining a non-rectilinear shape of the GeoRegion
 * `is180` - A `Bool` Type, is `W` < 0
 * `is360` - A `Bool` Type, is `E` > 180
 """
@@ -52,10 +50,8 @@ struct RectRegion{ST<:AbstractString, FT<:Real} <: GeoRegion
     pID   :: ST
     name  :: ST
     path  :: ST
-    N     :: FT
-    S     :: FT
-    E     :: FT
-    W     :: FT
+    bound :: Vector{FT}
+    shape :: Vector{Point2{FT}}
     is180 :: Bool
     is360 :: Bool
 end
@@ -64,22 +60,16 @@ end
     PolyRegion <: GeoRegion
 
 A polygonal region on a rectilinear lon-lat grid, defined by the (lon,lat) coordinates of its vertices.
-
-In addition to all the fields common to the `GeoRegion` `abstract type`, `PolyRegion`s will also contain the following field:
-* `shape` - A vector of `Point2` Types, defining a non-rectilinear shape of the GeoRegion
 """
 struct PolyRegion{ST<:AbstractString, FT<:Real} <: GeoRegion
     ID    :: ST
     pID   :: ST
     name  :: ST
     path  :: ST
-    N     :: FT
-    S     :: FT
-    E     :: FT
-    W     :: FT
+    bound :: Vector{FT}
+    shape :: Vector{Point2{FT}}
     is180 :: Bool
     is360 :: Bool
-    shape :: Vector{Point2{FT}}
 end
 
 """
@@ -102,10 +92,8 @@ struct TiltRegion{ST<:AbstractString, FT<:Real} <: GeoRegion
     pID   :: ST
     name  :: ST
     path  :: ST
-    N     :: FT
-    S     :: FT
-    E     :: FT
-    W     :: FT
+    bound :: Vector{FT}
+    shape :: Vector{FT}
     is180 :: Bool
     is360 :: Bool
     X     :: FT

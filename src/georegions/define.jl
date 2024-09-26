@@ -105,9 +105,10 @@ function RectRegion(
     end
 
     N,S,E,W = bound; is180,is360 = checkbounds(N,S,E,W)
+    lon,lat = rect2shape(N,S,E,W)
     geo  = RectRegion{ST,FT}(
         ID, pID, name, joinpath(path,"rectlist.txt"),
-        N, S, E, W, is180,is360
+        [N, S, E, W], Point2.(lon,lat), is180, is360
     )
 
     if save
@@ -208,9 +209,10 @@ function TiltRegion(
     end
 
     N,S,E,W = tilt2bounds(X,Y,ΔX,ΔY,θ); is180,is360 = checkbounds(N,S,E,W)
+    lon,lat = tilt2shape(X,Y,ΔX,ΔY,θ)
     geo  = TiltRegion{ST,FT}(
         ID, pID, name, joinpath(path,"tiltlist.txt"),
-        N, S, E, W, is180, is360,
+        [N, S, E, W], Point2.(lon,lat), is180, is360,
         X, Y, ΔX, ΔY, θ,
     )
 
@@ -319,11 +321,9 @@ function PolyRegion(
     N = maximum(lat); S = minimum(lat)
     E = maximum(lon); W = minimum(lon)
     is180,is360 = checkbounds(N,S,E,W)
-    shape = Point2.(lon,lat)
     geo   = PolyRegion{ST,FT}(
         ID, pID, name, joinpath(path,"polylist.txt"),
-        N, S, E, W, is180, is360,
-        shape
+        [N, S, E, W], Point2.(lon,lat), is180, is360
     )
     
     if save
@@ -400,14 +400,35 @@ function tilt2bounds(
     θ  :: Real
 )
 
+    lon,lat = tilt2shape(X,Y,ΔX,ΔY,θ)
+    return maximum(lat), minimum(lat) , maximum(lon), minimum(lon)
+
+end
+
+function tilt2shape(
+    X  :: Real,
+    Y  :: Real,
+    ΔX :: Real,
+    ΔY :: Real,
+    θ  :: Real
+)
+
     lon1 = X - ΔX * cosd(θ) - ΔY * sind(θ); lat1 = Y + ΔY * cosd(θ) - ΔX * sind(θ)
     lon2 = X - ΔX * cosd(θ) + ΔY * sind(θ); lat2 = Y - ΔY * cosd(θ) - ΔX * sind(θ)
     lon3 = X + ΔX * cosd(θ) + ΔY * sind(θ); lat3 = Y - ΔY * cosd(θ) + ΔX * sind(θ)
     lon4 = X + ΔX * cosd(θ) - ΔY * sind(θ); lat4 = Y + ΔY * cosd(θ) + ΔX * sind(θ)
 
-    lon = [lon1,lon2,lon3,lon4]
-    lat = [lat1,lat2,lat3,lat4]
+    return [lon1,lon2,lon3,lon4,lon1], [lat1,lat2,lat3,lat4,lat1]
 
-    return maximum(lat), minimum(lat) , maximum(lon), minimum(lon)
+end
+
+function rect2shape(
+    N :: Real,
+    S :: Real,
+    E :: Real,
+    W :: Real
+)
+
+    return [W,E,E,W,W], [N,N,S,S,N]
 
 end

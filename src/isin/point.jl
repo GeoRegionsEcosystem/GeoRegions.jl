@@ -64,10 +64,7 @@ function isinGeoRegion(
         @info "$(modulelog()) - Performing a check to determine if the coordinates $(Point) are within the specified region boundaries."
     end
 
-    N = GeoReg.N
-    S = GeoReg.S
-    E = GeoReg.E
-    W = GeoReg.W
+    N,S,E,W = GeoReg.bound
 
     plon = Point[1]; plon = mod(plon,360)
     plat = Point[2]
@@ -148,10 +145,7 @@ function isinGeoRegion(
         @info "$(modulelog()) - Performing a check to determine if the coordinates $(Point) are within the specified region boundaries."
     end
 
-    N = GeoReg.N
-    S = GeoReg.S
-    E = GeoReg.E
-    W = GeoReg.W
+    N,S,E,W = GeoReg.bound
 
     plon = Point[1]; plon = mod(plon,360)
     plat = Point[2]

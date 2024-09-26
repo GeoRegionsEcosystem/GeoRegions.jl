@@ -17,7 +17,7 @@ Returns
 - `lat` : A vector of latitude points for the shape of the GeoRegion
 """
 function coordinates(
-    geo :: PolyRegion;
+    geo :: GeoRegion;
     n :: Int = 1
 )
 
@@ -40,72 +40,6 @@ function coordinates(
         end
         lon = vcat(lon[:],lon[1])
         lat = vcat(lat[:],lat[1])
-    end
-
-    return lon,lat
-
-end
-
-function coordinates(
-    geo :: RectRegion;
-    n :: Int = 1
-)
-
-    N = geo.N
-    S = geo.S
-    E = geo.E
-    W = geo.W
-
-    if isone(n)
-        lon = [W,E,E,W,W]
-        lat = [N,N,S,S,N]
-    else
-        lon = vcat(
-            range(W,E,n+1)[1:(end-1)], range(E,E,n+1)[1:(end-1)],
-            range(E,W,n+1)[1:(end-1)], range(W,W,n+1)[1:(end-1)],
-            W
-        )
-        lat = vcat(
-            range(N,N,n+1)[1:(end-1)], range(N,S,n+1)[1:(end-1)],
-            range(S,S,n+1)[1:(end-1)], range(S,N,n+1)[1:(end-1)],
-            N
-        )
-    end
-
-    return lon,lat
-
-end
-
-function coordinates(
-    geo :: TiltRegion;
-    n :: Int = 1
-)
-
-    X  = geo.X
-    Y  = geo.Y
-    θ  = geo.θ
-    ΔX = geo.ΔX
-    ΔY = geo.ΔY
-
-    lon1 = X - ΔX * cosd(θ) - ΔY * sind(θ); lat1 = Y + ΔY * cosd(θ) - ΔX * sind(θ)
-    lon2 = X - ΔX * cosd(θ) + ΔY * sind(θ); lat2 = Y - ΔY * cosd(θ) - ΔX * sind(θ)
-    lon3 = X + ΔX * cosd(θ) + ΔY * sind(θ); lat3 = Y - ΔY * cosd(θ) + ΔX * sind(θ)
-    lon4 = X + ΔX * cosd(θ) - ΔY * sind(θ); lat4 = Y + ΔY * cosd(θ) + ΔX * sind(θ)
-
-    if isone(n)
-        lon = [lon1,lon2,lon3,lon4,lon1]
-        lat = [lat1,lat2,lat3,lat4,lat1]
-    else
-        lon = vcat(
-            range(lon1,lon2,n+1)[1:(end-1)], range(lon2,lon3,n+1)[1:(end-1)],
-            range(lon3,lon4,n+1)[1:(end-1)], range(lon4,lon1,n+1)[1:(end-1)],
-            lon1
-        )
-        lat = vcat(
-            range(lat1,lat2,n+1)[1:(end-1)], range(lat2,lat3,n+1)[1:(end-1)],
-            range(lat3,lat4,n+1)[1:(end-1)], range(lat4,lat1,n+1)[1:(end-1)],
-            lat1
-        )
     end
 
     return lon,lat

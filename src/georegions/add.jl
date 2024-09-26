@@ -25,7 +25,7 @@ function add(
 
     RectRegion(
         geo.ID, geo.pID, geo.name,
-        [geo.N,geo.S,geo.E,geo.W],
+        geo.bound,
         path = path, verbose = verbose, save = true
     )
 

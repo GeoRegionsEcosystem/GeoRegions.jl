@@ -75,11 +75,7 @@ function isinGeoRegion(
 
     @info "$(modulelog()) - Performing a check to determine if the $(Child.name) GeoRegion ($(Child.ID)) is inside the $(rectG.name) GeoRegion ($(rectG.ID))"
 
-    isin = isgridinregion(
-        [Child.N,Child.S,Child.E,Child.W],
-        [rectG.N,rectG.S,rectG.E,rectG.W],
-        throw=false
-    )
+    isin = isgridinregion(Child.bound,rectG.bound,throw=false)
 
     if !isin
 

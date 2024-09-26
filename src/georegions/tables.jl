@@ -64,7 +64,7 @@ function tableGeoRegions(;
         fmat[igeo,2] = tvec[igeo]
         fmat[igeo,3] = geo.name
         fmat[igeo,4] = geo.pID
-        fmat[igeo,5] = [geo.N, geo.S, geo.E, geo.W]
+        fmat[igeo,5] = geo.bound
         fmat[igeo,6] = fvec[igeo]
     end
 
@@ -113,7 +113,7 @@ function tableGeoRegions(
         fmat[igeo,2] = rtype
         fmat[igeo,3] = g.name
         fmat[igeo,4] = g.pID
-        fmat[igeo,5] = [g.N, g.S, g.E, g.W]
+        fmat[igeo,5] = geo.bound
         fmat[igeo,6] = basename(fname)
     end
 
@@ -180,7 +180,7 @@ function tableRectRegions(;
         fmat[igeo,2] = tvec[igeo]
         fmat[igeo,3] = geo.name
         fmat[igeo,4] = geo.pID
-        fmat[igeo,5] = [geo.N, geo.S, geo.E, geo.W]
+        fmat[igeo,5] = geo.bound
         fmat[igeo,6] = fvec[igeo]
     end
 
@@ -235,7 +235,7 @@ function tableTiltRegions(;
         fmat[igeo,2] = tvec[igeo]
         fmat[igeo,3] = geo.name
         fmat[igeo,4] = geo.pID
-        fmat[igeo,5] = [geo.N, geo.S, geo.E, geo.W]
+        fmat[igeo,5] = geo.bound
         fmat[igeo,6] = fvec[igeo]
     end
 
@@ -309,7 +309,7 @@ function tablePolyRegions(;
         fmat[igeo,2] = tvec[igeo]
         fmat[igeo,3] = geo.name
         fmat[igeo,4] = geo.pID
-        fmat[igeo,5] = [geo.N, geo.S, geo.E, geo.W]
+        fmat[igeo,5] = geo.bound
         fmat[igeo,6] = fvec[igeo]
     end
 
