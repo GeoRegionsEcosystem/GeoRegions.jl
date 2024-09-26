@@ -21,7 +21,7 @@ rm(
 ) = if isgeo(geo,path=path)
     rmID(geo.ID,path=path)
 else
-    if isID(geo,path=path)
+    if isID(geo.ID,path=path)
         error("$(modulelog()) - The GeoRegion in $path which has the ID \"$(geo.ID)\" does not have the same properties as our GeoRegion \"$(geo.ID)\" that we have defined, and thus cannot be removed.")
     else
         error("$(modulelog()) - There is no GeoRegion in $path which has the ID \"$(geo.ID)\".")
@@ -57,7 +57,7 @@ function rmID(
         @info "$(modulelog()) - Removing the GeoRegion $(geoID) ..."
     end
 
-    rvec,fvec,tvec,dvec = listall(path); isID(geoID,path)
+    rvec,fvec,tvec,dvec = listall(path); isID(geoID,rvec)
     ind = findall(geoID.==rvec)[1]
 
     fdefined = ["global.txt","giorgi.txt","srex.txt","ar6.txt"]
