@@ -202,21 +202,100 @@ function isgeo(
 
 end
 
+"""
+    isgeoshape(
+        geo  :: GeoRegion;
+        path :: AbstractString = dirname(geo.path),
+        throw    :: Bool = false,
+        returnID :: Bool = true
+    ) -> tf :: Bool
+
+Checks all the GeoRegions defined in the project determined by `path`. If there exists a `GeoRegion` with the same shape as `geo.shape`, returns `true` by default, or otherwise, if `returnID` is true, it will return the ID. If there is no `GeoRegion` with the same shape, then either returns a `false` or throws and error depending on `throw`
+
+Arguments
+=========
+- `geo` : The GeoRegion in question
+
+Keyword Arguments
+=================
+- `path` : The path where GeoRegions will be retrieved from and compared against.
+           Defaults to the directory `geo.path`
+- `throw` : If `true`, will throw an error if no GeoRegion in `path` has the same shape as `geo`
+- `returnID` : If `true`, then returns the `ID` of the `GeoRegion` in `path` with the same shape as `geo`.
+
+Returns
+=======
+- `tf` : True / False
+"""
 function isgeoshape(
-    geo   :: GeoRegion;
-    path  :: AbstractString = dirname(geo.path),
+    geo  :: GeoRegion;
+    path :: AbstractString = dirname(geo.path),
     returnID :: Bool = false
 )
 
     IDvec,_,_,_ = listall(path); ngeo = length(IDvec)
     tf = zeros(Bool,ngeo)
 
-    disable_logging(Logging.Warn)
     for igeo in 1 : ngeo
-        tgeo = GeoRegion(IDvec[igeo],path=path)
+        tgeo = GeoRegion(IDvec[igeo],path=path,verbose=false)
         tf[igeo] = equalshape(geo,tgeo)
     end
-    disable_logging(Logging.Debug)
+
+    if !iszero(sum(tf))
+        if returnID
+            return IDvec[tf][1]
+        else
+            return true
+        end
+    else
+        return false
+    end
+
+end
+
+"""
+    isgeoshape(
+        lon  :: Vector{<:Real},
+        lat  :: Vector{<:Real};
+        path :: AbstractString = dirname(geo.path),
+        throw    :: Bool = false,
+        returnID :: Bool = true
+    ) -> tf :: Bool
+
+Checks all the GeoRegions defined in the project determined by `path`. If there exists a `GeoRegion` with the same shape as defined by the vectors `lon` and `lat`, returns `true` by default, or otherwise, if `returnID` is true, it will return the ID. If there is no `GeoRegion` with the same shape, then either returns a `false` or throws and error depending on `throw`
+
+Arguments
+=========
+- `lon` : Vector of longitude points
+- `lat` : Vector of latitude points
+
+Keyword Arguments
+=================
+- `path` : The path where GeoRegions will be retrieved from and compared against.
+           Defaults to the directory `homedir()`
+- `throw` : If `true`, will throw an error if no GeoRegion in `path` has the same shape as `geo`
+- `returnID` : If `true`, then returns the `ID` of the `GeoRegion` in `path` with the same shape as `geo`.
+
+Returns
+=======
+- `tf` : True / False
+"""
+function isgeoshape(
+    lon  :: Vector{<:Real},
+    lat  :: Vector{<:Real};
+    path :: AbstractString = homedir(),
+    returnID :: Bool = false
+)
+
+    IDvec,_,_,_ = listall(path); ngeo = length(IDvec)
+    tf = zeros(Bool,ngeo)
+
+    geo = PolyRegion("","","",lon,lat)
+
+    for igeo in 1 : ngeo
+        tgeo = GeoRegion(IDvec[igeo],path=path,verbose=false)
+        tf[igeo] = equalshape(geo,tgeo)
+    end
 
     if !iszero(sum(tf))
         if returnID
@@ -255,35 +334,36 @@ Returns
 - `tf` : True / False
 """
 function isID(
-    geoID :: AbstractString;
+    ID :: AbstractString;
     path  :: AbstractString = homedir(),
     throw :: Bool=true
 )
 
-    rvec,_,_,_ = listall(path)
-    return isID(geoID,rvec;throw=throw,dolog=true)
+    IDvec,_,_,_ = listall(path)
+    return isID(ID,IDvec;throw=throw,verbose=true)
 
 end
 
 function isID(
-    geoID  :: AbstractString,
-    regvec :: AbstractArray;
-    throw  :: Bool = true,
-    dolog  :: Bool = false)
+    ID    :: AbstractString,
+    IDvec :: AbstractArray;
+    throw   :: Bool = true,
+    verbose :: Bool = false
+)
 
-    if dolog
-        @info "$(modulelog()) - Checking to see if the ID $geoID is in use"
+    if verbose
+        @info "$(modulelog()) - Checking to see if the ID $ID is in use"
     end
 
-    if sum(regvec.==geoID) == 0
+    if sum(IDvec.==ID) == 0
         if throw
-            error("$(modulelog()) - $(geoID) is not a valid GeoRegion identifier, use RectRegion(), TiltRegion() or PolyRegion() to add this GeoRegion to the list.")
+            error("$(modulelog()) - $(ID) is not a valid GeoRegion identifier, use RectRegion(), TiltRegion() or PolyRegion() to add this GeoRegion to the list.")
         else
-            @warn "$(modulelog()) - $(geoID) is not a valid GeoRegion identifier, use RectRegion(), TiltRegion() or PolyRegion() to add this GeoRegion to the list."
+            @warn "$(modulelog()) - $(ID) is not a valid GeoRegion identifier, use RectRegion(), TiltRegion() or PolyRegion() to add this GeoRegion to the list."
             return false
         end
     else
-        if dolog; @info "$(modulelog()) - The ID $geoID is already in use" end
+        if verbose; @info "$(modulelog()) - The ID $ID is already in use" end
         return true
     end
 
