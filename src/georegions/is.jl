@@ -1,22 +1,188 @@
-==(geo1::T, geo2::T) where T <: RectRegion =
-    getfield.(Ref(geo1),fieldnames(T)) == getfield.(Ref(geo2),fieldnames(T))
+"""
+    ==(
+        geo1 :: GeoRegion,
+        geo2 :: GeoRegion,
+    ) -> tf :: Bool
 
-==(geo1::T, geo2::T) where T <: PolyRegion =
-    getfield.(Ref(geo1),fieldnames(T)) == getfield.(Ref(geo2),fieldnames(T))
+Checks all the fields (except names and paths) of two different GeoRegions in order to determine if they are exactly the same. The GeoRegions must be of the same GeoRegion `type`.
 
-==(geo1::T, geo2::T) where T <: TiltRegion =
-    getfield.(Ref(geo1),fieldnames(T)) == getfield.(Ref(geo2),fieldnames(T))
+The `geo1.shape` and `geo2.shape` need not be exactly the same as long as they define the same area (i.e., the points in `geo2` can be a circshift version of `geo1`).
 
+Arguments
+=========
+- `geo1` : The first GeoRegion
+- `geo2` : The second GeoRegion
+
+Returns
+=======
+- `tf` : True / False
+"""
+==(geo1 :: GeoRegion, geo2 :: GeoRegion) = isequal(geo1,geo2)
+
+function isequal(
+    geo1 :: RectRegion,
+    geo2 :: RectRegion;
+    strict :: Bool = true
+)
+
+    tf = equalshape(geo1,geo2)
+
+    if geo1.ID !== geo2.ID
+        tf = false
+    end
+
+    if strict
+        if (geo1.pID !== geo2.ID) || 
+            (geo1.bound !== geo2.bound) || 
+            (geo1.is180 !== geo2.is180) || 
+            (geo1.is360 !== geo2.is360)
+            tf = false
+        end
+    end
+
+    return tf
+
+end
+
+"""
+    isequal(
+        geo1 :: GeoRegion,
+        geo2 :: GeoRegion;
+        strict :: Bool = true
+    ) -> tf :: Bool
+
+Checks all the fields (except names) of two different GeoRegions in order to determine if they are exactly the same. The GeoRegions must be of the same GeoRegion `type`.
+
+The `geo1.shape` and `geo2.shape` need not be exactly the same as long as they define the same area (i.e., the points in `geo2` can be a circshift version of `geo1`).
+
+Arguments
+=========
+- `geo1` : The first GeoRegion
+- `geo2` : The second GeoRegion
+
+Keyword Arguments
+=================
+- `strict` : If `true` (which is default), check to see if all fields are equivalent except for `name` and `path`
+
+Returns
+=======
+- `tf` : True / False
+"""
+function isequal(
+    geo1 :: PolyRegion,
+    geo2 :: PolyRegion;
+    strict :: Bool = true
+)
+
+    tf = equalshape(geo1,geo2)
+
+    if geo1.ID !== geo2.ID
+        tf = false
+    end
+
+    if strict
+        if (geo1.pID !== geo2.ID) || 
+            (geo1.bound !== geo2.bound) || 
+            (geo1.is180 !== geo2.is180) || 
+            (geo1.is360 !== geo2.is360)
+            tf = false
+        end
+    end
+
+    return tf
+
+end
+
+function isequal(
+    geo1 :: TiltRegion,
+    geo2 :: TiltRegion;
+    strict :: Bool = true
+)
+
+    tf = equalshape(geo1,geo2)
+
+    if geo1.ID !== geo2.ID
+        tf = false
+    end
+
+    if strict
+        if (geo1.pID !== geo2.ID) || 
+            (geo1.bound !== geo2.bound) || 
+            (geo1.is180 !== geo2.is180) || 
+            (geo1.is360 !== geo2.is360) || 
+            (geo1.geometry !== geo2.geometry)
+            tf = false
+        end
+    end
+
+    return tf
+
+end
+
+isequal(
+    geo1 :: RectRegion,
+    geo2 :: Union{TiltRegion, PolyRegion};
+    strict :: Bool = true
+) = if strict || (geo1.ID !== geo2.ID)
+    return false
+else
+    return equalshape(geo1,geo2)
+end
+
+isequal(
+    geo1 :: TiltRegion,
+    geo2 :: Union{RectRegion, PolyRegion};
+    strict :: Bool = true
+) = if strict || (geo1.ID !== geo2.ID)
+    return false
+else
+    return equalshape(geo1,geo2)
+end
+
+isequal(
+    geo1 :: PolyRegion,
+    geo2 :: Union{RectRegion, TiltRegion};
+    strict :: Bool = true
+) = if strict || (geo1.ID !== geo2.ID)
+    return false
+else
+    return equalshape(geo1,geo2)
+end
+
+"""
+    isgeo(
+        geo   :: GeoRegion;
+        path  :: AbstractString = dirname(geo.path),
+        throw :: Bool = true
+    ) -> tf :: Bool
+
+Checks all the GeoRegions defined in the project determined by `path`. If there exists a `GeoRegion` with the same `ID` **and** the same field values as the GeoRegion `geo`, returns `true`. Otherwise, returns `false` or throws an error.
+
+Arguments
+=========
+- `geo` : The GeoRegion in question
+
+Keyword Arguments
+=================
+- `path` : The path where the list of custom GeoRegions will be retrieved from.
+           Defaults to the directory `geo.path`
+- `throw` : If `true`, then throws an error if there is no `GeoRegion` defined in `path` with the same characteristics or field values as `geo`.
+
+Returns
+=======
+- `tf` : True / False
+"""
 function isgeo(
-    geo   :: GeoRegion;
-    path  :: AbstractString = dirname(geo.path),
-    throw :: Bool = true
+    geo  :: GeoRegion;
+    path :: AbstractString = dirname(geo.path),
+    strict :: Bool = true,
+    throw  :: Bool = false
 )
 
     if isID(geo.ID,path=path,throw=throw)
 
         tgeo = GeoRegion(geo.ID,path=path)
-        if tgeo == geo
+        if isequal(geo,tgeo,strict=strict)
             @info "$(modulelog()) - The GeoRegion \"$(geo.ID)\" we have defined shares the same properties as the custom GeoRegion \"$(tgeo.ID)\" from the lists in $path"
             return true
         else
