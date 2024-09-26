@@ -113,7 +113,7 @@ resize_to_layout!(fig)
 fig
 ```
 
-We see by eye that GeoRegion `TS2` and `TS4` are in the `BIG` region, but the other GeoRegions are not.  Now let us verify this with `isinGeoRegion()`
+We see by eye that GeoRegion `TS2` and `TS4` are in the `BIG` region, but the other GeoRegions are not.  Now let us verify this with `in()`
 
 ```@example isin
 in(geo_TS1,geo_BIG),

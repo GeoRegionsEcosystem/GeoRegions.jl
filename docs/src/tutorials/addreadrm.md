@@ -90,7 +90,7 @@ geo = PolyRegion("TSP","GLB","Test Save PolyRegion 2",[10,90,-50,10],[20,10,0,20
 add(geo,path=joinpath(pwd(),"test"))
 ```
 
-In order to replace the GeoRegion associated with this `ID` with another set of information, you need to _**overwrite**_ the preexisting information with `overwrite()`
+We see that we cannot add another GeoRegion with the `ID = TSP`. In order to replace the GeoRegion associated with this `ID` with another set of information, you need to _**overwrite**_ the preexisting information with `overwrite()`
 
 ```@example addreadremove
 overwrite(geo,path=joinpath(pwd(),"test"))
