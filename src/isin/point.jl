@@ -126,7 +126,7 @@ function isinGeoRegion(
 
     @info "$(modulelog()) - Performing a check to determine if the $(Child.name) GeoRegion ($(Child.ID)) is inside the $(tiltG.name) GeoRegion ($(tiltG.ID))"
 
-    lon,lat = getTiltShape(GeoReg)
+    lon,lat = coordinates(GeoReg)
     tgeo = PolyRegion("","","",lon,lat,save=false,verbose=false)
 
     isinGeoRegion(Point,tgeo,tlon=tlon,tlat=tlat,throw=throw)
