@@ -23,8 +23,8 @@ function getrectregion(
     FT = Float64
 )
 
-    rvec = listrectregions(fID)
-    ind  = findall(rvec.==ID)[1]
+    IDvec = listrectregions(fID)
+    ind  = findall(IDvec.==ID)[1]
 
     IDinfo = readdlm(fID,',',comments=true,comment_char='#')[ind,:]
     pID,name,N,S,E,W = IDinfo[[2,7,3,5,6,4]]
@@ -49,8 +49,8 @@ function gettiltregion(
     FT = Float64
 )
 
-    rvec = listrectregions(fID)
-    ind  = findall(rvec.==ID)[1]
+    IDvec = listrectregions(fID)
+    ind  = findall(IDvec.==ID)[1]
 
     IDinfo = readdlm(fID,',',comments=true,comment_char='#')[ind,:]
     pID,name,X,Y,ΔX,ΔY,θ = IDinfo[[2,8,3,4,5,6,7]]
@@ -65,7 +65,7 @@ function gettiltregion(
     return TiltRegion{ST,FT}(
         ID, pID, name, fID,
         [N, S, E, W], Point2.(lon,lat), is180, is360,
-        X, Y, ΔX, ΔY, θ,
+        [X, Y, ΔX, ΔY, θ]
     )
 
 end
@@ -77,8 +77,8 @@ function getpolyregion(
     FT = Float64
 )
 
-    rvec = listpolyregions(fID)
-    ind  = findall(rvec.==ID)[1]
+    IDvec = listpolyregions(fID)
+    ind  = findall(IDvec.==ID)[1]
     ind  = (ind) * 4 + 1
 
     flines = readlines(fID)

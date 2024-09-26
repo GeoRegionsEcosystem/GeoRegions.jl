@@ -15,7 +15,7 @@ export
         GeoRegion,
         RectRegion, PolyRegion, TiltRegion,
 
-        ==, isgeo, isID,
+        ==, isgeo, isgeoshape, isID,
         add, rm, rmID, overwrite,
 
         setupGeoRegions, readGeoRegions, addGeoRegions, deleteGeoRegions,
@@ -81,26 +81,23 @@ A **tilted** rectangular region on a rectilinear grid. Defined by
 * the angle of tilt in degrees (clockwise)
 
 In addition to all the fields common to the `GeoRegion` `abstract type`, `TiltRegion`s will also contain the following field:
-- `X`  : A `Float` Type, the longitude coordinate of region centre
-- `Y`  : A `Float` Type, the latitude coordinate of region centre
-- `θ`  : A `Float` Type, the angle-tilt of rectangular region in **degrees** in the clockwise direction
-- `ΔX` : A `Float` Type, the half-width in longitude coordinates (before tilting)
-- `ΔY` : A `Float` Type, the half-width in latitude coordinates (before tilting)
+- `geometry` : A vector of `Float` Types, containing [X,Y,ΔX,ΔY,θ], where
+    * `X`  : A `Float` Type, the longitude coordinate of region centre
+    * `Y`  : A `Float` Type, the latitude coordinate of region centre
+    * `θ`  : A `Float` Type, the angle-tilt of rectangular region in **degrees** in the clockwise direction
+    * `ΔX` : A `Float` Type, the half-width in longitude coordinates (before tilting)
+    * `ΔY` : A `Float` Type, the half-width in latitude coordinates (before tilting)
 """
 struct TiltRegion{ST<:AbstractString, FT<:Real} <: GeoRegion
-    ID    :: ST
-    pID   :: ST
-    name  :: ST
-    path  :: ST
-    bound :: Vector{FT}
-    shape :: Vector{FT}
-    is180 :: Bool
-    is360 :: Bool
-    X     :: FT
-    Y     :: FT
-    θ     :: FT
-    ΔX    :: FT
-    ΔY    :: FT
+    ID       :: ST
+    pID      :: ST
+    name     :: ST
+    path     :: ST
+    bound    :: Vector{FT}
+    shape    :: Vector{FT}
+    is180    :: Bool
+    is360    :: Bool
+    geometry :: Vector{FT}
 end
 
 modulelog() = "$(now()) - GeoRegions.jl"
