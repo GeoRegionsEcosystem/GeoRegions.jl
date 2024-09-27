@@ -9,7 +9,7 @@ Check if a geographical point `point` is within a GeoRegion defined by `geo`.
 
 Arguments
 =========
-- `point` : A geographical point of Type `Point2`.  Pass `Point2(plon,plat)`, where `plon` and `plat` are the longitude and latitudes of the point.
+- `point` : A geographical point of Type `Point`.  Pass `Point(plon,plat)`, where `plon` and `plat` are the longitude and latitudes of the point.
 - `geo`   : The GeoRegion struct container
 
 Keyword Arguments
@@ -33,20 +33,20 @@ function Base.in(
     while plon < -180; plon += 360 end
 
     isin = !iszero(sum([
-        within(Point2(plon    ,plat),geo.geometry),
-        within(Point2(plon+360,plat),geo.geometry),
-        within(Point2(plon-360,plat),geo.geometry)
+        within(Point(plon    ,plat),geo.geometry),
+        within(Point(plon+360,plat),geo.geometry),
+        within(Point(plon-360,plat),geo.geometry)
     ]))
 
     if !isin
         if throw
-            error("$(modulelog()) - The requested coordinates $(Point2(plon,plat)) are not within the specified region boundaries.")
+            error("$(modulelog()) - The requested coordinates $(Point(plon,plat)) are not within the specified region boundaries.")
         else
             return false
         end
     else
         if throw
-            @info "$(modulelog()) - The requested coordinates $(Point2(plon,plat)) are within the specified region boundaries."
+            @info "$(modulelog()) - The requested coordinates $(Point(plon,plat)) are within the specified region boundaries."
         end
         return true
     end
@@ -84,7 +84,7 @@ function Base.in(
     if verbose; @info "$(modulelog()) - Performing a check to determine if the $(cgeo.name) GeoRegion ($(cgeo.ID)) is inside the $(geo.name) GeoRegion ($(geo.ID))" end
 
     lon,lat = coordinates(cgeo,n=n)
-    isin = sum(.!in.(Point2.(lon,lat),[geo],n=n));
+    isin = sum(.!in.(Point.(lon,lat),[geo],n=n));
 
     if iszero(isin)
 

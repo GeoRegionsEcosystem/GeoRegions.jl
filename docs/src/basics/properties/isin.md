@@ -3,7 +3,7 @@
 When dealing with geographic data, we often wish to check if a point or region is inside another region.  GeoRegions.jl allows you to perform this check easily with the function `isinGeoRegion`.
 
 !!! note "Point Type"
-    We use the `Point2` Type from the package GeometryBasics.jl, which is reexported by GeoRegions.jl, as an easy way to denote points.  This also allows us to use the package PolygonOps.jl to determine if a point is inside a region.
+    We use the `Point` Type from the package GeometryBasics.jl, which is reexported by GeoRegions.jl, as an easy way to denote points.  This also allows us to use the package PolygonOps.jl to determine if a point is inside a region.
 
 ```@example isin
 using GeoRegions
@@ -25,9 +25,9 @@ As an example, let us test if a point is in GeoRegion `AR6_EAO`, defined in the 
 * Point *C* at coordinates (30,15)
 
 ```@example isin
-A = Point2(-20,5)
-B = Point2(340,5)
-C = Point2(-45,-7.5)
+A = Point(-20,5)
+B = Point(340,5)
+C = Point(-45,-7.5)
 geo = GeoRegion("AR6_EAO")
 ```
 
@@ -62,7 +62,7 @@ But what about Point B?  Point B is also very obvious within the bounds of the G
 in(B,geo)
 ```
 
-See the API [here](/api/isin#Base.in-Tuple{Point2{%3C:Real},%20GeoRegion})
+See the API [here](/api/isin#Base.in-Tuple{Point{%3C:Real},%20GeoRegion})
 
 ## Is a GeoRegion inside a GeoRegion?
 

@@ -9,7 +9,7 @@ Check if a geographical point `point` is on the boundary of a shape of a GeoRegi
 
 Arguments
 =========
-- `point` : A geographical point of Type `Point2`.  Pass `Point2(plon,plat)`, where `plon` and `plat` are the longitude and latitudes of the point.
+- `point` : A geographical point of Type `Point`.  Pass `Point(plon,plat)`, where `plon` and `plat` are the longitude and latitudes of the point.
 - `geo`   : The GeoRegion struct container
 
 Keyword Arguments
@@ -33,20 +33,20 @@ function on(
     while plon < -180; plon += 360 end
 
     isin = !iszero(sum([
-        touches(Point2(plon    ,plat),geo.geometry),
-        touches(Point2(plon+360,plat),geo.geometry),
-        touches(Point2(plon-360,plat),geo.geometry)
+        touches(Point(plon    ,plat),geo.geometry),
+        touches(Point(plon+360,plat),geo.geometry),
+        touches(Point(plon-360,plat),geo.geometry)
     ]))
 
     if !isin
         if throw
-            error("$(modulelog()) - The requested coordinates $(Point2(plon,plat)) are not on the region perimeter.")
+            error("$(modulelog()) - The requested coordinates $(Point(plon,plat)) are not on the region perimeter.")
         else
             return false
         end
     else
         if throw
-            @info "$(modulelog()) - The requested coordinates $(Point2(plon,plat)) are on the region perimeter."
+            @info "$(modulelog()) - The requested coordinates $(Point(plon,plat)) are on the region perimeter."
         end
         return true
     end
@@ -85,9 +85,9 @@ function on(
 
     lon1,lat1 = coordinates(geo1,n=n)
     lon2,lat2 = coordinates(geo2,n=n)
-    isin = sum(.!on.(Point2.(lon1,lat1),[geo2])) + sum(.!on.(Point2.(lon2,lat2),[geo1]))
+    isin = sum(.!on.(Point.(lon1,lat1),[geo2])) + sum(.!on.(Point.(lon2,lat2),[geo1]))
 
-    # @info lon1,lat1,Point2.(lon1,lat1)
+    # @info lon1,lat1,Point.(lon1,lat1)
 
     if iszero(isin)
 

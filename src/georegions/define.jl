@@ -117,7 +117,7 @@ function RectRegion(
     lon,lat = rect2shape(N,S,E,W)
     geo  = RectRegion{ST,FT}(
         ID, pID, name, joinpath(path,"rectlist.txt"),
-        [N, S, E, W], Point2.(lon,lat), Polygon(Point2.(lon,lat)),
+        [N, S, E, W], Point.(lon,lat), Polygon(Point.(lon,lat)),
         is180, is360
     )
 
@@ -227,7 +227,7 @@ function TiltRegion(
     lon,lat = tilt2shape(X,Y,ΔX,ΔY,θ)
     geo  = TiltRegion{ST,FT}(
         ID, pID, name, joinpath(path,"tiltlist.txt"),
-        [N, S, E, W], Point2.(lon,lat), Polygon(Point2.(lon,lat)), [X, Y, ΔX, ΔY, θ],
+        [N, S, E, W], Point.(lon,lat), Polygon(Point.(lon,lat)), [X, Y, ΔX, ΔY, θ],
         is180, is360
     )
 
@@ -342,7 +342,7 @@ function PolyRegion(
     is180,is360 = checkbounds(N,S,E,W)
     geo   = PolyRegion{ST,FT}(
         ID, pID, name, joinpath(path,"polylist.txt"),
-        [N, S, E, W], Point2.(lon,lat), Polygon(Point2.(lon,lat)),
+        [N, S, E, W], Point.(lon,lat), Polygon(Point.(lon,lat)),
         is180, is360
     )
     

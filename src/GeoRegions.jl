@@ -22,7 +22,7 @@ export
         tableGeoRegions, tableRectRegions, tableTiltRegions, tablePolyRegions,
 
         in, on, coordinates,
-        Point, Polygon
+        Point, Point2, Polygon
 
 ## Abstract types
 """

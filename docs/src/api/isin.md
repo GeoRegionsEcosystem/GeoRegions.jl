@@ -1,22 +1,28 @@
-# API for Is it in a GeoRegion?
+# API for Is it in/on a GeoRegion?
 
 ```@docs
 in(
-    Point  :: Point2{<:Real},
-    geo    :: GeoRegion;
-    tlon   :: Real = 0,
-    tlat   :: Real = 0,
-    throw  :: Bool = false
-)
-in(
-    cgeo  :: GeoRegion,
-    geo   :: RectRegion;
+    Point :: Point2{<:Real},
+    geo   :: GeoRegion;
     throw :: Bool = false
 )
 in(
-    cgeo  :: GeoRegion,
-    geo   :: Union{TiltRegion,PolyRegion};
-    n     :: Int = 100,
+    cgeo :: GeoRegion,
+    geo  :: GeoRegion;
+    n    :: Int = 100,
+    throw   :: Bool = false,
+    verbose :: Bool = false
+)
+on(
+    Point :: Point2{<:Real},
+    geo   :: GeoRegion;
     throw :: Bool = false
+)
+on(
+    cgeo :: GeoRegion,
+    geo  :: GeoRegion;
+    n    :: Int = 100,
+    throw   :: Bool = false,
+    verbose :: Bool = false
 )
 ```
