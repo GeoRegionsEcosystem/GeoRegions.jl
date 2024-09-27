@@ -4,15 +4,12 @@ using Test
 
 @testset "Test Creation, Detection and Removal of GeoRegions" begin
 
-    disable_logging(Logging.Warn)
     geo = RectRegion("TRP","GLB","Tropics",[30,-30,360,0])
     @test !isgeo(geo,throw=false)
     @test add(geo) === nothing
     @test isgeo(geo,throw=false)
     rm(geo)
-    disable_logging(Logging.Debug)
 
-    disable_logging(Logging.Warn)
     @test !isID("TRP",throw=false)
     geo1 = RectRegion("TRP","GLB","Tropics",[30,-30,360,0],save=true)
     geo2 = RectRegion("TRP_DTP","GLB","Deep Tropics",[10,-10,360,0],save=true)
@@ -23,13 +20,11 @@ using Test
     @test  isgeo(geo2,throw=false)
     @test  rmID("TRP_DTP") === nothing
     @test !isgeo(geo2,throw=false)
-    disable_logging(Logging.Debug)
 
 end
 
 @testset "Testing Directory Specification for Custom GeoRegions" begin
 
-    disable_logging(Logging.Warn)
     @test !isID("TRP",path=pwd(),throw=false)
     geo1 = RectRegion("TRP","GLB","Tropics",[30,-30,360,0],path=pwd(),save=true)
     @test !isID("TRP",throw=false)
@@ -39,7 +34,6 @@ end
     @test_throws "not a valid GeoRegion identifier" rm(geo1,path=homedir())
     @test  rm(geo1) === nothing
     @test !isgeo(geo1,throw=false)
-    disable_logging(Logging.Debug)
 
 end
 
@@ -59,12 +53,10 @@ end
 
 @testset "Test that all predefined GeoRegions work" begin
 
-    disable_logging(Logging.Warn)
     IDvec,_,_ = GeoRegions.listall()
     for ID in IDvec
         @test isID(ID,throw=false);
         @test isgeo(GeoRegion(ID),throw=false);
     end
-    disable_logging(Logging.Debug)
 
 end
