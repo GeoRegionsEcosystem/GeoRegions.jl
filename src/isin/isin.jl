@@ -96,7 +96,7 @@ function Base.in(
         if throw
             error("$(modulelog()) - The GeoRegion $(cgeo.ID) ($(cgeo.name)) is not a subset of the GeoRegion $(geo.ID) ($(geo.name))")
         else
-            @warn "$(modulelog()) - The GeoRegion $(cgeo.ID) ($(cgeo.name)) is not a subset of the GeoRegion $(geo.ID) ($(geo.name))"
+            if verbose; @warn "$(modulelog()) - The GeoRegion $(cgeo.ID) ($(cgeo.name)) is not a subset of the GeoRegion $(geo.ID) ($(geo.name))" end
             return false
         end
 

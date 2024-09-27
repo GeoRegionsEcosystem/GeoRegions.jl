@@ -32,7 +32,7 @@ function GeoRegion(
         @info "$(modulelog()) - Retrieving information for the GeoRegion defined by the ID $geoID"
     end
 
-    rvec,fvec,tvec,dvec = listall(path); isID(geoID,rvec)
+    rvec,fvec,tvec,dvec = listall(path); isID(geoID,rvec,verbose=verbose)
     ind = findall(geoID.==rvec)[1]
     return getgeoregion(geoID,joinpath(dvec[ind],fvec[ind]),tvec[ind],ST,FT)
 

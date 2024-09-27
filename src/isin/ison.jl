@@ -99,7 +99,7 @@ function on(
         if throw
             error("$(modulelog()) - The GeoRegion $(geo1.name) GeoRegion ($(geo1.ID)) does not share the same shape as GeoRegion ($(geo2.ID))")
         else
-            @warn "$(modulelog()) - The GeoRegion $(geo1.name) GeoRegion ($(geo1.ID)) does not share the same shape as GeoRegion ($(geo2.ID))"
+            if verbose; @warn "$(modulelog()) - The GeoRegion $(geo1.name) GeoRegion ($(geo1.ID)) does not share the same shape as GeoRegion ($(geo2.ID))" end
             return false
         end
 
