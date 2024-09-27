@@ -5,10 +5,10 @@ using Dates
 using DelimitedFiles
 using GeometryBasics
 using Logging
-using PolygonOps
 using PrettyTables
 
 import Base: show, rm, in, ==, !==, isequal
+import GeometryOps: within, touches
 
 ## Exporting the following functions:
 export
@@ -21,9 +21,8 @@ export
         setupGeoRegions, readGeoRegions, addGeoRegions, deleteGeoRegions,
         tableGeoRegions, tableRectRegions, tableTiltRegions, tablePolyRegions,
 
-        isinGeoRegion, in,
-        coordinates,
-        Point2
+        in, on, coordinates,
+        Point, Polygon
 
 ## Abstract types
 """
@@ -46,14 +45,15 @@ abstract type GeoRegion end
 A rectangular region on a rectilinear grid. Defined by its N,S,E,W boundaries.
 """
 struct RectRegion{ST<:AbstractString, FT<:Real} <: GeoRegion
-    ID    :: ST
-    pID   :: ST
-    name  :: ST
-    path  :: ST
-    bound :: Vector{FT}
-    shape :: Vector{Point2{FT}}
-    is180 :: Bool
-    is360 :: Bool
+    ID       :: ST
+    pID      :: ST
+    name     :: ST
+    path     :: ST
+    bound    :: Vector{FT}
+    shape    :: Vector{Point2{FT}}
+    geometry :: Polygon
+    is180    :: Bool
+    is360    :: Bool
 end
 
 """
@@ -62,14 +62,15 @@ end
 A polygonal region on a rectilinear lon-lat grid, defined by the (lon,lat) coordinates of its vertices.
 """
 struct PolyRegion{ST<:AbstractString, FT<:Real} <: GeoRegion
-    ID    :: ST
-    pID   :: ST
-    name  :: ST
-    path  :: ST
-    bound :: Vector{FT}
-    shape :: Vector{Point2{FT}}
-    is180 :: Bool
-    is360 :: Bool
+    ID       :: ST
+    pID      :: ST
+    name     :: ST
+    path     :: ST
+    bound    :: Vector{FT}
+    shape    :: Vector{Point2{FT}}
+    geometry :: Polygon
+    is180    :: Bool
+    is360    :: Bool
 end
 
 """
@@ -94,10 +95,11 @@ struct TiltRegion{ST<:AbstractString, FT<:Real} <: GeoRegion
     name     :: ST
     path     :: ST
     bound    :: Vector{FT}
-    shape    :: Vector{FT}
+    shape    :: Vector{Point2{FT}}
+    geometry :: Polygon
+    tilt     :: Vector{FT}
     is180    :: Bool
     is360    :: Bool
-    geometry :: Vector{FT}
 end
 
 modulelog() = "$(now()) - GeoRegions.jl"
@@ -116,7 +118,7 @@ include("georegions/show.jl")
 include("georegions/tables.jl")
 
 include("isin/isin.jl")
-include("isin/point.jl")
-include("isin/georegion.jl")
+include("isin/ison.jl")
+include("isin/extrastuff.jl")
 
 end # module
