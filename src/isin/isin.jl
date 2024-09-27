@@ -84,7 +84,7 @@ function Base.in(
     if verbose; @info "$(modulelog()) - Performing a check to determine if the $(cgeo.name) GeoRegion ($(cgeo.ID)) is inside the $(geo.name) GeoRegion ($(geo.ID))" end
 
     lon,lat = coordinates(cgeo,n=n)
-    isin = sum(.!in.(Point.(lon,lat),[geo],n=n));
+    isin = sum(.!in.(Point.(lon,lat),[geo]));
 
     if iszero(isin)
 
