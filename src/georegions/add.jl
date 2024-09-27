@@ -20,7 +20,7 @@ Keyword Arguments
 function add(
     geo  :: RectRegion;
     path :: AbstractString = dirname(geo.path),
-    verbose :: Bool = true
+    verbose :: Bool = false
 )
 
     RectRegion(
@@ -36,7 +36,7 @@ end
 function add(
     geo  :: TiltRegion;
     path :: AbstractString = dirname(geo.path),
-    verbose :: Bool = true
+    verbose :: Bool = false
 )
 
     TiltRegion(
@@ -52,7 +52,7 @@ end
 function add(
     geo  :: PolyRegion;
     path :: AbstractString = dirname(geo.path),
-    verbose :: Bool = true
+    verbose :: Bool = false
 )
 
     lon,lat = coordinates(geo)
@@ -89,7 +89,7 @@ Keyword Arguments
 function overwrite(
     geo  :: GeoRegion;
     path :: AbstractString = dirname(geo.path),
-    verbose :: Bool = true
+    verbose :: Bool = false
 )
 
     rmID(geo.ID,path=path)

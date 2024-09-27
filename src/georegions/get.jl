@@ -37,7 +37,8 @@ function getrectregion(
 
     return RectRegion{ST,FT}(
         ID, pID, name, fID,
-        [N, S, E, W], Point2.(lon,lat), is180, is360,
+        [N, S, E, W], Point2.(lon,lat), Polygon(Point2.(lon,lat)),
+        is180, is360
     )
 
 end
@@ -64,8 +65,8 @@ function gettiltregion(
 
     return TiltRegion{ST,FT}(
         ID, pID, name, fID,
-        [N, S, E, W], Point2.(lon,lat), is180, is360,
-        [X, Y, ΔX, ΔY, θ]
+        [N, S, E, W], Point2.(lon,lat), Polygon(Point2.(lon,lat)), [X, Y, ΔX, ΔY, θ],
+        is180, is360
     )
 
 end
@@ -92,7 +93,8 @@ function getpolyregion(
 
     return PolyRegion{ST,FT}(
         ID, pID, name, fID,
-        [N, S, E, W], Point2.(lon,lat), is180, is360,
+        [N, S, E, W], Point2.(lon,lat), Polygon(Point2.(lon,lat)),
+        is180, is360
     )
 
 end

@@ -116,20 +116,21 @@ Keyword Arguments
 function addGeoRegions(
     fname :: AbstractString;
     path  :: AbstractString = pwd(),
-    overwrite :: Bool = false
+    overwrite :: Bool = false,
+    verbose   :: Bool = false
 )
 
     @info "$(modulelog()) - Importing user-defined GeoRegions from the file $fname directly into the custom lists"
 
     rvec,rtype = listgeoregions(fname)
     for reg in rvec
-        if !isID(reg,path=path,throw=false)
+        if !isID(reg,path=path,throw=false,verbose=verbose)
             g = getgeoregion(reg,fname,rtype)
-            add(g,path=path)
+            add(g,path=path,verbose=verbose)
         elseif overwrite
             @warn "$(modulelog()) - The GeoRegion ID $reg is already in use. Overwriting and replacing with new boundaries ..."
             g = getgeoregion(reg,fname,rtype)
-            overwrite(g,path=path)
+            overwrite(g,path=path,verbose=verbose)
         else
             @warn "$(modulelog()) - The GeoRegion ID $reg is already in use. Please use a different ID, or you can remove the ID using removeGeoRegion()."
         end

@@ -47,18 +47,18 @@ Returns
 function isequal(
     geo1 :: RectRegion,
     geo2 :: RectRegion;
-    strict :: Bool = true
+    strict  :: Bool = true,
+    verbose :: Bool = false
 )
+ 
+    tf = on(geo1,geo2,verbose=verbose)
 
-    tf = equalshape(geo1,geo2)
-
-    if geo1.ID !== geo2.ID
+    if (geo1.ID !== geo2.ID) || (geo1.pID !== geo2.pID)
         tf = false
     end
 
     if strict
-        if (geo1.pID !== geo2.pID) || 
-            !isequal(geo1.bound,geo2.bound) || 
+        if !isequal(geo1.bound,geo2.bound) || 
             (geo1.is180 !== geo2.is180) || 
             (geo1.is360 !== geo2.is360)
             tf = false
@@ -72,18 +72,18 @@ end
 function isequal(
     geo1 :: PolyRegion,
     geo2 :: PolyRegion;
-    strict :: Bool = true
+    strict  :: Bool = true,
+    verbose :: Bool = false
 )
+ 
+    tf = on(geo1,geo2,verbose=verbose)
 
-    tf = equalshape(geo1,geo2)
-
-    if geo1.ID !== geo2.ID
+    if (geo1.ID !== geo2.ID) || (geo1.pID !== geo2.pID)
         tf = false
     end
 
     if strict
-        if (geo1.pID !== geo2.pID) || 
-            !isequal(geo1.bound,geo2.bound) || 
+        if !isequal(geo1.bound,geo2.bound) || 
             (geo1.is180 !== geo2.is180) || 
             (geo1.is360 !== geo2.is360)
             tf = false
@@ -97,18 +97,18 @@ end
 function isequal(
     geo1 :: TiltRegion,
     geo2 :: TiltRegion;
-    strict :: Bool = true
+    strict  :: Bool = true,
+    verbose :: Bool = false
 )
+ 
+    tf = on(geo1,geo2,verbose=verbose)
 
-    tf = equalshape(geo1,geo2)
-
-    if geo1.ID !== geo2.ID
+    if (geo1.ID !== geo2.ID) || (geo1.pID !== geo2.pID)
         tf = false
     end
 
     if strict
-        if (geo1.pID !== geo2.pID) || 
-            !isequal(geo1.bound,geo2.bound) || 
+        if !isequal(geo1.bound,geo2.bound) || 
             (geo1.is180 !== geo2.is180) || 
             (geo1.is360 !== geo2.is360) || 
             (geo1.geometry !== geo2.geometry)
@@ -123,31 +123,34 @@ end
 isequal(
     geo1 :: RectRegion,
     geo2 :: Union{TiltRegion, PolyRegion};
-    strict :: Bool = true
+    strict  :: Bool = true,
+    verbose :: Bool = false
 ) = if strict || (geo1.ID !== geo2.ID) || (geo1.pID !== geo2.pID)
     return false
 else
-    return equalshape(geo1,geo2)
+    return on(geo1,geo2,verbose=verbose)
 end
 
 isequal(
     geo1 :: TiltRegion,
     geo2 :: Union{RectRegion, PolyRegion};
-    strict :: Bool = true
+    strict  :: Bool = true,
+    verbose :: Bool = false
 ) = if strict || (geo1.ID !== geo2.ID) || (geo1.pID !== geo2.pID)
     return false
 else
-    return equalshape(geo1,geo2)
+    return on(geo1,geo2,verbose=verbose)
 end
 
 isequal(
     geo1 :: PolyRegion,
     geo2 :: Union{RectRegion, TiltRegion};
-    strict :: Bool = true
+    strict  :: Bool = true,
+    verbose :: Bool = false
 ) = if strict || (geo1.ID !== geo2.ID) || (geo1.pID !== geo2.pID)
     return false
 else
-    return equalshape(geo1,geo2)
+    return on(geo1,geo2,verbose=verbose)
 end
 
 """
@@ -176,15 +179,16 @@ Returns
 function isgeo(
     geo  :: GeoRegion;
     path :: AbstractString = dirname(geo.path),
-    strict :: Bool = true,
-    throw  :: Bool = false
+    strict  :: Bool = true,
+    throw   :: Bool = false,
+    verbose :: Bool = false
 )
 
-    if isID(geo.ID,path=path,throw=throw)
+    if isID(geo.ID,path=path,throw=throw,verbose=verbose)
 
-        tgeo = GeoRegion(geo.ID,path=path)
-        if isequal(geo,tgeo,strict=strict)
-            @info "$(modulelog()) - The GeoRegion \"$(geo.ID)\" we have defined shares the same properties as the custom GeoRegion \"$(tgeo.ID)\" from the lists in $path"
+        tgeo = GeoRegion(geo.ID,path=path,verbose=verbose)
+        if isequal(geo,tgeo,strict=strict,verbose=verbose)
+            if verbose; @info "$(modulelog()) - The GeoRegion \"$(geo.ID)\" we have defined shares the same properties as the custom GeoRegion \"$(tgeo.ID)\" from the lists in $path" end
             return true
         else
             if throw
@@ -231,15 +235,16 @@ Returns
 function isgeoshape(
     geo  :: GeoRegion;
     path :: AbstractString = dirname(geo.path),
-    returnID :: Bool = false
+    returnID :: Bool = false,
+    verbose  :: Bool = false
 )
 
     IDvec,_,_,_ = listall(path); ngeo = length(IDvec)
     tf = zeros(Bool,ngeo)
 
     for igeo in 1 : ngeo
-        tgeo = GeoRegion(IDvec[igeo],path=path,verbose=false)
-        tf[igeo] = equalshape(geo,tgeo)
+        tgeo = GeoRegion(IDvec[igeo],path=path,verbose=verbose)
+        tf[igeo] = on(geo,tgeo,verbose=verbose)
     end
 
     if !iszero(sum(tf))
@@ -285,7 +290,8 @@ function isgeoshape(
     lon  :: Vector{<:Real},
     lat  :: Vector{<:Real};
     path :: AbstractString = homedir(),
-    returnID :: Bool = false
+    returnID :: Bool = false,
+    verbose  :: Bool = false
 )
 
     IDvec,_,_,_ = listall(path); ngeo = length(IDvec)
@@ -294,8 +300,8 @@ function isgeoshape(
     geo = PolyRegion("","","",lon,lat)
 
     for igeo in 1 : ngeo
-        tgeo = GeoRegion(IDvec[igeo],path=path,verbose=false)
-        tf[igeo] = equalshape(geo,tgeo)
+        tgeo = GeoRegion(IDvec[igeo],path=path,verbose=verbose)
+        tf[igeo] = on(geo,tgeo,verbose=verbose)
     end
 
     if !iszero(sum(tf))
@@ -335,13 +341,14 @@ Returns
 - `tf` : True / False
 """
 function isID(
-    ID :: AbstractString;
-    path  :: AbstractString = homedir(),
-    throw :: Bool = true
+    ID   :: AbstractString;
+    path :: AbstractString = homedir(),
+    throw   :: Bool = true,
+    verbose :: Bool = false
 )
 
     IDvec,_,_,_ = listall(path)
-    return isID(ID,IDvec;throw=throw,verbose=true)
+    return isID(ID,IDvec;throw=throw,verbose=verbose)
 
 end
 
@@ -352,9 +359,7 @@ function isID(
     verbose :: Bool = false
 )
 
-    if verbose
-        @info "$(modulelog()) - Checking to see if the ID $ID is in use"
-    end
+    if verbose; @info "$(modulelog()) - Checking to see if the ID $ID is in use" end
 
     if sum(IDvec.==ID) == 0
         if throw
@@ -365,34 +370,6 @@ function isID(
         end
     else
         if verbose; @info "$(modulelog()) - The ID $ID is already in use" end
-        return true
-    end
-
-end
-
-function equalshape(geo1::GeoRegion, geo2::GeoRegion)
-
-    lon1,lat1 = coordinates(geo1,n=2); pop!(lon1); pop!(lat1)
-    lon2,lat2 = coordinates(geo2,n=2); pop!(lon2); pop!(lat2)
-    
-    lon1 = mod.(lon1,360); npnt1 = length(lon1)
-    lon2 = mod.(lon2,360); npnt2 = length(lon2)
-
-    isin = 0
-
-    for ii = 1 : npnt1
-        ipnt = Point(lon1[ii],lat1[ii])
-        isin += inpolygon(ipnt,geo2.shape,in=1,on=0,out=1)
-    end
-
-    for ii = 1 : npnt2
-        ipnt = Point(lon2[ii],lat2[ii])
-        isin += inpolygon(ipnt,geo1.shape,in=1,on=0,out=1)
-    end
-
-    if !iszero(isin)
-        return false
-    else
         return true
     end
 

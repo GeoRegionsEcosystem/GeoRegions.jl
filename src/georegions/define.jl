@@ -25,7 +25,7 @@ function GeoRegion(
     ST = String,
     FT = Float64;
     path  :: AbstractString = homedir(),
-    verbose :: Bool = true
+    verbose :: Bool = false
 )
 
     if verbose
@@ -79,7 +79,7 @@ function RectRegion(
     bound :: Vector{<:Real};
     save :: Bool = false,
     path :: AbstractString = homedir(),
-    verbose :: Bool = true,
+    verbose :: Bool = false,
     ST = String,
     FT = Float64
 )
@@ -117,7 +117,8 @@ function RectRegion(
     lon,lat = rect2shape(N,S,E,W)
     geo  = RectRegion{ST,FT}(
         ID, pID, name, joinpath(path,"rectlist.txt"),
-        [N, S, E, W], Point2.(lon,lat), is180, is360
+        [N, S, E, W], Point2.(lon,lat), Polygon(Point2.(lon,lat)),
+        is180, is360
     )
 
     if save
@@ -188,7 +189,7 @@ function TiltRegion(
     θ    :: Real;
     save :: Bool = false,
     path :: AbstractString = homedir(),
-    verbose :: Bool = true,
+    verbose :: Bool = false,
     ST = String,
     FT = Float64
 )
@@ -202,7 +203,7 @@ function TiltRegion(
         if !isfile(geofile)
             cp(joinpath(geodir,"tiltlist.txt"),geofile)
         end
-        if isID(ID,path=path,throw=false)
+        if isID(ID,path=path,throw=false,verbose=verbose)
             error("$(modulelog()) - The GeoRegion $(ID) has already been defined.  Please use another identifier.")
         end
         lon,lat = tilt2shape(X,Y,ΔX,ΔY,θ)
@@ -211,7 +212,7 @@ function TiltRegion(
             error("$(modulelog()) - The GeoRegion $(oID) in $path has the same shape. Use it instead.")
         end
         if pID != "GLB"
-            if !isID(pID,path=path,throw=false)
+            if !isID(pID,path=path,throw=false,verbose=verbose)
                 error("$(modulelog()) - The GeoRegion $(pID) was defined to be the parent GeoRegion of $(ID), but the GeoRegion $(pID) is not defined.  Please define the GeoRegion $(pID) and its properties.")
             else
                 pgeo = GeoRegion(pID,path=path); isinGeoRegion(geo,pgeo)
@@ -226,8 +227,8 @@ function TiltRegion(
     lon,lat = tilt2shape(X,Y,ΔX,ΔY,θ)
     geo  = TiltRegion{ST,FT}(
         ID, pID, name, joinpath(path,"tiltlist.txt"),
-        [N, S, E, W], Point2.(lon,lat), is180, is360,
-        [X, Y, ΔX, ΔY, θ]
+        [N, S, E, W], Point2.(lon,lat), Polygon(Point2.(lon,lat)), [X, Y, ΔX, ΔY, θ],
+        is180, is360
     )
 
     if save
@@ -294,7 +295,7 @@ function PolyRegion(
     join :: Bool = true,
     save :: Bool = false,
     path :: AbstractString = homedir(),
-    verbose :: Bool = true,
+    verbose :: Bool = false,
     ST = String,
     FT = Float64
 )
@@ -341,7 +342,8 @@ function PolyRegion(
     is180,is360 = checkbounds(N,S,E,W)
     geo   = PolyRegion{ST,FT}(
         ID, pID, name, joinpath(path,"polylist.txt"),
-        [N, S, E, W], Point2.(lon,lat), is180, is360
+        [N, S, E, W], Point2.(lon,lat), Polygon(Point2.(lon,lat)),
+        is180, is360
     )
     
     if save
