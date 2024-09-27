@@ -365,7 +365,7 @@ function isID(
         if throw
             error("$(modulelog()) - $(ID) is not a valid GeoRegion identifier, use RectRegion(), TiltRegion() or PolyRegion() to add this GeoRegion to the list.")
         else
-            @warn "$(modulelog()) - $(ID) is not a valid GeoRegion identifier, use RectRegion(), TiltRegion() or PolyRegion() to add this GeoRegion to the list."
+            if verbose; @warn "$(modulelog()) - $(ID) is not a valid GeoRegion identifier, use RectRegion(), TiltRegion() or PolyRegion() to add this GeoRegion to the list." end
             return false
         end
     else
