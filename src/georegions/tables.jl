@@ -8,14 +8,15 @@
     ) -> nothing
 
 Display all available GeoRegions in tabular format.
+
 Keyword Arguments
 =================
 - `path` : The path where the list of custom GeoRegions will be retrieved from.
-           Defaults to the user's home directory `homedir()`
+           Defaults to the user's home directory `homedir()`.
 - `predefined` : If `true`, predefined Giorgi, SREX and IPPC AR6 list of GeoRegions will be displayed.
 - `custom` : If `true`, custom, user-defined list of GeoRegions will be displayed.
-- `warn` : If `true`, display warnings if custom files do not exist
-- `crop` : If `true`, will crop the vertical extent of the table, default is `false`
+- `warn` : If `true`, display warnings if custom files do not exist.
+- `crop` : If `true`, will crop the vertical extent of the table, default is `false`.
 """
 function tableGeoRegions(;
     path :: AbstractString = homedir(),
@@ -42,7 +43,7 @@ function tableGeoRegions(;
                 rvec,fvec,tvec,dvec = fillinfo(rvec,fvec,tvec,dvec,fID)
             else
                 if warn
-                    @warn "$(modulelog) - The custom file does \"$fname\" does not exist in $path, use `setupGeoRegions()` to copy templates and empty custom lists to $path"
+                    @warn "$(modulelog) - The custom file does \"$fname\" does not exist in $path, use `setupGeoRegions()` to copy templates and empty custom lists to $path."
                 end
             end
         end
@@ -97,7 +98,7 @@ Display all available GeoRegions in tabular format listed in the file `fname`.
 
 Arguments
 =========
-- `fname` : Specifies the name + path of the file containing GeoRegion information
+- `fname` : Specifies the name + path of the file containing GeoRegion information.
 """
 function tableGeoRegions(
     fname :: AbstractString
@@ -141,9 +142,9 @@ Display all available RectRegions in tabular format.
 Keyword Arguments
 =================
 - `path` : The path where the list of custom RectRegions will be retrieved from.
-           Defaults to the user's home directory `homedir()`
-- `custom` : If `true`, display custom user-defined RectRegions. Default is `true`
-- `giorgi` : If `true`, display GF predefined RectRegions. Default is `true`
+           Defaults to the user's home directory `homedir()`.
+- `custom` : If `true`, display custom user-defined RectRegions. Default is `true`.
+- `giorgi` : If `true`, display GF predefined RectRegions. Default is `true`.
 """
 function tableRectRegions(;
     path :: AbstractString = homedir(),
@@ -163,7 +164,7 @@ function tableRectRegions(;
         if isfile(fID)
             rvec,fvec,tvec,dvec = fillinfo(rvec,fvec,tvec,dvec,fID)
         else
-            @warn "$(modulelog) - The custom file \"rectlist.txt\" does not exist in $path, use `setupGeoRegions()` to copy templates and empty custom lists to $path"
+            @warn "$(modulelog) - The custom file \"rectlist.txt\" does not exist in $path, use `setupGeoRegions()` to copy templates and empty custom lists to $path."
         end
     end
 
@@ -206,7 +207,7 @@ Display all available TiltRegions in tabular format.
 Keyword Arguments
 =================
 - `path` : The path where the list of custom TiltRegions will be retrieved from.
-           Defaults to the user's home directory `homedir()`
+           Defaults to the user's home directory `homedir()`.
 """
 function tableTiltRegions(;
     path :: AbstractString = homedir()
@@ -223,7 +224,7 @@ function tableTiltRegions(;
     if isfile(fID)
         rvec,fvec,tvec,dvec = fillinfo(rvec,fvec,tvec,dvec,fID)
     else
-        @warn "$(modulelog) - The custom file \"tiltlist.txt\" does not exist in $path, use `setupGeoRegions()` to copy templates and empty custom lists to $path"
+        @warn "$(modulelog) - The custom file \"tiltlist.txt\" does not exist in $path, use `setupGeoRegions()` to copy templates and empty custom lists to $path."
     end
 
     ngeo = size(rvec,1)
@@ -264,10 +265,10 @@ Display all available PolyRegions in tabular format.
 Keyword Arguments
 =================
 - `path` : The path where the list of custom PolyRegions will be retrieved from.
-           Defaults to the user's home directory `homedir()`
-- `custom` : If `true`, display custom user-defined PolyRegions. Default is `true`
-- `srex` : If `true`, display SREX predefined PolyRegions. Default is `true`
-- `ar6` : If `true`, display IPCC AR6 predefined PolyRegions. Default is `true`
+           Defaults to the user's home directory `homedir()`.
+- `custom` : If `true`, display custom user-defined PolyRegions. Default is `true`.
+- `srex` : If `true`, display SREX predefined PolyRegions. Default is `true`.
+- `ar6` : If `true`, display IPCC AR6 predefined PolyRegions. Default is `true`.
 """
 function tablePolyRegions(;
     path :: AbstractString = homedir(),
@@ -288,7 +289,7 @@ function tablePolyRegions(;
         if isfile(fID)
             rvec,fvec,tvec,dvec = fillinfo(rvec,fvec,tvec,dvec,fID)
         else
-            @warn "$(modulelog) - The custom file \"polylist.txt\" does not exist in $path, use `setupGeoRegions()` to copy templates and empty custom lists to $path"
+            @warn "$(modulelog) - The custom file \"polylist.txt\" does not exist in $path, use `setupGeoRegions()` to copy templates and empty custom lists to $path."
         end
     end
 

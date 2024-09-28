@@ -3,18 +3,22 @@
         point :: Point2{<:Real},
         geo   :: GeoRegion;
         throw :: Bool = false
-    ) -> Bool
+    ) -> tf :: Bool
 
 Check if a geographical point `point` is on the boundary of a shape of a GeoRegion defined by `geo`.
 
 Arguments
 =========
 - `point` : A geographical point of Type `Point`.  Pass `Point(plon,plat)`, where `plon` and `plat` are the longitude and latitudes of the point.
-- `geo`   : The GeoRegion struct container
+- `geo`   : The GeoRegion struct container.
 
 Keyword Arguments
 =================
 - `throw` : If `true`, then if `point` is not within `geo`, an error is thrown and the program stops running.
+
+Returns
+=======
+- `tf` : A `true`/`false` boolean.
 """
 function on(
     point :: Point2{<:Real},
@@ -59,8 +63,9 @@ end
         geo1  :: GeoRegion,
         geo2  :: GeoRegion;
         n     :: Int = 100,
-        throw :: Bool = false
-    ) -> Bool
+        throw :: Bool = false,
+        verbose :: Bool = false
+    ) -> tf :: Bool
 
 Check if the GeoRegions `geo1` and `geo2` have the same shape.
 
@@ -72,8 +77,12 @@ Arguments
 Keyword Arguments
 =================
 - `n` : The number of segments to split each of the `GeoRegion`s into. Default is 2.
-- `throw` : If `true`, then if `cgeo` is not within `geo`, an error is thrown and the program stops running
-- `verbose` : If `true`, print logs to screen
+- `throw` : If `true`, then if `cgeo` is not within `geo`, an error is thrown and the program stops running.
+- `verbose` : If `true`, print logs to screen.
+
+Returns
+=======
+- `tf` : A `true`/`false` boolean.
 """
 function on(
     geo1 :: GeoRegion,
@@ -83,7 +92,7 @@ function on(
     verbose :: Bool = false
 )
 
-    if verbose; @info "$(modulelog()) - Performing a check to determine if the $(geo1.name) GeoRegion ($(geo1.ID)) shares the same shape as GeoRegion ($(geo2.ID))" end
+    if verbose; @info "$(modulelog()) - Performing a check to determine if the $(geo1.name) GeoRegion  \"$(geo1.ID)\" shares the same shape as GeoRegion  \"$(geo2.ID)\"." end
 
     lon1,lat1 = coordinates(geo1,n=n)
     lon2,lat2 = coordinates(geo2,n=n)
@@ -93,15 +102,15 @@ function on(
 
     if iszero(isin)
 
-        if verbose; @info "$(modulelog()) - The GeoRegion $(geo1.name) GeoRegion ($(geo1.ID)) indeed shares the same shape as GeoRegion ($(geo2.ID))" end
+        if verbose; @info "$(modulelog()) - The GeoRegion $(geo1.name) GeoRegion  \"$(geo1.ID)\" indeed shares the same shape as GeoRegion \"$(geo2.ID)\"." end
         return true
         
     else
 
         if throw
-            error("$(modulelog()) - The GeoRegion $(geo1.name) GeoRegion ($(geo1.ID)) does not share the same shape as GeoRegion ($(geo2.ID))")
+            error("$(modulelog()) - The GeoRegion $(geo1.name) GeoRegion \"$(geo1.ID)\" does not share the same shape as GeoRegion  \"$(geo2.ID)\"")
         else
-            if verbose; @warn "$(modulelog()) - The GeoRegion $(geo1.name) GeoRegion ($(geo1.ID)) does not share the same shape as GeoRegion ($(geo2.ID))" end
+            if verbose; @warn "$(modulelog()) - The GeoRegion $(geo1.name) GeoRegion \"$(geo1.ID)\" does not share the same shape as GeoRegion  \"$(geo2.ID)\"" end
             return false
         end
 

@@ -3,18 +3,22 @@
         point  :: Point2{<:Real},
         geo    :: GeoRegion;
         throw  :: Bool = false
-    ) -> Bool
+    ) -> tf :: Bool
 
 Check if a geographical point `point` is within a GeoRegion defined by `geo`.
 
 Arguments
 =========
 - `point` : A geographical point of Type `Point`.  Pass `Point(plon,plat)`, where `plon` and `plat` are the longitude and latitudes of the point.
-- `geo`   : The GeoRegion struct container
+- `geo`   : The GeoRegion struct container.
 
 Keyword Arguments
 =================
 - `throw` : If `true`, then if `point` is not within `geo`, an error is thrown and the program stops running.
+
+Returns
+=======
+- `tf` : A `true`/`false` boolean.
 """
 function Base.in(
     point :: Point2{<:Real},
@@ -59,21 +63,26 @@ end
         cgeo  :: GeoRegion,
         geo   :: GeoRegion;
         n     :: Int = 100,
-        throw :: Bool = false
-    ) -> Bool
+        throw :: Bool = false,
+        verbose :: Bool = false
+    ) -> tf :: Bool
 
 Check if a child GeoRegion defined by `cgeo` is within another GeoRegion `geo`.
 
 Arguments
 =========
-- `cgeo` : A GeoRegion that we postulate to be a "child", or a subset of the GeoRegion defined by `geo`
-- `geo` : A GeoRegion that we postulate to be a "parent", or containing the GeoRegion defined by `cgeo`
+- `cgeo` : A GeoRegion that we postulate to be a "child", or a subset of the GeoRegion defined by `geo`.
+- `geo` : A GeoRegion that we postulate to be a "parent", or containing the GeoRegion defined by `cgeo`.
 
 Keyword Arguments
 =================
-- `n` : The number of segments to split each of the `GeoRegion`s into. Default is 100
-- `throw`  : If `true`, then if `cgeo` is not within `geo`, an error is thrown and the program stops running
-- `verbose` : If `true`, print logs to screen
+- `n` : The number of segments to split each of the `GeoRegion`s into. Default is 100.
+- `throw`  : If `true`, then if `cgeo` is not within `geo`, an error is thrown and the program stops running.
+- `verbose` : If `true`, print logs to screen.
+
+Returns
+=======
+- `tf` : A `true`/`false` boolean.
 """
 function Base.in(
     cgeo :: GeoRegion,
@@ -90,15 +99,15 @@ function Base.in(
 
     if iszero(isin)
 
-        if verbose; @info "$(modulelog()) - The GeoRegion $(cgeo.ID) ($(cgeo.name)) is indeed a subset of the GeoRegion $(geo.ID) ($(geo.name))" end
+        if verbose; @info "$(modulelog()) - The GeoRegion \"$(cgeo.ID)\" ($(cgeo.name)) is indeed a subset of the GeoRegion \"$(geo.ID)\" ($(geo.name))" end
         return true
         
     else
 
         if throw
-            error("$(modulelog()) - The GeoRegion $(cgeo.ID) ($(cgeo.name)) is not a subset of the GeoRegion $(geo.ID) ($(geo.name))")
+            error("$(modulelog()) - The GeoRegion \"$(cgeo.ID)\" ($(cgeo.name)) is not a subset of the GeoRegion \"$(geo.ID)\" ($(geo.name))")
         else
-            if verbose; @warn "$(modulelog()) - The GeoRegion $(cgeo.ID) ($(cgeo.name)) is not a subset of the GeoRegion $(geo.ID) ($(geo.name))" end
+            if verbose; @warn "$(modulelog()) - The GeoRegion \"$(cgeo.ID)\" ($(cgeo.name)) is not a subset of the GeoRegion \"$(geo.ID)\" ($(geo.name))" end
             return false
         end
 

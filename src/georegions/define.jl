@@ -14,11 +14,12 @@ Arguments
 Keyword Arguments
 =================
 - `path` : The path where the list of custom GeoRegions will be retrieved from.
-           Defaults to the user's home directory `homedir()`
+           Defaults to the user's home directory `homedir()`.
+- `verbose` : Verbose logging for ease of monitoring? Default is `false`.
 
 Returns
 =======
-- `geo` : A GeoRegion
+- `geo` : A GeoRegion.
 """
 function GeoRegion(
     ID :: AbstractString,
@@ -29,7 +30,7 @@ function GeoRegion(
 )
 
     if verbose
-        @info "$(modulelog()) - Retrieving information for the GeoRegion defined by the ID $ID"
+        @info "$(modulelog()) - Retrieving information for the GeoRegion defined by the ID \"$ID\"."
     end
 
     rvec,fvec,tvec,dvec = listall(path); isID(ID,rvec,verbose=verbose)
@@ -57,20 +58,20 @@ Arguments
 =========
 - `ID` : The keyword ID that will be used to identify the GeoRegion.
             If the ID is already in use, then an error will be thrown.
-- `pID` : The ID of the parent GeoRegion where information can be extracted from
-- `name` : A name for the GeoRegion (meta information, can be used in Logging)
-- `bound` : The [N,S,E,W] coordinates defining the region
+- `pID` : The ID of the parent GeoRegion where information can be extracted from.
+- `name` : A name for the GeoRegion (meta information, can be used in Logging).
+- `bound` : The [N,S,E,W] coordinates defining the region.
 
 Keyword Arguments
 =========
 - `save` : If `true`, save the GeoRegion into the list of custom GeoRegions in the path specified by `path`.
 - `path` : The path where the list of custom GeoRegions will be retrieved from.
-           Defaults to the user's home directory `homedir()`
-- `verbose` : Verbose logging for ease of monitoring? Default is `true`
+           Defaults to the user's home directory `homedir()`.
+- `verbose` : Verbose logging for ease of monitoring? Default is `false`.
 
 Returns
 =======
-- `geo` : A rectilinear GeoRegion
+- `geo` : A rectilinear GeoRegion.
 """
 function RectRegion(
     ID    :: AbstractString,
@@ -148,7 +149,7 @@ end
         θ    :: Real;
         save :: Bool = false,
         path :: AbstractString = pwd(),
-        verbose :: Bool = true,
+        verbose :: Bool = false,
         ST = String,
         FT = Float64
     ) -> geo :: TiltRegion{ST,FT}
@@ -159,24 +160,24 @@ Arguments
 =========
 - `ID` : The keyword ID that will be used to identify the GeoRegion.
             If the ID is already in use, then an error will be thrown.
-- `pID` : The ID of the parent GeoRegion where information can be extracted from
-- `name` : A name for the GeoRegion (meta information, can be used in Logging)
-- `X`  : Longitude coordinate of region centre
-- `Y`  : Latitude coordinate of region centre
-- `ΔX` : Half-width in longitude coordinates (before tilting)
-- `ΔY` : Half-width in latitude coordinates (before tilting)
-- `θ`  : Tilt of rectangular region in **degrees**
+- `pID` : The ID of the parent GeoRegion where information can be extracted from.
+- `name` : A name for the GeoRegion (meta information, can be used in Logging).
+- `X`  : Longitude coordinate of region centre.
+- `Y`  : Latitude coordinate of region centre.
+- `ΔX` : Half-width in longitude coordinates (before tilting).
+- `ΔY` : Half-width in latitude coordinates (before tilting).
+- `θ`  : Tilt of rectangular region in **degrees**.
 
 Keyword Arguments
 =========
 - `save` : If `true`, save the GeoRegion into the list of custom GeoRegions in the path specified by `path`.
 - `path` : The path where the list of custom GeoRegions will be retrieved from.
-           Defaults to the user's home directory `homedir()`
-- `verbose` : Verbose logging for ease of monitoring? Default is `true`
+           Defaults to the user's home directory `homedir()`.
+- `verbose` : Verbose logging for ease of monitoring? Default is `false`.
 
 Returns
 =======
-- `geo` : A tilted rectangular GeoRegion
+- `geo` : A tilted rectangular GeoRegion.
 """
 function TiltRegion(
     ID   :: AbstractString,
@@ -256,7 +257,7 @@ end
         join :: Bool = true,
         save :: Bool = false,
         path :: AbstractString = pwd(),
-        verbose :: Bool = true,
+        verbose :: Bool = false,
         ST = String,
         FT = Float64
     ) -> geo :: PolyRegion{ST,FT}
@@ -268,7 +269,6 @@ Arguments
 
 - `ID` : The keyword ID that will be used to identify the GeoRegion.
             If the ID is already in use, then an error will be thrown.
-
 - `pID` : The ID of the parent GeoRegion where information can be extracted from.
 - `name` : A name for the GeoRegion (meta information, can be used in Logging).
 - `lon` : A vector containing the longitude points.
@@ -279,12 +279,12 @@ Keyword Arguments
 - `join` : If `true`, if the first and last coordinate points do not match, append the first coordinate again to close the shape.
 - `save` : If `true`, save the GeoRegion into the list of custom GeoRegions in the path specified by `path`.
 - `path` : The path where the list of custom GeoRegions will be retrieved from.
-           Defaults to the user's home directory `homedir()`
-- `verbose` : If `true`, verbose logging for ease of monitoring.
+           Defaults to the user's home directory `homedir()`.
+- `verbose` : If `true`, verbose logging for ease of monitoring. Default is false.
 
 Returns
 =======
-- `geo` : A polygonal GeoRegion
+- `geo` : A polygonal GeoRegion.
 """
 function PolyRegion(
     ID   :: AbstractString,
@@ -306,7 +306,7 @@ function PolyRegion(
 
     if (lon[1] != lon[end]) || (lat[1] != lat[end])
         if !join
-            error("$(modulelog()) - The longitude/ latitude coordinates of the first and last points must be the same")
+            error("$(modulelog()) - The longitude/ latitude coordinates of the first and last points must be the same.")
         else
             lon = vcat(lon,lon[1])
             lat = vcat(lat,lat[1])

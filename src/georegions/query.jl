@@ -8,13 +8,13 @@ For a given GeoRegion, create longitude and latitude vectors of the shape.
 
 Arguments
 =========
-- `geo` : A GeoRegion
-- `n` : The number of segments on each side of the shape (a vertex counts as half a point)
+- `geo` : A GeoRegion.
+- `n` : The number of segments on each side of the shape.
 
 Returns
 =======
-- `lon` : A vector of longitude points for the shape of the GeoRegion
-- `lat` : A vector of latitude points for the shape of the GeoRegion
+- `lon` : A vector of longitude points for the shape of the GeoRegion.
+- `lat` : A vector of latitude points for the shape of the GeoRegion.
 """
 function coordinates(
     geo :: GeoRegion;

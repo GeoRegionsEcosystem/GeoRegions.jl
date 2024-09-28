@@ -29,13 +29,14 @@ export
     GeoRegion
 
 Abstract supertype for geographical regions. All `GeoRegion` types contain the following fields:
-* `ID` - A `String` Type, the identifier for the GeoRegion
-* `pID` - A `String` Type, the identifier for the parent GeoRegion
-* `name` - A `String` Type, the full name of the GeoRegion
-* `bound` - A vector of `Float` Types, defining the [North, South, East, West] boundaries of the GeoRegion
+* `ID` - A `String` Type, the identifier for the GeoRegion.
+* `pID` - A `String` Type, the identifier for the parent GeoRegion.
+* `name` - A `String` Type, the full name of the GeoRegion.
+* `bound` - A vector of `Float` Types, defining the [North, South, East, West] boundaries of the GeoRegion.
 * `shape` - A vector of `Point2` Types, defining a non-rectilinear shape of the GeoRegion
-* `is180` - A `Bool` Type, is `W` < 0
-* `is360` - A `Bool` Type, is `E` > 180
+* `geometry` - A `Polygon` Type (see [GeometryBasics.jl]()), which is useful when doing checks on polygons using [GeometryOps.jl]().
+* `is180` - A `Bool` Type, is `W` < 0.
+* `is360` - A `Bool` Type, is `E` > 180.
 """
 abstract type GeoRegion end
 
@@ -76,18 +77,18 @@ end
 """
     TiltRegion <: GeoRegion
 
-A **tilted** rectangular region on a rectilinear grid. Defined by
-* the (lon,lat) coordinates of its centre
-* the width in both the longitude and latitude directions (pre-rotation)
-* the angle of tilt in degrees (clockwise)
+A **tilted** rectangular region on a rectilinear grid. Defined by:
+* the (lon,lat) coordinates of its centre.
+* the width in both the longitude and latitude directions (pre-rotation).
+* the angle of tilt in degrees (clockwise).
 
 In addition to all the fields common to the `GeoRegion` `abstract type`, `TiltRegion`s will also contain the following field:
-- `geometry` : A vector of `Float` Types, containing [X,Y,ΔX,ΔY,θ], where
-    * `X`  : A `Float` Type, the longitude coordinate of region centre
-    * `Y`  : A `Float` Type, the latitude coordinate of region centre
-    * `θ`  : A `Float` Type, the angle-tilt of rectangular region in **degrees** in the clockwise direction
-    * `ΔX` : A `Float` Type, the half-width in longitude coordinates (before tilting)
-    * `ΔY` : A `Float` Type, the half-width in latitude coordinates (before tilting)
+- `tilt` : A vector of `Float` Types, containing [X,Y,ΔX,ΔY,θ], where:
+    * `X`  : A `Float` Type, the longitude coordinate of region centre.
+    * `Y`  : A `Float` Type, the latitude coordinate of region centre.
+    * `θ`  : A `Float` Type, the angle-tilt of rectangular region in **degrees** in the clockwise direction.
+    * `ΔX` : A `Float` Type, the half-width in longitude coordinates (before tilting).
+    * `ΔY` : A `Float` Type, the half-width in latitude coordinates (before tilting).
 """
 struct TiltRegion{ST<:AbstractString, FT<:Real} <: GeoRegion
     ID       :: ST

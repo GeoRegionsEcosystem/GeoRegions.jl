@@ -4,7 +4,7 @@
         overwrite :: Bool = false
     ) -> nothing
 
-Setup the directory specified by `path` with files for custom `GeoRegion`s. If `overwrite = true`, then any preexisting files are overwritten
+Setup the directory specified by `path` with files for custom `GeoRegion`s. If `overwrite = true`, then any preexisting files are overwritten.
 
 Keyword Arguments
 =================
@@ -65,21 +65,21 @@ end
         fname :: AbstractString
     ) -> gvec :: Vector{<:GeoRegion}
 
-Extract information of GeoRegions from the file defined by `fname`
+Extract information of GeoRegions from the file defined by `fname`.
 
 Arguments
 =========
-- `fname` : String specifying name + path of the file containing GeoRegion information
+- `fname` : String specifying name + path of the file containing GeoRegion information.
 
 Returns
 =======
-- `gvec` : Vector containing all the GeoRegions in the file `fname`
+- `gvec` : Vector containing all the GeoRegions in the file `fname`.
 """
 function readGeoRegions(
     fname :: AbstractString
 )
 
-    @info "$(modulelog()) - Loading user-defined GeoRegions from the file $fname"
+    @info "$(modulelog()) - Loading user-defined GeoRegions from the file $fname ..."
 
     rvec,rtype = listgeoregions(fname)
     ngeo = length(rvec)
@@ -106,13 +106,13 @@ Add GeoRegions from the file `fname` into the project directory defined by `path
 
 Arguments
 =========
-- `fname` : name + path of the file containing GeoRegion information
+- `fname` : name + path of the file containing GeoRegion information.
 
 Keyword Arguments
 =================
 - `path` : The path where the list of custom GeoRegions will be retrieved from.
-           Defaults to the current working directory `pwd()`
-- `overwrite` : If `true`, override any custom GeoRegions that have the same `ID`s as those in the file `fname`
+           Defaults to the current working directory `pwd()`.
+- `overwrite` : If `true`, override any custom GeoRegions that have the same `ID`s as those in the file `fname`.
 """
 function addGeoRegions(
     fname :: AbstractString;
@@ -121,7 +121,7 @@ function addGeoRegions(
     verbose   :: Bool = false
 )
 
-    @info "$(modulelog()) - Importing user-defined GeoRegions from the file $fname directly into the custom lists"
+    @info "$(modulelog()) - Importing user-defined GeoRegions from the file $fname directly into the custom lists."
 
     rvec,rtype = listgeoregions(fname)
     for reg in rvec
@@ -151,14 +151,14 @@ Reset all the files containing GeoRegion information back to the default.
 Keyword Arguments
 =================
 - `path` : The path where the list of custom GeoRegions will be retrieved from.
-           Defaults to the current working directory `pwd()`
+           Defaults to the current working directory `pwd()`.
 """
 function deleteGeoRegions(;
     path :: AbstractString = pwd()
 )
 
 
-    @warn "$(modulelog()) - Removing custom GeoRegions.jl files from $path, all GeoRegion information saved into these files will be permanently lost"
+    @warn "$(modulelog()) - Removing custom GeoRegions.jl files from $path, all GeoRegion information saved into these files will be permanently lost."
     flist = ["rectlist.txt","polylist.txt","tiltlist.txt"]
     for fname in flist
         rm(joinpath(path,fname),force=true)

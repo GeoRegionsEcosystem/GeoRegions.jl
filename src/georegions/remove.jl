@@ -2,18 +2,18 @@
     rm(
         geo  :: GeoRegion;
         path :: AbstractString = geodir
-    )
+    ) -> nothing
 
-Removes the GeoRegion `geo` from the custom lists specified in `path`. The GeoRegion must have exactly the same properties as the one in the custom list
+Removes the GeoRegion `geo` from the custom lists specified in `path`. The GeoRegion must have exactly the same properties as the one in the custom list.
 
 Arguments
 =========
-- `geo` : The GeoRegion to be removed from the custom lists in `path`
+- `geo` : The GeoRegion to be removed from the custom lists in `path`.
 
 Keyword Arguments
 =================
 - `path` : The path where the list of custom GeoRegions will be retrieved from.
-           Defaults to the `local` package variable `geodir`
+           Defaults to the `local` package variable `geodir`.
 """
 rm(
     geo  :: GeoRegion;
@@ -31,8 +31,8 @@ end
 """
     rmID(
         ID :: AbstractString;
-        path  :: AbstractString = geodir
-    )
+        path :: AbstractString = geodir
+    ) -> nothing
 
 Removes any GeoRegion associated with the ID `ID`. ID must be exact.
 
@@ -44,11 +44,11 @@ Arguments
 Keyword Arguments
 =================
 - `path` : The path where the list of custom GeoRegions will be retrieved from.
-           Defaults to the home directory `homedir()`
+           Defaults to the home directory `homedir()`.
 """
 function rmID(
     ID :: AbstractString;
-    path  :: AbstractString = homedir(),
+    path :: AbstractString = homedir(),
 )
 
     if ID == "GLB"
