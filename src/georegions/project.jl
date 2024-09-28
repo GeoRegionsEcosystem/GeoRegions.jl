@@ -65,7 +65,7 @@ end
         fname :: AbstractString
     ) -> gvec :: Vector{<:GeoRegion}
 
-Extracts information of the GeoRegion with the ID `geoID`.  If no GeoRegion with this ID exists, an error is thrown.
+Extract information of GeoRegions from the file defined by `fname`
 
 Arguments
 =========
@@ -98,10 +98,11 @@ end
     addGeoRegions(
         fname :: AbstractString;
         path  :: AbstractString = pwd(),
-        overwrite :: Bool = false
+        overwrite :: Bool = false,
+        verbose   :: Bool = false
     ) -> nothing
 
-Extracts information of the GeoRegion with the ID `geoID`.  If no GeoRegion with this ID exists, an error is thrown.
+Add GeoRegions from the file `fname` into the project directory defined by `path`.
 
 Arguments
 =========

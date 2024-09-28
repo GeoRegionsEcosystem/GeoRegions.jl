@@ -1,22 +1,15 @@
 // .vitepress/theme/index.ts
-import { h, watch } from 'vue'
+import { watch } from 'vue'
 import type { Theme } from 'vitepress'
 import DefaultTheme from 'vitepress/theme'
-import VersionPicker from "./VersionPicker.vue"
 
 import { enhanceAppWithTabs } from 'vitepress-plugin-tabs/client'
 import './style.css'
 
 export default {
   extends: DefaultTheme,
-  Layout() {
-    return h(DefaultTheme.Layout, null, {
-      // https://vitepress.dev/guide/extending-default-theme#layout-slots
-    })
-  },
-  enhanceApp({ app, router, siteData }) {
+  async enhanceApp({ app, router, siteData }) {
     enhanceAppWithTabs(app);
-    app.component('VersionPicker', VersionPicker);
     // Only run this on the client. Not during build.
     // this function replaces the version in the URL with the stable prefix whenever a
     // new route is navigated to. VitePress does not support relative links all over the site,
@@ -44,7 +37,7 @@ export default {
           );
           window.history.replaceState(
             { additionalInformation: "URL rewritten to stable" },
-            "Makie",
+            "DimensionalData",
             rewritten_url
           );
           return;
@@ -58,5 +51,5 @@ export default {
       // also rewrite at initial load
       document.addEventListener("DOMContentLoaded", rewriteURL);
     }
-  }
-} satisfies Theme
+  },
+} satisfies Theme;

@@ -62,7 +62,7 @@ end
         throw :: Bool = false
     ) -> Bool
 
-Check if a child GeoRegion defined by `cgeo` is within a RectRegion `geo`.
+Check if a child GeoRegion defined by `cgeo` is within another GeoRegion `geo`.
 
 Arguments
 =========
@@ -71,7 +71,9 @@ Arguments
 
 Keyword Arguments
 =================
+- `n` : The number of segments to split each of the `GeoRegion`s into. Default is 100
 - `throw`  : If `true`, then if `cgeo` is not within `geo`, an error is thrown and the program stops running
+- `verbose` : If `true`, print logs to screen
 """
 function Base.in(
     cgeo :: GeoRegion,

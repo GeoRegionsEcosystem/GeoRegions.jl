@@ -1,8 +1,8 @@
 """
     on(
-        point  :: Point2{<:Real},
-        geo    :: GeoRegion;
-        throw  :: Bool = false
+        point :: Point2{<:Real},
+        geo   :: GeoRegion;
+        throw :: Bool = false
     ) -> Bool
 
 Check if a geographical point `point` is on the boundary of a shape of a GeoRegion defined by `geo`.
@@ -62,16 +62,18 @@ end
         throw :: Bool = false
     ) -> Bool
 
-Check if a child GeoRegion defined by `cgeo` is the same as a RectRegion `geo`.
+Check if the GeoRegions `geo1` and `geo2` have the same shape.
 
 Arguments
 =========
-- `cgeo` : A GeoRegion that we postulate to be a "child", or a subset of the GeoRegion defined by `geo`
-- `geo` : A GeoRegion that we postulate to be a "parent", or containing the GeoRegion defined by `cgeo`
+- `geo1` : The first GeoRegion
+- `geo2` : The second GeoRegion
 
 Keyword Arguments
 =================
-- `throw`  : If `true`, then if `cgeo` is not within `geo`, an error is thrown and the program stops running
+- `n` : The number of segments to split each of the `GeoRegion`s into. Default is 2.
+- `throw` : If `true`, then if `cgeo` is not within `geo`, an error is thrown and the program stops running
+- `verbose` : If `true`, print logs to screen
 """
 function on(
     geo1 :: GeoRegion,

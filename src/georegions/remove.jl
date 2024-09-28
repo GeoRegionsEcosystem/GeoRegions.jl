@@ -16,8 +16,8 @@ Keyword Arguments
            Defaults to the `local` package variable `geodir`
 """
 rm(
-    geo   :: GeoRegion;
-    path  :: AbstractString = dirname(geo.path)
+    geo  :: GeoRegion;
+    path :: AbstractString = dirname(geo.path)
 ) = if isgeo(geo,path=path)
     rmID(geo.ID,path=path)
 else
@@ -30,15 +30,15 @@ end
 
 """
     rmID(
-        geoID :: AbstractString;
+        ID :: AbstractString;
         path  :: AbstractString = geodir
     )
 
-Removes any GeoRegion associated with the ID `geoID`. ID must be exact.
+Removes any GeoRegion associated with the ID `ID`. ID must be exact.
 
 Arguments
 =========
-- `geoID` : The keyword ID that will be used to identify the GeoRegion.
+- `ID` : The keyword ID that will be used to identify the GeoRegion.
             If the ID is not valid (i.e. not being used), then an error will be thrown.
 
 Keyword Arguments
@@ -47,25 +47,25 @@ Keyword Arguments
            Defaults to the home directory `homedir()`
 """
 function rmID(
-    geoID :: AbstractString;
+    ID :: AbstractString;
     path  :: AbstractString = homedir(),
 )
 
-    if geoID == "GLB"
+    if ID == "GLB"
         error("$(modulelog()) - The Global GeoRegion \"GLB\" is an integral part of the GeoRegions.jl package and cannot be removed.")
     else
-        @info "$(modulelog()) - Removing the GeoRegion $(geoID) ..."
+        @info "$(modulelog()) - Removing the GeoRegion $(ID) ..."
     end
 
-    rvec,fvec,tvec,dvec = listall(path); isID(geoID,rvec)
-    ind = findall(geoID.==rvec)[1]
+    rvec,fvec,tvec,dvec = listall(path); isID(ID,rvec)
+    ind = findall(ID.==rvec)[1]
 
     fdefined = ["global.txt","giorgi.txt","srex.txt","ar6.txt"]
     if !any(fvec[ind].==fdefined)
-        geo = getgeoregion(geoID,joinpath(dvec[ind],fvec[ind]),tvec[ind])
+        geo = getgeoregion(ID,joinpath(dvec[ind],fvec[ind]),tvec[ind])
         removegeoregion(geo,joinpath(dvec[ind],fvec[ind]))
     else
-        error("$(modulelog()) - You are trying to remove the predefined GeoRegion \"$geoID\". If you really want to remove this GeoRegion, please do `force = true`")
+        error("$(modulelog()) - You are trying to remove the predefined GeoRegion \"$ID\". If you really want to remove this GeoRegion, please do `force = true`")
     end
 
 end

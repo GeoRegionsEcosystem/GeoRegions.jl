@@ -1,14 +1,14 @@
 """
     GeoRegion(
-        geoID :: AbstractString;
-        path  :: AbstractString = homedir()
+        ID :: AbstractString;
+        path :: AbstractString = homedir()
     ) -> geo :: GeoRegion
 
-Extracts information of the GeoRegion with the ID `geoID`.  If no GeoRegion with this ID exists, an error is thrown.
+Extracts information of the GeoRegion with the ID `ID`.  If no GeoRegion with this ID exists, an error is thrown.
 
 Arguments
 =========
-- `geoID` : The ID that will be used to identify the GeoRegion.
+- `ID` : The ID that will be used to identify the GeoRegion.
             If the ID is not valid (i.e. not being used), then an error will be thrown.
 
 Keyword Arguments
@@ -21,20 +21,20 @@ Returns
 - `geo` : A GeoRegion
 """
 function GeoRegion(
-    geoID :: AbstractString,
+    ID :: AbstractString,
     ST = String,
     FT = Float64;
-    path  :: AbstractString = homedir(),
+    path    :: AbstractString = homedir(),
     verbose :: Bool = false
 )
 
     if verbose
-        @info "$(modulelog()) - Retrieving information for the GeoRegion defined by the ID $geoID"
+        @info "$(modulelog()) - Retrieving information for the GeoRegion defined by the ID $ID"
     end
 
-    rvec,fvec,tvec,dvec = listall(path); isID(geoID,rvec,verbose=verbose)
-    ind = findall(geoID.==rvec)[1]
-    return getgeoregion(geoID,joinpath(dvec[ind],fvec[ind]),tvec[ind],ST,FT)
+    rvec,fvec,tvec,dvec = listall(path); isID(ID,rvec,verbose=verbose)
+    ind = findall(ID.==rvec)[1]
+    return getgeoregion(ID,joinpath(dvec[ind],fvec[ind]),tvec[ind],ST,FT)
 
 end
 
