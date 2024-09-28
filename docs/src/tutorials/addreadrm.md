@@ -118,7 +118,7 @@ rm(ply,path=joinpath(pwd(),"test"))
 
 And now we check if the `GeoRegion` `TSP` now exists:
 
-```@example addreadremove
+```@repl addreadremove
 isID("TSP",path=joinpath(pwd(),"test"))
 ```
 

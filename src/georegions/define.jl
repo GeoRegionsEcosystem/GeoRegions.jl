@@ -1,7 +1,8 @@
 """
     GeoRegion(
         ID :: AbstractString;
-        path :: AbstractString = homedir()
+        path    :: AbstractString = homedir(),
+        verbose :: Bool = false
     ) -> geo :: GeoRegion
 
 Extracts information of the GeoRegion with the ID `ID`.  If no GeoRegion with this ID exists, an error is thrown.
@@ -47,7 +48,7 @@ end
         bound :: Vector{<:Real};
         save :: Bool = false,
         path :: AbstractString = pwd(),
-        verbose :: Bool = true,
+        verbose :: Bool = false,
         ST = String,
         FT = Float64
     ) -> geo :: RectRegion{ST,FT}
@@ -278,7 +279,7 @@ Keyword Arguments
 - `save` : If `true`, save the GeoRegion into the list of custom GeoRegions in the path specified by `path`.
 - `path` : The path where the list of custom GeoRegions will be retrieved from.
            Defaults to the user's home directory `homedir()`.
-- `verbose` : If `true`, verbose logging for ease of monitoring. Default is false.
+- `verbose` : If `true`, verbose logging for ease of monitoring. Default is `false`.
 
 Returns
 =======

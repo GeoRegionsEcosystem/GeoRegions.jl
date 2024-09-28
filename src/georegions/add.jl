@@ -18,8 +18,8 @@ Keyword Arguments
 - `verbose` : Verbose logging for ease of monitoring? Default is `false`.
 """
 function add(
-    geo  :: RectRegion;
-    path :: AbstractString = dirname(geo.path),
+    geo :: RectRegion;
+    path    :: AbstractString = dirname(geo.path),
     verbose :: Bool = false
 )
 
@@ -34,8 +34,8 @@ function add(
 end
 
 function add(
-    geo  :: TiltRegion;
-    path :: AbstractString = dirname(geo.path),
+    geo :: TiltRegion;
+    path    :: AbstractString = dirname(geo.path),
     verbose :: Bool = false
 )
 
@@ -50,8 +50,8 @@ function add(
 end
 
 function add(
-    geo  :: PolyRegion;
-    path :: AbstractString = dirname(geo.path),
+    geo :: PolyRegion;
+    path    :: AbstractString = dirname(geo.path),
     verbose :: Bool = false
 )
 
@@ -87,8 +87,8 @@ Keyword Arguments
 - `verbose` : Verbose logging for ease of monitoring? Default is `false`.
 """
 function overwrite(
-    geo  :: GeoRegion;
-    path :: AbstractString = dirname(geo.path),
+    geo :: GeoRegion;
+    path    :: AbstractString = dirname(geo.path),
     verbose :: Bool = false
 )
 
