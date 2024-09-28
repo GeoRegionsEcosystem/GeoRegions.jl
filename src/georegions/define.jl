@@ -114,12 +114,11 @@ function RectRegion(
         path = homedir()
     end
 
-    N,S,E,W = bound; is180,is360 = checkbounds(N,S,E,W)
+    N,S,E,W = bound
     lon,lat = rect2shape(N,S,E,W)
     geo  = RectRegion{ST,FT}(
         ID, pID, name, joinpath(path,"rectlist.txt"),
         [N, S, E, W], Point.(lon,lat), Polygon(Point.(lon,lat)),
-        is180, is360
     )
 
     if save
@@ -224,12 +223,11 @@ function TiltRegion(
         path = homedir()
     end
 
-    N,S,E,W = tilt2bounds(X,Y,ΔX,ΔY,θ); is180,is360 = checkbounds(N,S,E,W)
+    N,S,E,W = tilt2bounds(X,Y,ΔX,ΔY,θ)
     lon,lat = tilt2shape(X,Y,ΔX,ΔY,θ)
     geo  = TiltRegion{ST,FT}(
         ID, pID, name, joinpath(path,"tiltlist.txt"),
-        [N, S, E, W], Point.(lon,lat), Polygon(Point.(lon,lat)), [X, Y, ΔX, ΔY, θ],
-        is180, is360
+        [N, S, E, W], Point.(lon,lat), Polygon(Point.(lon,lat)), [X, Y, ΔX, ΔY, θ]
     )
 
     if save
@@ -339,11 +337,9 @@ function PolyRegion(
 
     N = maximum(lat); S = minimum(lat)
     E = maximum(lon); W = minimum(lon)
-    is180,is360 = checkbounds(N,S,E,W)
     geo   = PolyRegion{ST,FT}(
         ID, pID, name, joinpath(path,"polylist.txt"),
-        [N, S, E, W], Point.(lon,lat), Polygon(Point.(lon,lat)),
-        is180, is360
+        [N, S, E, W], Point.(lon,lat), Polygon(Point.(lon,lat))
     )
     
     if save
@@ -403,11 +399,7 @@ function checkbounds(
         error("$(modulelog()) - The northern bound of the GeoRegion cannot be south of the southern bound.")
     end
 
-    if E > 180; is360 = true; else is360 = false end
-    if W < 0;   is180 = true; else is180 = false end
-    if !(is180) && !(is360); is360 = true end
-
-    return is180,is360
+    return nothing
 
 end
 

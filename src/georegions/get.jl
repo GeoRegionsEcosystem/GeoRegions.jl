@@ -32,13 +32,11 @@ function getrectregion(
     name = replace(name," "=>"")
     name = replace(name,"-"=>" ")
 
-    is180,is360 = checkbounds(N,S,E,W)
     lon,lat = rect2shape(N,S,E,W)
 
     return RectRegion{ST,FT}(
         ID, pID, name, fID,
         [N, S, E, W], Point.(lon,lat), Polygon(Point.(lon,lat)),
-        is180, is360
     )
 
 end
@@ -60,13 +58,12 @@ function gettiltregion(
     name = replace(name,"-"=>" ")
 
     N,S,E,W = tilt2bounds(X,Y,ΔX,ΔY,θ)
-    is180,is360 = checkbounds(N,S,E,W)
     lon,lat = tilt2shape(X,Y,ΔX,ΔY,θ)
 
     return TiltRegion{ST,FT}(
         ID, pID, name, fID,
-        [N, S, E, W], Point.(lon,lat), Polygon(Point.(lon,lat)), [X, Y, ΔX, ΔY, θ],
-        is180, is360
+        [N, S, E, W], Point.(lon,lat), Polygon(Point.(lon,lat)),
+        [X, Y, ΔX, ΔY, θ],
     )
 
 end
@@ -89,12 +86,10 @@ function getpolyregion(
 
     N = maximum(lat); S = minimum(lat)
     E = maximum(lon); W = minimum(lon)
-    is180,is360 = checkbounds(N,S,E,W)
 
     return PolyRegion{ST,FT}(
         ID, pID, name, fID,
         [N, S, E, W], Point.(lon,lat), Polygon(Point.(lon,lat)),
-        is180, is360
     )
 
 end

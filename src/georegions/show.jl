@@ -7,7 +7,6 @@ function show(io::IO, geo::RectRegion)
 		"    Name        (name) : ", geo.name, '\n',
 		"    Bounds   (N,S,E,W) : ", geo.bound, '\n',
 		"    Shape      (shape) : ", geo.shape, '\n',
-        "         (is180,is360) : ",(geo.is180,geo.is360),"\n",
 	)
 end
 
@@ -21,7 +20,6 @@ function show(io::IO, geo::TiltRegion)
 		"    Bounds   (N,S,E,W) : ", geo.bound, '\n',
 		"    Shape      (shape) : ", geo.shape, '\n',
 		"    Tilt (X,Y,ΔX,ΔY,θ) : ", geo.tilt, '\n',
-        "         (is180,is360) : ",(geo.is180,geo.is360),"\n",
 	)
 end
 
@@ -34,6 +32,5 @@ function show(io::IO, geo::PolyRegion)
 		"    Name        (name) : ", geo.name,  '\n',
 		"    Bounds   (N,S,E,W) : ", geo.bound, '\n',
 		"    Shape      (shape) : ", geo.shape, '\n',
-        "         (is180,is360) : ",(geo.is180,geo.is360),"\n",
 	)
 end

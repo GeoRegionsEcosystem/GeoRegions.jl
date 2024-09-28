@@ -39,7 +39,7 @@ Arguments
 
 Keyword Arguments
 =================
-- `strict` : If `true` (which is default), check to see if all fields are equivalent except for `name` and `path`
+- `strict` : If `true` (which is default), `geo1` and `geo2` must be of the same GeoRegion `type` (e.g., a `RectRegion ≠ PolyRegion`).
 - `verbose` : Verbose logging for ease of monitoring? Default is `false`.
 
 Returns
@@ -59,14 +59,6 @@ function isequal(
         tf = false
     end
 
-    if strict
-        if !isequal(geo1.bound,geo2.bound) || 
-            (geo1.is180 !== geo2.is180) || 
-            (geo1.is360 !== geo2.is360)
-            tf = false
-        end
-    end
-
     return tf
 
 end
@@ -82,14 +74,6 @@ function isequal(
 
     if (geo1.ID !== geo2.ID) || (geo1.pID !== geo2.pID)
         tf = false
-    end
-
-    if strict
-        if !isequal(geo1.bound,geo2.bound) || 
-            (geo1.is180 !== geo2.is180) || 
-            (geo1.is360 !== geo2.is360)
-            tf = false
-        end
     end
 
     return tf
@@ -110,10 +94,7 @@ function isequal(
     end
 
     if strict
-        if !isequal(geo1.bound,geo2.bound) || 
-            (geo1.is180 !== geo2.is180) || 
-            (geo1.is360 !== geo2.is360) || 
-            (geo1.geometry !== geo2.geometry)
+        if (geo1.geometry !== geo2.geometry)
             tf = false
         end
     end

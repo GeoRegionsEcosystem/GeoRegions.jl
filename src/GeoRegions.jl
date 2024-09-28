@@ -35,8 +35,6 @@ Abstract supertype for geographical regions. All `GeoRegion` types contain the f
 * `bound` - A vector of `Float` Types, defining the [North, South, East, West] boundaries of the GeoRegion.
 * `shape` - A vector of `Point2` Types, defining a non-rectilinear shape of the GeoRegion
 * `geometry` - A `Polygon` Type (see [GeometryBasics.jl]()), which is useful when doing checks on polygons using [GeometryOps.jl]().
-* `is180` - A `Bool` Type, is `W` < 0.
-* `is360` - A `Bool` Type, is `E` > 180.
 """
 abstract type GeoRegion end
 
@@ -53,8 +51,6 @@ struct RectRegion{ST<:AbstractString, FT<:Real} <: GeoRegion
     bound    :: Vector{FT}
     shape    :: Vector{Point2{FT}}
     geometry :: Polygon
-    is180    :: Bool
-    is360    :: Bool
 end
 
 """
@@ -70,8 +66,6 @@ struct PolyRegion{ST<:AbstractString, FT<:Real} <: GeoRegion
     bound    :: Vector{FT}
     shape    :: Vector{Point2{FT}}
     geometry :: Polygon
-    is180    :: Bool
-    is360    :: Bool
 end
 
 """
@@ -99,8 +93,6 @@ struct TiltRegion{ST<:AbstractString, FT<:Real} <: GeoRegion
     shape    :: Vector{Point2{FT}}
     geometry :: Polygon
     tilt     :: Vector{FT}
-    is180    :: Bool
-    is360    :: Bool
 end
 
 modulelog() = "$(now()) - GeoRegions.jl"
