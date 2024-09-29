@@ -66,7 +66,7 @@ But what about Point B?  Point B is also very obviously on the bounds of the Geo
 on(B,geo)
 ```
 
-See the API [here](/api/isinon#GeoRegions.on-Tuple{Point2{%3C:Real},%20GeoRegion})
+See the API [here](/api/isinonequal#GeoRegions.on-Tuple{Point2{%3C:Real},%20GeoRegion})
 
 ## Is a GeoRegion on a GeoRegion? (i.e., Are their Shapes the Same?)
 
@@ -76,7 +76,7 @@ We can also use the `on()` function to determine if the perimeter of a `GeoRegio
 on(geo,geo)
 ```
 
-See the API [here](/api/isinon#GeoRegions.on-Tuple{GeoRegion,%20GeoRegion})
+See the API [here](/api/isinonequal#GeoRegions.on-Tuple{GeoRegion,%20GeoRegion})
 
 Which is obvious because we are comparing a `GeoRegion` against itself. However, let us try something a bit more complicated.
 

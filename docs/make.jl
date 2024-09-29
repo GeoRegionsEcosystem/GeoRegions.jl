@@ -18,9 +18,9 @@ makedocs(;
         repo = "https://github.com/GeoRegionsEcosystem/GeoRegions.jl",
     ),
     pages=[
-        "Home"                      => "index.md",
-        "What is a GeoRegion?"      => "georegions.md",
-        "Basics" => [
+        "Home"                 => "index.md",
+        "What is a GeoRegion?" => "georegions.md",
+        "Basics"               => [
             "Retrieving GeoRegions" => [
                 "Overview (START HERE)"  => "basics/read/overview.md",
                 "Predefined GeoRegions"  => "basics/read/predefined.md",
@@ -28,27 +28,27 @@ makedocs(;
                 "Listing All GeoRegions" => "basics/read/listall.md",
             ],
             "Creating GeoRegions"   => "basics/create.md",
-            "GeoRegion Properties"  => [
-                "Shape of a GeoRegion"  => "basics/properties/shape.md",
-                "Is it in a GeoRegion?" => "basics/properties/isin.md",
-                "Is it on a GeoRegion?" => "basics/properties/ison.md",
-                "Equivalent GeoRegions" => "basics/properties/isequal.md",
+            "Shape of a GeoRegion"  => "basics/shape.md",
+            "Using GeoRegions.jl"   => [
+                "Is it in a GeoRegion?" => "basics/using/isin.md",
+                "Is it on a GeoRegion?" => "basics/using/ison.md",
+                "Equivalent GeoRegions" => "basics/using/isequal.md",
             ]
         ],
-        "Tutorials"   => [
+        "Tutorials"            => [
             "Project Setup (START HERE)" => "tutorials/projects.md",
             "Add, Read, Remove"          => "tutorials/addreadrm.md",
             "Custom GeoRegion Files"     => "tutorials/files.md",
         ],
-        "API"                       => [
-            "Creation"          => "api/create.md",
-            "Add, Read, Remove" => "api/addreadrm.md",
-            "Project Setup"     => "api/project.md",
-            "Tables"            => "api/tables.md",
-            "Is In/On?"         => "api/isinon.md",
-            "Properties"        => "api/properties.md",
+        "API"                  => [
+            "Creation"            => "api/create.md",
+            "Add, Read, Remove"   => "api/addreadrm.md",
+            "Project Setup"       => "api/project.md",
+            "Tables"              => "api/tables.md",
+            "Shape / Coordinates" => "api/shape.md",
+            "Is In/On?"           => "api/isinonequal.md",
         ],
-        "Ecosystem"                 => "ecosystem.md",
+        "Ecosystem"            => "ecosystem.md",
     ],
 )
 
