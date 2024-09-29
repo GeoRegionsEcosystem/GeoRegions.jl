@@ -36,8 +36,8 @@ nothing
 
 We define `RectRegion`s that are of the same shape (note that because `save = false` that the same `ID` can be used to define these GeoRegions):
 ```@example equivalence
-geo2 = RectRegion("GF_SEA","GLB","",geo.bounds) # Different name
-geo3 = RectRegion("SEA","GLB",geo.name,geo.bounds) # Different ID
+geo2 = RectRegion("GF_SEA","GLB","",geo.bound) # Different name
+geo3 = RectRegion("SEA","GLB",geo.name,geo.bound) # Different ID
 geo4 = PolyRegion("GF_SEA","GLB",geo.name,lon,lat) # Different ID
 geo5 = PolyRegion("GF_SEA","GLB","",lon,lat) # Different ID
 geo6 = PolyRegion("GF_SEA","GLB",geo.name,lon.+360,lat) # Shifted by 360º

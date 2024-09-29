@@ -25,4 +25,41 @@ on(
     throw   :: Bool = false,
     verbose :: Bool = false
 )
+==(
+    geo1 :: GeoRegion,
+    geo2 :: GeoRegion,
+)
+isequal(
+    geo1 :: RectRegion,
+    geo2 :: RectRegion;
+    strict  :: Bool = true,
+    verbose :: Bool = false
+)
+isgeo(
+    geo  :: GeoRegion;
+    path :: AbstractString = dirname(geo.path),
+    strict  :: Bool = true,
+    shape   :: Bool = true,
+    throw   :: Bool = true,
+    verbose :: Bool = false
+)
+isgeoshape(
+    geo  :: GeoRegion;
+    path :: AbstractString = dirname(geo.path),
+    returnID :: Bool = true,
+    verbose  :: Bool = false
+)
+isgeoshape(
+    lon  :: Vector{<:Real},
+    lat  :: Vector{<:Real};
+    path :: AbstractString = dirname(geo.path),
+    returnID :: Bool = true,
+    verbose  :: Bool = false
+)
+isID(
+    ID   :: AbstractString;
+    path :: AbstractString = homedir(),
+    throw   :: Bool = true,
+    verbose :: Bool = false
+)
 ```

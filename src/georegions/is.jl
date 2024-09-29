@@ -141,6 +141,7 @@ end
         geo  :: GeoRegion;
         path :: AbstractString = dirname(geo.path),
         strict  :: Bool = true,
+        shape   :: Bool = true,
         throw   :: Bool = true,
         verbose :: Bool = false
     ) -> tf :: Bool
