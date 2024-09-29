@@ -46,7 +46,7 @@ makedocs(;
             "Project Setup"       => "api/project.md",
             "Tables"              => "api/tables.md",
             "Shape / Coordinates" => "api/shape.md",
-            "Is In/On?"           => "api/isinonequal.md",
+            "Is In/On/Equal?"     => "api/isinonequal.md",
         ],
         "Ecosystem"            => "ecosystem.md",
     ],
