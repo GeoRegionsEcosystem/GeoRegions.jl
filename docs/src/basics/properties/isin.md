@@ -2,8 +2,8 @@
 
 When dealing with geographic data, we often wish to check if a point or region is inside another region.  GeoRegions.jl allows you to perform this check easily with the function `isinGeoRegion`.
 
-!!! note "Point Type"
-    We use the `Point` Type from the package GeometryBasics.jl, which is reexported by GeoRegions.jl, as an easy way to denote points.  This also allows us to use the package PolygonOps.jl to determine if a point is inside a region.
+!!! note "Point2 Type"
+    We use the `Point2` Type from the package [GeometryBasics.jl](https://github.com/JuliaGeometry/GeometryBasics.jl), which is reexported by GeoRegions.jl, as an easy way to denote points.  This also allows us to use the package [GeometryOps.jl](https://github.com/JuliaGeo/GeometryOps.jl) to determine if a point is within a GeoRegion.
 
 ```@example isin
 using GeoRegions
@@ -62,7 +62,7 @@ But what about Point B?  Point B is also very obvious within the bounds of the G
 in(B,geo)
 ```
 
-See the API [here](/api/isin#Base.in-Tuple{Point{%3C:Real},%20GeoRegion})
+See the API [here](/api/isinon#Base.in-Tuple{Point2{%3C:Real},%20GeoRegion})
 
 ## Is a GeoRegion inside a GeoRegion?
 
@@ -124,4 +124,4 @@ in(geo_TS4,geo_BIG)
 
 And we see that this is indeed the case.
 
-See the API for `RectRegion` type [here](/api/isin#Base.in-Tuple{GeoRegion,%20RectRegion}), and for the `TiltRegion` and `PolyRegion` types [here](/api/isin#Base.in-Tuple{GeoRegion,%20Union{PolyRegion,%20TiltRegion}}).
+See the API [here](/api/isinon#Base.in-Tuple{GeoRegion,%20GeoRegion}).

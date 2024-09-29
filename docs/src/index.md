@@ -12,10 +12,13 @@ hero:
   actions:
     - theme: brand
       text: Getting Started
-      link: /georegions/intro
+      link: /georegions
+    - theme: alt
+      text: Basics
+      link: /basics/read/overview
     - theme: alt
       text: Tutorials
-      link: /using/isin
+      link: /tutorials/projects
     - theme: alt
       text: View on Github
       link: https://github.com/georegionsecosystem/GeoRegions.jl
@@ -24,16 +27,20 @@ hero:
 features:
   - icon: <img width="64" height="64" src="https://img.icons8.com/arcade/64/markdown.png" alt="markdown"/>
     title: Simple
-    details: Only Longitude/Latitude coordinates needed
-    link: /lists/default
+    details: Geographic Regions are defined using Longitude/Latitude coordinates
+    link: /basics/properties/shape
+  - icon: <img width="64" height="64" src="https://img.icons8.com/arcade/64/markdown.png" alt="markdown"/>
+    title: Predefined GeoRegions
+    details: Many Geographic Regions have been predefined, including regions from the IPCC AR6 report
+    link: /georegions
   - icon: <img width="64" height="64" src="https://img.icons8.com/arcade/64/markdown.png" alt="markdown"/>
     title: Customizable
-    details: Define your own custom Geographic Regions
-    link: /georegions/create
+    details: Define your own custom Geographic Regions and save them for later
+    link: /tutorials/addreadrm
   - icon: <img width="64" height="64" src="https://img.icons8.com/arcade/64/markdown.png" alt="markdown"/>
     title: Useful
-    details: Data Extraction made easy using GeoRegions.jl
-    link: /using/extract
+    details: Are points in/on a GeoRegion for extraction?
+    link: /basics/properties/isin
 ---
 ```
 

@@ -1,8 +1,8 @@
 """
     in(
-        point  :: Point2{<:Real},
-        geo    :: GeoRegion;
-        throw  :: Bool = false
+        point :: Point2{<:Real},
+        geo   :: GeoRegion;
+        throw :: Bool = false
     ) -> tf :: Bool
 
 Check if a geographical point `point` is within a GeoRegion defined by `geo`.
@@ -60,10 +60,10 @@ end
 
 """
     in(
-        cgeo  :: GeoRegion,
-        geo   :: GeoRegion;
-        n     :: Int = 100,
-        throw :: Bool = false,
+        cgeo :: GeoRegion,
+        geo  :: GeoRegion;
+        n    :: Int = 100,
+        throw   :: Bool = false,
         verbose :: Bool = false
     ) -> tf :: Bool
 

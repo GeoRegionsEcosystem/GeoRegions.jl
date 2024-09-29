@@ -31,6 +31,7 @@ makedocs(;
             "GeoRegion Properties"  => [
                 "Shape of a GeoRegion"  => "basics/properties/shape.md",
                 "Is it in a GeoRegion?" => "basics/properties/isin.md",
+                "Is it on a GeoRegion?" => "basics/properties/ison.md",
                 "Equivalent GeoRegions" => "basics/properties/isequal.md",
             ]
         ],
@@ -44,7 +45,7 @@ makedocs(;
             "Add, Read, Remove" => "api/addreadrm.md",
             "Project Setup"     => "api/project.md",
             "Tables"            => "api/tables.md",
-            "Is In?"            => "api/isin.md",
+            "Is In/On?"         => "api/isinon.md",
             "Properties"        => "api/properties.md",
         ],
         "Ecosystem"                 => "ecosystem.md",
