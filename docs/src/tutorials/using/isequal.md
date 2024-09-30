@@ -72,7 +72,7 @@ So, we can see that
 ```@example equivalence
 isequal(geo,geo4,strict=false), # true, the shape is the same even though the GeoRegions are of differen types
 isequal(geo,geo5,strict=false), # false, the ID is different
-isequal(geo,geo6,strict=false), # true, shape is same even tho shift is by 360º
+isequal(geo,geo6,strict=false) # true, shape is same even tho shift is by 360º
 ```
 
 ## 2. Does there already exist a GeoRegion?
