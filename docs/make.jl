@@ -1,10 +1,9 @@
 using Documenter
 using DocumenterVitepress
 using GeoRegions
-# using CairoMakie
-# using Literate
+using CairoMakie
 
-# CairoMakie.activate!(type = "svg")
+CairoMakie.activate!(type = "svg")
 
 DocMeta.setdocmeta!(GeoRegions, :DocTestSetup, :(using GeoRegions); recursive=true)
 
@@ -61,7 +60,7 @@ recursive_find(directory, pattern) =
     end
 
 files = []
-for pattern in [r"\.cst", r"\.nc"]
+for pattern in [r"\.cst", r"\.nc", "test.geo"]
     global files = vcat(files, recursive_find(@__DIR__, pattern))
 end
 
