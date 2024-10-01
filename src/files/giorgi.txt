@@ -1,6 +1,6 @@
 # RectRegion
 # GeoRegions adapted from Giorgi & Francisco [2000]
-# (1)ID, (2)pID, (3)N, (4)W, (5)S, (6)E, (7)Description, (8)Notes
+# (1)ID, (2)pID, (3)N, (4)W, (5)S, (6)E, (7)Name
 
 GF_AUS, GLB, -10, 110, -45, 155, Australia
 GF_AMZ, GLB, 15, 275, -20, 330, Amazon-Basin
