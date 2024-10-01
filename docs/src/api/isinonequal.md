@@ -14,14 +14,14 @@ in(
     verbose :: Bool = false
 )
 on(
-    Point :: Point2{<:Real},
+    point :: Point2{<:Real},
     geo   :: GeoRegion;
     throw :: Bool = false
 )
 on(
-    cgeo :: GeoRegion,
-    geo  :: GeoRegion;
-    n    :: Int = 100,
+    geo1 :: GeoRegion,
+    geo2 :: GeoRegion;
+    n    :: Int = 2,
     throw   :: Bool = false,
     verbose :: Bool = false
 )

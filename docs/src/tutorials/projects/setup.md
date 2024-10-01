@@ -52,7 +52,7 @@ tableGeoRegions(path=pwd(),predefined=false)
 
 Note, we have no custom GeoRegions added, so there is nothing to list right now even though the files exist. If any of `rectlist.txt`, `polylist.txt` and `tiltlist.txt` are not present, a warning will be shown unless the keyword `warn = false` is set.
 
-See the API [here](/api/project#GeoRegions.deleteGeoRegions)
+See the API [here](/api/project#GeoRegions.tableGeoRegions)
 
 ## 3. Removing a the custom GeoRegions list from your Project
 

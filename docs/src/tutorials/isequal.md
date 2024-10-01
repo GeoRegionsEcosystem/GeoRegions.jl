@@ -43,7 +43,7 @@ geo == geo3, # false, different ID
 geo == geo4  # false, different GeoRegion type
 ```
 
-See the API nfor `==` [here](/api/isinonequal#Base.:==-Tuple{GeoRegion,%20GeoRegion})
+See the API [here](/api/isinonequal#Base.:==-Tuple{GeoRegion,%20GeoRegion})
 
 And we perform the tests with `isequal()`
 
