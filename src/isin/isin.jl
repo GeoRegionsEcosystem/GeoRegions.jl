@@ -39,7 +39,10 @@ function Base.in(
     isin = !iszero(sum([
         within(Point(plon    ,plat),geo.geometry),
         within(Point(plon+360,plat),geo.geometry),
-        within(Point(plon-360,plat),geo.geometry)
+        within(Point(plon-360,plat),geo.geometry),
+        touches(Point(plon    ,plat),geo.geometry),
+        touches(Point(plon+360,plat),geo.geometry),
+        touches(Point(plon-360,plat),geo.geometry)
     ]))
 
     if !isin
