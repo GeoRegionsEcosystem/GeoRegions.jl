@@ -107,7 +107,7 @@ function RectRegion(
             if !isID(pID,path=path,throw=false)
                 error("$(modulelog()) - The GeoRegion $(pID) was defined to be the parent GeoRegion of $(ID), but the GeoRegion $(pID) is not defined.  Please define the GeoRegion $(pID) and its properties.")
             else
-                pgeo = GeoRegion(pID,path=path); isinGeoRegion(geo,pgeo)
+                pgeo = GeoRegion(pID,path=path); in(geo,pgeo,throw=true)
             end
         end
         @info "$(modulelog()) - Adding the GeoRegion $(ID) to the list."
@@ -216,7 +216,7 @@ function TiltRegion(
             if !isID(pID,path=path,throw=false,verbose=verbose)
                 error("$(modulelog()) - The GeoRegion $(pID) was defined to be the parent GeoRegion of $(ID), but the GeoRegion $(pID) is not defined.  Please define the GeoRegion $(pID) and its properties.")
             else
-                pgeo = GeoRegion(pID,path=path); isinGeoRegion(geo,pgeo)
+                pgeo = GeoRegion(pID,path=path); in(geo,pgeo,throw=true)
             end
         end
         @info "$(modulelog()) - Adding the GeoRegion $(ID) to the list."
@@ -328,7 +328,7 @@ function PolyRegion(
             if !isID(pID,path=path)
                 error("$(modulelog()) - The GeoRegion $(pID) was defined to be the parent GeoRegion of $(ID), but the GeoRegion $(pID) is not defined.  Please define the GeoRegion $(pID) and its properties.")
             else
-                pgeo = GeoRegion(pID,path=path); isinGeoRegion(geo,pgeo)
+                pgeo = GeoRegion(pID,path=path); in(geo,pgeo,throw=true)
             end
         end
         @info "$(modulelog()) - Adding the GeoRegion $(ID) to the list."

@@ -114,7 +114,7 @@ PolyRegion(
 Suppose you have a list of `GeoRegion`s inside a custom file (that is not `rectlist.txt`, `tiltlist.txt` or `polylist.txt`), you can read the `GeoRegion`s defined inside this custom file into your project via `readGeoRegions()`
 
 ```@example files
-download("https://raw.githubusercontent.com/natgeo-wong/GeoRegionsEcosystem/main/files/customrect.txt","test.geo")
+download("https://raw.githubusercontent.com/GeoRegionsEcosystem/notebooks/refs/heads/main/files/customrect.txt","test.geo")
 geovec = readGeoRegions("test.geo")
 ```
 
@@ -124,4 +124,20 @@ We can directly add the `GeoRegion`s inside such custom files using the function
 
 ```@example files
 addGeoRegions("test.geo",path=pwd())
+```
+
+And we test this:
+
+```@example files
+GeoRegion("CRB",path=pwd())
+```
+
+Now, let's remove the custom `GeoRegion`s we defined above
+
+```@example files
+deleteGeoRegions(path=pwd())
+```
+
+```@repl files
+GeoRegion("CRB",path=pwd())
 ```
