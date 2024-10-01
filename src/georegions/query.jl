@@ -46,6 +46,28 @@ function coordinates(
 
 end
 
+"""
+    N(geo :: GeoRegion) -> north
+    S(geo :: GeoRegion) -> south
+    E(geo :: GeoRegion) -> east
+    W(geo :: GeoRegion) -> west
+
+For a given GeoRegion, find the north/south/east/west extent of the GeoRegion using the field `bound`.
+
+Arguments
+=========
+- `geo` : A GeoRegion.
+
+Returns
+=======
+- `north` : The northern latitude bound.
+or
+- `south` : The southern latitude bound.
+or
+- `east` : The eastern longitude bound.
+or
+- `west` : The western longitude bound.
+"""
 N(geo :: GeoRegion) = geo.bound[1]
 S(geo :: GeoRegion) = geo.bound[2]
 E(geo :: GeoRegion) = geo.bound[3]
