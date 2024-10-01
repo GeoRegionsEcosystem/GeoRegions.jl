@@ -90,6 +90,13 @@ function RectRegion(
         disable_logging(Logging.Warn)
     end
 
+    N,S,E,W = bound
+    lon,lat = rect2shape(N,S,E,W)
+    geo  = RectRegion{ST,FT}(
+        ID, pID, name, joinpath(path,"rectlist.txt"),
+        [N, S, E, W], Point.(lon,lat), Polygon(Point.(lon,lat)),
+    )
+
     if save
         geofile = joinpath(path,"rectlist.txt")
         if !isfile(geofile)
@@ -114,13 +121,6 @@ function RectRegion(
     else
         path = homedir()
     end
-
-    N,S,E,W = bound
-    lon,lat = rect2shape(N,S,E,W)
-    geo  = RectRegion{ST,FT}(
-        ID, pID, name, joinpath(path,"rectlist.txt"),
-        [N, S, E, W], Point.(lon,lat), Polygon(Point.(lon,lat)),
-    )
 
     if save
         name = replace(name," "=>"-")
@@ -199,6 +199,13 @@ function TiltRegion(
         disable_logging(Logging.Warn)
     end
 
+    N,S,E,W = tilt2bounds(X,Y,ΔX,ΔY,θ)
+    lon,lat = tilt2shape(X,Y,ΔX,ΔY,θ)
+    geo  = TiltRegion{ST,FT}(
+        ID, pID, name, joinpath(path,"tiltlist.txt"),
+        [N, S, E, W], Point.(lon,lat), Polygon(Point.(lon,lat)), [X, Y, ΔX, ΔY, θ]
+    )
+
     if save
         geofile = joinpath(path,"tiltlist.txt")
         if !isfile(geofile)
@@ -223,13 +230,6 @@ function TiltRegion(
     else
         path = homedir()
     end
-
-    N,S,E,W = tilt2bounds(X,Y,ΔX,ΔY,θ)
-    lon,lat = tilt2shape(X,Y,ΔX,ΔY,θ)
-    geo  = TiltRegion{ST,FT}(
-        ID, pID, name, joinpath(path,"tiltlist.txt"),
-        [N, S, E, W], Point.(lon,lat), Polygon(Point.(lon,lat)), [X, Y, ΔX, ΔY, θ]
-    )
 
     if save
         name = replace(name," "=>"-")
@@ -311,6 +311,13 @@ function PolyRegion(
             lat = vcat(lat,lat[1])
         end
     end
+
+    N = maximum(lat); S = minimum(lat)
+    E = maximum(lon); W = minimum(lon)
+    geo   = PolyRegion{ST,FT}(
+        ID, pID, name, joinpath(path,"polylist.txt"),
+        [N, S, E, W], Point.(lon,lat), Polygon(Point.(lon,lat))
+    )
     
     if save
         geofile = joinpath(path,"polylist.txt")
@@ -335,13 +342,6 @@ function PolyRegion(
     else
         path = homedir()
     end
-
-    N = maximum(lat); S = minimum(lat)
-    E = maximum(lon); W = minimum(lon)
-    geo   = PolyRegion{ST,FT}(
-        ID, pID, name, joinpath(path,"polylist.txt"),
-        [N, S, E, W], Point.(lon,lat), Polygon(Point.(lon,lat))
-    )
     
     if save
         name = replace(name," "=>"-")
