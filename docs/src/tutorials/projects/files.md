@@ -109,6 +109,23 @@ PolyRegion(
 !!! warning "Additional empty lines"
     There is an empty line between each `PolyRegion` being defined. And **there needs to be an additional empty line after the last `PolyRegion` defined. Please see `joinpath($(GeoRegions.geodir),"ar6.txt")` as an example.
 
+A valid `polylist.txt` file would look something like the following:
+
+```
+# PolyRegion
+# GeoRegions adapted from AR6 Regions (Iturbide et al., 2020; ESSD)
+# (RegID, ParID, Name), X, Y
+                                                # This empty line here *must* exist
+  RegID SRX_ALA, GLB, Alaska/N.W.-Canada        # (ID, pID, Name)
+  RegX  -105, -168, -168, -105, -105            # Longitude vector
+  RegY  60, 60, 72.6, 72.6, 60                  # Latitude vector
+                                                # This empty line here *must* exist
+  RegID SRX_AMZ, GLB, Amazon                    # (ID, pID, Name)
+  RegX  -66.4, -79.7, -68.8, -50, -50, -66.4    # Longitude vector
+  RegY  -20, -1.2, 11.4, 11.4, -20, -20         # Latitude vector
+                                                # This empty line here *must* exist
+```
+
 ## Listing GeoRegions inside Custom Files
 
 Suppose you have a list of `GeoRegion`s inside a custom file (that is not `rectlist.txt`, `tiltlist.txt` or `polylist.txt`), you can read the `GeoRegion`s defined inside this custom file into your project via `readGeoRegions()`
@@ -118,6 +135,8 @@ download("https://raw.githubusercontent.com/GeoRegionsEcosystem/notebooks/refs/h
 geovec = readGeoRegions("test.geo")
 ```
 
+See the API [here](/api/project#GeoRegions.readGeoRegions)
+
 ## Adding GeoRegions inside Custom Files
 
 We can directly add the `GeoRegion`s inside such custom files using the function `addGeoRegions()` as follows:
@@ -125,6 +144,8 @@ We can directly add the `GeoRegion`s inside such custom files using the function
 ```@example files
 addGeoRegions("test.geo",path=pwd())
 ```
+
+See the API [here](/api/project#GeoRegions.addGeoRegions)
 
 And we test this:
 

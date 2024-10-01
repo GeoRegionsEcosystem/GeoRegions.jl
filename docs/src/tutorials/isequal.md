@@ -28,10 +28,10 @@ nothing
 
 We define `RectRegion`s that are of the same shape (note that because `save = false` that the same `ID` can be used to define these GeoRegions):
 ```@example equivalence
-geo2 = RectRegion("GF_SEA","GLB","",geo.bound) # Different name
-geo3 = RectRegion("SEA","GLB",geo.name,geo.bound) # Different ID
-geo4 = PolyRegion("GF_SEA","GLB",geo.name,lon,lat) # Different ID
-geo5 = PolyRegion("GF_SEA","GLB","",lon,lat) # Different ID
+geo2 = RectRegion("GF_SEA","GLB","",geo.bound)          # Different name
+geo3 = RectRegion("SEA","GLB",geo.name,geo.bound)       # Different ID
+geo4 = PolyRegion("GF_SEA","GLB",geo.name,lon,lat)      # Different ID
+geo5 = PolyRegion("GF_SEA","GLB","",lon,lat)            # Different ID
 geo6 = PolyRegion("GF_SEA","GLB",geo.name,lon.+360,lat) # Shifted by 360º
 ```
 
@@ -43,7 +43,7 @@ geo == geo3, # false, different ID
 geo == geo4  # false, different GeoRegion type
 ```
 
-See the API nfor `==` [here](/api/isinonequal#Base.==)
+See the API nfor `==` [here](/api/isinonequal#Base.:==-Tuple{GeoRegion,%20GeoRegion})
 
 And we perform the tests with `isequal()`
 
@@ -53,7 +53,7 @@ isequal(geo,geo3), # false, different ID
 isequal(geo,geo4)  # false, different GeoRegion type
 ```
 
-See the API nfor `isequal()` [here](/api/isinonequal#Base.isequal)
+See the API [here](/api/isinonequal#Base.isequal-Tuple{RectRegion,%20RectRegion})
 
 ### 1.2 Non-Strict Equivalence
 
@@ -62,7 +62,7 @@ See the API nfor `isequal()` [here](/api/isinonequal#Base.isequal)
 So, we can see that
 
 ```@example equivalence
-isequal(geo,geo4,strict=false), # true, the shape is the same even though the GeoRegions are of differen types
+isequal(geo,geo4,strict=false), # true, the shape is the same even though the GeoRegions are of different types
 isequal(geo,geo5,strict=false), # false, the ID is different
 isequal(geo,geo6,strict=false) # true, shape is same even tho shift is by 360º
 ```
@@ -78,6 +78,8 @@ isgeo(geo_SEA)
 
 We see here that `isgeo(geo,geo_SEA) = true` because the `ID`, `pID` and `shape` of the newly defined `geo_SEA` is the same as `geo`.
 
+See the API [here](/api/isinonequal#GeoRegions.isgeo-Tuple{GeoRegion})
+
 ## 3. Property Checks for GeoRegions
 
 Sometimes, we don't want to check if a `GeoRegion` specifically exists. Sometimes, we just want to check if an `ID` or a `shape` already exists in the current project.
@@ -87,9 +89,10 @@ Sometimes, we don't want to check if a `GeoRegion` specifically exists. Sometime
 The function `isID()` allows us to check if an `ID` is already in use for a current project.
 
 ```@example equivalence
-geo_SEA = RectRegion("GF_SEA","GLB","New Southeast Asia",geo.bound)
-isgeo(geo_SEA)
+isID("GF_SEA"), isID("AR6_SEA")
 ```
+
+See the API [here](/api/isinonequal#GeoRegions.isID-Tuple{AbstractString})
 
 ### 3.1 Checking if a GeoRegion has an equivalent `shape`
 
@@ -100,11 +103,17 @@ geo_tmp1 = PolyRegion("TST","GLB","",lon,lat) # lon,lat taken from above example
 isgeoshape(geo_tmp1,path=pwd())
 ```
 
-### 3.1 Checking if a `shape` defined by (lon,lat) is defined in an existing GeoRegion
+See the API [here](/api/isinonequal#GeoRegions.isgeoshape-Tuple{GeoRegion})
+
+### 3.2 Checking if a `shape` defined by (lon,lat) is defined in an existing GeoRegion
 
 The function `isgeoshape()` also allows us to check if another GeoRegion in the project has an equivalent `shape` to that which would be defined by a set of `lon` and `lat` vectors.
 
 ```@example equivalence
-isgeoshape(lon,lat,path=pwd())
-isgeoshape([20,30,40,20],[10,30,10,10],path=pwd())
+isgeoshape(lon,lat,path=pwd()),                    # lon,lat taken from above example
+isgeoshape([20,30,40,20],[10,30,10,10],path=pwd()) # Randomly defined lon,lat
 ```
+
+The first is true but the second is false.
+
+See the API [here](/api/isinonequal#GeoRegions.isgeoshape-Tuple{Vector{%3C:Real},%20Vector{%3C:Real}})
