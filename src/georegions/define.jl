@@ -34,7 +34,7 @@ function GeoRegion(
         @info "$(modulelog()) - Retrieving information for the GeoRegion defined by the ID \"$ID\"."
     end
 
-    rvec,fvec,tvec,dvec = listall(path); isID(ID,rvec,verbose=verbose)
+    rvec,fvec,tvec,dvec = listall(path,verbose); isID(ID,rvec,verbose=verbose)
     ind = findall(ID.==rvec)[1]
     return getgeoregion(ID,joinpath(dvec[ind],fvec[ind]),tvec[ind],ST,FT)
 

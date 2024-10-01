@@ -1,5 +1,6 @@
 function listall(
-    path :: AbstractString = homedir()
+    path :: AbstractString = homedir(),
+    warn :: Bool = false
 )
 
     flist    = ["rectlist.txt","polylist.txt","tiltlist.txt"]
@@ -14,6 +15,8 @@ function listall(
         fID = joinpath(path,fname)
         if isfile(fID)
             IDs,fIDs,types,dirs = fillinfo(IDs,fIDs,types,dirs,fID)
+        else
+            if warn @warn "$(modulelog) - The custom file does \"$fname\" does not exist in $path, use `setupGeoRegions()` to copy templates and empty custom lists to $path." end
         end
     end
 

@@ -141,7 +141,6 @@ end
         geo  :: GeoRegion;
         path :: AbstractString = dirname(geo.path),
         strict  :: Bool = true,
-        shape   :: Bool = true,
         throw   :: Bool = true,
         verbose :: Bool = false
     ) -> tf :: Bool
@@ -157,7 +156,6 @@ Keyword Arguments
 - `path` : The path where the list of custom GeoRegions will be retrieved from.
            Defaults to the directory `geo.path`.
 - `strict` : If `true` (which is default), check to see if all fields are equivalent except for `name` and `path`.
-- `shape` : If `true` (which is default), check to see if any existing GeoRegion in `path` has the same shape
 - `throw` : If `true`, then throws an error if there is no `GeoRegion` defined in `path` with the same characteristics or field values as `geo`.
 - `verbose` : Verbose logging for ease of monitoring? Default is `false`.
 
@@ -169,7 +167,6 @@ function isgeo(
     geo  :: GeoRegion;
     path :: AbstractString = dirname(geo.path),
     strict  :: Bool = true,
-    shape   :: Bool = true,
     throw   :: Bool = false,
     verbose :: Bool = false
 )
@@ -178,7 +175,7 @@ function isgeo(
 
         tgeo = GeoRegion(geo.ID,path=path,verbose=verbose)
         if isequal(geo,tgeo,strict=strict,verbose=verbose)
-            if verbose; @info "$(modulelog()) - The GeoRegion \"$(geo.ID)\" we have defined shares the same properties as the custom GeoRegion \"$(tgeo.ID)\" from the lists in $path." end
+            if verbose; @info "$(modulelog()) - A previously defined GeoRegion \"$(tgeo.ID)\" in $path shares the same properties as our custom GeoRegion \"$(geo.ID)\"." end
             return true
         else
             if throw
@@ -188,20 +185,7 @@ function isgeo(
                 return false
             end
         end
-
-    elseif isgeoshape(geo,path=path,verbose=verbose)
-
-        # In this case, a GeoRegion of the same ID does not exist, but there already exists a GeoRegion with the same shape
-        ID = isgeoshape(geo,path=path,returnID=true,verbose=verbose)
-
-        if shape
-            if verbose; @info "$(modulelog()) - There exists a GeoRegion \"$ID\" that has the same shape as the GeoRegion \"$(geo.ID)\" that we have defined, and because `shape = true`, we have decided to treat this GeoRegion as equivalent to our user-defined GeoRegion \"$(geo.ID)\" to prevent redundancy." end
-            return true
-        else
-            @warn "$(modulelog()) - There exists a GeoRegion \"$ID\" that has the same shape as the GeoRegion \"$(geo.ID)\" that we have defined. However, because `shape = false`, we have decided that this does not matter and that no equivalent GeoRegion to our user-defined GeoRegion \"$(geo.ID)\" exists."
-            return false
-        end
-
+        
     else
 
         return false
@@ -242,7 +226,7 @@ function isgeoshape(
     verbose  :: Bool = false
 )
 
-    IDvec,_,_,_ = listall(path); ngeo = length(IDvec)
+    IDvec,_,_,_ = listall(path,verbose); ngeo = length(IDvec)
     tf = zeros(Bool,ngeo)
 
     for igeo in 1 : ngeo
@@ -297,7 +281,7 @@ function isgeoshape(
     verbose  :: Bool = false
 )
 
-    IDvec,_,_,_ = listall(path); ngeo = length(IDvec)
+    IDvec,_,_,_ = listall(path,verbose); ngeo = length(IDvec)
     tf = zeros(Bool,ngeo)
 
     geo = PolyRegion("","","",lon,lat)
