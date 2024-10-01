@@ -31,16 +31,16 @@ makedocs(;
             "Shape of a GeoRegion"  => "basics/shape.md",
         ],
         "Tutorials"            => [
-            "Using GeoRegions.jl"        => [
-                "Is it in a GeoRegion?" => "tutorials/using/isin.md",
-                "Is it on a GeoRegion?" => "tutorials/using/ison.md",
-                "Equivalent GeoRegions" => "tutorials/using/isequal.md",
-            ],
-            "GeoRegions.jl for Projects" => [
+            "GeoRegions.jl for Projects"   => [
                 "Setup (START HERE)"     => "tutorials/projects/setup.md",
                 "Add, Read, Remove"      => "tutorials/projects/addreadrm.md",
                 "Custom GeoRegion Files" => "tutorials/projects/files.md",
-            ]
+            ],
+            "Using GeoRegions.jl"          => [
+                "Is it in a GeoRegion?" => "tutorials/using/isin.md",
+                "Is it on a GeoRegion?" => "tutorials/using/ison.md",
+            ],
+            "Equivalence in GeoRegions.jl" => "tutorials/isequal.md",
             
         ],
         "API"                  => [

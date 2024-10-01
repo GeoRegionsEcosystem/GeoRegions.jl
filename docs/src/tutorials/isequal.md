@@ -1,4 +1,4 @@
-# Comparing GeoRegions
+# Equivalence between GeoRegions and their Properties
 
 Now, suppose we have two different GeoRegions, we have constructed several different ways of testing various forms of equivalence.
 
@@ -77,4 +77,42 @@ isequal(geo,geo6,strict=false) # true, shape is same even tho shift is by 360º
 
 ## 2. Does there already exist a GeoRegion?
 
-Sometimes, we want to figure out if there exists a `GeoRegion` `geo` in a project we have defined (for more information on how to use GeoRegions.jl in projects, see [here](/tutorials/projects)). We can use the function `isgeo()` to determine if this is the case.
+Sometimes, we want to figure out if there exists a `GeoRegion` `geo` in a project we have defined (for more information on how to use GeoRegions.jl in projects, see [here](/tutorials/projects)). We can use the function `isgeo()` to determine if this is the case. For `isgeo()` to be true, there must exist another `GeoRegion` `ogeo` such that `isequal(geo,ogeo) = true`.
+
+```@example equivalence
+geo_SEA = RectRegion("GF_SEA","GLB","New Southeast Asia",geo.bound)
+isgeo(geo_SEA)
+```
+
+We see here that `isgeo(geo,geo_SEA) = true` because the `ID`, `pID` and `shape` of the newly defined `geo_SEA` is the same as `geo`.
+
+## 3. Property Checks for GeoRegions
+
+Sometimes, we don't want to check if a `GeoRegion` specifically exists. Sometimes, we just want to check if an `ID` or a `shape` already exists in the current project.
+
+### 3.1 Checking if an `ID` already exists
+
+The function `isID()` allows us to check if an `ID` is already in use for a current project.
+
+```@example equivalence
+geo_SEA = RectRegion("GF_SEA","GLB","New Southeast Asia",geo.bound)
+isgeo(geo_SEA)
+```
+
+### 3.1 Checking if a GeoRegion has an equivalent `shape`
+
+The function `isgeoshape()` allows us to check if another GeoRegion in the project has an equivalent `shape`.
+
+```@example equivalence
+geo_tmp1 = PolyRegion("TST","GLB","",lon,lat)
+isgeoshape("TST",path=pwd())
+```
+
+### 3.1 Checking if a `shape` defined by (lon,lat) is defined in an existing GeoRegion
+
+The function `isgeoshape()` also allows us to check if another GeoRegion in the project has an equivalent `shape` to that which would be defined by a set of `lon` and `lat` vectors.
+
+```@example equivalence
+isgeoshape(lon,lat,path=pwd())
+isgeoshape([20,30,40,20],[10,30,10,10],path=pwd())
+```
