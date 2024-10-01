@@ -3,10 +3,9 @@
 ```@docs
 setupGeoRegions
 deleteGeoRegions
-```
-
-```@docs
 tableGeoRegions(
     fname :: AbstractString
 )
+readGeoRegions
+addGeoRegions
 ```

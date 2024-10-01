@@ -2,6 +2,11 @@
 
 This page gives a brief introduction into how to **manually** defined custom `GeoRegion`s in their respective files.
 
+```@example files
+using GeoRegions
+using DelimitedFiles
+```
+
 ## `RectRegion` and `TiltRegion` Files
 
 Manually defining a `RectRegion` or a `TiltRegion` in the `rectlist.txt` and `tiltlist.txt` files is relatively simple. Simple follow the order of the headers in the respective files.
@@ -101,6 +106,22 @@ PolyRegion(
 )
 ```
 
+!!! warning "Additional empty lines"
+    There is an empty line between each `PolyRegion` being defined. And **there needs to be an additional empty line after the last `PolyRegion` defined. Please see `joinpath($(GeoRegions.geodir),"ar6.txt")` as an example.
+
 ## Listing GeoRegions inside Custom Files
 
-It is possible to list the GeoRegions in specified file. The template for these files can be retrieved using the function `setupGeoRegions()`
+Suppose you have a list of `GeoRegion`s inside a custom file (that is not `rectlist.txt`, `tiltlist.txt` or `polylist.txt`), you can read the `GeoRegion`s defined inside this custom file into your project via `readGeoRegions()`
+
+```@example files
+download("https://raw.githubusercontent.com/natgeo-wong/GeoRegionsEcosystem/main/files/customrect.txt","test.geo")
+geovec = readGeoRegions("test.geo")
+```
+
+## Adding GeoRegions inside Custom Files
+
+We can directly add the `GeoRegion`s inside such custom files using the function `addGeoRegions()` as follows:
+
+```@example files
+addGeoRegions("test.geo",path=pwd())
+```
