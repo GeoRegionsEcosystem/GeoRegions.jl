@@ -4,14 +4,6 @@ Now, suppose we have two different GeoRegions, we have constructed several diffe
 
 ```@example equivalence
 using GeoRegions
-using DelimitedFiles
-using CairoMakie
-
-download("https://raw.githubusercontent.com/natgeo-wong/GeoPlottingData/main/coastline_resl.txt","coast.cst")
-coast = readdlm("coast.cst",comments=true)
-clon  = coast[:,1]
-clat  = coast[:,2]
-nothing
 ```
 
 ## 1. Are two GeoRegions Equivalent
@@ -104,8 +96,8 @@ isgeo(geo_SEA)
 The function `isgeoshape()` allows us to check if another GeoRegion in the project has an equivalent `shape`.
 
 ```@example equivalence
-geo_tmp1 = PolyRegion("TST","GLB","",lon,lat)
-isgeoshape("TST",path=pwd())
+geo_tmp1 = PolyRegion("TST","GLB","",lon,lat) # lon,lat taken from above example
+isgeoshape(geo_tmp1,path=pwd())
 ```
 
 ### 3.1 Checking if a `shape` defined by (lon,lat) is defined in an existing GeoRegion
