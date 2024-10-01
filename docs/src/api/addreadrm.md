@@ -1,5 +1,7 @@
 # API for Adding, Reading and Removing GeoRegions
 
+## Retrieving GeoRegions
+
 ```@docs
 GeoRegion(
     geoID :: AbstractString;
@@ -7,13 +9,11 @@ GeoRegion(
 )
 ```
 
+## Adding/Removing GeoRegions
+
 ```@docs
 add
 overwrite
 rm
-```
-
-```@docs
-isID
 rmID
 ```

@@ -1,5 +1,6 @@
 # API for Is it in/on a GeoRegion?
 
+## In
 ```@docs
 in(
     Point :: Point2{<:Real},
@@ -13,6 +14,11 @@ in(
     throw   :: Bool = false,
     verbose :: Bool = false
 )
+```
+
+## On
+
+```@docs
 on(
     point :: Point2{<:Real},
     geo   :: GeoRegion;
@@ -25,6 +31,11 @@ on(
     throw   :: Bool = false,
     verbose :: Bool = false
 )
+```
+
+## Equivalence of GeoRegions
+
+```@docs
 ==(
     geo1 :: GeoRegion,
     geo2 :: GeoRegion,
@@ -43,6 +54,11 @@ isgeo(
     throw   :: Bool = true,
     verbose :: Bool = false
 )
+```
+
+## Equivalence of GeoRegion Properties
+
+```@docs
 isgeoshape(
     geo  :: GeoRegion;
     path :: AbstractString = dirname(geo.path),

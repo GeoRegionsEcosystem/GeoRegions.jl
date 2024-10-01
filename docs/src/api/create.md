@@ -1,5 +1,7 @@
 # API for Creating GeoRegions
 
+## RectRegion
+
 ```@docs
 RectRegion(
     ::AbstractString, ::AbstractString, ::AbstractString,
@@ -7,12 +9,16 @@ RectRegion(
 )
 ```
 
+## TiltRegion
+
 ```@docs
 TiltRegion(
     ::AbstractString, ::AbstractString, ::AbstractString,
     ::Real, ::Real, ::Real, ::Real, ::Real
 )
 ```
+
+## PolyRegion
 
 ```@docs
 PolyRegion(
