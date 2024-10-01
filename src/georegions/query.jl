@@ -45,3 +45,8 @@ function coordinates(
     return lon,lat
 
 end
+
+N(geo :: GeoRegion) = geo.bound[1]
+S(geo :: GeoRegion) = geo.bound[2]
+E(geo :: GeoRegion) = geo.bound[3]
+W(geo :: GeoRegion) = geo.bound[4]

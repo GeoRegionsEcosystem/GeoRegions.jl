@@ -21,7 +21,7 @@ export
         setupGeoRegions, readGeoRegions, addGeoRegions, deleteGeoRegions,
         tableGeoRegions, tableRectRegions, tableTiltRegions, tablePolyRegions,
 
-        in, on, coordinates,
+        in, on, coordinates, N, S, E, W,
         Point, Point2, Polygon
 
 ## Abstract types
