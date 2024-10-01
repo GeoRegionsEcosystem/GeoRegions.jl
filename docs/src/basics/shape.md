@@ -22,6 +22,16 @@ We load a predefined AR6 GeoRegion for Northwest North America:
 geo = GeoRegion("AR6_NWN")
 ```
 
+## Retrieving the Bounds of the GeoRegion
+
+We can use the functions `N()`, `S()`, `E()` and `W()` to retrieve the north and south latitude bounds, and the east and west longitude bounds, of a `GeoRegion`.
+
+```@example properties
+N(geo),S(geo),E(geo),W(geo)
+```
+
+See the API [here](/api/shape#GeoRegions.N)
+
 ## Retrieving the coordinates of a GeoRegion
 
 Using the function `coordinates()`, we are able to retrieve the coordinates of the vertices that define the shape of the `GeoRegion`. In the below example, we plot the longitude and latitude points.
@@ -29,11 +39,11 @@ Using the function `coordinates()`, we are able to retrieve the coordinates of t
 ```@example properties
 lon,lat = coordinates(geo)
 
-aspect = (maximum(slon)-minimum(slon))/(maximum(slat)-minimum(slat))
+aspect = (E(geo)-W(geo))/(N(geo)-S(geo))
 fig = Figure()
 ax = Axis(
     fig[1,1],width=750,height=750/aspect,
-    limits=(minimum(slon)-2,maximum(slon)+2,minimum(slat)-2,maximum(slat)+2)
+    limits=(W(geo)-2,E(geo)+2,S(geo)-2,N(geo)+2)
 )
 lines!(ax,clon,clat,color=:black,linewidth=3)
 lines!(ax,lon,lat,linewidth=5)
