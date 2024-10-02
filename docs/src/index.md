@@ -18,29 +18,29 @@ hero:
       link: /basics/read/overview
     - theme: alt
       text: Tutorials
-      link: /tutorials/projects
+      link: /tutorials/using/isin
     - theme: alt
       text: View on Github
-      link: https://github.com/georegionsecosystem/GeoRegions.jl
+      link: https://github.com/GeoRegionsEcosystem/GeoRegions.jl
       
 
 features:
   - icon: <img width="64" height="64" src="https://img.icons8.com/arcade/64/markdown.png" alt="markdown"/>
     title: Simple
     details: Geographic Regions are defined using Longitude/Latitude coordinates
-    link: /basics/properties/shape
+    link: /basics/shape
   - icon: <img width="64" height="64" src="https://img.icons8.com/arcade/64/markdown.png" alt="markdown"/>
     title: Predefined GeoRegions
-    details: Many Geographic Regions have been predefined, including regions from the IPCC AR6 report
-    link: /georegions
+    details: Many predefined Geographic Regions bundled, from the IPCC AR6 report
+    link: /basics/read/predefined
   - icon: <img width="64" height="64" src="https://img.icons8.com/arcade/64/markdown.png" alt="markdown"/>
     title: Customizable
     details: Define your own custom Geographic Regions and save them for later
-    link: /tutorials/addreadrm
+    link: /tutorials/projects/addreadrm
   - icon: <img width="64" height="64" src="https://img.icons8.com/arcade/64/markdown.png" alt="markdown"/>
     title: Useful
-    details: Are points in/on a GeoRegion for extraction?
-    link: /basics/properties/isin
+    details: Check if points or a region are in/on a GeoRegion?
+    link: /tutorials/using/isin
 ---
 ```
 

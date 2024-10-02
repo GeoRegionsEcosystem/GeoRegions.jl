@@ -20,14 +20,14 @@ makedocs(;
         "Home"                 => "index.md",
         "What is a GeoRegion?" => "georegions.md",
         "Basics"               => [
-            "Retrieving GeoRegions" => [
-                "Overview (START HERE)"  => "basics/read/overview.md",
-                "Predefined GeoRegions"  => "basics/read/predefined.md",
-                "Tabulating GeoRegions"  => "basics/read/tables.md",
-                "Listing All GeoRegions" => "basics/read/listall.md",
+            "Load/Read a GeoRegion"     => "basics/read.md",
+            "Creating a GeoRegion"      => "basics/create.md",
+            "Shape of a GeoRegion"      => "basics/shape.md",
+            "List Available GeoRegions" => "basics/tables.md",
+            "Predefined GeoRegions"     => [
+                "Predefined Datasets" => "basics/predefined/datasets.md",
+                "List All GeoRegions" => "basics/predefined/listall.md",
             ],
-            "Creating GeoRegions"   => "basics/create.md",
-            "Shape of a GeoRegion"  => "basics/shape.md",
         ],
         "Tutorials"            => [
             "Using GeoRegions.jl"          => [
@@ -36,7 +36,7 @@ makedocs(;
             ],
             "Equivalence in GeoRegions.jl" => "tutorials/isequal.md",
             "GeoRegions.jl for Projects"   => [
-                "Setup (START HERE)"     => "tutorials/projects/setup.md",
+                "Setting Up"             => "tutorials/projects/setup.md",
                 "Add, Read, Remove"      => "tutorials/projects/addreadrm.md",
                 "Custom GeoRegion Files" => "tutorials/projects/files.md",
             ],

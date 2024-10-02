@@ -1,6 +1,6 @@
 # Predefined `GeoRegion`s in GeoRegions.jl
 
-In GeoRegions.jl, there are a predefined set of `GeoRegion`s.
+In GeoRegions.jl, there are several predefined sets of `GeoRegion`s.
 
 ## Adapted from Giorgi & Francisco [2000]
 
