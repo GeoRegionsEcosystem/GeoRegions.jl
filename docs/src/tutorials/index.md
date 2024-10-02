@@ -1,3 +1,4 @@
+```@raw html
 <script setup lang="ts">
 import Gallery from "../components/Gallery.vue";
 
@@ -53,3 +54,4 @@ const projects = [
 ## Predefined GeoRegions
 
 <Gallery :images="projects" />
+```

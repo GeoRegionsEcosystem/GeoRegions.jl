@@ -8,7 +8,7 @@ deleteGeoRegions
 
 ## Handling custom lists of GeoRegions.jl
 
-```
+```@docs
 tableGeoRegions(
     fname :: AbstractString
 )

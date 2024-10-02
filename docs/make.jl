@@ -1,7 +1,7 @@
 using Documenter
 using DocumenterVitepress
 using GeoRegions
-using CairoMakie
+import CairoMakie
 
 CairoMakie.activate!(type = "svg")
 

@@ -8,7 +8,7 @@ Sometimes, we don't just want information on whether a point is _inside_ a `GeoR
 ```@example ison
 using GeoRegions
 using DelimitedFiles
-using CairoMakie
+import CairoMakie: Figure, Axis, lines!, scatter!, resize_to_layout!
 
 download("https://raw.githubusercontent.com/natgeo-wong/GeoPlottingData/main/coastline_resl.txt","coast.cst")
 coast = readdlm("coast.cst",comments=true)

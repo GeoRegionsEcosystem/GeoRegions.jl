@@ -15,10 +15,10 @@ hero:
       link: /georegions
     - theme: alt
       text: Basics
-      link: /basics/read/overview
+      link: /basics
     - theme: alt
       text: Tutorials
-      link: /tutorials/using/isin
+      link: /tutorials
     - theme: alt
       text: View on Github
       link: https://github.com/GeoRegionsEcosystem/GeoRegions.jl
@@ -31,8 +31,8 @@ features:
     link: /basics/shape
   - icon: <img width="64" height="64" src="https://img.icons8.com/arcade/64/markdown.png" alt="markdown"/>
     title: Predefined GeoRegions
-    details: Many predefined Geographic Regions bundled, from the IPCC AR6 report
-    link: /basics/read/predefined
+    details: Many predefined Geographic Regions bundled from different datasets
+    link: /basics/predefined/datasets
   - icon: <img width="64" height="64" src="https://img.icons8.com/arcade/64/markdown.png" alt="markdown"/>
     title: Customizable
     details: Define your own custom Geographic Regions and save them for later
