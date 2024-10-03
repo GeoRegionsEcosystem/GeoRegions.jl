@@ -24,10 +24,38 @@ geo = GeoRegion("AR6_NWN")
 
 ## Retrieving the Bounds of the GeoRegion
 
-We can use the functions `N()`, `S()`, `E()` and `W()` to retrieve the north and south latitude bounds, and the east and west longitude bounds, of a `GeoRegion`.
+We can use the functions `GeoRegions.N()`, `GeoRegions.S()`, `GeoRegions.E()` and `GeoRegions.W()` to retrieve the north and south latitude bounds, and the east and west longitude bounds, of a `GeoRegion`.
+
+!!! warning "`N()`, `S()`, `E()`, `W()` not exported"
+    In order to prevent clashes with variable names, `N()`, `S()`, `E()`, `W()` are not exported, and thus must be prefixed with `GeoRegions.` (e.g., `GeoRegions.N()`).
 
 ```@example properties
-N(geo),S(geo),E(geo),W(geo)
+GeoRegions.N(geo),
+GeoRegions.S(geo),
+GeoRegions.E(geo),
+GeoRegions.W(geo)
+```
+
+See the API [here](/api/shape#GeoRegions.N)
+
+## Retrieving the Tilt-Properties of a TiltRegion
+
+Similar to above can use the functions `GeoRegions.X()`, `GeoRegions.Y()`, `GeoRegions.ΔX()`, `GeoRegions.ΔY()` and `GeoRegions.θ()` to respective tilt-properties, of a `TiltRegion`.
+
+!!! warning "`X()`, `Y()`, `ΔX()`, `ΔY()`, `θ()` not exported"
+    In order to prevent clashes with variable names, `X()`, `Y()`, `ΔX()`, `ΔY()`, `θ()` are not exported, and thus must be prefixed with `GeoRegions.` (e.g., `GeoRegions.X()`).
+
+```@example properties
+tlt = TiltRegion("TST_TILT","GLB","Test Tilt",20,0,50,10,13)
+# [X,Y,ΔX,ΔY,θ] = [20,0,50,10,13]
+```
+
+```julia
+GeoRegions.X(tlt),
+GeoRegions.Y(tlt),
+GeoRegions.ΔX(tlt),
+GeoRegions.ΔY(tlt),
+GeoRegions.θ(tlt)
 ```
 
 See the API [here](/api/shape#GeoRegions.N)
