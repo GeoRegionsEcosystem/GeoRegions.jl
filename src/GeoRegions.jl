@@ -21,7 +21,7 @@ export
         setupGeoRegions, readGeoRegions, addGeoRegions, deleteGeoRegions,
         tableGeoRegions, tableRectRegions, tableTiltRegions, tablePolyRegions,
 
-        in, on, coordinates, N, S, E, W,
+        in, on, coordinates,
         Point, Point2, Polygon
 
 ## Abstract types
@@ -106,7 +106,7 @@ include("georegions/is.jl")
 include("georegions/list.jl")
 include("georegions/project.jl")
 include("georegions/remove.jl")
-include("georegions/query.jl")
+include("georegions/shape.jl")
 include("georegions/show.jl")
 include("georegions/tables.jl")
 
