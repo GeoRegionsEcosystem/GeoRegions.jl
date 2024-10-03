@@ -4,25 +4,25 @@ import Gallery from "../components/Gallery.vue";
 
 const beginner = [
   {
-    href: "/basics/read",
+    href: "read",
     src: "images/read.png",
     caption: "Read / Load",
     desc: "How to read/load a GeoRegion into the workspace."
   },
   {
-    href: "/basics/create",
+    href: "create",
     src: "images/create.png",
     caption: "Create",
     desc: "How to create a user-defined GeoRegion."
   },
   {
-    href: "/basics/shape",
+    href: "shape",
     src: "images/shape.png",
     caption: "Shape Properties",
     desc: "Retrieving the Shape of a GeoRegion"
   },
   {
-    href: "/basics/tables",
+    href: "tables",
     src: "images/list.png",
     caption: "Tables",
     desc: "Listing existing GeoRegions in Table Format"
@@ -31,13 +31,13 @@ const beginner = [
 
 const predefined = [
   {
-    href: "/basics/predefined/sets",
+    href: "predefined/sets",
     src: "images/sets.png",
     caption: "Available Datasets",
     desc: "Different Predefined Datasets in GeoRegions.jl"
   },
   {
-    href: "/basics/predefined/listall",
+    href: "predefined/listall",
     src: "images/listall.png",
     caption: "All Predefined GeoRegions",
     desc: "Listing out all predefined GeoRegions in GeoRegions.jl"
