@@ -69,7 +69,7 @@ See the API [here](/api/shape#GeoRegions.N)
 Or you can also extract them all at the same time as follows:
 
 ```@example properties
-X,Y,ΔX,ΔY,θ = geo.tilt
+X,Y,ΔX,ΔY,θ = tlt.tilt
 ```
 
 ## Retrieving the coordinates of a GeoRegion
