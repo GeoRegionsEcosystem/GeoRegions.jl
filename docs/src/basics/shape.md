@@ -36,6 +36,12 @@ GeoRegions.E(geo),
 GeoRegions.W(geo)
 ```
 
+Or you can also extract them all at the same time as follows:
+
+```@example properties
+N,S,E,W = geo.bound
+```
+
 See the API [here](/api/shape#GeoRegions.N)
 
 ## Retrieving the Tilt-Properties of a TiltRegion
@@ -50,7 +56,7 @@ tlt = TiltRegion("TST_TILT","GLB","Test Tilt",20,0,50,10,13)
 # [X,Y,ΔX,ΔY,θ] = [20,0,50,10,13]
 ```
 
-```julia
+```@example properties
 GeoRegions.X(tlt),
 GeoRegions.Y(tlt),
 GeoRegions.ΔX(tlt),
@@ -60,6 +66,12 @@ GeoRegions.θ(tlt)
 
 See the API [here](/api/shape#GeoRegions.N)
 
+Or you can also extract them all at the same time as follows:
+
+```@example properties
+X,Y,ΔX,ΔY,θ = geo.tilt
+```
+
 ## Retrieving the coordinates of a GeoRegion
 
 Using the function `coordinates()`, we are able to retrieve the coordinates of the vertices that define the shape of the `GeoRegion`. In the below example, we plot the longitude and latitude points.
@@ -67,11 +79,11 @@ Using the function `coordinates()`, we are able to retrieve the coordinates of t
 ```@example properties
 lon,lat = coordinates(geo)
 
-aspect = (E(geo)-W(geo))/(N(geo)-S(geo))
+aspect = (E-W+4)/(N-S+4)
 fig = Figure()
 ax = Axis(
     fig[1,1],width=750,height=750/aspect,
-    limits=(W(geo)-2,E(geo)+2,S(geo)-2,N(geo)+2)
+    limits=(W-2,E+2,S-2,N+2)
 )
 lines!(ax,clon,clat,color=:black,linewidth=3)
 lines!(ax,lon,lat,linewidth=5)
