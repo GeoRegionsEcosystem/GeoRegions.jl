@@ -99,19 +99,19 @@ modulelog() = "$(now()) - GeoRegions.jl"
 geodir = joinpath(@__DIR__,"files")
 
 ## Including other files in the module
-include("georegions/define.jl")
-include("georegions/add.jl")
-include("georegions/get.jl")
-include("georegions/is.jl")
-include("georegions/list.jl")
-include("georegions/project.jl")
-include("georegions/remove.jl")
-include("georegions/shape.jl")
-include("georegions/show.jl")
-include("georegions/tables.jl")
+# include("georegions/define.jl")
+# include("georegions/add.jl")
+# include("georegions/get.jl")
+# include("georegions/is.jl")
+# include("georegions/list.jl")
+# include("georegions/project.jl")
+# include("georegions/remove.jl")
+# include("georegions/shape.jl")
+# include("georegions/show.jl")
+# include("georegions/tables.jl")
 
-include("isin/isin.jl")
-include("isin/ison.jl")
-include("isin/extrastuff.jl")
+# include("isin/isin.jl")
+# include("isin/ison.jl")
+# include("isin/extrastuff.jl")
 
 end # module
