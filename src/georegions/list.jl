@@ -16,7 +16,7 @@ function listall(
         if isfile(fID)
             IDs,fIDs,types,dirs = fillinfo(IDs,fIDs,types,dirs,fID)
         else
-            if warn @warn "$(modulelog) - The custom file does \"$fname\" does not exist in $path, use `setupGeoRegions()` to copy templates and empty custom lists to $path." end
+            if warn @warn "$(modulelog()) - The custom file does \"$fname\" does not exist in $path, use `setupGeoRegions()` to copy templates and empty custom lists to $path." end
         end
     end
 
