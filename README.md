@@ -29,9 +29,8 @@
 ## **Introduction**
 
 `GeoRegions.jl` is a Julia package that aims to streamline the following processes:
+* defining a geographic region of interest and its shape/boundaries
 * query if a point / grid is within a specified boundary
-* extract point data (given coordinates) from a given region
-* extract gridded data (given grid boundaries) from a larger (parent) region (grid must be entirely within the parent region)
 
 In general, these boundaries can be specified either using `[N,S,E,W]` coordinates, or by `longitude` and `latitude` vectors.
 
