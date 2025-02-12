@@ -123,27 +123,16 @@ Keyword Arguments
 - `overwrite` : If `true`, override any custom GeoRegions that have the same `ID`s as those in the file `fname`.
 """
 function addGeoRegions(
-    fname :: AbstractString;
-    path  :: AbstractString = pwd(),
+    src :: AbstractString,
+    dst :: AbstractSTring;
     overwrite :: Bool = false,
-    verbose   :: Bool = false
+    verbose   :: Bool = false,
+    geopath   :: Bool = false
 )
 
-    @info "$(modulelog()) - Importing user-defined GeoRegions from the file $fname directly into the custom lists."
+    @info "$(modulelog()) - Importing all user-defined GeoRegions from the file $fname directly into the current project."
 
-    rvec,rtype = listgeoregions(fname)
-    for reg in rvec
-        if !isID(reg,path=path,throw=false,verbose=verbose)
-            g = getgeoregion(reg,fname,rtype)
-            add(g,path=path,verbose=verbose)
-        elseif overwrite
-            @warn "$(modulelog()) - The GeoRegion ID $reg is already in use. Overwriting and replacing with new boundaries ..."
-            g = getgeoregion(reg,fname,rtype)
-            overwrite(g,path=path,verbose=verbose)
-        else
-            @warn "$(modulelog()) - The GeoRegion ID $reg is already in use. Please use a different ID, or you can remove the ID using removeGeoRegion()."
-        end
-    end
+    
 
     return nothing
 
@@ -165,10 +154,11 @@ function deleteGeoRegions(;
     path :: AbstractString = pwd()
 )
 
-    @warn "$(modulelog()) - Removing custom GeoRegions.jl files from $path, all GeoRegion information saved into these files will be permanently lost."
-    flist = ["rectlist.txt","polylist.txt","tiltlist.txt"]
+    gpath = geopath(path)
+    @warn "$(modulelog()) - Removing custom GeoRegions.jl files from $gpath, all GeoRegion information saved into these files will be permanently lost."
+    flist = glob("*.georegion",gpath)
     for fname in flist
-        rm(joinpath(path,fname),force=true)
+        rm(joinpath(gpath,fname),force=true)
     end
 
     return nothing
