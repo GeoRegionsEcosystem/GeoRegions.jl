@@ -46,7 +46,7 @@ function tableGeoRegions(;
     for igeo = 1 : ngeo
         geo = GeoRegion(IDs[igeo],path=gpaths[igeo])
         fmat[igeo,1] = geo.ID
-        fmat[igeo,2] = "GeoRegion"
+        fmat[igeo,2] = typeof(geo)
         fmat[igeo,3] = geo.name
         fmat[igeo,4] = geo.pID
         fmat[igeo,5] = [geo.N, geo.S, geo.E, geo.W]
