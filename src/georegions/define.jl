@@ -30,26 +30,22 @@ function GeoRegion(
     verbose :: Bool = false
 )
 
-    if isID(ID,path,verbose=verbose)
+    gpath = geopath(path)
+    IDs,gpaths = listall(gpath,verbose); isID(ID,IDs,verbose=verbose)
+    ind = findall(ID.==IDs)[1]
+    fID = joinpath(gpaths[ind],"$ID.json")
 
-        verbose ? (@info "$(modulelog()) - Retrieving information for the GeoRegion defined by the ID \"$ID\".") : nothing
+    verbose ? (@info "$(modulelog()) - Retrieving information for the GeoRegion defined by the ID \"$ID\".") : nothing
 
-        geo = JSON3.read(read(joinpath(path,"$ID.json"),String))
-        shape = Point.(
-            geo.geometry.longitude,
-            geo.geometry.latitude
-        )
-
-        return GeoRegion{ST,FT}(
-            geo.ID, geo.pID, geo.name, path, geo.rotation,
-            Geometry(geo.geometry.level, shape, Polygon(shape))
-        )
-
-    else
-
-        return nothing
-
-    end
+    geo = JSON3.read(read(fID,String))
+    lon = FT.(geo.geometry.longitude)
+    lat = FT.(geo.geometry.latitude)
+    shape = Point.(lon,lat)
+    N,S,E,W = checkbounds(lon,lat)
+    return GeoRegion{ST,FT}(
+        geo.ID, geo.pID, geo.name, fID, N, S, E, W, geo.rotation,
+        Geometry(geo.geometry.level, shape, Polygon(shape))
+    )
 
 end
 
