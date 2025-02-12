@@ -140,7 +140,7 @@ function GeoRegion(
         !isdir(gpath) ? mkpath(gpath) : nothing
         open(joinpath(gpath,"$ID.json"), "w") do io
             JSON3.write(io,JSONRegion{ST,FT}(
-                ID, pID, name, rotation, JSONGeometry(1, lon, lat)
+                ID, pID, name, rotation, JSONGeometry{FT}(1, lon, lat)
             ))
         end
 
@@ -153,7 +153,7 @@ function GeoRegion(
     !verbose ? disable_logging(Logging.Debug) : nothing
 
     return GeoRegion{ST,FT}(
-        ID, pID, name, gpath, N, S, E, W, rotation,
+        ID, pID, name, joinpath(gpath,"$ID.json"), N, S, E, W, rotation,
         Geometry(1, shape, Polygon(shape))
     )
 
