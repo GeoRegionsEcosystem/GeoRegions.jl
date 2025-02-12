@@ -57,7 +57,7 @@ function rmID(
         @info "$(modulelog()) - Removing the GeoRegion $(ID) ..."
     end
 
-    fgeo = joinpath(geopath(path),"$ID.georegion")
+    fgeo = joinpath(geopath(path),"$ID.json")
     if isfile(fgeo); rm(fgeo,force=true) end
 
 end

@@ -34,7 +34,7 @@ function GeoRegion(
 
         verbose ? (@info "$(modulelog()) - Retrieving information for the GeoRegion defined by the ID \"$ID\".") : nothing
 
-        geo = JSON3.read(read(joinpath(path,"$ID.georegion"),String))
+        geo = JSON3.read(read(joinpath(path,"$ID.json"),String))
         shape = Point.(
             geo.geometry.longitude,
             geo.geometry.latitude
@@ -142,7 +142,7 @@ function GeoRegion(
 
         @info "$(modulelog()) - Adding the GeoRegion $(ID) to the list."
         !isdir(gpath) ? mkpath(gpath) : nothing
-        open(joinpath(gpath,"$ID.georegion"), "w") do io
+        open(joinpath(gpath,"$ID.json"), "w") do io
             JSON3.write(io,JSONRegion{ST,FT}(
                 ID, pID, name, rotation, JSONGeometry(1, lon, lat)
             ))

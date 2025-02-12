@@ -48,7 +48,7 @@ function readGeoRegions(;
 
     if ID == ""
 
-        IDvec  = glob("*.georegion",gpath)
+        IDvec  = glob("*.json",gpath)
         nID    = length(IDvec)
         geovec = Vector{GeoRegion}(undef,nID)
         for iID in 1 : nID
@@ -97,7 +97,7 @@ function addGeoRegions(
 
     verbose ? (@info "$(modulelog()) - Importing all user-defined GeoRegions from the folder $gsrc directly into the folder $gdst.") : nothing
 
-    fgeo = basename.(glob("*.georegion",gsrc)); ngeo = length(fgeo)
+    fgeo = basename.(glob("*.json",gsrc)); ngeo = length(fgeo)
     for igeo = 1 : ngeo
         cp(joinpath(gsrc,fgeo[igeo]),joinpath(gdst,fgeo[igeo]),force=overwrite)
     end
@@ -124,7 +124,7 @@ function deleteGeoRegions(;
 
     gpath = geopath(path)
     @warn "$(modulelog()) - Removing custom GeoRegions.jl files from $gpath, all GeoRegion information saved into these files will be permanently lost."
-    flist = glob("*.georegion",gpath)
+    flist = glob("*.json",gpath)
     for fname in flist
         rm(joinpath(gpath,fname),force=true)
     end
