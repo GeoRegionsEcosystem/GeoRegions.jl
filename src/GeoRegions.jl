@@ -118,7 +118,7 @@ struct JSONMultiRegion{ST<:AbstractString, FT<:Real} <: AbstractGeoRegion
 end
 
 modulelog() = "$(now()) - GeoRegions.jl"
-geopath(path) = joinpath(path,".georegions")
+geopath(path) = splitpath(path)[end] !== ".georegions" ? joinpath(path,".georegions") : path
 geopredefined = joinpath(@__DIR__,".files")
 
 ## Including other files in the module

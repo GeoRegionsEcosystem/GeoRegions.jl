@@ -32,7 +32,7 @@ function GeoRegion(
 
     if isID(ID,path,verbose=verbose)
 
-        if verbose; @info "$(modulelog()) - Retrieving information for the GeoRegion defined by the ID \"$ID\"." end
+        verbose ? (@info "$(modulelog()) - Retrieving information for the GeoRegion defined by the ID \"$ID\".") : nothing
 
         geo = JSON3.read(read(joinpath(path,"$ID.json"),String))
         shape = Point.(
@@ -108,9 +108,7 @@ function GeoRegion(
     FT = Float64
 )
 
-    if !verbose
-        disable_logging(Logging.Warn)
-    end
+    !verbose ? disable_logging(Logging.Warn) : nothing
 
     if (lon[1] != lon[end]) || (lat[1] != lat[end])
         if !join
@@ -126,33 +124,37 @@ function GeoRegion(
     shape = Point.(lon,lat)
     
     if save
-        if isID(ID,path=path,throw=false)
-            error("$(modulelog()) - The GeoRegion $(ID) has already been defined.  Please use another identifier.")
-        end
-        if isgeoshape(lon,lat,path=path)
+
+        isID(ID,path=gpath,throw=false) ? error("$(modulelog()) - The GeoRegion $(ID) has already been defined.  Please use another identifier.") : nothing
+
+        if isgeoshape(lon,lat,path=gpath)
             oID = isgeoshape(lon,lat,path=gpath,returnID=true)
             error("$(modulelog()) - The GeoRegion $(oID) in $path has the same shape. Use it instead.")
         end
+
         if pID != "GLB"
-            if !isID(pID,path=path)
+            if !isID(pID,path=gpath)
                 error("$(modulelog()) - The GeoRegion $(pID) was defined to be the parent GeoRegion of $(ID), but the GeoRegion $(pID) is not defined.  Please define the GeoRegion $(pID) and its properties.")
             else
-                pgeo = GeoRegion(pID,path=path); in(geo,pgeo,throw=true)
+                pgeo = GeoRegion(pID,path=gpath); in(geo,pgeo,throw=true)
             end
         end
+
         @info "$(modulelog()) - Adding the GeoRegion $(ID) to the list."
+        !isdir(gpath) ? mkpath(gpath) : nothing
         open(joinpath(gpath,"$ID.georegion"), "w") do io
             JSON3.write(io,JSONRegion{ST,FT}(
                 ID, pID, name, rotation, JSONGeometry(1, lon, lat)
             ))
         end
+
     else
+
         gpath = geopath(homedir())
+
     end
 
-    if !verbose
-        disable_logging(Logging.Debug)
-    end
+    !verbose ? disable_logging(Logging.Debug) : nothing
 
     return GeoRegion{ST,FT}(
         ID, pID, name, gpath, N, S, E, W, rotation,
@@ -169,34 +171,20 @@ function checkbounds(
     W = minimum(lon); E = maximum(lon)
     S = minimum(lat); N = maximum(lat)
 
-    if (N>90) || (N<-90)
-        error("$(modulelog()) - The latitude of the GeoRegion's northern bound at $N is not valid.")
-    end
+    (N>90) || (N<-90) ? error("$(modulelog()) - The latitude of the GeoRegion's northern bound at $N is not valid.") : nothing
 
-    if (S>90) || (S<-90)
-        error("$(modulelog()) - The latitude of the GeoRegion's southern bound at $S is not valid.")
-    end
+    (S>90) || (S<-90) ? error("$(modulelog()) - The latitude of the GeoRegion's southern bound at $S is not valid.") : nothing
 
-    if (E>360) || (E<-180)
-        error("$(modulelog()) - The longitude of the GeoRegion's eastern bound at $E is not valid.")
-    end
+    (E>360) || (E<-180) ? error("$(modulelog()) - The longitude of the GeoRegion's eastern bound at $E is not valid.") : nothing
 
-    if (W>360) || (W<-180)
-        error("$(modulelog()) - The longitude of the GeoRegion's western bound at $W is not valid.")
-    end
+    (W>360) || (W<-180) ? error("$(modulelog()) - The longitude of the GeoRegion's western bound at $W is not valid.") : nothing
 
-    if (E - W) > 360
-        error("$(modulelog()) - The GeoRegion cannot be more than 360º in Longitude.")
-    end
+    (E - W) > 360 ? error("$(modulelog()) - The GeoRegion cannot be more than 360º in Longitude.") : nothing
 
-    if E < W
-        error("$(modulelog()) - The eastern bound of the GeoRegion cannot be west of the western bound.")
-    end
+    E < W ? error("$(modulelog()) - The eastern bound of the GeoRegion cannot be west of the western bound.") : nothing
 
-    if N < S
-        error("$(modulelog()) - The northern bound of the GeoRegion cannot be south of the southern bound.")
-    end
+    N < S ? error("$(modulelog()) - The northern bound of the GeoRegion cannot be south of the southern bound.") : nothing
 
-    return nothing
+    return N, S, E, W
 
 end

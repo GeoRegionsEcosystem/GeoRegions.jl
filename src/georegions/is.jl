@@ -101,9 +101,10 @@ function isgeo(
     verbose :: Bool = false
 )
 
-    if isID(geo.ID,path=path,throw=throw,verbose=verbose)
+    gpath = geopath(path)
+    if isID(geo.ID,path=gpath,throw=throw,verbose=verbose)
 
-        tgeo = GeoRegion(geo.ID,path=path,verbose=verbose)
+        tgeo = GeoRegion(geo.ID,path=gpath,verbose=verbose)
         if isequal(geo,tgeo,strict=strict,verbose=verbose)
             if verbose; @info "$(modulelog()) - A previously defined GeoRegion \"$(tgeo.ID)\" in $path shares the same properties as our custom GeoRegion \"$(geo.ID)\"." end
             return true
@@ -156,11 +157,12 @@ function isgeoshape(
     verbose  :: Bool = false
 )
 
-    IDvec,_,_,_ = listall(path,verbose); ngeo = length(IDvec)
+    gpath = geopath(path)
+    IDvec,_ = listall(gpath,verbose); ngeo = length(IDvec)
     tf = zeros(Bool,ngeo)
 
     for igeo in 1 : ngeo
-        tgeo = GeoRegion(IDvec[igeo],path=path,verbose=verbose)
+        tgeo = GeoRegion(IDvec[igeo],path=gpath,verbose=verbose)
         tf[igeo] = on(geo,tgeo,verbose=verbose)
     end
 
@@ -211,13 +213,15 @@ function isgeoshape(
     verbose  :: Bool = false
 )
 
-    IDvec,_ = listall(path,verbose); ngeo = length(IDvec)
+    gpath = geopath(path)
+
+    IDvec,_ = listall(gpath,verbose); ngeo = length(IDvec)
     tf = zeros(Bool,ngeo)
 
     geo = GeoRegion(lon,lat)
 
     for igeo in 1 : ngeo
-        tgeo = GeoRegion(IDvec[igeo],path=path,verbose=verbose)
+        tgeo = GeoRegion(IDvec[igeo],path=gpath,verbose=verbose)
         tf[igeo] = on(geo,tgeo,verbose=verbose)
     end
 
@@ -266,7 +270,7 @@ function isID(
     verbose :: Bool = false
 )
 
-    IDvec,_ = listall(path)
+    IDvec,_ = listall(geopath(path))
     return isID(ID,IDvec;throw=throw,verbose=verbose)
 
 end

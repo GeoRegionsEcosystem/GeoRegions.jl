@@ -18,13 +18,13 @@ Keyword Arguments
 rm(
     geo  :: GeoRegion;
     path :: AbstractString = dirname(geo.path)
-) = if isgeo(geo,path=path)
-    rmID(geo.ID,path=path)
+) = if isgeo(geo,path=geopath(path))
+    rmID(geo.ID,path=geopath(path))
 else
-    if isID(geo.ID,path=path)
-        error("$(modulelog()) - The GeoRegion in $path which has the ID \"$(geo.ID)\" does not have the same properties as our GeoRegion \"$(geo.ID)\" that we have defined, and thus cannot be removed.")
+    if isID(geo.ID,path=geopath(path))
+        error("$(modulelog()) - The GeoRegion in $(geopath(path)) which has the ID \"$(geo.ID)\" does not have the same properties as our GeoRegion \"$(geo.ID)\" that we have defined, and thus cannot be removed.")
     else
-        error("$(modulelog()) - There is no GeoRegion in $path which has the ID \"$(geo.ID)\".")
+        error("$(modulelog()) - There is no GeoRegion in $(geopath(path)) which has the ID \"$(geo.ID)\".")
     end
 end
 
