@@ -44,7 +44,7 @@ function GeoRegion(
     N,S,E,W = checkbounds(lon,lat)
     return GeoRegion{ST,FT}(
         geo.ID, geo.pID, geo.name, fID, N, S, E, W, geo.rotation,
-        Geometry(geo.geometry.level, shape, Polygon(shape))
+        Geometry{FT}(geo.geometry.level, shape, Polygon(shape))
     )
 
 end
@@ -154,7 +154,7 @@ function GeoRegion(
 
     return GeoRegion{ST,FT}(
         ID, pID, name, joinpath(gpath,"$ID.json"), N, S, E, W, rotation,
-        Geometry(1, shape, Polygon(shape))
+        Geometry{FT}(1, shape, Polygon(shape))
     )
 
 end
