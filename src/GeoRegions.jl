@@ -31,9 +31,12 @@ Abstract supertype for geographical regions. All `AbstractGeoRegion` types conta
 * `ID` - A `String` Type, the identifier for the GeoRegion.
 * `pID` - A `String` Type, the identifier for the parent GeoRegion.
 * `name` - A `String` Type, the full name of the GeoRegion.
-* `path` - A `String` Type, the full name of the GeoRegion.
-* `boundary` - A `Vector` Type, contains the [N, S, E, W] points that bound the GeoRegion
-* `rotation` - A `Real` Type, the rotation projection for the data in the GeoRegion
+* `path` - A `String` Type, the path of the file containing information on this GeoRegion.
+* `N` - A `Float` Type, contains the northernmost latitude bound.
+* `S` - A `Float` Type, contains the southernmost latitude bound.
+* `E` - A `Float` Type, contains the easternmost longitude bound.
+* `W` - A `Float` Type, contains the westernmost longitude bound.
+* `θ` - A `Float` Type, the rotation projection for the data in the GeoRegion
 * `geometry` - A `Geometry` or `Vector{Geometry}` Type
 """
 abstract type AbstractGeoRegion end
@@ -55,7 +58,7 @@ abstract type AbstractJSONRegion end
 """
     Geometry
 
-Abstract supertype for geographical regions. All `GeoRegion` types contain the following fields:
+Abstract supertype for the geometry of a shape in a GeoRegion. All `Geometry` types contain the following fields:
 * `level` - An `Int` type that determines the nested-level of this particular shape/polygon geometry within the GeoRegion.
 * `shape` - A vector of `Point2` (see [GeometryBasics.jl](https://github.com/JuliaGeometry/GeometryBasics.jl)) Types, defining a non-rectilinear shape of the GeoRegion.
 * `polygon` - A `Polygon` Type (see [GeometryBasics.jl](https://github.com/JuliaGeometry/GeometryBasics.jl)), which is useful when doing checks on polygons using [GeometryOps.jl](https://github.com/JuliaGeo/GeometryOps.jl).
@@ -81,12 +84,15 @@ struct JSONGeometry{FT<:Real}
 end
 
 struct GeoRegion{ST<:AbstractString, FT<:Real} <: AbstractGeoRegion
-    ID       :: ST
-    pID      :: ST
-    name     :: ST
-    path     :: ST
-    boundary :: Vector{FT}
-    rotation :: FT
+      ID :: ST
+     pID :: ST
+    name :: ST
+    path :: ST
+       N :: FT
+       S :: FT
+       E :: FT
+       W :: FT
+       θ :: FT
     geometry :: Geometry{FT}
 end
 
@@ -99,12 +105,15 @@ struct JSONRegion{ST<:AbstractString, FT<:Real} <: AbstractGeoRegion
 end
 
 struct MultiGeoRegion{ST<:AbstractString, FT<:Real} <: AbstractGeoRegion
-    ID       :: ST
-    pID      :: ST
-    name     :: ST
-    path     :: ST
-    boundary :: Vector{FT}
-    rotation :: FT
+      ID :: ST
+     pID :: ST
+    name :: ST
+    path :: ST
+       N :: FT
+       S :: FT
+       E :: FT
+       W :: FT
+       θ :: FT
     geometry :: Vector{Geometry{FT}}
 end
 
