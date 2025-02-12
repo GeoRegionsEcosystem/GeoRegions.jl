@@ -7,6 +7,9 @@ function listall(
     gpaths = []
 
     IDs,gpaths = fillinfo(IDs,gpaths,geodir,warn)
+    IDs,gpaths = fillinfo(IDs,gpaths,joinpath(geodir,"GF"),warn)
+    IDs,gpaths = fillinfo(IDs,gpaths,joinpath(geodir,"SRX"),warn)
+    IDs,gpaths = fillinfo(IDs,gpaths,joinpath(geodir,"AR6"),warn)
     IDs,gpaths = fillinfo(IDs,gpaths,geopath(path),warn)
 
     return IDs,gpaths
