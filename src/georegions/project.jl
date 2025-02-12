@@ -75,22 +75,30 @@ Returns
 =======
 - `gvec` : Vector containing all the GeoRegions in the file `fname`.
 """
-function readGeoRegions(
-    fname :: AbstractString
+function readGeoRegions(;
+    ID   :: AbstractString = "",
+    path :: AbstractString = pwd(),
 )
 
-    @info "$(modulelog()) - Loading user-defined GeoRegions from the file $fname ..."
+    gpath = geopath(path)
+    @info "$(modulelog()) - Loading user-defined GeoRegions from the directory $gpath ..."
 
-    rvec,rtype = listgeoregions(fname)
-    ngeo = length(rvec)
-    gvec = Vector{GeoRegion}(undef,ngeo)
-    for igeo in 1 : ngeo
-        reg = rvec[igeo]
-        g = getgeoregion(reg,fname,rtype)
-        gvec[igeo] = g
+    if ID == ""
+
+        IDvec  = glob("*.georegion",gpath)
+        nID    = length(IDvec)
+        geovec = Vector{GeoRegion}(undef,nID)
+        for iID in 1 : nID
+            geovec[iID] = GeoRegion(ID,gpath)
+        end
+        
+        return geovec
+
+    else
+
+        return GeoRegion(ID,path)
+
     end
-
-    return gvec
 
 end
 
