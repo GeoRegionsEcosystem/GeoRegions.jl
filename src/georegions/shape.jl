@@ -21,7 +21,7 @@ function coordinates(
     n :: Int = 1
 )
 
-    shape = geo.shape
+    shape = geo.geometry.shape
     npnt  = length(shape)
 
     if isone(n)
@@ -105,78 +105,3 @@ Returns
 - `west` : The western longitude bound, a `Float` type.
 """
 W(geo :: GeoRegion) = geo.bound[4]
-
-"""
-    X(geo :: TiltRegion) -> x :: Real
-
-For a given TiltRegion, find the longitude of the center.
-
-Arguments
-=========
-- `geo` : A TiltRegion.
-
-Returns
-=======
-- `x` : The longitude of the center of the `TiltRegion`, a `Float` type.
-"""
-X(geo :: TiltRegion) = geo.tilt[1]
-
-"""
-    Y(geo :: TiltRegion) -> y :: Real
-
-For a given TiltRegion, find the latitude of the center.
-
-Arguments
-=========
-- `geo` : A TiltRegion.
-
-Returns
-=======
-- `y` : The latitude of the center of the `TiltRegion`, a `Float` type.
-"""
-Y(geo :: TiltRegion) = geo.tilt[2]
-
-"""
-    ΔX(geo :: TiltRegion) -> dx :: Real
-
-For a given TiltRegion, find the unrotated longitude half-width.
-
-Arguments
-=========
-- `geo` : A TiltRegion.
-
-Returns
-=======
-- `dx` : The unrotated longitude half-width, a `Float` type.
-"""
-ΔX(geo :: TiltRegion) = geo.tilt[3]
-
-"""
-    ΔY(geo :: GeoRegion) -> dy :: Real
-
-For a given TiltRegion, find the unrotated latitude half-width.
-
-Arguments
-=========
-- `geo` : A TiltRegion.
-
-Returns
-=======
-- `dY` : The unrotated latitude half-width, a `Float` type.
-"""
-ΔY(geo :: TiltRegion) = geo.tilt[4]
-
-"""
-    θ(geo :: GeoRegion) -> angle :: Real
-
-For a given GeoRegion, find the western bound of the GeoRegion.
-
-Arguments
-=========
-- `geo` : A TiltRegion.
-
-Returns
-=======
-- `angle` : The tilt of the region.
-"""
-θ(geo :: TiltRegion) = geo.tilt[5]
