@@ -121,6 +121,7 @@ function GeoRegion(
         end
     end
 
+    N,S,E,W = checkbounds(lon,lat)
     gpath = geopath(path)
     shape = Point.(lon,lat)
     
@@ -154,7 +155,7 @@ function GeoRegion(
     end
 
     return GeoRegion{ST,FT}(
-        ID, pID, name, gpath, rotation,
+        ID, pID, name, gpath, N, S, E, W, rotation,
         Geometry(1, shape, Polygon(shape))
     )
 
