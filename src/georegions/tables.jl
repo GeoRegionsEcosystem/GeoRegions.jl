@@ -49,22 +49,23 @@ function tableGeoRegions(;
         fmat[igeo,2] = "GeoRegion"
         fmat[igeo,3] = geo.name
         fmat[igeo,4] = geo.pID
-        fmat[igeo,5] = geo.bound
-        fmat[igeo,6] = splitdir(gpaths[igeo])[end]
+        fmat[igeo,5] = [geo.N, geo.S, geo.E, geo.W]
+        fmat[igeo,6] = geo.θ
+        fmat[igeo,7] = splitdir(gpaths[igeo])[end]
     end
 
-    head = ["ID","Type","Name","Parent","Bounds [N,S,E,W]","Folder"];
+    head = ["ID","Type","Name","Parent","Bounds [N,S,E,W]","Rotation θ","Folder"];
 
     if !crop
         pretty_table(
             fmat,header=head,
-            alignment=[:c,:c,:l,:c,:c,:c],
+            alignment=[:c,:c,:l,:c,:c,:c,:c],
             crop = :none, tf = tf_compact
         );
     else
         pretty_table(
             fmat,header=head,
-            alignment=[:c,:c,:l,:c,:c,:c],
+            alignment=[:c,:c,:l,:c,:c,:c,:c],
             crop = :vertical, tf = tf_compact
         );
     end
