@@ -35,12 +35,12 @@ function Base.in(
     while plon < -180; plon += 360 end
 
     isin = !iszero(sum([
-        within(Point(plon    ,plat),geo.geometry),
-        within(Point(plon+360,plat),geo.geometry),
-        within(Point(plon-360,plat),geo.geometry),
-        touches(Point(plon    ,plat),geo.geometry),
-        touches(Point(plon+360,plat),geo.geometry),
-        touches(Point(plon-360,plat),geo.geometry)
+        within(Point(plon    ,plat),geo.geometry.polygon),
+        within(Point(plon+360,plat),geo.geometry.polygon),
+        within(Point(plon-360,plat),geo.geometry.polygon),
+        touches(Point(plon    ,plat),geo.geometry.polygon),
+        touches(Point(plon+360,plat),geo.geometry.polygon),
+        touches(Point(plon-360,plat),geo.geometry.polygon)
     ]))
 
     if !isin

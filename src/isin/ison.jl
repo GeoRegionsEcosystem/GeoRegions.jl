@@ -35,9 +35,9 @@ function on(
     while plon < -180; plon += 360 end
 
     isin = !iszero(sum([
-        touches(Point(plon    ,plat),geo.geometry),
-        touches(Point(plon+360,plat),geo.geometry),
-        touches(Point(plon-360,plat),geo.geometry)
+        touches(Point(plon    ,plat),geo.geometry.polygon),
+        touches(Point(plon+360,plat),geo.geometry.polygon),
+        touches(Point(plon-360,plat),geo.geometry.polygon)
     ]))
 
     if !isin
