@@ -6,10 +6,10 @@ function listall(
     IDs    = []
     gpaths = []
 
-    IDs,gpaths = fillinfo(IDs,gpaths,geodir,warn)
-    IDs,gpaths = fillinfo(IDs,gpaths,joinpath(geodir,"GF"),warn)
-    IDs,gpaths = fillinfo(IDs,gpaths,joinpath(geodir,"SRX"),warn)
-    IDs,gpaths = fillinfo(IDs,gpaths,joinpath(geodir,"AR6"),warn)
+    IDs,gpaths = fillinfo(IDs,gpaths,geopredefined,warn)
+    IDs,gpaths = fillinfo(IDs,gpaths,joinpath(geopredefined,"GF"),warn)
+    IDs,gpaths = fillinfo(IDs,gpaths,joinpath(geopredefined,"SREX"),warn)
+    IDs,gpaths = fillinfo(IDs,gpaths,joinpath(geopredefined,"AR6"),warn)
     IDs,gpaths = fillinfo(IDs,gpaths,geopath(path),warn)
 
     return IDs,gpaths
@@ -21,10 +21,8 @@ function fillinfo(IDs,gpaths,geopath,warn)
     IDvec = replace.(basename.(glob("*.json",geopath)),".json"=>"")
     nID   = length(IDvec)
 
-    if isempty(IDvec) && warn
-        @warn "$(modulelog()) - No custom GeoRegions are available in $geopath, please check to ensure the path specified is correct."
-    end
+    isempty(IDvec) && warn ? (@warn "$(modulelog()) - No custom GeoRegions are available in $geopath, please check to ensure the path specified is correct.") : nothing
 
-    return vcat(IDs,IDvec),vcat(gpaths,fill(path,nID))
+    return vcat(IDs,IDvec),vcat(gpaths,fill(geopath,nID))
 
 end

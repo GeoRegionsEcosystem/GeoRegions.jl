@@ -93,7 +93,7 @@ function addGeoRegions(
     dogeopath :: Bool = false
 )
 
-    dogeopath ? gsrc = geopath(src) : gsrc = src; gdst = geopath(dst)
+    gsrc = dogeopath ? geopath(src) : src; gdst = geopath(dst)
 
     verbose ? (@info "$(modulelog()) - Importing all user-defined GeoRegions from the folder $gsrc directly into the folder $gdst.") : nothing
 

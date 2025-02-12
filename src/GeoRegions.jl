@@ -128,7 +128,11 @@ end
 
 modulelog() = "$(now()) - GeoRegions.jl"
 geopath(path) = splitpath(path)[end] !== ".georegions" ? joinpath(path,".georegions") : path
+
 geopredefined = joinpath(@__DIR__,".files")
+gfdir   = joinpath(geopredefined,"GF")
+srexdir = joinpath(geopredefined,"SREX")
+ar6dir  = joinpath(geopredefined,"AR6")
 
 # Including other files in the module
 include("georegions/define.jl")

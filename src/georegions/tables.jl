@@ -32,16 +32,16 @@ function tableGeoRegions(;
     IDs    = []
     gpaths = []
 
-    IDs,gpaths = fillinfo(IDs,gpaths,geodir,warn)
-    custom ? (IDs,gpaths = fillinfo(IDs,gpaths,geopath(path),warn)) : nothing
+    IDs,gpaths = fillinfo(IDs,gpaths,geopredefined,warn)
+    IDs,gpaths = custom ? fillinfo(IDs,gpaths,geopath(path),warn) : (IDs,gpaths)
     if predefined
-        giorgi ? (IDs,gpaths = fillinfo(IDs,gpaths,joinpath(geodir,"GF"),warn)) : nothing
-        srex ? (IDs,gpaths = fillinfo(IDs,gpaths,joinpath(geodir,"SREX"),warn)) : nothing
-        ar6 ?   (IDs,gpaths = fillinfo(IDs,gpaths,joinpath(geodir,"AR6"),warn)) : nothing
+        IDs,gpaths = giorgi ? fillinfo(IDs,gpaths,gfdir,warn)   : (IDs,gpaths)
+        IDs,gpaths = srex   ? fillinfo(IDs,gpaths,srexdir,warn) : (IDs,gpaths)
+        IDs,gpaths = ar6    ? fillinfo(IDs,gpaths,ar6dir,warn)  : (IDs,gpaths)
     end
 
-    ngeo = size(rvec,1)
-    fmat = Array{Any,2}(undef,ngeo,6)
+    ngeo = length(IDs)
+    fmat = Array{Any,2}(undef,ngeo,7)
 
     for igeo = 1 : ngeo
         geo = GeoRegion(IDs[igeo],path=gpaths[igeo])
