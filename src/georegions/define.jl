@@ -34,7 +34,7 @@ function GeoRegion(
 
         verbose ? (@info "$(modulelog()) - Retrieving information for the GeoRegion defined by the ID \"$ID\".") : nothing
 
-        geo = JSON3.read(read(joinpath(path,"$ID.json"),String))
+        geo = JSON3.read(read(joinpath(path,"$ID.georegion"),String))
         shape = Point.(
             geo.geometry.longitude,
             geo.geometry.latitude

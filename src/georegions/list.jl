@@ -18,7 +18,7 @@ end
 
 function fillinfo(IDs,gpaths,geopath,warn)
 
-    IDvec = glob("*.georegion",geopath)
+    IDvec = replace.(basename.(glob("*.georegion",geopath)),".georegion"=>"")
     nID   = length(IDvec)
 
     if isempty(IDvec) && warn
