@@ -5,7 +5,6 @@ version = "8.0.0"
 
 [deps]
 Dates = "ade2ca70-3891-5945-98fb-dc099432e06a"
-DelimitedFiles = "8bb1440f-4735-579b-a4ab-409b98df4dab"
 GeometryBasics = "5c1252a2-5f33-56bf-86c9-59e7332b4326"
 GeometryOps = "3251bfac-6a57-4b6d-aa61-ac1fef2975ab"
 Glob = "c27321d9-0574-5035-807b-f59d2c89b15c"
