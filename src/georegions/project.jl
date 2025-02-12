@@ -119,7 +119,8 @@ Keyword Arguments
            Defaults to the current working directory `pwd()`.
 """
 function deleteGeoRegions(;
-    path :: AbstractString = pwd()
+    path :: AbstractString = pwd(),
+    deletedir :: Bool = false,
 )
 
     gpath = geopath(path)
@@ -128,6 +129,8 @@ function deleteGeoRegions(;
     for fname in flist
         rm(joinpath(gpath,fname),force=true)
     end
+
+    deletedir ? rm(gpath,recursive=true) : nothing
 
     return nothing
 
