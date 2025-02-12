@@ -17,45 +17,8 @@ function setupGeoRegions(;
     overwrite :: Bool = false
 )
 
-    if !isdir(path); mkpath(path) end
-    for fname in ["rectlist.txt","polylist.txt","tiltlist.txt"]
-
-        ftem = joinpath(geodir,fname)
-        freg = joinpath(path,fname)
-
-        if !overwrite
-            if !isfile(freg)
-
-                @debug "$(modulelog()) - Unable to find $freg, copying data from $ftem ..."
-
-                open(freg,"w") do io
-                    open(ftem) do f
-                        for line in readlines(f)
-                            write(io,"$line\n")
-                        end
-                    end
-                end
-
-            end
-        else
-
-            if isfile(freg)
-                @warn "$(modulelog()) - Overwriting $freg with original file in $ftem ..."
-                rm(freg,force=true)
-            end
-
-            open(freg,"w") do io
-                open(ftem) do f
-                    for line in readlines(f)
-                        write(io,"$line\n")
-                    end
-                end
-            end
-
-        end
-
-    end
-
+    gpath = geopath(path); !isdir(gpath) ? mkpath(path) : nothing
+    overwrite ? deleteGeoRegions(path=gpath) : nothing
     return nothing
 
 end
@@ -124,15 +87,20 @@ Keyword Arguments
 """
 function addGeoRegions(
     src :: AbstractString,
-    dst :: AbstractSTring;
+    dst :: AbstractString = pwd();
     overwrite :: Bool = false,
     verbose   :: Bool = false,
-    geopath   :: Bool = false
+    dogeopath :: Bool = false
 )
 
-    @info "$(modulelog()) - Importing all user-defined GeoRegions from the file $fname directly into the current project."
+    dogeopath ? gsrc = geopath(src) : gsrc = src; gdst = geopath(dst)
 
-    
+    verbose ? (@info "$(modulelog()) - Importing all user-defined GeoRegions from the folder $gsrc directly into the folder $gdst.") : nothing
+
+    fgeo = basename.(glob("*.georegion",gsrc)); ngeo = length(fgeo)
+    for igeo = 1 : ngeo
+        cp(joinpath(gsrc,fgeo[igeo]),joinpath(gdst,fgeo[igeo]),force=overwrite)
+    end
 
     return nothing
 
