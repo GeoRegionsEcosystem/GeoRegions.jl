@@ -47,93 +47,23 @@ Returns
 - `tf` : A `true`/`false` boolean.
 """
 function isequal(
-    geo1 :: RectRegion,
-    geo2 :: RectRegion;
+    geo1 :: GeoRegion,
+    geo2 :: GeoRegion;
     strict  :: Bool = true,
     verbose :: Bool = false
 )
  
     tf = on(geo1,geo2,verbose=verbose)
 
-    if (geo1.ID !== geo2.ID) || (geo1.pID !== geo2.pID)
+    if (geo1.ID !== geo2.ID) || 
+        (geo1.pID !== geo2.pID) || 
+        (geo1.rotation !== geo2.rotation)
+
         tf = false
     end
 
     return tf
 
-end
-
-function isequal(
-    geo1 :: PolyRegion,
-    geo2 :: PolyRegion;
-    strict  :: Bool = true,
-    verbose :: Bool = false
-)
- 
-    tf = on(geo1,geo2,verbose=verbose)
-
-    if (geo1.ID !== geo2.ID) || (geo1.pID !== geo2.pID)
-        tf = false
-    end
-
-    return tf
-
-end
-
-function isequal(
-    geo1 :: TiltRegion,
-    geo2 :: TiltRegion;
-    strict  :: Bool = true,
-    verbose :: Bool = false
-)
- 
-    tf = on(geo1,geo2,verbose=verbose)
-
-    if (geo1.ID !== geo2.ID) || (geo1.pID !== geo2.pID)
-        tf = false
-    end
-
-    if strict
-        if (geo1.geometry !== geo2.geometry)
-            tf = false
-        end
-    end
-
-    return tf
-
-end
-
-isequal(
-    geo1 :: RectRegion,
-    geo2 :: Union{TiltRegion, PolyRegion};
-    strict  :: Bool = true,
-    verbose :: Bool = false
-) = if strict || (geo1.ID !== geo2.ID) || (geo1.pID !== geo2.pID)
-    return false
-else
-    return on(geo1,geo2,verbose=verbose)
-end
-
-isequal(
-    geo1 :: TiltRegion,
-    geo2 :: Union{RectRegion, PolyRegion};
-    strict  :: Bool = true,
-    verbose :: Bool = false
-) = if strict || (geo1.ID !== geo2.ID) || (geo1.pID !== geo2.pID)
-    return false
-else
-    return on(geo1,geo2,verbose=verbose)
-end
-
-isequal(
-    geo1 :: PolyRegion,
-    geo2 :: Union{RectRegion, TiltRegion};
-    strict  :: Bool = true,
-    verbose :: Bool = false
-) = if strict || (geo1.ID !== geo2.ID) || (geo1.pID !== geo2.pID)
-    return false
-else
-    return on(geo1,geo2,verbose=verbose)
 end
 
 """
@@ -281,10 +211,10 @@ function isgeoshape(
     verbose  :: Bool = false
 )
 
-    IDvec,_,_,_ = listall(path,verbose); ngeo = length(IDvec)
+    IDvec,_ = listall(path,verbose); ngeo = length(IDvec)
     tf = zeros(Bool,ngeo)
 
-    geo = PolyRegion("","","",lon,lat)
+    geo = GeoRegion(lon,lat)
 
     for igeo in 1 : ngeo
         tgeo = GeoRegion(IDvec[igeo],path=path,verbose=verbose)
@@ -336,7 +266,7 @@ function isID(
     verbose :: Bool = false
 )
 
-    IDvec,_,_,_ = listall(path)
+    IDvec,_ = listall(path)
     return isID(ID,IDvec;throw=throw,verbose=verbose)
 
 end

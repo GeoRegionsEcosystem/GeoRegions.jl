@@ -157,7 +157,6 @@ function deleteGeoRegions(;
     path :: AbstractString = pwd()
 )
 
-
     @warn "$(modulelog()) - Removing custom GeoRegions.jl files from $path, all GeoRegion information saved into these files will be permanently lost."
     flist = ["rectlist.txt","polylist.txt","tiltlist.txt"]
     for fname in flist

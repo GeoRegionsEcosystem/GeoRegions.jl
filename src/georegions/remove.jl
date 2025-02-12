@@ -57,65 +57,7 @@ function rmID(
         @info "$(modulelog()) - Removing the GeoRegion $(ID) ..."
     end
 
-    rvec,fvec,tvec,dvec = listall(path); isID(ID,rvec)
-    ind = findall(ID.==rvec)[1]
-
-    fdefined = ["global.txt","giorgi.txt","srex.txt","ar6.txt"]
-    if !any(fvec[ind].==fdefined)
-        geo = getgeoregion(ID,joinpath(dvec[ind],fvec[ind]),tvec[ind])
-        removegeoregion(geo,joinpath(dvec[ind],fvec[ind]))
-    else
-        error("$(modulelog()) - You are trying to remove the predefined GeoRegion \"$ID\". If you really want to remove this GeoRegion, please do `force = true`")
-    end
-
-end
-
-function removegeoregion(
-    geo  :: PolyRegion,
-    fgeo :: AbstractString
-)
-
-    rvec = listpolyregions(fgeo)
-    ind  = findall(rvec.==geo.ID)[1]
-    ind  = (ind) * 4 .+ (0:3)
-
-    flines = readlines(fgeo)
-    nlines = length(flines)
-
-    open("tmp.txt","w") do io
-        for iline = 1 : nlines
-            if !any(iline.==ind)
-                write(io,"$(flines[iline])\n")
-            end
-        end
-    end
-
-    mv("tmp.txt",fgeo,force=true)
-
-    return nothing
-
-end
-
-function removegeoregion(
-    geo  :: Union{RectRegion,TiltRegion},
-    fgeo :: AbstractString
-)
-
-    flines = readlines(fgeo)
-    nlines = length(flines)
-
-    open("tmp.txt","w") do io
-        for iline = 1 : nlines
-            line = flines[iline]
-            items = split(line,", ")
-            if !(items[1] == geo.ID)
-                write(io,"$(flines[iline])\n")
-            end
-        end
-    end
-
-    mv("tmp.txt",fgeo,force=true)
-
-    return nothing
+    fgeo = joinpath(geopath(path),"$ID.georegion")
+    if isfile(fgeo); rm(fgeo,force=true) end
 
 end
