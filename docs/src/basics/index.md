@@ -31,7 +31,7 @@ const beginner = [
 
 const predefined = [
   {
-    href: "predefined/sets",
+    href: "predefined/datasets",
     src: "images/sets.png",
     caption: "Available Datasets",
     desc: "Different Predefined Datasets in GeoRegions.jl"

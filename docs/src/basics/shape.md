@@ -24,52 +24,21 @@ geo = GeoRegion("AR6_NWN")
 
 ## Retrieving the Bounds of the GeoRegion
 
-We can use the functions `GeoRegions.N()`, `GeoRegions.S()`, `GeoRegions.E()` and `GeoRegions.W()` to retrieve the north and south latitude bounds, and the east and west longitude bounds, of a `GeoRegion`.
-
-!!! warning "`N()`, `S()`, `E()`, `W()` not exported"
-    In order to prevent clashes with variable names, `N()`, `S()`, `E()`, `W()` are not exported, and thus must be prefixed with `GeoRegions.` (e.g., `GeoRegions.N()`).
+The bounds of the GeoRegion are given by the `.N`, `.S`, `.E` and `.W` fields in the `GeoRegion` struct, that denote the north and south latitude bounds, and the east and west longitude bounds.
 
 ```@example properties
-GeoRegions.N(geo),
-GeoRegions.S(geo),
-GeoRegions.E(geo),
-GeoRegions.W(geo)
+geo.N,
+geo.S,
+geo.E,
+geo.W
 ```
 
-Or you can also extract them all at the same time as follows:
+## Retrieving the Rotation
+
+By default, there is no rotation projection passed onto the GeoRegion. However, if you have passed on a rotation projection, you can retrieve it via the field `.θ`, which is given in degrees.
 
 ```@example properties
-N,S,E,W = geo.bound
-```
-
-See the API [here](/api/shape#GeoRegions.N)
-
-## Retrieving the Tilt-Properties of a TiltRegion
-
-Similar to above can use the functions `GeoRegions.X()`, `GeoRegions.Y()`, `GeoRegions.ΔX()`, `GeoRegions.ΔY()` and `GeoRegions.θ()` to respective tilt-properties, of a `TiltRegion`.
-
-!!! warning "`X()`, `Y()`, `ΔX()`, `ΔY()`, `θ()` not exported"
-    In order to prevent clashes with variable names, `X()`, `Y()`, `ΔX()`, `ΔY()`, `θ()` are not exported, and thus must be prefixed with `GeoRegions.` (e.g., `GeoRegions.X()`).
-
-```@example properties
-tlt = TiltRegion("TST_TILT","GLB","Test Tilt",20,0,50,10,13)
-# [X,Y,ΔX,ΔY,θ] = [20,0,50,10,13]
-```
-
-```@example properties
-GeoRegions.X(tlt),
-GeoRegions.Y(tlt),
-GeoRegions.ΔX(tlt),
-GeoRegions.ΔY(tlt),
-GeoRegions.θ(tlt)
-```
-
-See the API [here](/api/shape#GeoRegions.N)
-
-Or you can also extract them all at the same time as follows:
-
-```@example properties
-X,Y,ΔX,ΔY,θ = tlt.tilt
+geo.θ
 ```
 
 ## Retrieving the coordinates of a GeoRegion

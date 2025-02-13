@@ -18,14 +18,17 @@ To see the full list of predefined GeoRegions from Giorgi & Francisco [2000], go
 
 ## SREX Regions adapted from Seneviratne et al. [2012]
 
-Add the `SRX_` prefix to the 3-letter IDs given in Seneviratne et al. [2012] to call GeoRegions adapted from this paper.  All GeoRegions are defined as the `PolyRegion` type, even though many of them are rectilinear.
+Add the `SREX_` prefix to the 3-letter IDs given in Seneviratne et al. [2012] to call GeoRegions adapted from this paper.  All GeoRegions are defined as the `PolyRegion` type, even though many of them are rectilinear.
 
 !!! tip "Defined in GeoRegions.jl ≥ v2"
-    All `SRX_*` domains are defined only in versions ≥2
+    All `SREX_*` domains are defined only in versions ≥2
+
+!!! tip "Changes to SREX IDs in GeoRegions.jl ≥ v8"
+    Previous versions of GeoRegions.jl used the prefix `SRX_*`. As of GeoRegions.jl ≥v8, the prefix has been changed to `SREX_*`
 
 ```@example readpredefined
 using GeoRegions
-GeoRegion("SRX_CNA")
+GeoRegion("SREX_CNA")
 ```
 
 To see the full list of predefined GeoRegions from Seneviratne et al. [2012], go [here](basics/read/listall#SREX-Regions-from-Seneviratne-et-al.-[2012])

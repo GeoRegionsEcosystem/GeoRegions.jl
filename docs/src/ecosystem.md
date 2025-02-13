@@ -12,7 +12,7 @@ const georegions = [
     name: 'GeoRegions.jl',
     desc: 'Defining Geographic Regions of Interest for Geospatial Data in Geoscience and Climate.',
     links: [
-      { icon: 'github', link: 'https://github.com/SciML/DiffEqFlux.jl' }
+      { icon: 'github', link: 'https://github.com/GeoRegionsEcosystem/GeoRegions.jl' }
     ]
   }
 ];
