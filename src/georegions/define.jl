@@ -121,6 +121,8 @@ function GeoRegion(
     
     if save
 
+        ID == "" || pID == "" || name == "" ? error("$(modulelog()) - In order to save a GeoRegion, you must enter values for all the following keyword arguments: \"ID\", \"pID\" and \"name\".") : nothing
+
         isID(ID,path=gpath,throw=false) ? error("$(modulelog()) - The GeoRegion $(ID) has already been defined.  Please use another identifier.") : nothing
 
         if isgeoshape(lon,lat,path=gpath)
