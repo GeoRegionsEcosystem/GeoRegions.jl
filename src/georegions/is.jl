@@ -24,7 +24,6 @@ Returns
     isequal(
         geo1 :: GeoRegion,
         geo2 :: GeoRegion;
-        strict  :: Bool = true,
         verbose :: Bool = false
     ) -> tf :: Bool
 
@@ -39,7 +38,6 @@ Arguments
 
 Keyword Arguments
 =================
-- `strict` : If `true` (which is default), `geo1` and `geo2` must be of the same GeoRegion `type` (e.g., a `RectRegion ≠ PolyRegion`).
 - `verbose` : Verbose logging for ease of monitoring? Default is `false`.
 
 Returns
@@ -49,15 +47,14 @@ Returns
 function isequal(
     geo1 :: GeoRegion,
     geo2 :: GeoRegion;
-    strict  :: Bool = true,
     verbose :: Bool = false
 )
  
     tf = on(geo1,geo2,verbose=verbose)
 
-    if (geo1.ID !== geo2.ID) || 
-        (geo1.pID !== geo2.pID) || 
-        (geo1.rotation !== geo2.rotation)
+    if (geo1.ID !== geo2.ID) || (geo1.pID !== geo2.pID) || 
+        (geo1.N !== geo2.N) || (geo1.S !== geo2.S) ||
+        (geo1.E !== geo2.E) || (geo1.W !== geo2.W) || (geo1.θ !== geo2.θ)
 
         tf = false
     end
@@ -85,7 +82,6 @@ Keyword Arguments
 =================
 - `path` : The path where the list of custom GeoRegions will be retrieved from.
            Defaults to the directory `geo.path`.
-- `strict` : If `true` (which is default), check to see if all fields are equivalent except for `name` and `path`.
 - `throw` : If `true`, then throws an error if there is no `GeoRegion` defined in `path` with the same characteristics or field values as `geo`.
 - `verbose` : Verbose logging for ease of monitoring? Default is `false`.
 
@@ -96,7 +92,6 @@ Returns
 function isgeo(
     geo  :: GeoRegion;
     path :: AbstractString = dirname(geo.path),
-    strict  :: Bool = true,
     throw   :: Bool = false,
     verbose :: Bool = false
 )
@@ -105,7 +100,7 @@ function isgeo(
     if isID(geo.ID,path=gpath,throw=throw,verbose=verbose)
 
         tgeo = GeoRegion(geo.ID,path=gpath,verbose=verbose)
-        if isequal(geo,tgeo,strict=strict,verbose=verbose)
+        if isequal(geo,tgeo,verbose=verbose)
             if verbose; @info "$(modulelog()) - A previously defined GeoRegion \"$(tgeo.ID)\" in $path shares the same properties as our custom GeoRegion \"$(geo.ID)\"." end
             return true
         else
@@ -288,11 +283,11 @@ function isID(
         if throw
             error("$(modulelog()) - $(ID) is not a valid GeoRegion identifier, use RectRegion(), TiltRegion() or PolyRegion() to add this GeoRegion to the list.")
         else
-            if verbose; @warn "$(modulelog()) - $(ID) is not a valid GeoRegion identifier, use RectRegion(), TiltRegion() or PolyRegion() to add this GeoRegion to the list." end
+            verbose ? (@warn "$(modulelog()) - $(ID) is not a valid GeoRegion identifier, use RectRegion(), TiltRegion() or PolyRegion() to add this GeoRegion to the list.") : nothing
             return false
         end
     else
-        if verbose; @info "$(modulelog()) - The ID $ID is already in use." end
+        verbose ? (@info "$(modulelog()) - The ID $ID is already in use.") : nothing
         return true
     end
 

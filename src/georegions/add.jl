@@ -14,7 +14,7 @@ Arguments
 Keyword Arguments
 =================
 - `path` : The path where the list of custom GeoRegions will be retrieved from.
-           Defaults to the `local` package variable `geodir`.
+           Defaults to `dirname(geo.path)`.
 - `verbose` : Verbose logging for ease of monitoring? Default is `false`.
 """
 function add(
@@ -50,7 +50,7 @@ Arguments
 Keyword Arguments
 =================
 - `path` : The path where the list of custom GeoRegions will be retrieved from.
-           Defaults to the `local` package variable `geodir`.
+           Defaults to `dirname(geo.path)`.
 - `verbose` : Verbose logging for ease of monitoring? Default is `false`.
 """
 function overwrite(

@@ -106,9 +106,11 @@ function GeoRegion(
 
     !verbose ? disable_logging(Logging.Warn) : nothing
 
+    length(lon) !== length(lat) ? error("$(modulelog()) - The longitude and latitude vectors must be of the same length.") : nothing
+
     if (lon[1] != lon[end]) || (lat[1] != lat[end])
         if !join
-            error("$(modulelog()) - The longitude/ latitude coordinates of the first and last points must be the same.")
+            error("$(modulelog()) - The (longitude,latitude) coordinates of the first and last points must be the same.")
         else
             lon = vcat(lon,lon[1])
             lat = vcat(lat,lat[1])
