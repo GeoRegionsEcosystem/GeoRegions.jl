@@ -26,9 +26,7 @@ function on(
     throw :: Bool = false
 )
 
-    if throw
-        @info "$(modulelog()) - Performing a check to determine if the coordinates $(point) are within the specified region boundaries."
-    end
+    throw ? (@info "$(modulelog()) - Performing a check to determine if the coordinates $(point) are within the specified region boundaries.") : nothing
 
     plon = point[1]
     plat = point[2]
@@ -37,9 +35,9 @@ function on(
     while plon < -180; plon += 360 end
 
     isin = !iszero(sum([
-        touches(Point(plon    ,plat),geo.geometry),
-        touches(Point(plon+360,plat),geo.geometry),
-        touches(Point(plon-360,plat),geo.geometry)
+        touches(Point(plon    ,plat),geo.geometry.polygon),
+        touches(Point(plon+360,plat),geo.geometry.polygon),
+        touches(Point(plon-360,plat),geo.geometry.polygon)
     ]))
 
     if !isin
@@ -92,13 +90,11 @@ function on(
     verbose :: Bool = false
 )
 
-    if verbose; @info "$(modulelog()) - Performing a check to determine if the $(geo1.name) GeoRegion  \"$(geo1.ID)\" shares the same shape as GeoRegion  \"$(geo2.ID)\"." end
+    verbose ? (@info "$(modulelog()) - Performing a check to determine if the $(geo1.name) GeoRegion  \"$(geo1.ID)\" shares the same shape as GeoRegion  \"$(geo2.ID)\".") : nothing
 
     lon1,lat1 = coordinates(geo1,n=n)
     lon2,lat2 = coordinates(geo2,n=n)
     isin = sum(.!on.(Point.(lon1,lat1),[geo2])) + sum(.!on.(Point.(lon2,lat2),[geo1]))
-
-    # @info lon1,lat1,Point.(lon1,lat1)
 
     if iszero(isin)
 

@@ -24,7 +24,6 @@ Returns
     isequal(
         geo1 :: GeoRegion,
         geo2 :: GeoRegion;
-        strict  :: Bool = true,
         verbose :: Bool = false
     ) -> tf :: Bool
 
@@ -39,7 +38,6 @@ Arguments
 
 Keyword Arguments
 =================
-- `strict` : If `true` (which is default), `geo1` and `geo2` must be of the same GeoRegion `type` (e.g., a `RectRegion ≠ PolyRegion`).
 - `verbose` : Verbose logging for ease of monitoring? Default is `false`.
 
 Returns
@@ -47,93 +45,22 @@ Returns
 - `tf` : A `true`/`false` boolean.
 """
 function isequal(
-    geo1 :: RectRegion,
-    geo2 :: RectRegion;
-    strict  :: Bool = true,
+    geo1 :: GeoRegion,
+    geo2 :: GeoRegion;
     verbose :: Bool = false
 )
  
     tf = on(geo1,geo2,verbose=verbose)
 
-    if (geo1.ID !== geo2.ID) || (geo1.pID !== geo2.pID)
+    if (geo1.ID !== geo2.ID) || (geo1.pID !== geo2.pID) || 
+        (geo1.N !== geo2.N) || (geo1.S !== geo2.S) ||
+        (geo1.E !== geo2.E) || (geo1.W !== geo2.W) || (geo1.θ !== geo2.θ)
+
         tf = false
     end
 
     return tf
 
-end
-
-function isequal(
-    geo1 :: PolyRegion,
-    geo2 :: PolyRegion;
-    strict  :: Bool = true,
-    verbose :: Bool = false
-)
- 
-    tf = on(geo1,geo2,verbose=verbose)
-
-    if (geo1.ID !== geo2.ID) || (geo1.pID !== geo2.pID)
-        tf = false
-    end
-
-    return tf
-
-end
-
-function isequal(
-    geo1 :: TiltRegion,
-    geo2 :: TiltRegion;
-    strict  :: Bool = true,
-    verbose :: Bool = false
-)
- 
-    tf = on(geo1,geo2,verbose=verbose)
-
-    if (geo1.ID !== geo2.ID) || (geo1.pID !== geo2.pID)
-        tf = false
-    end
-
-    if strict
-        if (geo1.geometry !== geo2.geometry)
-            tf = false
-        end
-    end
-
-    return tf
-
-end
-
-isequal(
-    geo1 :: RectRegion,
-    geo2 :: Union{TiltRegion, PolyRegion};
-    strict  :: Bool = true,
-    verbose :: Bool = false
-) = if strict || (geo1.ID !== geo2.ID) || (geo1.pID !== geo2.pID)
-    return false
-else
-    return on(geo1,geo2,verbose=verbose)
-end
-
-isequal(
-    geo1 :: TiltRegion,
-    geo2 :: Union{RectRegion, PolyRegion};
-    strict  :: Bool = true,
-    verbose :: Bool = false
-) = if strict || (geo1.ID !== geo2.ID) || (geo1.pID !== geo2.pID)
-    return false
-else
-    return on(geo1,geo2,verbose=verbose)
-end
-
-isequal(
-    geo1 :: PolyRegion,
-    geo2 :: Union{RectRegion, TiltRegion};
-    strict  :: Bool = true,
-    verbose :: Bool = false
-) = if strict || (geo1.ID !== geo2.ID) || (geo1.pID !== geo2.pID)
-    return false
-else
-    return on(geo1,geo2,verbose=verbose)
 end
 
 """
@@ -155,7 +82,6 @@ Keyword Arguments
 =================
 - `path` : The path where the list of custom GeoRegions will be retrieved from.
            Defaults to the directory `geo.path`.
-- `strict` : If `true` (which is default), check to see if all fields are equivalent except for `name` and `path`.
 - `throw` : If `true`, then throws an error if there is no `GeoRegion` defined in `path` with the same characteristics or field values as `geo`.
 - `verbose` : Verbose logging for ease of monitoring? Default is `false`.
 
@@ -166,15 +92,15 @@ Returns
 function isgeo(
     geo  :: GeoRegion;
     path :: AbstractString = dirname(geo.path),
-    strict  :: Bool = true,
     throw   :: Bool = false,
     verbose :: Bool = false
 )
 
-    if isID(geo.ID,path=path,throw=throw,verbose=verbose)
+    gpath = geopath(path)
+    if isID(geo.ID,path=gpath,throw=throw,verbose=verbose)
 
-        tgeo = GeoRegion(geo.ID,path=path,verbose=verbose)
-        if isequal(geo,tgeo,strict=strict,verbose=verbose)
+        tgeo = GeoRegion(geo.ID,path=gpath,verbose=verbose)
+        if isequal(geo,tgeo,verbose=verbose)
             if verbose; @info "$(modulelog()) - A previously defined GeoRegion \"$(tgeo.ID)\" in $path shares the same properties as our custom GeoRegion \"$(geo.ID)\"." end
             return true
         else
@@ -226,11 +152,12 @@ function isgeoshape(
     verbose  :: Bool = false
 )
 
-    IDvec,_,_,_ = listall(path,verbose); ngeo = length(IDvec)
+    gpath = geopath(path)
+    IDvec,_ = listall(gpath,verbose); ngeo = length(IDvec)
     tf = zeros(Bool,ngeo)
 
     for igeo in 1 : ngeo
-        tgeo = GeoRegion(IDvec[igeo],path=path,verbose=verbose)
+        tgeo = GeoRegion(IDvec[igeo],path=gpath,verbose=verbose)
         tf[igeo] = on(geo,tgeo,verbose=verbose)
     end
 
@@ -281,13 +208,15 @@ function isgeoshape(
     verbose  :: Bool = false
 )
 
-    IDvec,_,_,_ = listall(path,verbose); ngeo = length(IDvec)
+    gpath = geopath(path)
+
+    IDvec,_ = listall(gpath,verbose); ngeo = length(IDvec)
     tf = zeros(Bool,ngeo)
 
-    geo = PolyRegion("","","",lon,lat)
+    geo = GeoRegion(lon,lat)
 
     for igeo in 1 : ngeo
-        tgeo = GeoRegion(IDvec[igeo],path=path,verbose=verbose)
+        tgeo = GeoRegion(IDvec[igeo],path=gpath,verbose=verbose)
         tf[igeo] = on(geo,tgeo,verbose=verbose)
     end
 
@@ -336,7 +265,7 @@ function isID(
     verbose :: Bool = false
 )
 
-    IDvec,_,_,_ = listall(path)
+    IDvec,_ = listall(geopath(path))
     return isID(ID,IDvec;throw=throw,verbose=verbose)
 
 end
@@ -354,11 +283,11 @@ function isID(
         if throw
             error("$(modulelog()) - $(ID) is not a valid GeoRegion identifier, use RectRegion(), TiltRegion() or PolyRegion() to add this GeoRegion to the list.")
         else
-            if verbose; @warn "$(modulelog()) - $(ID) is not a valid GeoRegion identifier, use RectRegion(), TiltRegion() or PolyRegion() to add this GeoRegion to the list." end
+            verbose ? (@warn "$(modulelog()) - $(ID) is not a valid GeoRegion identifier, use RectRegion(), TiltRegion() or PolyRegion() to add this GeoRegion to the list.") : nothing
             return false
         end
     else
-        if verbose; @info "$(modulelog()) - The ID $ID is already in use." end
+        verbose ? (@info "$(modulelog()) - The ID $ID is already in use.") : nothing
         return true
     end
 

@@ -2,9 +2,13 @@
     tableGeoRegions(;
         path :: AbstractString = homedir(),
         predefined :: Bool = true,
+        giorgi     :: Bool = true,
+        srex       :: Bool = true,
+        ar6        :: Bool = true,
         custom     :: Bool = true,
         warn :: Bool = true,
-        crop :: Bool = false
+        crop :: Bool = false,
+        rows :: Int = 0
     ) -> nothing
 
 Display all available GeoRegions in tabular format.
@@ -14,6 +18,9 @@ Keyword Arguments
 - `path` : The path where the list of custom GeoRegions will be retrieved from.
            Defaults to the user's home directory `homedir()`.
 - `predefined` : If `true`, predefined Giorgi, SREX and IPPC AR6 list of GeoRegions will be displayed.
+- `giorgi` : If `true` AND `predefined = true`, display predefined GF GeoRegions. Default is `true`.
+- `srex` : If `true` AND `predefined = true`, display predefined SREX GeoRegions. Default is `true`.
+- `ar6` : If `true` AND `predefined = true`, display predefined IPCC AR6 GeoRegions. Default is `true`.
 - `custom` : If `true`, custom, user-defined list of GeoRegions will be displayed.
 - `warn` : If `true`, display warnings if custom files do not exist.
 - `crop` : If `true`, will crop the vertical extent of the table, default is `false`.
@@ -21,306 +28,59 @@ Keyword Arguments
 function tableGeoRegions(;
     path :: AbstractString = homedir(),
     predefined :: Bool = true,
+    giorgi     :: Bool = true,
+    srex       :: Bool = true,
+    ar6        :: Bool = true,
     custom     :: Bool = true,
     warn :: Bool = true,
-    crop :: Bool = false
+    crop :: Bool = false,
+    rows :: Int = 0
 )
 
-    flist = ["rectlist.txt","polylist.txt","tiltlist.txt"]
-    fdefined = ["giorgi.txt","srex.txt","ar6.txt"]
+    IDs    = []
+    gpaths = []
 
-    rvec = []
-    fvec = []
-    dvec = []
-    tvec = []
-
-    rvec,fvec,tvec,dvec = fillinfo(rvec,fvec,tvec,dvec,joinpath(geodir,"global.txt"))
-
-    if custom
-        for fname in flist
-            fID = joinpath(path,fname)
-            if isfile(fID)
-                rvec,fvec,tvec,dvec = fillinfo(rvec,fvec,tvec,dvec,fID)
-            else
-                if warn
-                    @warn "$(modulelog()) - The custom file does \"$fname\" does not exist in $path, use `setupGeoRegions()` to copy templates and empty custom lists to $path."
-                end
-            end
-        end
-    end
-
+    IDs,gpaths = fillinfo(IDs,gpaths,geopredefined,warn)
+    IDs,gpaths = custom ? fillinfo(IDs,gpaths,geopath(path),warn) : (IDs,gpaths)
     if predefined
-        for fname in fdefined
-            fID = joinpath(geodir,fname)
-            rvec,fvec,tvec,dvec = fillinfo(rvec,fvec,tvec,dvec,fID)
-        end
+        IDs,gpaths = giorgi ? fillinfo(IDs,gpaths,gfdir,warn)   : (IDs,gpaths)
+        IDs,gpaths = srex   ? fillinfo(IDs,gpaths,srexdir,warn) : (IDs,gpaths)
+        IDs,gpaths = ar6    ? fillinfo(IDs,gpaths,ar6dir,warn)  : (IDs,gpaths)
     end
 
-    ngeo = size(rvec,1)
+    ngeo = length(IDs)
     fmat = Array{Any,2}(undef,ngeo,6)
 
     for igeo = 1 : ngeo
-        geo = getgeoregion(rvec[igeo],joinpath(dvec[igeo],fvec[igeo]),tvec[igeo])
+        geo = GeoRegion(IDs[igeo],path=gpaths[igeo])
         fmat[igeo,1] = geo.ID
-        fmat[igeo,2] = tvec[igeo]
-        fmat[igeo,3] = geo.name
-        fmat[igeo,4] = geo.pID
-        fmat[igeo,5] = geo.bound
-        fmat[igeo,6] = fvec[igeo]
+        # fmat[igeo,2] = typeof(geo)
+        fmat[igeo,2] = geo.name
+        fmat[igeo,3] = geo.pID
+        fmat[igeo,4] = [geo.N, geo.S, geo.E, geo.W]
+        fmat[igeo,5] = geo.θ
+        fmat[igeo,6] = splitdir(gpaths[igeo])[end]
     end
 
-    head = ["ID","Type","Name","Parent","Bounds [N,S,E,W]","File"];
+    head = ["ID","Name","Parent","Bounds [N,S,E,W]","Rotation θ","Folder"]
+    # head = ["ID","Type","Name","Parent","Bounds [N,S,E,W]","Rotation θ","Folder"]
 
-    if !crop
+    if !crop || rows < 15
         pretty_table(
             fmat,header=head,
-            alignment=[:c,:c,:l,:c,:c,:c],
+            alignment=[:c,:l,:c,:c,:c,:c],
+            # alignment=[:c,:c,:l,:c,:c,:c,:c],
             crop = :none, tf = tf_compact
         );
     else
         pretty_table(
             fmat,header=head,
-            alignment=[:c,:c,:l,:c,:c,:c],
-            crop = :vertical, tf = tf_compact
+            alignment=[:c,:l,:c,:c,:c,:c],
+            # alignment=[:c,:c,:l,:c,:c,:c,:c],
+            crop = :vertical, tf = tf_compact,
+            vcrop_mode = :middle, display_size = (rows,-1)
         );
     end
-
-    return nothing
-
-end
-
-"""
-    tableGeoRegions(
-        fname :: AbstractString
-    ) -> nothing
-
-Display all available GeoRegions in tabular format listed in the file `fname`.
-
-Arguments
-=========
-- `fname` : Specifies the name + path of the file containing GeoRegion information.
-"""
-function tableGeoRegions(
-    fname :: AbstractString
-)
-
-    rvec,rtype = listgeoregions(fname)
-    ngeo = size(rvec,1)
-    fmat = Array{Any,2}(undef,ngeo,6)
-
-    for igeo = 1 : ngeo
-        g = getgeoregion(rvec[igeo],fname,rtype)
-        fmat[igeo,1] = g.ID
-        fmat[igeo,2] = rtype
-        fmat[igeo,3] = g.name
-        fmat[igeo,4] = g.pID
-        fmat[igeo,5] = geo.bound
-        fmat[igeo,6] = basename(fname)
-    end
-
-    head = ["ID","Type","Name","Parent","Bounds [N,S,E,W]","File"];
-
-    pretty_table(
-        fmat,header=head,
-        alignment=[:c,:c,:l,:c,:c,:c],
-        crop = :none, tf = tf_compact
-    );
-
-    return nothing
-
-end
-
-"""
-    tableRectRegions(;
-        path :: AbstractString = homedir(),
-        custom :: Bool = true,
-        giorgi :: Bool = false
-    ) -> nothing
-
-Display all available RectRegions in tabular format.
-
-Keyword Arguments
-=================
-- `path` : The path where the list of custom RectRegions will be retrieved from.
-           Defaults to the user's home directory `homedir()`.
-- `custom` : If `true`, display custom user-defined RectRegions. Default is `true`.
-- `giorgi` : If `true`, display GF predefined RectRegions. Default is `true`.
-"""
-function tableRectRegions(;
-    path :: AbstractString = homedir(),
-    custom :: Bool = true,
-    giorgi :: Bool = true
-)
-
-    rvec = []
-    fvec = []
-    dvec = []
-    tvec = []
-
-    rvec,fvec,tvec,dvec = fillinfo(rvec,fvec,tvec,dvec,joinpath(geodir,"global.txt"))
-
-    if custom
-        fID = joinpath(path,"rectlist.txt")
-        if isfile(fID)
-            rvec,fvec,tvec,dvec = fillinfo(rvec,fvec,tvec,dvec,fID)
-        else
-            @warn "$(modulelog()) - The custom file \"rectlist.txt\" does not exist in $path, use `setupGeoRegions()` to copy templates and empty custom lists to $path."
-        end
-    end
-
-    if giorgi
-        rvec,fvec,tvec,dvec = fillinfo(rvec,fvec,tvec,dvec,joinpath(geodir,"giorgi.txt"))
-    end
-
-    ngeo = size(rvec,1)
-    fmat = Array{Any,2}(undef,ngeo,6)
-
-    for igeo = 1 : ngeo
-        geo = getgeoregion(rvec[igeo],joinpath(dvec[igeo],fvec[igeo]),tvec[igeo])
-        fmat[igeo,1] = geo.ID
-        fmat[igeo,2] = tvec[igeo]
-        fmat[igeo,3] = geo.name
-        fmat[igeo,4] = geo.pID
-        fmat[igeo,5] = geo.bound
-        fmat[igeo,6] = fvec[igeo]
-    end
-
-    head = ["ID","Type","Name","Parent","Bounds [N,S,E,W]","File"];
-
-    pretty_table(
-        fmat,header=head,
-        alignment=[:c,:c,:l,:c,:c,:c],
-        crop = :none, tf = tf_compact
-    );
-
-    return nothing
-
-end
-
-"""
-    tableTiltRegions(;
-        path :: AbstractString = homedir()
-    ) -> nothing
-
-Display all available TiltRegions in tabular format.
-
-Keyword Arguments
-=================
-- `path` : The path where the list of custom TiltRegions will be retrieved from.
-           Defaults to the user's home directory `homedir()`.
-"""
-function tableTiltRegions(;
-    path :: AbstractString = homedir()
-)
-
-    rvec = []
-    fvec = []
-    dvec = []
-    tvec = []
-
-    rvec,fvec,tvec,dvec = fillinfo(rvec,fvec,tvec,dvec,joinpath(geodir,"global.txt"))
-
-    fID = joinpath(path,"tiltlist.txt")
-    if isfile(fID)
-        rvec,fvec,tvec,dvec = fillinfo(rvec,fvec,tvec,dvec,fID)
-    else
-        @warn "$(modulelog()) - The custom file \"tiltlist.txt\" does not exist in $path, use `setupGeoRegions()` to copy templates and empty custom lists to $path."
-    end
-
-    ngeo = size(rvec,1)
-    fmat = Array{Any,2}(undef,ngeo,6)
-
-    for igeo = 1 : ngeo
-        geo = getgeoregion(rvec[igeo],joinpath(dvec[igeo],fvec[igeo]),tvec[igeo])
-        fmat[igeo,1] = geo.ID
-        fmat[igeo,2] = tvec[igeo]
-        fmat[igeo,3] = geo.name
-        fmat[igeo,4] = geo.pID
-        fmat[igeo,5] = geo.bound
-        fmat[igeo,6] = fvec[igeo]
-    end
-
-    head = ["ID","Type","Name","Parent","Bounds [N,S,E,W]","File"];
-
-    pretty_table(
-        fmat,header=head,
-        alignment=[:c,:c,:l,:c,:c,:c],
-        crop = :none, tf = tf_compact
-    );
-
-    return nothing
-
-end
-
-"""
-    tablePolyRegions(;
-        path :: AbstractString = homedir(),
-        custom :: Bool = true,
-        srex :: Bool = false,
-        ar6  :: Bool = false
-    ) -> nothing
-
-Display all available PolyRegions in tabular format.
-
-Keyword Arguments
-=================
-- `path` : The path where the list of custom PolyRegions will be retrieved from.
-           Defaults to the user's home directory `homedir()`.
-- `custom` : If `true`, display custom user-defined PolyRegions. Default is `true`.
-- `srex` : If `true`, display SREX predefined PolyRegions. Default is `true`.
-- `ar6` : If `true`, display IPCC AR6 predefined PolyRegions. Default is `true`.
-"""
-function tablePolyRegions(;
-    path :: AbstractString = homedir(),
-    custom :: Bool = true,
-    srex   :: Bool = true,
-    ar6    :: Bool = true
-)
-    
-    rvec = []
-    fvec = []
-    dvec = []
-    tvec = []
-
-    rvec,fvec,tvec,dvec = fillinfo(rvec,fvec,tvec,dvec,joinpath(geodir,"global.txt"))
-
-    if custom
-        fID = joinpath(path,"polylist.txt")
-        if isfile(fID)
-            rvec,fvec,tvec,dvec = fillinfo(rvec,fvec,tvec,dvec,fID)
-        else
-            @warn "$(modulelog()) - The custom file \"polylist.txt\" does not exist in $path, use `setupGeoRegions()` to copy templates and empty custom lists to $path."
-        end
-    end
-
-    if srex
-        rvec,fvec,tvec,dvec = fillinfo(rvec,fvec,tvec,dvec,joinpath(geodir,"srex.txt"))
-    end
-
-    if ar6
-        rvec,fvec,tvec,dvec = fillinfo(rvec,fvec,tvec,dvec,joinpath(geodir,"ar6.txt"))
-    end
-
-    ngeo = size(rvec,1)
-    fmat = Array{Any,2}(undef,ngeo,6)
-
-    for igeo = 1 : ngeo
-        geo = getgeoregion(rvec[igeo],joinpath(dvec[igeo],fvec[igeo]),tvec[igeo])
-        fmat[igeo,1] = geo.ID
-        fmat[igeo,2] = tvec[igeo]
-        fmat[igeo,3] = geo.name
-        fmat[igeo,4] = geo.pID
-        fmat[igeo,5] = geo.bound
-        fmat[igeo,6] = fvec[igeo]
-    end
-
-    head = ["ID","Type","Name","Parent","Bounds [N,S,E,W]","File"];
-
-    pretty_table(
-        fmat,header=head,
-        alignment=[:c,:c,:l,:c,:c,:c],
-        crop = :none, tf = tf_compact
-    );
 
     return nothing
 

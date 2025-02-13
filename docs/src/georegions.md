@@ -9,30 +9,22 @@ In essence, a `GeoRegion` is:
     When using GeoRegions.jl, the default `GeoRegion` should generally be the global domain, specified by `GLB` and given by the `[N,S,E,W]` coordinates `[90,-90,360,0]`.  The Global GeoRegion `GLB` is considered to be a subset of itself.
 
 ```@docs
-GeoRegion
+AbstractGeoRegion
 ```
 
 ## Types of GeoRegions
 
-In GeoRegions.jl, we differentiate between several different types of GeoRegions:
-* Rectilinear GeoRegions are denoted by the `RectRegion` type, available in all version of GeoRegions.jl
-* Tilted rectangular GeoRegions are denoted by the `TiltRegion` type, available in ≥v6
-* Polygonal GeoRegions are denoted by the `PolyRegion` type, available in ≥v2
+In GeoRegions.jl v8 and above, we have standardized the usage of the struct type `GeoRegion` for all simple polygonal shapes.
 
-### RectRegions
+**Current Limitations:**
+* A `GeoRegion` supports only one shape/polygon per GeoRegion
+* A `GeoRegion` shape/polygon cannot have holes within it 
 
-```@docs
-RectRegion
-```
+Work is currently in progress to determine how best to include multiple shapes in a single `GeoRegion` type.
 
-### TiltRegions
+!!! warning "`Types` of GeoRegions for versions ≤v7"
+    Previous versions of GeoRegions.jl used to differentiate between Rectilinear (`RectRegion`) and Polygonal (`PolyRegion`) Types of GeoRegions. This is no longer supported in ≥v8.
 
 ```@docs
-TiltRegion
-```
-
-### PolyRegions
-
-```@docs
-PolyRegion
+GeoRegion
 ```

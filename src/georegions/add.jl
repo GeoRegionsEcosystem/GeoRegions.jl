@@ -14,53 +14,20 @@ Arguments
 Keyword Arguments
 =================
 - `path` : The path where the list of custom GeoRegions will be retrieved from.
-           Defaults to the `local` package variable `geodir`.
+           Defaults to `dirname(geo.path)`.
 - `verbose` : Verbose logging for ease of monitoring? Default is `false`.
 """
 function add(
-    geo :: RectRegion;
-    path    :: AbstractString = dirname(geo.path),
-    verbose :: Bool = false
-)
-
-    RectRegion(
-        geo.ID, geo.pID, geo.name,
-        geo.bound,
-        path = path, verbose = verbose, save = true
-    )
-
-    return nothing
-
-end
-
-function add(
-    geo :: TiltRegion;
-    path    :: AbstractString = dirname(geo.path),
-    verbose :: Bool = false
-)
-
-    TiltRegion(
-        geo.ID, geo.pID, geo.name,
-        geo.X, geo.Y, geo.ΔX, geo.ΔY, geo.θ,
-        path = path, verbose = verbose, save = true
-    )
-
-    return nothing
-
-end
-
-function add(
-    geo :: PolyRegion;
-    path    :: AbstractString = dirname(geo.path),
+    geo  :: GeoRegion;
+    path :: AbstractString = dirname(geo.path),
     verbose :: Bool = false
 )
 
     lon,lat = coordinates(geo)
 
-    PolyRegion(
-        geo.ID, geo.pID, geo.name,
-        lon, lat,
-        path = path, verbose = verbose, save = true
+    GeoRegion(
+        lon, lat, ID = geo.ID, pID = geo.pID, name = geo.name, rotation = geo.θ,
+        path = geopath(path), verbose = verbose, save = true
     )
 
     return nothing
@@ -83,7 +50,7 @@ Arguments
 Keyword Arguments
 =================
 - `path` : The path where the list of custom GeoRegions will be retrieved from.
-           Defaults to the `local` package variable `geodir`.
+           Defaults to `dirname(geo.path)`.
 - `verbose` : Verbose logging for ease of monitoring? Default is `false`.
 """
 function overwrite(
@@ -92,8 +59,9 @@ function overwrite(
     verbose :: Bool = false
 )
 
-    rmID(geo.ID,path=path)
-    add(geo,path=path,verbose=verbose)
+    gpath = geopath(path)
+    rmID(geo.ID,path=gpath)
+    add(geo,path=gpath,verbose=verbose)
     
     return nothing
 

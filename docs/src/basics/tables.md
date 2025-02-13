@@ -7,26 +7,9 @@ tableGeoRegions(predefined = true/false, custom = true/false)
 ```
 
 !!! tip "Additional Functionality for `tableGeoRegions()`"
-    It is possible to use `tableGeoRegions()` to list user-defined `GeoRegion`s in specific paths/directories. By default, it will list user-defined `GeoRegion`s saved into the path `joinpath(DEPOT_PATH[1],"files","GeoRegions")`. For more on user-defined GeoRegions and saving them as part of a larger project, refer to how to [setup](/tutorials/projects) GeoRegions.jl for a project. Full API documentation for `tableGeoRegions()` is given [here](/api/tables).
-
-## More specific lists of GeoRegions
-
-Besides listing all available GeoRegions, it is also possible to list a variety of different subtypes of GeoRegions with the `tableRectRegions()`, `tableTiltRegions()` and `tablePolyRegions()`.
-
-```julia
-tableRectRegions(giorgi = true/false, custom = true/false)
-tableTiltRegions()
-tablePolyRegions(srex = true/false, ar6 = true/false, custom = true/false)
-```
-
-!!! tip "`GLB` Region will always appear"
-    The `GLB` GeoRegion will always appear in the table, because it is the ultimate parent GeoRegion. All other `GeoRegion`s will always in some manner be a subset of the `GLB` GeoRegion.
+    It is possible to use `tableGeoRegions()` to list user-defined `GeoRegion`s in specific paths/directories. By default, it will list user-defined `GeoRegion`s saved into the path `joinpath(homedir(),".georegions")`. For more on user-defined GeoRegions and saving them as part of a larger project, refer to how to [setup](/tutorials/projects) GeoRegions.jl for a project. Full API documentation for `tableGeoRegions()` is given [here](/api/tables).
 
 ## Use Case Examples
-
-::::tabs
-
-== tableGeoRegions()
 
 ```@example tablesimple
 using GeoRegions
@@ -35,37 +18,6 @@ tableGeoRegions(warn=false)
 
 See the API [here](/api/addreadrm#GeoRegions.GeoRegion-Tuple{AbstractString})
 
-== tableRectRegions()
+## More specific Tabular Lists of GeoRegions
 
-```@example tablesimple
-using GeoRegions
-tableRectRegions()
-```
-
-See the API [here](/api/tables#GeoRegions.tableRectRegions)
-
-== tablePolyRegions()
-
-```@example tablesimple
-using GeoRegions
-tablePolyRegions()
-```
-
-See the API [here](/api/tables#GeoRegions.tablePolyRegions)
-
-== tableTiltRegions()
-
-::: info "No predefined `TiltRegion`s"
-
-There are no predefined `TiltRegion`s in GeoRegions.jl, so calling `tableTiltRegions()` will only return the `GLB` GeoRegion.
-
-:::
-
-```@example tablesimple
-using GeoRegions
-tableTiltRegions()
-```
-
-See the API [here](/api/tables#GeoRegions.tableTiltRegions)
-
-::::
+You may create tables of specific sets of predefined GeoRegions that come with GeoRegions.jl, as listed [here](/basics/predefined/listall).

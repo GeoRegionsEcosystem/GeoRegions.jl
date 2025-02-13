@@ -41,8 +41,8 @@ on(
     geo2 :: GeoRegion,
 )
 isequal(
-    geo1 :: RectRegion,
-    geo2 :: RectRegion;
+    geo1 :: GeoRegion,
+    geo2 :: GeoRegion;
     strict  :: Bool = true,
     verbose :: Bool = false
 )

@@ -2,8 +2,9 @@ module GeoRegions
 
 ## Modules Used
 using Dates
-using DelimitedFiles
 using GeometryBasics
+using Glob
+using JSON3
 using Logging
 using PrettyTables
 
@@ -12,96 +13,130 @@ import GeometryOps: within, touches
 
 ## Exporting the following functions:
 export
-        GeoRegion,
-        RectRegion, PolyRegion, TiltRegion,
+        GeoRegion, #MultipleRegion,
 
         ==, !==, isequal, isgeo, isgeoshape, isID,
         add, rm, rmID, overwrite,
 
-        setupGeoRegions, readGeoRegions, addGeoRegions, deleteGeoRegions,
-        tableGeoRegions, tableRectRegions, tableTiltRegions, tablePolyRegions,
+        setupGeoRegions, readGeoRegions, addGeoRegions, deleteGeoRegions, tableGeoRegions,
 
         in, on, coordinates,
         Point, Point2, Polygon
 
 ## Abstract types
 """
-    GeoRegion
+    AbstractGeoRegion
 
-Abstract supertype for geographical regions. All `GeoRegion` types contain the following fields:
+Abstract supertype for geographical regions. All `AbstractGeoRegion` types contain the following fields:
 * `ID` - A `String` Type, the identifier for the GeoRegion.
 * `pID` - A `String` Type, the identifier for the parent GeoRegion.
 * `name` - A `String` Type, the full name of the GeoRegion.
-* `bound` - A vector of `Float` Types, defining the [North, South, East, West] boundaries of the GeoRegion.
-* `shape` - A vector of `Point2` (see [GeometryBasics.jl](https://github.com/JuliaGeometry/GeometryBasics.jl)) Types, defining a non-rectilinear shape of the GeoRegion
-* `geometry` - A `Polygon` Type (see [GeometryBasics.jl](https://github.com/JuliaGeometry/GeometryBasics.jl)), which is useful when doing checks on polygons using [GeometryOps.jl](https://github.com/JuliaGeo/GeometryOps.jl).
+* `path` - A `String` Type, the path of the file containing information on this GeoRegion.
+* `N` - A `Float` Type, contains the northernmost latitude bound.
+* `S` - A `Float` Type, contains the southernmost latitude bound.
+* `E` - A `Float` Type, contains the easternmost longitude bound.
+* `W` - A `Float` Type, contains the westernmost longitude bound.
+* `θ` - A `Float` Type, the rotation projection for the data in the GeoRegion
+* `geometry` - A `Geometry` or `Vector{Geometry}` Type
 """
-abstract type GeoRegion end
+abstract type AbstractGeoRegion end
 
 """
-    RectRegion <: GeoRegion
+    AbstractJSONRegion
 
-A rectangular region on a rectilinear grid. Defined by its N,S,E,W boundaries.
+Abstract backend supertype for necessary GeoRegion information to be saved into JSON files. This is a backend and most likely need not be called upon except within the GeoRegions.jl package.
+    
+All `AbstractJSONRegion` types contain the following fields:
+* `ID` - A `String` Type, the identifier for the GeoRegion.
+* `pID` - A `String` Type, the identifier for the parent GeoRegion.
+* `name` - A `String` Type, the full name of the GeoRegion.
+* `rotation` - A `Real` Type, the rotation projection for the data in the GeoRegion.
+* `geometry` - A `JSONGeometry` or `Vector{JSONGeometry}` Type.
 """
-struct RectRegion{ST<:AbstractString, FT<:Real} <: GeoRegion
-    ID       :: ST
-    pID      :: ST
-    name     :: ST
-    path     :: ST
-    bound    :: Vector{FT}
-    shape    :: Vector{Point2{FT}}
-    geometry :: Polygon
+abstract type AbstractJSONRegion end
+
+"""
+    Geometry
+
+Abstract supertype for the geometry of a shape in a GeoRegion. All `Geometry` types contain the following fields:
+* `level` - An `Int` type that determines the nested-level of this particular shape/polygon geometry within the GeoRegion.
+* `shape` - A vector of `Point2` (see [GeometryBasics.jl](https://github.com/JuliaGeometry/GeometryBasics.jl)) Types, defining a non-rectilinear shape of the GeoRegion.
+* `polygon` - A `Polygon` Type (see [GeometryBasics.jl](https://github.com/JuliaGeometry/GeometryBasics.jl)), which is useful when doing checks on polygons using [GeometryOps.jl](https://github.com/JuliaGeo/GeometryOps.jl).
+"""
+struct Geometry{FT<:Real}
+    level   :: Int
+    shape   :: Vector{Point2{FT}}
+    polygon :: Polygon
 end
 
 """
-    PolyRegion <: GeoRegion
+    JSONGeometry
 
-A polygonal region on a rectilinear lon-lat grid, defined by the (lon,lat) coordinates of its vertices.
+Abstract supertype for geographical regions. All `GeoRegion` types contain the following fields:
+* `level` - An `Int` type that determines the nested-level of this particular shape/polygon geometry within the GeoRegion.
+* `longitude` - A vector of `Float`s that contain the longitudes.
+* `latitude` - A vector of `Float`s that contain the latitudes.
 """
-struct PolyRegion{ST<:AbstractString, FT<:Real} <: GeoRegion
-    ID       :: ST
-    pID      :: ST
-    name     :: ST
-    path     :: ST
-    bound    :: Vector{FT}
-    shape    :: Vector{Point2{FT}}
-    geometry :: Polygon
+struct JSONGeometry{FT<:Real}
+    level     :: Int
+    longitude :: Vector{FT}
+    latitude  :: Vector{FT}
 end
 
-"""
-    TiltRegion <: GeoRegion
+struct GeoRegion{ST<:AbstractString, FT<:Real} <: AbstractGeoRegion
+      ID :: ST
+     pID :: ST
+    name :: ST
+    path :: ST
+       N :: FT
+       S :: FT
+       E :: FT
+       W :: FT
+       θ :: FT
+    geometry :: Geometry{FT}
+end
 
-A **tilted** rectangular region on a rectilinear grid. Defined by:
-* the (lon,lat) coordinates of its centre.
-* the width in both the longitude and latitude directions (pre-rotation).
-* the angle of tilt in degrees (clockwise).
+struct JSONRegion{ST<:AbstractString, FT<:Real} <: AbstractGeoRegion
+    ID       :: ST
+    pID      :: ST
+    name     :: ST
+    rotation :: FT
+    geometry :: JSONGeometry{FT}
+end
 
-In addition to all the fields common to the `GeoRegion` `abstract type`, `TiltRegion`s will also contain the following field:
-- `tilt` : A vector of `Float` Types, containing [X,Y,ΔX,ΔY,θ], where:
-    * `X`  : A `Float` Type, the longitude coordinate of region centre.
-    * `Y`  : A `Float` Type, the latitude coordinate of region centre.
-    * `θ`  : A `Float` Type, the angle-tilt of rectangular region in **degrees** in the clockwise direction.
-    * `ΔX` : A `Float` Type, the half-width in longitude coordinates (before tilting).
-    * `ΔY` : A `Float` Type, the half-width in latitude coordinates (before tilting).
-"""
-struct TiltRegion{ST<:AbstractString, FT<:Real} <: GeoRegion
+struct MultiGeoRegion{ST<:AbstractString, FT<:Real} <: AbstractGeoRegion
+      ID :: ST
+     pID :: ST
+    name :: ST
+    path :: ST
+       N :: FT
+       S :: FT
+       E :: FT
+       W :: FT
+       θ :: FT
+    geometry :: Vector{Geometry{FT}}
+end
+
+struct JSONMultiRegion{ST<:AbstractString, FT<:Real} <: AbstractGeoRegion
     ID       :: ST
     pID      :: ST
     name     :: ST
     path     :: ST
-    bound    :: Vector{FT}
-    shape    :: Vector{Point2{FT}}
-    geometry :: Polygon
-    tilt     :: Vector{FT}
+    rotation :: FT
+    geometry :: Vector{JSONGeometry{FT}}
 end
 
 modulelog() = "$(now()) - GeoRegions.jl"
-geodir = joinpath(@__DIR__,"files")
+geopath(path) = splitpath(path)[end] !== ".georegions" ? joinpath(path,".georegions") : path
 
-## Including other files in the module
+geopredefined = joinpath(@__DIR__,".files")
+gfdir   = joinpath(geopredefined,"GF")
+srexdir = joinpath(geopredefined,"SREX")
+ar6dir  = joinpath(geopredefined,"AR6")
+
+# Including other files in the module
 include("georegions/define.jl")
 include("georegions/add.jl")
-include("georegions/get.jl")
 include("georegions/is.jl")
 include("georegions/list.jl")
 include("georegions/project.jl")
@@ -112,6 +147,6 @@ include("georegions/tables.jl")
 
 include("isin/isin.jl")
 include("isin/ison.jl")
-include("isin/extrastuff.jl")
+# include("isin/extrastuff.jl")
 
 end # module

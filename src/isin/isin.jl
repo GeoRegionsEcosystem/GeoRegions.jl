@@ -26,9 +26,7 @@ function Base.in(
     throw :: Bool = false
 )
 
-    if throw
-        @info "$(modulelog()) - Performing a check to determine if the coordinates $(point) are within the specified region boundaries."
-    end
+    throw ? (@info "$(modulelog()) - Performing a check to determine if the coordinates $(point) are within the specified region boundaries.") : nothing
     
     plon = point[1]
     plat = point[2]
@@ -37,12 +35,12 @@ function Base.in(
     while plon < -180; plon += 360 end
 
     isin = !iszero(sum([
-        within(Point(plon    ,plat),geo.geometry),
-        within(Point(plon+360,plat),geo.geometry),
-        within(Point(plon-360,plat),geo.geometry),
-        touches(Point(plon    ,plat),geo.geometry),
-        touches(Point(plon+360,plat),geo.geometry),
-        touches(Point(plon-360,plat),geo.geometry)
+        within(Point(plon    ,plat),geo.geometry.polygon),
+        within(Point(plon+360,plat),geo.geometry.polygon),
+        within(Point(plon-360,plat),geo.geometry.polygon),
+        touches(Point(plon    ,plat),geo.geometry.polygon),
+        touches(Point(plon+360,plat),geo.geometry.polygon),
+        touches(Point(plon-360,plat),geo.geometry.polygon)
     ]))
 
     if !isin
@@ -95,7 +93,7 @@ function Base.in(
     verbose :: Bool = false
 )
 
-    if verbose; @info "$(modulelog()) - Performing a check to determine if the $(cgeo.name) GeoRegion ($(cgeo.ID)) is inside the $(geo.name) GeoRegion ($(geo.ID))" end
+    verbose ? (@info "$(modulelog()) - Performing a check to determine if the $(cgeo.name) GeoRegion ($(cgeo.ID)) is inside the $(geo.name) GeoRegion ($(geo.ID))") : nothing
 
     lon,lat = coordinates(cgeo,n=n)
     isin = sum(.!in.(Point.(lon,lat),[geo]));

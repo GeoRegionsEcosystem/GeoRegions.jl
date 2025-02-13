@@ -17,45 +17,8 @@ function setupGeoRegions(;
     overwrite :: Bool = false
 )
 
-    if !isdir(path); mkpath(path) end
-    for fname in ["rectlist.txt","polylist.txt","tiltlist.txt"]
-
-        ftem = joinpath(geodir,fname)
-        freg = joinpath(path,fname)
-
-        if !overwrite
-            if !isfile(freg)
-
-                @debug "$(modulelog()) - Unable to find $freg, copying data from $ftem ..."
-
-                open(freg,"w") do io
-                    open(ftem) do f
-                        for line in readlines(f)
-                            write(io,"$line\n")
-                        end
-                    end
-                end
-
-            end
-        else
-
-            if isfile(freg)
-                @warn "$(modulelog()) - Overwriting $freg with original file in $ftem ..."
-                rm(freg,force=true)
-            end
-
-            open(freg,"w") do io
-                open(ftem) do f
-                    for line in readlines(f)
-                        write(io,"$line\n")
-                    end
-                end
-            end
-
-        end
-
-    end
-
+    gpath = geopath(path); !isdir(gpath) ? mkpath(path) : nothing
+    overwrite ? deleteGeoRegions(path=gpath) : nothing
     return nothing
 
 end
@@ -75,22 +38,30 @@ Returns
 =======
 - `gvec` : Vector containing all the GeoRegions in the file `fname`.
 """
-function readGeoRegions(
-    fname :: AbstractString
+function readGeoRegions(;
+    ID   :: AbstractString = "",
+    path :: AbstractString = pwd(),
 )
 
-    @info "$(modulelog()) - Loading user-defined GeoRegions from the file $fname ..."
+    gpath = geopath(path)
+    @info "$(modulelog()) - Loading user-defined GeoRegions from the directory $gpath ..."
 
-    rvec,rtype = listgeoregions(fname)
-    ngeo = length(rvec)
-    gvec = Vector{GeoRegion}(undef,ngeo)
-    for igeo in 1 : ngeo
-        reg = rvec[igeo]
-        g = getgeoregion(reg,fname,rtype)
-        gvec[igeo] = g
+    if ID == ""
+
+        IDvec  = glob("*.json",gpath)
+        nID    = length(IDvec)
+        geovec = Vector{GeoRegion}(undef,nID)
+        for iID in 1 : nID
+            geovec[iID] = GeoRegion(ID,gpath)
+        end
+        
+        return geovec
+
+    else
+
+        return GeoRegion(ID,path)
+
     end
-
-    return gvec
 
 end
 
@@ -115,26 +86,20 @@ Keyword Arguments
 - `overwrite` : If `true`, override any custom GeoRegions that have the same `ID`s as those in the file `fname`.
 """
 function addGeoRegions(
-    fname :: AbstractString;
-    path  :: AbstractString = pwd(),
+    src :: AbstractString,
+    dst :: AbstractString = pwd();
     overwrite :: Bool = false,
-    verbose   :: Bool = false
+    verbose   :: Bool = false,
+    dogeopath :: Bool = false
 )
 
-    @info "$(modulelog()) - Importing user-defined GeoRegions from the file $fname directly into the custom lists."
+    gsrc = dogeopath ? geopath(src) : src; gdst = geopath(dst)
 
-    rvec,rtype = listgeoregions(fname)
-    for reg in rvec
-        if !isID(reg,path=path,throw=false,verbose=verbose)
-            g = getgeoregion(reg,fname,rtype)
-            add(g,path=path,verbose=verbose)
-        elseif overwrite
-            @warn "$(modulelog()) - The GeoRegion ID $reg is already in use. Overwriting and replacing with new boundaries ..."
-            g = getgeoregion(reg,fname,rtype)
-            overwrite(g,path=path,verbose=verbose)
-        else
-            @warn "$(modulelog()) - The GeoRegion ID $reg is already in use. Please use a different ID, or you can remove the ID using removeGeoRegion()."
-        end
+    verbose ? (@info "$(modulelog()) - Importing all user-defined GeoRegions from the folder $gsrc directly into the folder $gdst.") : nothing
+
+    fgeo = basename.(glob("*.json",gsrc)); ngeo = length(fgeo)
+    for igeo = 1 : ngeo
+        cp(joinpath(gsrc,fgeo[igeo]),joinpath(gdst,fgeo[igeo]),force=overwrite)
     end
 
     return nothing
@@ -154,15 +119,18 @@ Keyword Arguments
            Defaults to the current working directory `pwd()`.
 """
 function deleteGeoRegions(;
-    path :: AbstractString = pwd()
+    path :: AbstractString = pwd(),
+    deletedir :: Bool = false,
 )
 
-
-    @warn "$(modulelog()) - Removing custom GeoRegions.jl files from $path, all GeoRegion information saved into these files will be permanently lost."
-    flist = ["rectlist.txt","polylist.txt","tiltlist.txt"]
+    gpath = geopath(path)
+    @warn "$(modulelog()) - Removing custom GeoRegions.jl files from $gpath, all GeoRegion information saved into these files will be permanently lost."
+    flist = glob("*.json",gpath)
     for fname in flist
-        rm(joinpath(path,fname),force=true)
+        rm(joinpath(gpath,fname),force=true)
     end
+
+    deletedir ? rm(gpath,recursive=true) : nothing
 
     return nothing
 
