@@ -52,9 +52,7 @@ function isequal(
  
     tf = on(geo1,geo2,verbose=verbose)
 
-    if (geo1.ID !== geo2.ID) || (geo1.pID !== geo2.pID) || 
-        (geo1.N !== geo2.N) || (geo1.S !== geo2.S) ||
-        (geo1.E !== geo2.E) || (geo1.W !== geo2.W) || (geo1.θ !== geo2.θ)
+    if (geo1.ID !== geo2.ID) || (geo1.pID !== geo2.pID) || (geo1.θ !== geo2.θ)
 
         tf = false
     end
