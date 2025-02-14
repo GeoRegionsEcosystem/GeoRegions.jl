@@ -2,7 +2,8 @@
     in(
         point :: Point2{<:Real},
         geo   :: GeoRegion;
-        throw :: Bool = false
+        throw :: Bool = false,
+        sigdigits :: Int = 10
     ) -> tf :: Bool
 
 Check if a geographical point `point` is within a GeoRegion defined by `geo`.
@@ -15,6 +16,7 @@ Arguments
 Keyword Arguments
 =================
 - `throw` : If `true`, then if `point` is not within `geo`, an error is thrown and the program stops running.
+- `sigdigits` : Specifies number of significant digits (i.e., precision) of the point coordinates used for checking. Defaults to 10.
 
 Returns
 =======
@@ -23,36 +25,34 @@ Returns
 function Base.in(
     point :: Point2{<:Real},
     geo   :: GeoRegion;
-    throw :: Bool = false
+    throw :: Bool = false,
+    sigdigits :: Int = 10
 )
 
     throw ? (@info "$(modulelog()) - Performing a check to determine if the coordinates $(point) are within the specified region boundaries.") : nothing
     
-    plon = point[1]
-    plat = point[2]
+    plon = point[1]; plat = round(point[2],sigdigits=sigdigits)
 
     while plon > 360;  plon -= 360 end
     while plon < -180; plon += 360 end
 
+    plon1 = round(plon,sigdigits=sigdigits)
+    plon2 = round(plon-360,sigdigits=sigdigits)
+    plon3 = round(plon+360,sigdigits=sigdigits)
+
     isin = !iszero(sum([
-        within(Point(plon    ,plat),geo.geometry.polygon),
-        within(Point(plon+360,plat),geo.geometry.polygon),
-        within(Point(plon-360,plat),geo.geometry.polygon),
-        touches(Point(plon    ,plat),geo.geometry.polygon),
-        touches(Point(plon+360,plat),geo.geometry.polygon),
-        touches(Point(plon-360,plat),geo.geometry.polygon)
+        within(Point(plon1,plat),geo.geometry.polygon),
+        within(Point(plon2,plat),geo.geometry.polygon),
+        within(Point(plon3,plat),geo.geometry.polygon),
+        touches(Point(plon1,plat),geo.geometry.polygon),
+        touches(Point(plon2,plat),geo.geometry.polygon),
+        touches(Point(plon3,plat),geo.geometry.polygon)
     ]))
 
     if !isin
-        if throw
-            error("$(modulelog()) - The requested coordinates $(Point(plon,plat)) are not within the specified region boundaries.")
-        else
-            return false
-        end
+        throw ? error("$(modulelog()) - The requested coordinates $(Point(plon,plat)) are not within the specified region boundaries.") : return false
     else
-        if throw
-            @info "$(modulelog()) - The requested coordinates $(Point(plon,plat)) are within the specified region boundaries."
-        end
+        throw ? (@info "$(modulelog()) - The requested coordinates $(Point(plon,plat)) are within the specified region boundaries.") : nothing
         return true
     end
 
@@ -65,7 +65,8 @@ end
         geo  :: GeoRegion;
         n    :: Int = 100,
         throw   :: Bool = false,
-        verbose :: Bool = false
+        verbose :: Bool = false,
+        sigdigits :: Int = 10
     ) -> tf :: Bool
 
 Check if a child GeoRegion defined by `cgeo` is within another GeoRegion `geo`.
@@ -80,6 +81,7 @@ Keyword Arguments
 - `n` : The number of segments to split each of the `GeoRegion`s into. Default is 100.
 - `throw`  : If `true`, then if `cgeo` is not within `geo`, an error is thrown and the program stops running.
 - `verbose` : If `true`, print logs to screen.
+- `sigdigits` : Specifies number of significant digits (i.e., precision) of the point coordinates used for checking. Defaults to 10.
 
 Returns
 =======
@@ -90,13 +92,20 @@ function Base.in(
     geo  :: GeoRegion;
     n    :: Int = 100,
     throw   :: Bool = false,
-    verbose :: Bool = false
+    verbose :: Bool = false,
+    sigdigits :: Int = 10
 )
 
     verbose ? (@info "$(modulelog()) - Performing a check to determine if the $(cgeo.name) GeoRegion ($(cgeo.ID)) is inside the $(geo.name) GeoRegion ($(geo.ID))") : nothing
 
     lon,lat = coordinates(cgeo,n=n)
-    isin = sum(.!in.(Point.(lon,lat),[geo]));
+
+    tlon,tlat = coordinates(geo,n=n)
+    tlon = round.(tlon,sigdigits=sigdigits)
+    tlat = round.(tlat,sigdigits=sigdigits)
+    tgeo = GeoRegion(tlon,tlat)
+
+    isin = sum(.!in.(Point.(lon,lat),[tgeo],sigdigits=sigdigits))
 
     if iszero(isin)
 
