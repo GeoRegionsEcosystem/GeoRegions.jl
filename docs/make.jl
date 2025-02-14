@@ -1,9 +1,9 @@
 using Documenter
 using DocumenterVitepress
 using GeoRegions
-# import CairoMakie
+import CairoMakie
 
-# CairoMakie.activate!(type = "svg")
+CairoMakie.activate!(type = "svg")
 
 DocMeta.setdocmeta!(GeoRegions, :DocTestSetup, :(using GeoRegions); recursive=true)
 

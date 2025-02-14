@@ -4,6 +4,19 @@ In this tutorial, we will show you the ropes of adding, retrieving the informati
 
 ```@example addreadremove
 using GeoRegions
+using DelimitedFiles
+using CairoMakie
+
+download("https://raw.githubusercontent.com/natgeo-wong/GeoPlottingData/main/coastline_resl.txt","coast.cst")
+coast = readdlm("coast.cst",comments=true)
+clon  = coast[:,1]
+clat  = coast[:,2]
+nothing
+```
+
+We start off by defining a test directory:
+
+```@example addreadremove
 mkpath(joinpath(pwd(),"test"))
 setupGeoRegions(path=joinpath(pwd(),"test"))
 ```
@@ -29,7 +42,7 @@ For example, we can do
 ```@example addreadremove
 geo = GeoRegion(
     [10,100,-50,10],[20,10,0,20],
-    ID = "TST", pID = "GLB", name = "Test Save PolyRegion"
+    ID = "TST", pID = "GLB", name = "Test Save GeoRegion 1"
 )
 add(geo,path=joinpath(pwd(),"test"))
 ```
@@ -41,7 +54,7 @@ Or we can just directly add the GeoRegion simultaneously when it is defined, as 
 ```@example addreadremove
 GeoRegion(
     [3,8,5,3],[40,-20,14,40],
-    ID = "TST2", pID = "GLB", name = "Test Save GeoRegion",
+    ID = "TST2", pID = "GLB", name = "Test Save GeoRegion 2",
     save = true, path = joinpath(pwd(),"test")
 )
 ```
@@ -74,10 +87,21 @@ So now that we have saved information on the abovementioned user-defined GeoRegi
 geo1 = GeoRegion("TST",path=joinpath(pwd(),"test"))
 ```
 
-Let's try retrieving the shape of this `GeoRegion`
+Let's try retrieving and plotting the shape of this `GeoRegion`
 
 ```@example addreadremove
-lon,lat = coordinates(geo)
+lon,lat = coordinates(geo1)
+
+aspect = (geo1.E-geo1.W+4)/(geo1.N-geo1.S+4)
+fig = Figure()
+ax = Axis(
+    fig[1,1],width=750,height=750/aspect,
+    limits=(geo1.W-2,geo1.E+2,geo1.S-2,geo1.N+2)
+)
+lines!(ax,clon,clat,color=:black,linewidth=3)
+lines!(ax,lon,lat,linewidth=5)
+resize_to_layout!(fig)
+fig
 ```
 
 See the API [here](/api/createaddreadrm#Retrieving-GeoRegions)

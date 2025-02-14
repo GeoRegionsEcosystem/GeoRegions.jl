@@ -52,7 +52,7 @@ aspect = (geo.E-geo.W+4)/(geo.N-geo.S+4)
 fig = Figure()
 ax = Axis(
     fig[1,1],width=750,height=750/aspect,
-    limits=(W-2,E+2,S-2,N+2)
+    limits=(geo.W-2,geo.E+2,geo.S-2,geo.N+2)
 )
 lines!(ax,clon,clat,color=:black,linewidth=3)
 lines!(ax,lon,lat,linewidth=5)
