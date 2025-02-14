@@ -264,11 +264,11 @@ function isID(
 )
 
     IDvec,_ = listall(geopath(path))
-    return isID(ID,IDvec;throw=throw,verbose=verbose)
+    return isIDinlist(ID,IDvec;throw=throw,verbose=verbose)
 
 end
 
-function isID(
+function isIDinlist(
     ID    :: AbstractString,
     IDvec :: AbstractArray;
     throw   :: Bool = true,

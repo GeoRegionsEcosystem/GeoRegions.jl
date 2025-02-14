@@ -31,7 +31,7 @@ function GeoRegion(
 )
 
     gpath = geopath(path)
-    IDs,gpaths = listall(gpath,verbose); isID(ID,IDs,verbose=verbose)
+    IDs,gpaths = listall(gpath,verbose); isIDinlist(ID,IDs,verbose=verbose)
     ind = findall(ID.==IDs)[1]
     fID = joinpath(gpaths[ind],"$ID.json")
 
