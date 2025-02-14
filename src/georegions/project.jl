@@ -17,51 +17,60 @@ function setupGeoRegions(;
     overwrite :: Bool = false
 )
 
-    gpath = geopath(path); !isdir(gpath) ? mkpath(path) : nothing
+    gpath = geopath(path); !isdir(gpath) ? mkpath(gpath) : nothing
     overwrite ? deleteGeoRegions(path=gpath) : nothing
     return nothing
 
 end
 
 """
-    readGeoRegions(
-        fname :: AbstractString
+    loadGeoRegions(;
+        path :: AbstractString = pwd(),
+        custom :: Bool = true,
+        giorgi :: Bool = false,
+        srex   :: Bool = false,
+        ar6    :: Bool = false,
     ) -> gvec :: Vector{<:GeoRegion}
 
-Extract information of GeoRegions from the file defined by `fname`.
+Extract information for all custom GeoRegions in the project defined by defined by `path`.
 
 Arguments
 =========
-- `fname` : String specifying name + path of the file containing GeoRegion information.
+- `path` : Path where all custom GeoRegions for the project are saved into.
+- `custom` : If `true`, custom, user-defined list of GeoRegions will be displayed.
+- `giorgi` : If `true` AND `predefined = true`, display predefined GF GeoRegions. Default is `false`.
+- `srex` : If `true` AND `predefined = true`, display predefined SREX GeoRegions. Default is `false`.
+- `ar6` : If `true` AND `predefined = true`, display predefined IPCC AR6 GeoRegions. Default is `false`.
 
 Returns
 =======
-- `gvec` : Vector containing all the GeoRegions in the file `fname`.
+- `gvec` : Vector containing all the GeoRegions in the directory defined by `path`.
 """
-function readGeoRegions(;
-    ID   :: AbstractString = "",
+function loadGeoRegions(;
     path :: AbstractString = pwd(),
+    custom :: Bool = true,
+    giorgi :: Bool = false,
+    srex   :: Bool = false,
+    ar6    :: Bool = false,
 )
 
-    gpath = geopath(path)
-    @info "$(modulelog()) - Loading user-defined GeoRegions from the directory $gpath ..."
+    IDs    = []
+    gpaths = []
+    gpath  = geopath(path)
 
-    if ID == ""
+    IDs,gpaths = fillinfo(IDs,gpaths,geopredefined,warn)
+    IDs,gpaths = custom ? fillinfo(IDs,gpaths,gpath,warn)   : (IDs,gpaths)
+    IDs,gpaths = giorgi ? fillinfo(IDs,gpaths,gfdir,warn)   : (IDs,gpaths)
+    IDs,gpaths = srex   ? fillinfo(IDs,gpaths,srexdir,warn) : (IDs,gpaths)
+    IDs,gpaths = ar6    ? fillinfo(IDs,gpaths,ar6dir,warn)  : (IDs,gpaths)
 
-        IDvec  = glob("*.json",gpath)
-        nID    = length(IDvec)
-        geovec = Vector{GeoRegion}(undef,nID)
-        for iID in 1 : nID
-            geovec[iID] = GeoRegion(ID,gpath)
-        end
-        
-        return geovec
-
-    else
-
-        return GeoRegion(ID,path)
-
+    ngeo = length(IDs)
+    geovec = Vector{GeoRegion}(undef,ngeo)
+    for iID in 1 : nID
+        geovec[iID] = GeoRegion(IDs[iID],gpaths[iID])
     end
+    
+    return geovec
 
 end
 
