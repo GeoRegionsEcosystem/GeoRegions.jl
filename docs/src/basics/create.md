@@ -9,4 +9,4 @@ lat = collect(10sin.((0:0.01:1).*2pi))
 GeoRegion(lon,lat)
 ```
 
-See the API [here](/api/create#GeoRegions.TiltRegion-Tuple{AbstractString,%20AbstractString,%20AbstractString,%20Vararg{Real,%205}})
+See the API [here](/api/createaddreadrm#Creating-GeoRegions)

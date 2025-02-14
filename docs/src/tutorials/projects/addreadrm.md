@@ -27,19 +27,26 @@ add(geo, path = ...)
 For example, we can do
 
 ```@example addreadremove
-geo = PolyRegion("TSP","GLB","Test Save PolyRegion",[10,100,-50,10],[20,10,0,20])
+geo = GeoRegion(
+    [10,100,-50,10],[20,10,0,20],
+    ID = "TST", pID = "GLB", name = "Test Save PolyRegion"
+)
 add(geo,path=joinpath(pwd(),"test"))
 ```
 
-See the API [here](/api/addreadrm#GeoRegions.add)
+See the API [here](/api/createaddreadrm#Adding-Custom-GeoRegions)
 
 Or we can just directly add the GeoRegion simultaneously when it is defined, as follows:
 
 ```@example addreadremove
-RectRegion("TSR","GLB","Test Save RectRegion",[40,-20,14,-60],save=true,path=joinpath(pwd(),"test"))
+GeoRegion(
+    [3,8,5,3],[40,-20,14,40],
+    ID = "TST2", pID = "GLB", name = "Test Save GeoRegion",
+    save = true, path = joinpath(pwd(),"test")
+)
 ```
 
-See the API [here](/api/create)
+See the API [here](/api/createaddreadrm#Creating-GeoRegions)
 
 ## 2. Check if GeoRegions have been added
 
@@ -54,50 +61,67 @@ And we see that yes, we can confirm their addition to the files.
 Alternatively, we can check if the `ID`s have been added using the function `isID`:
 
 ```@example addreadremove
-isID("TSR",path=joinpath(pwd(),"test")),
-isID("TSP",path=joinpath(pwd(),"test"))
+isID("TST",path=joinpath(pwd(),"test"))
 ```
 
-See the API [here](/api/addreadrm#GeoRegions.isID)
+See the API [here](/api/isinonequal#Equivalence-of-GeoRegion-IDs)
 
 ## 3. Reading and Retrieving GeoRegions for your Project
 
 So now that we have saved information on the abovementioned user-defined GeoRegions, let's see if we can retrieve the information on these GeoRegions:
 
 ```@example addreadremove
-ply = GeoRegion("TSP",path=joinpath(pwd(),"test"))
+geo1 = GeoRegion("TST",path=joinpath(pwd(),"test"))
 ```
 
-Let's try retrieving the shape of this `PolyRegion`
+Let's try retrieving the shape of this `GeoRegion`
 
 ```@example addreadremove
-lon,lat = coordinates(ply)
+lon,lat = coordinates(geo)
 ```
 
-See the API [here](/api/addreadrm#GeoRegions.GeoRegion-Tuple{AbstractString})
+See the API [here](/api/createaddreadrm#Retrieving-GeoRegions)
+
+### 3.1 Loading all custom GeoRegions for your Project
+
+If you have multiple GeoRegions saved in your project and you want to load all of them as a vector, you can use the `loadGeoRegions()` function
+
+```@example addreadremove
+geovec = loadGeoRegions(path=joinpath(pwd(),"test"))
+```
+
+Which returns a `Vector` of `GeoRegion` types.
+
+!!! tip "`GLB` is automatically included"
+    The `GLB` GeoRegion will automatically be included in this vector, so your vector will always have at least 1 element inside it.
+
+See the API [here]()
 
 ## 4. Overwriting Information for a Previously Defined GeoRegion
 
 Once a GeoRegion associated with an `ID` has been saved into the directory named `path`, this `ID` can no longer be used in association with another GeoRegion for this Project. Therefore, you cannot save another GeoRegion of this `ID` into the same project.
 
 ```@repl addreadremove
-geo = PolyRegion("TSP","GLB","Test Save PolyRegion 2",[10,90,-50,10],[20,10,0,20])
-add(geo,path=joinpath(pwd(),"test"))
+geo2 = GeoRegion(
+    [10,90,-50,10],[20,10,0,20],
+    ID = "TST", pID = "GLB", name = "Test Save PolyRegion 2"
+)
+add(geo2,path=joinpath(pwd(),"test"))
 ```
 
 We see that we cannot add another GeoRegion with the `ID = TSP`. In order to replace the GeoRegion associated with this `ID` with another set of information, you need to _**overwrite**_ the preexisting information with `overwrite()`
 
 ```@example addreadremove
-overwrite(geo,path=joinpath(pwd(),"test"))
+overwrite(geo2,path=joinpath(pwd(),"test"))
 ```
 
 And we reload the GeoRegion associated with the `ID = TSP`
 
 ```@example addreadremove
-ply = GeoRegion("TSP",path=joinpath(pwd(),"test"))
+geo3 = GeoRegion("TST",path=joinpath(pwd(),"test"))
 ```
 
-See the API [here](/api/addreadrm#GeoRegions.overwrite)
+See the API [here](/api/createaddreadrm#Overwriting-Custom-GeoRegions)
 
 ## 5. Removing a custom GeoRegions from your Project
 
@@ -108,42 +132,46 @@ Now, we've realized that you don't really need a `GeoRegion` anymore, or for som
 THe first method is to remove a GeoRegion `geo` that has already been loaded into the workspace. We use the function `rm()` to do this
 
 ```@example addreadremove
-rm(ply,path=joinpath(pwd(),"test"))
+rm(geo3,path=joinpath(pwd(),"test"))
 ```
 
 And now we check if the `GeoRegion` `TSP` now exists:
 
 ```@repl addreadremove
-isID("TSP",path=joinpath(pwd(),"test"))
+isID("TST",path=joinpath(pwd(),"test"))
 ```
 
 And we see that it does not.
 
-See the API [here](/api/addreadrm#Base.Filesystem.rm)
+See the API [here](/api/createaddreadrm#After-having-loaded-a-Custom-GeoRegion)
 
 ### 5.2 Removing a GeoRegion based on its `ID`
 
 The second method is to remove a `GeoRegion` based on an `ID`, or its `string` identifier. We do this with the function `rmID()`
 
 ```@example addreadremove
-rmID("TSR",path=joinpath(pwd(),"test"))
+rmID("TST2",path=joinpath(pwd(),"test"))
 ```
 
 ```@repl addreadremove
-isID("TSR",path=joinpath(pwd(),"test"))
+isID("TST2",path=joinpath(pwd(),"test"))
 ```
 
 !!! tip "Predefined `GeoRegion`s cannot be removed"
     You cannot remove `GLB`, `GF_*`, `SRX_*` or `AR6_*` that have been predefined in GeoRegions.jl
 
-See the API [here](/api/addreadrm#GeoRegions.rmID)
+See the API [here](/api/createaddreadrm#Based-on-the-ID-of-a-Custom-GeoRegion)
 
 ## 6. Removing a the custom GeoRegions lists from your Project
 
 If you use `deleteGeoRegions()` to remove all the custom lists, you will remove **all** the custom GeoRegions for the projects and they cannot be retrieved.
 
 ```@example addreadremove
-TiltRegion("TST","GLB","Test Save TiltRegion",10,5,50,20,30,path=joinpath(pwd(),"test"))
+GeoRegion(
+    [3,8,5,3],[40,-20,14,40],
+    ID = "TST", pID = "GLB", name = "Test Save GeoRegion",
+    save = true, path = joinpath(pwd(),"test")
+)
 ```
 
 ```@example addreadremove

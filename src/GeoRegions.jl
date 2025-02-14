@@ -58,7 +58,7 @@ abstract type AbstractJSONRegion end
 """
     Geometry
 
-Abstract supertype for the geometry of a shape in a GeoRegion. All `Geometry` types contain the following fields:
+Struct containing the geometry/shape properties of a GeoRegion. All `Geometry` types contain the following fields:
 * `level` - An `Int` type that determines the nested-level of this particular shape/polygon geometry within the GeoRegion.
 * `shape` - A vector of `Point2` (see [GeometryBasics.jl](https://github.com/JuliaGeometry/GeometryBasics.jl)) Types, defining a non-rectilinear shape of the GeoRegion.
 * `polygon` - A `Polygon` Type (see [GeometryBasics.jl](https://github.com/JuliaGeometry/GeometryBasics.jl)), which is useful when doing checks on polygons using [GeometryOps.jl](https://github.com/JuliaGeo/GeometryOps.jl).
@@ -72,7 +72,7 @@ end
 """
     JSONGeometry
 
-Abstract supertype for geographical regions. All `GeoRegion` types contain the following fields:
+Struct containing the geometry/shape properties of a GeoRegion that are needed to be saved into JSON files. All `JSONGeometry` types contain the following fields:
 * `level` - An `Int` type that determines the nested-level of this particular shape/polygon geometry within the GeoRegion.
 * `longitude` - A vector of `Float`s that contain the longitudes.
 * `latitude` - A vector of `Float`s that contain the latitudes.
@@ -83,6 +83,12 @@ struct JSONGeometry{FT<:Real}
     latitude  :: Vector{FT}
 end
 
+"""
+    GeoRegion
+
+A `struct` containing geometric information on a geographic regions defined in `Geometry`. We note the following:
+* `geometry` - currently is a singular `Geometry`
+"""
 struct GeoRegion{ST<:AbstractString, FT<:Real} <: AbstractGeoRegion
       ID :: ST
      pID :: ST

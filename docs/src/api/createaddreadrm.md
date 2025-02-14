@@ -1,4 +1,4 @@
-# API for Creating, Adding, Reading and Removing GeoRegions
+# API for Creating, Reading, Adding and Removing GeoRegions
 
 ## Creating GeoRegions
 
@@ -15,11 +15,26 @@ GeoRegion(
 )
 ```
 
-## Adding/Removing GeoRegions
+## Adding Custom GeoRegions
 
 ```@docs
 add
+```
+
+## Overwriting Custom GeoRegions
+```@docs
 overwrite
+```
+
+## Removing Custom GeoRegions
+
+### After having loaded a Custom GeoRegion
+```@docs
 rm
+```
+
+### Based on the `ID` of a Custom GeoRegion
+
+```@docs
 rmID
 ```

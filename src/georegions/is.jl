@@ -4,9 +4,9 @@
         geo2 :: GeoRegion,
     ) -> tf :: Bool
 
-Checks all the fields (except names and paths) of two different GeoRegions in order to determine if they are exactly the same. The GeoRegions must be of the same GeoRegion `type`.
+Checks (a) ID, (b) pID, (c) rotation, and (d) the geometry/shape of two different GeoRegions in order to determine if they are exactly the same.
 
-The `geo1.shape` and `geo2.shape` need not be exactly the same as long as they define the same area (i.e., the points in `geo2` can be a circshift version of `geo1`).
+The `geo1.shape` and `geo2.shape` need not be exactly the same as long as they define the same area (i.e., the points in `geo2` can be a circshift version of `geo1`). They can also be offset from each other by 360º.
 
 Arguments
 =========
@@ -27,7 +27,7 @@ Returns
         verbose :: Bool = false
     ) -> tf :: Bool
 
-Checks all the fields (except names) of two different GeoRegions in order to determine if they are exactly the same. The GeoRegions need not be of the same GeoRegion `type` as long as they have the same `ID`, `pID` and area defined by `shape`.
+Checks (a) ID, (b) pID, (c) rotation, and (d) the geometry/shape of two different GeoRegions in order to determine if they are exactly the same.
 
 The `geo1.shape` and `geo2.shape` need not be exactly the same as long as they define exactly the same area (i.e., the points in `geo2` can be a `circshift()` version of `geo1`).
 
@@ -65,12 +65,11 @@ end
     isgeo(
         geo  :: GeoRegion;
         path :: AbstractString = dirname(geo.path),
-        strict  :: Bool = true,
         throw   :: Bool = true,
         verbose :: Bool = false
     ) -> tf :: Bool
 
-Checks all the GeoRegions defined in the project determined by `path`. If there exists a `GeoRegion` with the same `ID` **and** the same field values (except `name` and `path`) as the GeoRegion `geo`, returns `true`. Otherwise, returns `false` or throws an error.
+Checks all the GeoRegions defined in the project determined by `path` against a given GeoRegion `geo`. If there is any GeoRegion `tgeo` that returns `isequal(geo,tgeo) = true`, then `isgeo(geo) = true`. Otherwise, returns `false` or throws an error.
 
 Arguments
 =========
@@ -99,7 +98,7 @@ function isgeo(
 
         tgeo = GeoRegion(geo.ID,path=gpath,verbose=verbose)
         if isequal(geo,tgeo,verbose=verbose)
-            if verbose; @info "$(modulelog()) - A previously defined GeoRegion \"$(tgeo.ID)\" in $path shares the same properties as our custom GeoRegion \"$(geo.ID)\"." end
+            verbose ? (@info "$(modulelog()) - A previously defined GeoRegion \"$(tgeo.ID)\" in $path shares the same properties as our custom GeoRegion \"$(geo.ID)\".") : nothing
             return true
         else
             if throw
@@ -126,7 +125,7 @@ end
         verbose  :: Bool = false
     ) -> tf :: Bool
 
-Checks all the GeoRegions defined in the project determined by `path`. If there exists a `GeoRegion` with the same shape as `geo.shape`, returns `true` by default, or otherwise, if `returnID` is true, it will return the ID. If there is no `GeoRegion` with the same shape, then either returns a `false` or throws and error depending on `throw`
+Checks all the GeoRegions defined in the project determined by `path`. If there exists a GeoRegion `tgeo` such that `on(geo,tgeo) = true`, then returns `true` by default, or otherwise, if `returnID` is true, it will return `tgeo.ID`. If there is no `GeoRegion` with the same shape, then either returns a `false` or throws and error depending on `throw`
 
 Arguments
 =========
@@ -180,7 +179,7 @@ end
         verbose  :: Bool = false
     ) -> tf :: Bool
 
-Checks all the GeoRegions defined in the project determined by `path`. If there exists a `GeoRegion` with the same shape as defined by the vectors `lon` and `lat`, returns `true` by default, or otherwise, if `returnID` is true, it will return the ID. If there is no `GeoRegion` with the same shape, then either returns a `false` or throws and error depending on `throw`
+Checks all the GeoRegions defined in the project determined by `path`. If there exists a GeoRegion `tgeo` with the same shape as defined by the vectors `lon` and `lat`, returns `true` by default, or otherwise, if `returnID` is true, it will return the `tgeo.ID`. If there is no `GeoRegion` with the same shape, then either returns a `false` or throws and error depending on `throw`
 
 Arguments
 =========

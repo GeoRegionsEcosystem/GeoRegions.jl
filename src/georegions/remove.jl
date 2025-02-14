@@ -1,7 +1,7 @@
 """
     rm(
         geo  :: GeoRegion;
-        path :: AbstractString = geodir
+        path :: AbstractString = dirname(geo.path)
     ) -> nothing
 
 Removes the GeoRegion `geo` from the custom lists specified in `path`. The GeoRegion must have exactly the same properties as the one in the custom list.
@@ -13,7 +13,7 @@ Arguments
 Keyword Arguments
 =================
 - `path` : The path where the list of custom GeoRegions will be retrieved from.
-           Defaults to the `local` package variable `geodir`.
+           Defaults to the `local` package variable `dirname(geo.path)`.
 """
 rm(
     geo  :: GeoRegion;
@@ -31,7 +31,7 @@ end
 """
     rmID(
         ID :: AbstractString;
-        path :: AbstractString = geodir
+        path :: AbstractString = dirname(geo.path)
     ) -> nothing
 
 Removes any GeoRegion associated with the ID `ID`. ID must be exact.

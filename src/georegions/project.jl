@@ -76,30 +76,32 @@ end
 
 """
     addGeoRegions(
-        fname :: AbstractString;
-        path  :: AbstractString = pwd(),
+        src :: AbstractString,
+        dst :: AbstractString = pwd();
         overwrite :: Bool = false,
-        verbose   :: Bool = false
+        verbose   :: Bool = false,
+        dogeopath :: Bool = true
     ) -> nothing
 
-Add GeoRegions from the file `fname` into the project directory defined by `path`.
+Copy all custom GeoRegions from the project directory defined by `src` into a new project directory defined by `dst`.
 
 Arguments
 =========
-- `fname` : name + path of the file containing GeoRegion information.
+- `src` : The project path where the list of custom GeoRegions will be copied from.
+- `dst` : The project path where the list of custom GeoRegions will be copied into.
 
 Keyword Arguments
 =================
-- `path` : The path where the list of custom GeoRegions will be retrieved from.
-           Defaults to the current working directory `pwd()`.
 - `overwrite` : If `true`, override any custom GeoRegions that have the same `ID`s as those in the file `fname`.
+- `verbose` : Verbose logging for ease of monitoring? Default is `false`.
+- `dogeopath` : If `true`, then the appends `.georegions` to the end of `src` if it isn't already specified. Default is `true`
 """
 function addGeoRegions(
     src :: AbstractString,
     dst :: AbstractString = pwd();
     overwrite :: Bool = false,
     verbose   :: Bool = false,
-    dogeopath :: Bool = false
+    dogeopath :: Bool = true
 )
 
     gsrc = dogeopath ? geopath(src) : src; gdst = geopath(dst)
@@ -117,19 +119,21 @@ end
 
 """
     deleteGeoRegions(;
-        path :: AbstractString = pwd()
+        path :: AbstractString = pwd(),
+        recursive :: Bool = false,
     ) -> nothing
 
-Reset all the files containing GeoRegion information back to the default.
+Reset all the files containing GeoRegion information back to the default. If `recursive = true`, delete the entire directory.
 
 Keyword Arguments
 =================
 - `path` : The path where the list of custom GeoRegions will be retrieved from.
            Defaults to the current working directory `pwd()`.
+- `recursive` : If true, then delete the hidden `.georegions` folder entirely.
 """
 function deleteGeoRegions(;
     path :: AbstractString = pwd(),
-    deletedir :: Bool = false,
+    recursive :: Bool = false,
 )
 
     gpath = geopath(path)
@@ -139,7 +143,7 @@ function deleteGeoRegions(;
         rm(joinpath(gpath,fname),force=true)
     end
 
-    deletedir ? rm(gpath,recursive=true) : nothing
+    recursive ? rm(gpath,recursive=recursive) : nothing
 
     return nothing
 

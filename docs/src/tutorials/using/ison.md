@@ -66,7 +66,7 @@ But what about Point B?  Point B is also very obviously on the bounds of the Geo
 on(B,geo)
 ```
 
-See the API [here](/api/isinonequal#GeoRegions.on-Tuple{Point2{%3C:Real},%20GeoRegion})
+See the API [here](/api/isinonequal#Is-Point-On-a-GeoRegion)
 
 ## Is a GeoRegion on a GeoRegion? (i.e., Are their Shapes the Same?)
 
@@ -76,7 +76,7 @@ We can also use the `on()` function to determine if the perimeter of a `GeoRegio
 on(geo,geo)
 ```
 
-See the API [here](/api/isinonequal#GeoRegions.on-Tuple{GeoRegion,%20GeoRegion})
+See the API [here](/api/isinonequal#Is-GeoRegion-On-a-GeoRegion)
 
 Which is obvious because we are comparing a `GeoRegion` against itself. However, let us try something a bit more complicated.
 
@@ -88,7 +88,7 @@ In this test case, we use `circshift()` to change the starting and ending coordi
 lon,lat = coordinates(geo)
 pop!(lon); lon = circshift(lon,2); lon = vcat(lon,lon[1])
 pop!(lat); lat = circshift(lat,2); lat = vcat(lat,lat[1])
-geo2 = PolyRegion("","","",lon,lat)
+geo2 = GeoRegion(lon,lat)
 ```
 
 So here, we have circshifted the `lon` and `lat` values used to define the GeoRegion such that instead of the start/end points being at (-34,-10), now the start/end points are at (-50,0).
@@ -106,16 +106,22 @@ And see that the GeoRegions define the same area.
 
 ### 2. Shifting the `GeoRegion` by 360º
 
-In this test case, we shift the `lon` of `geo` by 360º, so that it is on a (0,360) grid instead of a (-180,180) grid.
+In this test case, we shift the `lon` of a given GeoRegion by 360º, so that it is on a (0,360) grid instead of a (-180,180) grid.
 
 ```@example ison
-lon,lat = coordinates(geo); lon = lon .+ 360
-geo3 = PolyRegion("","","",lon,lat)
+geo3 = GeoRegion("AR6_WNA")
+```
+
+In this case, the longitude is all <0º, so we can simply add 360º to the longitude and transform it from a 180ºW-180ºE grid to a 0º-360ºE grid.
+
+```@example ison
+lon,lat = coordinates(geo3); lon = lon .+ 360
+geo4 = GeoRegion(lon,lat)
 ```
 
 We compare the shapes of the two GeoRegions:
 ```@example ison
-on(geo,geo3)
+on(geo3,geo4)
 ```
 
 And we see that the GeoRegions define the same area.

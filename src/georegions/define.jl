@@ -1,7 +1,7 @@
 """
     GeoRegion(
-        ID :: AbstractString;
-        path    :: AbstractString = homedir(),
+        ID   :: AbstractString;
+        path :: AbstractString = homedir(),
         verbose :: Bool = false
     ) -> geo :: GeoRegion
 
@@ -23,11 +23,11 @@ Returns
 - `geo` : A GeoRegion.
 """
 function GeoRegion(
-    ID :: AbstractString,
+    ID   :: AbstractString;
+    path :: AbstractString = homedir(),
+    verbose :: Bool = false,
     ST = String,
-    FT = Float64;
-    path    :: AbstractString = homedir(),
-    verbose :: Bool = false
+    FT = Float64
 )
 
     gpath = geopath(path)
@@ -51,19 +51,19 @@ end
 
 """
     GeoRegion(
-        ID   :: AbstractString,
-        pID  :: AbstractString,
-        name :: AbstractString,
         lon  :: Vector{<:Real},
         lat  :: Vector{<:Real};
+        rotation :: Real = 0,
+        ID   :: AbstractString = "",
+        pID  :: AbstractString = "",
+        name :: AbstractString = "",
         join :: Bool = true,
         save :: Bool = false,
         path :: AbstractString = homedir(),
-        rotation :: Real = 0,
         verbose :: Bool = false,
         ST = String,
         FT = Float64
-    ) -> geo :: PolyRegion{ST,FT}
+    ) -> geo :: GeoRegion{ST,FT}
 
 Creates a polygonal GeoRegion.
 
@@ -87,18 +87,18 @@ Keyword Arguments
 
 Returns
 =======
-- `geo` : A polygonal GeoRegion.
+- `geo` : A GeoRegion.
 """
 function GeoRegion(
     lon  :: Vector{<:Real},
     lat  :: Vector{<:Real};
+    rotation :: Real = 0,
     ID   :: AbstractString = "",
     pID  :: AbstractString = "",
     name :: AbstractString = "",
     join :: Bool = true,
     save :: Bool = false,
     path :: AbstractString = homedir(),
-    rotation :: Real = 0,
     verbose :: Bool = false,
     ST = String,
     FT = Float64

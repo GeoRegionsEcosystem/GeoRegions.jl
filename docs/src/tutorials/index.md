@@ -16,7 +16,7 @@ const using = [
     desc: "Check if GeoRegion Shapes are Equal"
   },
   {
-    href: "isequal",
+    href: "using/isequal",
     src: "images/isequal.png",
     caption: "Equivalence in GeoRegions.jl",
     desc: "Retrieving the Shape of a GeoRegion"
@@ -27,31 +27,31 @@ const projects = [
   {
     href: "projects/setup",
     src: "images/setup.png",
-    caption: "Available Datasets",
-    desc: "Different Predefined Datasets in GeoRegions.jl"
+    caption: "GeoRegions.jl and your Project",
+    desc: "Setting up GeoRegions.jl for your project"
   },
   {
     href: "projects/addreadrm",
     src: "images/addreadrm.png",
-    caption: "All Predefined GeoRegions",
-    desc: "Listing out all predefined GeoRegions in GeoRegions.jl"
+    caption: "Custom GeoRegions",
+    desc: "Adding, Reading, Removing custom GeoRegions for your project"
   },
   {
-    href: "projects/files",
+    href: "projects/backends",
     src: "images/files.png",
-    caption: "Tables",
-    desc: "Listing existing GeoRegions in Table Format"
+    caption: "Backends",
+    desc: "What goes on behind the scenes?"
   }
 ];
 </script>
 
 # Tutorials
 
-## Using GeoRegions.jl
+## Using the Properties of GeoRegions
 
 <Gallery :images="using" />
 
-## Predefined GeoRegions
+## Using GeoRegions.jl for Projects
 
 <Gallery :images="projects" />
 ```

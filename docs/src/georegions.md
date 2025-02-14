@@ -9,10 +9,10 @@ In essence, a `GeoRegion` is:
     When using GeoRegions.jl, the default `GeoRegion` should generally be the global domain, specified by `GLB` and given by the `[N,S,E,W]` coordinates `[90,-90,360,0]`.  The Global GeoRegion `GLB` is considered to be a subset of itself.
 
 ```@docs
-AbstractGeoRegion
+GeoRegions.AbstractGeoRegion
 ```
 
-## Types of GeoRegions
+## The `GeoRegion` Type
 
 In GeoRegions.jl v8 and above, we have standardized the usage of the struct type `GeoRegion` for all simple polygonal shapes.
 
@@ -26,5 +26,15 @@ Work is currently in progress to determine how best to include multiple shapes i
     Previous versions of GeoRegions.jl used to differentiate between Rectilinear (`RectRegion`) and Polygonal (`PolyRegion`) Types of GeoRegions. This is no longer supported in ≥v8.
 
 ```@docs
-GeoRegion
+GeoRegions.GeoRegion
 ```
+
+## The `Geometry` Type
+
+All `GeoRegion`s are defined based on a `Geometry` struct type that contains information on the geometry of a GeoRegion.
+
+```@docs
+GeoRegions.Geometry
+```
+
+GeoRegions.jl extracts the `Polygon` and `Vector{Point}` information from this `Geometry` type and use the functionalities of [GeometryOps.jl](https://github.com/JuliaGeo/GeometryOps.jl) to perform checks on polygons.

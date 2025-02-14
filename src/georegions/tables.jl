@@ -34,7 +34,7 @@ function tableGeoRegions(;
     custom     :: Bool = true,
     warn :: Bool = true,
     crop :: Bool = false,
-    rows :: Int = 0
+    rows :: Int = 15
 )
 
     IDs    = []

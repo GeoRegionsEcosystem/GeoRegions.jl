@@ -48,7 +48,7 @@ Using the function `coordinates()`, we are able to retrieve the coordinates of t
 ```@example properties
 lon,lat = coordinates(geo)
 
-aspect = (E-W+4)/(N-S+4)
+aspect = (geo.E-geo.W+4)/(geo.N-geo.S+4)
 fig = Figure()
 ax = Axis(
     fig[1,1],width=750,height=750/aspect,

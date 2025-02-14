@@ -1,9 +1,9 @@
 using Documenter
 using DocumenterVitepress
 using GeoRegions
-import CairoMakie
+# import CairoMakie
 
-CairoMakie.activate!(type = "svg")
+# CairoMakie.activate!(type = "svg")
 
 DocMeta.setdocmeta!(GeoRegions, :DocTestSetup, :(using GeoRegions); recursive=true)
 
@@ -31,14 +31,14 @@ makedocs(;
         ],
         "Tutorials"            => [
             "Using GeoRegions.jl"          => [
-                "Is it in a GeoRegion?" => "tutorials/using/isin.md",
-                "Is it on a GeoRegion?" => "tutorials/using/ison.md",
+                "Is it in a GeoRegion?"        => "tutorials/using/isin.md",
+                "Is it on a GeoRegion?"        => "tutorials/using/ison.md",
+                "Equivalence in GeoRegions.jl" => "tutorials/using/isequal.md",
             ],
-            "Equivalence in GeoRegions.jl" => "tutorials/isequal.md",
             "GeoRegions.jl for Projects"   => [
-                "Setting Up"             => "tutorials/projects/setup.md",
-                "Add, Read, Remove"      => "tutorials/projects/addreadrm.md",
-                "Custom GeoRegion Files" => "tutorials/projects/files.md",
+                "Setting Up"        => "tutorials/projects/setup.md",
+                "Add, Read, Remove" => "tutorials/projects/addreadrm.md",
+                "Backends"          => "tutorials/projects/backends.md",
             ],
         ],
         "API"                  => [

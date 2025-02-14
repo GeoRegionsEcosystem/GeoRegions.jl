@@ -17,15 +17,13 @@ using GeoRegions
 setupGeoRegions(path=pwd())
 ```
 
-This will copy over the following files: `rectlist.txt`, `polylist.txt`, `tiltlist.txt`, which will stored `RectRegion`s, `PolyRegion`s and `TiltRegion`s respectively.
+This will set up a folder called `.georegions` (which is a hidden folder) in the directory specified by `path`.
 
 ```@example projects
-isfile(joinpath(pwd(),"rectlist.txt")),
-isfile(joinpath(pwd(),"polylist.txt")),
-isfile(joinpath(pwd(),"tiltlist.txt"))
+isdir(joinpath(pwd(),".georegions"))
 ```
 
-If any of these files already exist in `path`, they will not be overwritten. To specifically overwrite all preexisting user-defined GeoRegions, use the keyword `overwrite = true`.
+If any GeoRegions already exist in `path`, they will not be overwritten. To specifically overwrite all preexisting user-defined GeoRegions, use the keyword `overwrite = true`.
 
 ```@example projects
 setupGeoRegions(path=pwd(),overwrite=true)
@@ -50,9 +48,9 @@ For example, we create a table of user-defined and predefined GeoRegions for the
 tableGeoRegions(path=pwd(),predefined=false)
 ```
 
-Note, we have no custom GeoRegions added, so there is nothing to list right now even though the files exist. If any of `rectlist.txt`, `polylist.txt` and `tiltlist.txt` are not present, a warning will be shown unless the keyword `warn = false` is set.
+Note, we have no custom GeoRegions added, so there is nothing to list right now even though the files exist. If no GeoRegions are available, a warning will be shown unless the keyword `warn = false` is set.
 
-See the API [here](/api/project#GeoRegions.tableGeoRegions)
+See the API [here](/api/tables)
 
 ## 3. Removing a the custom GeoRegions list from your Project
 
@@ -62,15 +60,20 @@ Say you want to completely clear your project of custom GeoRegions, replacing th
     For `deleteGeoRegions()`, the default `path` is the current directory `pwd()`.
 
 ```@example projects
-deleteGeoRegions()
+deleteGeoRegions(path=pwd())
 ```
 
-And then we see if `rectlist.txt` exists!
+And then we see if the directory `.georegions` exists!
 
 ```@example projects
-isfile(joinpath(pwd(),"rectlist.txt")),
-isfile(joinpath(pwd(),"polylist.txt")),
-isfile(joinpath(pwd(),"tiltlist.txt"))
+isdir(joinpath(pwd(),".georegions"))
+```
+
+Which is does. If you want to delete this directory, then do `deleteGeoRegions(..,recursive=true)`
+
+```@example projects
+deleteGeoRegions(path=pwd(),recursive=true)
+isdir(joinpath(pwd(),".georegions"))
 ```
 
 See the API [here](/api/project#GeoRegions.deleteGeoRegions)

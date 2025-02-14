@@ -1,12 +1,18 @@
-# API for Is it in/on a GeoRegion?
+# API for Is it in/on/equal to a GeoRegion?
 
 ## In
+
+### Is Point In a GeoRegion
 ```@docs
 in(
     Point :: Point2{<:Real},
     geo   :: GeoRegion;
     throw :: Bool = false
 )
+```
+
+### Is GeoRegion In a GeoRegion
+```@docs
 in(
     cgeo :: GeoRegion,
     geo  :: GeoRegion;
@@ -18,12 +24,17 @@ in(
 
 ## On
 
+### Is Point On a GeoRegion
 ```@docs
 on(
     point :: Point2{<:Real},
     geo   :: GeoRegion;
     throw :: Bool = false
 )
+```
+
+### Is GeoRegion On a GeoRegion
+```@docs
 on(
     geo1 :: GeoRegion,
     geo2 :: GeoRegion;
@@ -34,7 +45,6 @@ on(
 ```
 
 ## Equivalence of GeoRegions
-
 ```@docs
 ==(
     geo1 :: GeoRegion,
@@ -43,21 +53,31 @@ on(
 isequal(
     geo1 :: GeoRegion,
     geo2 :: GeoRegion;
-    strict  :: Bool = true,
     verbose :: Bool = false
 )
+```
+
+## Does this GeoRegion already Exist?
+```@docs
 isgeo(
     geo  :: GeoRegion;
     path :: AbstractString = dirname(geo.path),
-    strict  :: Bool = true,
-    shape   :: Bool = true,
     throw   :: Bool = true,
     verbose :: Bool = false
 )
 ```
 
-## Equivalence of GeoRegion Properties
+## Equivalence of GeoRegion IDs
+```@docs
+isID(
+    ID   :: AbstractString;
+    path :: AbstractString = homedir(),
+    throw   :: Bool = true,
+    verbose :: Bool = false
+)
+```
 
+## Equivalence of GeoRegion Shapes
 ```@docs
 isgeoshape(
     geo  :: GeoRegion;
@@ -71,11 +91,5 @@ isgeoshape(
     path :: AbstractString = dirname(geo.path),
     returnID :: Bool = true,
     verbose  :: Bool = false
-)
-isID(
-    ID   :: AbstractString;
-    path :: AbstractString = homedir(),
-    throw   :: Bool = true,
-    verbose :: Bool = false
 )
 ```
