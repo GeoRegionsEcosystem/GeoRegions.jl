@@ -1,44 +1,54 @@
 using Dates
-# using GeoRegions
-# using Logging
+using GeoRegions
 using Test
 
-@info "$(now()) - No tests to be done for now, package is still heavily under development"
+@testset "Test Creation, Detection and Removal of GeoRegions" begin
 
-# @testset "Test Creation, Detection and Removal of GeoRegions" begin
+    geo = GeoRegion(
+        [0,360,360,0,0], [-30,-30,30,30,-30],
+        ID = "TRP", pID = "GLB", name = "Tropics",
+    )
+    @test !isgeo(geo,throw=false)
+    @test add(geo) === nothing
+    @test isgeo(geo,throw=false)
+    rm(geo)
+    @test !isID("TRP",throw=false)
 
-#     geo = RectRegion("TRP","GLB","Tropics",[30,-30,360,0])
-#     @test !isgeo(geo,throw=false)
-#     @test add(geo) === nothing
-#     @test isgeo(geo,throw=false)
-#     rm(geo)
+    geo1 = GeoRegion(
+        [0,360,360,0,0], [-30,-30,30,30,-30],
+        ID = "TRP", pID = "GLB", name = "Tropics", save = true
+    )
+    geo2 = GeoRegion(
+        [0,360,360,0,0], [-10,-10,10,10,-10],
+        ID = "TRP_DTP", pID = "GLB", name = "Deep Tropics", save = true
+    )
+    @test  isID("TRP",throw=false)
+    @test  isgeo(geo1,throw=false)
+    @test  rm(geo1) === nothing
+    @test !isgeo(geo1,throw=false)
+    @test  isgeo(geo2,throw=false)
+    @test  rmID("TRP_DTP") === nothing
+    @test !isgeo(geo2,throw=false)
 
-#     @test !isID("TRP",throw=false)
-#     geo1 = RectRegion("TRP","GLB","Tropics",[30,-30,360,0],save=true)
-#     geo2 = RectRegion("TRP_DTP","GLB","Deep Tropics",[10,-10,360,0],save=true)
-#     @test  isID("TRP",throw=false)
-#     @test  isgeo(geo1,throw=false)
-#     @test  rm(geo1) === nothing
-#     @test !isgeo(geo1,throw=false)
-#     @test  isgeo(geo2,throw=false)
-#     @test  rmID("TRP_DTP") === nothing
-#     @test !isgeo(geo2,throw=false)
+end
 
-# end
+@testset "Testing Directory Specification for Custom GeoRegions" begin
 
-# @testset "Testing Directory Specification for Custom GeoRegions" begin
+    @test !isID("TRP",path=pwd(),throw=false)
+    geo1 = GeoRegion(
+        [0,360,360,0,0], [-30,-30,30,30,-30],
+        ID = "TRP", pID = "GLB", name = "Tropics",
+        path = pwd(), save = true
+    )
+    @test !isID("TRP",throw=false)
+    @test  isID("TRP",path=pwd(),throw=false)
+    @test  isgeo(geo1,throw=false)
+    @test !isgeo(geo1,path=homedir(),throw=false)
+    @test_throws "not a valid GeoRegion identifier" rm(geo1,path=homedir())
+    @test  rm(geo1) === nothing
+    @test !isgeo(geo1,throw=false)
 
-#     @test !isID("TRP",path=pwd(),throw=false)
-#     geo1 = RectRegion("TRP","GLB","Tropics",[30,-30,360,0],path=pwd(),save=true)
-#     @test !isID("TRP",throw=false)
-#     @test  isID("TRP",path=pwd(),throw=false)
-#     @test  isgeo(geo1,throw=false)
-#     @test !isgeo(geo1,path=homedir(),throw=false)
-#     @test_throws "not a valid GeoRegion identifier" rm(geo1,path=homedir())
-#     @test  rm(geo1) === nothing
-#     @test !isgeo(geo1,throw=false)
-
-# end
+end
 
 # @testset "Testing GeoRegion in GeoRegion" begin
 
@@ -54,12 +64,12 @@ using Test
 
 # end
 
-# @testset "Test that all predefined GeoRegions work" begin
+@testset "Test that all predefined GeoRegions work" begin
 
-#     IDvec,_,_ = GeoRegions.listall()
-#     for ID in IDvec
-#         @test isID(ID,throw=false);
-#         @test isgeo(GeoRegion(ID),throw=false);
-#     end
+    IDvec,_ = GeoRegions.listall()
+    for ID in IDvec
+        @test isID(ID,throw=false);
+        @test isgeo(GeoRegion(ID),throw=false);
+    end
 
-# end
+end
