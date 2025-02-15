@@ -41,7 +41,8 @@ aspect = (maximum(slon)-minimum(slon))/(maximum(slat)-minimum(slat))
 fig = Figure()
 ax = Axis(
     fig[1,1],width=750,height=750/aspect,
-    limits=(minimum(slon)-2,maximum(slon)+2,minimum(slat)-2,maximum(slat)+2)
+    limits=(minimum(slon)-2,maximum(slon)+2,minimum(slat)-2,maximum(slat)+2),
+    xlabel = "Longitude / º", ylabel = "Latitude / º"
 )
 lines!(ax,clon,clat,color=:black,linewidth=3)
 lines!(ax,slon,slat,linewidth=5)

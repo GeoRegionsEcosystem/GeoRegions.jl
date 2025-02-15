@@ -25,22 +25,24 @@ hero:
       
 
 features:
-  - icon: <img width="64" height="64" src="https://img.icons8.com/arcade/64/markdown.png" alt="markdown"/>
-    title: Simple
-    details: Geographic Regions are defined using Longitude/Latitude coordinates
-    link: /basics/shape
-  - icon: <img width="64" height="64" src="https://img.icons8.com/arcade/64/markdown.png" alt="markdown"/>
-    title: Predefined GeoRegions
-    details: Many predefined Geographic Regions bundled from different datasets
+  - title: 💥 Simple
+    details: Geographic Regions are defined using Longitude/Latitude coordinates.
+    link: /basics/shape.
+  - title: 🌍 Predefined GeoRegions
+    details: Many predefined Geographic Regions bundled from different datasets included!
     link: /basics/predefined/datasets
-  - icon: <img width="64" height="64" src="https://img.icons8.com/arcade/64/markdown.png" alt="markdown"/>
-    title: Customizable
-    details: Define your own custom Geographic Regions and save them for later
-    link: /tutorials/projects/addreadrm
-  - icon: <img width="64" height="64" src="https://img.icons8.com/arcade/64/markdown.png" alt="markdown"/>
-    title: Useful
-    details: Check if points or a region are in/on a GeoRegion?
+  - title: ⚙️ Customizable
+    details: Define your own custom Geographic Regions for immediate use.
+    link: /basics/create
+  - title: 🔍 Useful
+    details: Check if points or a region are in/on a GeoRegion? Sure thing.
     link: /tutorials/using/isin
+  - title: 🔄 Rotation
+    details: Want to "de"rotate your data for better analysis? We've got you covered!
+    link: /tutorials/using/derotate
+  - title: 🗂️ Save for Later
+    details: Want to save your custom GeoRegions for later? Start here!
+    link: /tutorials/projects/addreadrm
 ---
 ```
 
