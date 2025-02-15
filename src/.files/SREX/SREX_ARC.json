@@ -1,1 +1,1 @@
-{"ID":"SREX_ARC","pID":"GLB","name":"Arctic","rotation":0.0,"geometry":{"level":1,"longitude":[-180.0,-180.0,180.0,180.0,-180.0],"latitude":[67.5,90.0,90.0,67.5,67.5]}}
+{"ID":"SREX_ARC","pID":"GLB","name":"Arctic","rotation":0.0,"geometry":{"longitude":[-180.0,-180.0,180.0,180.0,-180.0],"latitude":[67.5,90.0,90.0,67.5,67.5]}}

@@ -1,1 +1,1 @@
-{"ID":"GF_ALA","pID":"GLB","name":"Alaska","rotation":0.0,"geometry":{"level":1,"longitude":[180.0,255.0,255.0,180.0,180.0],"latitude":[75.0,75.0,50.0,50.0,75.0]}}
+{"ID":"GF_ALA","pID":"GLB","name":"Alaska","rotation":0.0,"geometry":{"longitude":[180.0,255.0,255.0,180.0,180.0],"latitude":[75.0,75.0,50.0,50.0,75.0]}}

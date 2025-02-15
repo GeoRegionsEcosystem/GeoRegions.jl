@@ -1,1 +1,1 @@
-{"ID":"SREX_NAS","pID":"GLB","name":"North Asia","rotation":0.0,"geometry":{"level":1,"longitude":[40.0,40.0,180.0,180.0,40.0],"latitude":[50.0,70.0,70.0,50.0,50.0]}}
+{"ID":"SREX_NAS","pID":"GLB","name":"North Asia","rotation":0.0,"geometry":{"longitude":[40.0,40.0,180.0,180.0,40.0],"latitude":[50.0,70.0,70.0,50.0,50.0]}}

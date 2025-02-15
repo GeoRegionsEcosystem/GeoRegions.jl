@@ -1,1 +1,1 @@
-{"ID":"SREX_MED","pID":"GLB","name":"South Europe/Mediterranean","rotation":0.0,"geometry":{"level":1,"longitude":[-10.0,-10.0,40.0,40.0,-10.0],"latitude":[30.0,45.0,45.0,30.0,30.0]}}
+{"ID":"SREX_MED","pID":"GLB","name":"South Europe/Mediterranean","rotation":0.0,"geometry":{"longitude":[-10.0,-10.0,40.0,40.0,-10.0],"latitude":[30.0,45.0,45.0,30.0,30.0]}}

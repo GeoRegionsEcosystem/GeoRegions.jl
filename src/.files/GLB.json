@@ -1,1 +1,1 @@
-{"ID":"GLB","pID":"GLB","name":"Globe","rotation":0.0,"geometry":{"level":1,"longitude":[0.0,360.0,360.0,0.0,0.0],"latitude":[90.0,90.0,-90.0,-90.0,90.0]}}
+{"ID":"GLB","pID":"GLB","name":"Globe","rotation":0.0,"geometry":{"longitude":[0.0,360.0,360.0,0.0,0.0],"latitude":[90.0,90.0,-90.0,-90.0,90.0]}}

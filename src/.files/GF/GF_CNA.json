@@ -1,1 +1,1 @@
-{"ID":"GF_CNA","pID":"GLB","name":"Central North America","rotation":0.0,"geometry":{"level":1,"longitude":[255.0,275.0,275.0,255.0,255.0],"latitude":[50.0,50.0,30.0,30.0,50.0]}}
+{"ID":"GF_CNA","pID":"GLB","name":"Central North America","rotation":0.0,"geometry":{"longitude":[255.0,275.0,275.0,255.0,255.0],"latitude":[50.0,50.0,30.0,30.0,50.0]}}

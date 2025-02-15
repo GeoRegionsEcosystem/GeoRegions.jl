@@ -1,1 +1,1 @@
-{"ID":"SREX_SAU","pID":"GLB","name":"South Australia/NewZealand","rotation":0.0,"geometry":{"level":1,"longitude":[110.0,110.0,180.0,180.0,110.0],"latitude":[-50.0,-30.0,-30.0,-50.0,-50.0]}}
+{"ID":"SREX_SAU","pID":"GLB","name":"South Australia/NewZealand","rotation":0.0,"geometry":{"longitude":[110.0,110.0,180.0,180.0,110.0],"latitude":[-50.0,-30.0,-30.0,-50.0,-50.0]}}

@@ -1,1 +1,1 @@
-{"ID":"AR6_EIO","pID":"GLB","name":"Equatorial Indian Ocean","rotation":0.0,"geometry":{"level":1,"longitude":[46.5,46.5,53.0,93.0,93.0,46.5],"latitude":[-10.0,2.3,7.0,7.0,-10.0,-10.0]}}
+{"ID":"AR6_EIO","pID":"GLB","name":"Equatorial Indian Ocean","rotation":0.0,"geometry":{"longitude":[46.5,46.5,53.0,93.0,93.0,46.5],"latitude":[-10.0,2.3,7.0,7.0,-10.0,-10.0]}}

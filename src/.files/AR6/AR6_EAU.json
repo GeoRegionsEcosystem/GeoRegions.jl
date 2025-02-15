@@ -1,1 +1,1 @@
-{"ID":"AR6_EAU","pID":"GLB","name":"Eastern Australia","rotation":0.0,"geometry":{"level":1,"longitude":[145.5,145.5,155.0,155.0,145.5],"latitude":[-32.9,-20.0,-20.0,-38.0,-32.9]}}
+{"ID":"AR6_EAU","pID":"GLB","name":"Eastern Australia","rotation":0.0,"geometry":{"longitude":[145.5,145.5,155.0,155.0,145.5],"latitude":[-32.9,-20.0,-20.0,-38.0,-32.9]}}
