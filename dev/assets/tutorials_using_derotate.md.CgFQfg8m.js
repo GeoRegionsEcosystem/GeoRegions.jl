@@ -1,4 +1,4 @@
-import{_ as i,c as a,o as n,ai as t}from"./chunks/framework.ERdqLCt_.js";const e="/GeoRegions.jl/dev/assets/esszxyv.CRTH70aj.png",E=JSON.parse('{"title":"Derotating Coordinates around a given GeoRegion","description":"","frontmatter":{},"headers":[],"relativePath":"tutorials/using/derotate.md","filePath":"tutorials/using/derotate.md","lastUpdated":null}'),l={name:"tutorials/using/derotate.md"};function p(h,s,k,o,r,d){return n(),a("div",null,s[0]||(s[0]=[t(`<h1 id="Derotating-Coordinates-around-a-given-GeoRegion" tabindex="-1">Derotating Coordinates around a given GeoRegion <a class="header-anchor" href="#Derotating-Coordinates-around-a-given-GeoRegion" aria-label="Permalink to &quot;Derotating Coordinates around a given GeoRegion {#Derotating-Coordinates-around-a-given-GeoRegion}&quot;">​</a></h1><p>Using the rotation and centroid properties of a GeoRegion, we are able to perform derotation of coordinates about the centroid of a given GeoRegion, allowing us to project longitude/latitude coordinates and even data into a x/y-cartesian coordinate system.</p><p>Let us now setup the example</p><div class="language-julia vp-adaptive-theme"><button title="Copy Code" class="copy"></button><span class="lang">julia</span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">using</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;"> GeoRegions</span></span>
+import{_ as i,c as a,o as n,ai as t}from"./chunks/framework.ERdqLCt_.js";const e="/GeoRegions.jl/dev/assets/hkghbvh.CRTH70aj.png",E=JSON.parse('{"title":"Derotating Coordinates around a given GeoRegion","description":"","frontmatter":{},"headers":[],"relativePath":"tutorials/using/derotate.md","filePath":"tutorials/using/derotate.md","lastUpdated":null}'),l={name:"tutorials/using/derotate.md"};function p(h,s,k,o,r,d){return n(),a("div",null,s[0]||(s[0]=[t(`<h1 id="Derotating-Coordinates-around-a-given-GeoRegion" tabindex="-1">Derotating Coordinates around a given GeoRegion <a class="header-anchor" href="#Derotating-Coordinates-around-a-given-GeoRegion" aria-label="Permalink to &quot;Derotating Coordinates around a given GeoRegion {#Derotating-Coordinates-around-a-given-GeoRegion}&quot;">​</a></h1><p>Using the rotation and centroid properties of a GeoRegion, we are able to perform derotation of coordinates about the centroid of a given GeoRegion, allowing us to project longitude/latitude coordinates and even data into a x/y-cartesian coordinate system.</p><p>Let us now setup the example</p><div class="language-julia vp-adaptive-theme"><button title="Copy Code" class="copy"></button><span class="lang">julia</span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">using</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;"> GeoRegions</span></span>
 <span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">using</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;"> DelimitedFiles</span></span>
 <span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">using</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;"> CairoMakie</span></span>
 <span class="line"></span>
@@ -37,28 +37,28 @@ import{_ as i,c as a,o as n,ai as t}from"./chunks/framework.ERdqLCt_.js";const e
 <span class="line"><span></span></span>
 <span class="line"><span>ax1 = Axis(</span></span>
 <span class="line"><span>    fig[1,1],width=375,height=375,</span></span>
-<span class="line"><span>    limits=(-2000,2000,-2000,2000)</span></span>
+<span class="line"><span>    limits=(-1,1,-1,1).*2e6</span></span>
 <span class="line"><span>)</span></span>
 <span class="line"><span>lines!(ax1,rclon1,rclat1,color=:black,linewidth=3)</span></span>
 <span class="line"><span>lines!(ax1,rlon1,rlat1,linewidth=5)</span></span>
 <span class="line"><span></span></span>
 <span class="line"><span>ax2 = Axis(</span></span>
 <span class="line"><span>    fig[1,2],width=375,height=375,</span></span>
-<span class="line"><span>    limits=(-2000,2000,-2000,2000)</span></span>
+<span class="line"><span>    limits=(-1,1,-1,1).*2e6</span></span>
 <span class="line"><span>)</span></span>
 <span class="line"><span>lines!(ax2,rclon2,rclat2,color=:black,linewidth=3)</span></span>
 <span class="line"><span>lines!(ax2,rlon2,rlat2,linewidth=5)</span></span>
 <span class="line"><span></span></span>
 <span class="line"><span>ax3 = Axis(</span></span>
 <span class="line"><span>    fig[2,1],width=375,height=375,</span></span>
-<span class="line"><span>    limits=(-2000,2000,-2000,2000)</span></span>
+<span class="line"><span>    limits=(-1,1,-1,1).*2e6</span></span>
 <span class="line"><span>)</span></span>
 <span class="line"><span>lines!(ax3,rclon3,rclat3,color=:black,linewidth=3)</span></span>
 <span class="line"><span>lines!(ax3,rlon3,rlat3,linewidth=5)</span></span>
 <span class="line"><span></span></span>
 <span class="line"><span>ax4 = Axis(</span></span>
 <span class="line"><span>    fig[2,2],width=375,height=375,</span></span>
-<span class="line"><span>    limits=(-2000,2000,-2000,2000)</span></span>
+<span class="line"><span>    limits=(-1,1,-1,1).*2e6</span></span>
 <span class="line"><span>)</span></span>
 <span class="line"><span>lines!(ax4,rclon4,rclat4,color=:black,linewidth=3)</span></span>
 <span class="line"><span>lines!(ax4,rlon4,rlat4,linewidth=5)</span></span>
