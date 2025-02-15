@@ -34,6 +34,7 @@ makedocs(;
                 "Is it in a GeoRegion?"        => "tutorials/using/isin.md",
                 "Is it on a GeoRegion?"        => "tutorials/using/ison.md",
                 "Equivalence in GeoRegions.jl" => "tutorials/using/isequal.md",
+                "Derotation of Coordinates"    => "tutorials/using/derotate.md",
             ],
             "GeoRegions.jl for Projects"   => [
                 "Setting Up"        => "tutorials/projects/setup.md",

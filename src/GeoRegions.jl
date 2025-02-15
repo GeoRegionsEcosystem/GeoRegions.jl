@@ -131,7 +131,7 @@ include("georegions/tables.jl")
 include("is/isequal.jl")
 include("is/isgeo.jl")
 include("is/isgeoshape.jl")
-include("is/isiD.jl")
+include("is/isID.jl")
 include("is/isin.jl")
 include("is/ison.jl")
 

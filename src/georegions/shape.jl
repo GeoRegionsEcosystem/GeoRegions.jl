@@ -27,7 +27,7 @@ function coordinates(
     geo :: GeoRegion;
     n   :: Int = 1,
     derotate :: Bool = false,
-    rotation :: Real = geo.θ
+    rotation :: Real = 0
 )
 
     shape = geo.geometry.shape

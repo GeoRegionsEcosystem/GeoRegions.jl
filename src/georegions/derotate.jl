@@ -27,7 +27,7 @@ function derotatecoordinates(
     lon :: Vector{<:Real},
     lat :: Vector{<:Real},
     geo :: GeoRegion;
-    rotation :: Real = geo.θ
+    rotation :: Real = 0
 )
 
     npnts = length(lon)
@@ -66,7 +66,7 @@ function derotatecoordinates!(
     lon :: Vector{<:Real},
     lat :: Vector{<:Real},
     geo :: GeoRegion;
-    rotation :: Real = geo.θ
+    rotation :: Real = 0
 )
 
     npnts = length(lon)
@@ -105,7 +105,7 @@ Returns
 function derotatecoordinates(
     pnts :: Vector{Point2{<:Real}},
     geo  :: GeoRegion;
-    rotation :: Real = geo.θ
+    rotation :: Real = 0
 )
 
     npnts = length(pnts)
@@ -149,12 +149,12 @@ function derotatepoint(
     lon :: Real,
     lat :: Real,
     geo :: GeoRegion;
-    rotation :: Real = geo.θ
+    rotation :: Real = 0
 )
 
     Xc,Yc = geo.geometry.centroid
     ir = haversine((lon,lat),(Xc,Yc))
-    iθ = atand(lat-Yc,lon-Xc) - rotation
+    iθ = atand(lat-Yc,lon-Xc) - (geo.θ - rotation)
 
     return ir * cosd(iθ), ir * sind(iθ)
 
@@ -186,12 +186,12 @@ Returns
 function derotatepoint(
     pnt :: Point2{<:Real},
     geo :: GeoRegion;
-    rotation :: Real = geo.θ
+    rotation :: Real = 0
 )
 
     Xc,Yc = geo.geometry.centroid
     ir = haversine((pnt[1],pnt[2]),(Xc,Yc))
-    iθ = atand(pnt[1]-Yc,pnt[2]-Xc) - rotation
+    iθ = atand(pnt[1]-Yc,pnt[2]-Xc) - (geo.θ - rotation)
 
     return ir * cosd(iθ),ir * sind(iθ)
 
