@@ -71,3 +71,33 @@ length(lon), length(nlon)
     The shape is defined by 8 sides. Therefore there are by default 8 + 1 = 9 coordinate points to close the polygon. If we specify 50 segments a side, we therefore have 400 + 1 = 401 coordinate points to close the polygon.
 
 See the API [here](/api/shape#GeoRegions.coordinates)
+
+## Calculate the centroid of a GeoRegion
+
+We the GeometryOps.jl function `centroid()` to find the longitude and latitude coordinates of the centroid of the GeoRegion.
+
+```@example properties
+lonc,latc = centroid(geo)
+scatter!(ax,lonc,latc,markersize=20)
+fig
+```
+
+## Calculate the "Unrotated" Cartesian Shape for the GeoRegion
+
+As mentioned above, all GeoRegions have the field `θ` that denotes the rotation. Using this field we can "unrotate" the GeoRegion, so that we can calculate a gridded field in an X-Y direction. We can also calculate the corresponding "unrotated" shape of the GeoRegion in X-Y coordinates (meters).
+
+```@example properties
+X,Y = unrotatedcartesian(geo)
+X2,Y2 = unrotatedcartesian(geo,rotation=30)
+
+aspect = (maximum(X)-minimum(X))/(maximum(Y2)-minimum(Y2))
+fig = Figure()
+ax = Axis(
+    fig[1,1],width=750,height=750/aspect,
+)
+lines!(ax,X,Y,linewidth=3)
+lines!(ax,X2,Y2,linewidth=3)
+resize_to_layout!(fig)
+
+fig
+```

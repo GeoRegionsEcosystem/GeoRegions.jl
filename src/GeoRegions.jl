@@ -2,6 +2,7 @@ module GeoRegions
 
 ## Modules Used
 using Dates
+using Distances
 using GeometryBasics
 using Glob
 using JSON3
@@ -9,7 +10,7 @@ using Logging
 using PrettyTables
 
 import Base: show, rm, in, ==, !==, isequal
-import GeometryOps: within, touches
+import GeometryOps: within, touches, centroid
 
 ## Exporting the following functions:
 export
@@ -20,7 +21,7 @@ export
 
         setupGeoRegions, loadGeoRegions, addGeoRegions, deleteGeoRegions, tableGeoRegions,
 
-        in, on, coordinates,
+        in, on, coordinates, unrotatedcartesian, centroid,
         Point, Point2, Polygon
 
 ## Abstract types

@@ -119,7 +119,7 @@ Which returns a `Vector` of `GeoRegion` types.
 !!! tip "`GLB` is automatically included"
     The `GLB` GeoRegion will automatically be included in this vector, so your vector will always have at least 1 element inside it.
 
-See the API [here]()
+See the API [here](/api/project#GeoRegions.loadGeoRegions)
 
 ## 4. Overwriting Information for a Previously Defined GeoRegion
 
