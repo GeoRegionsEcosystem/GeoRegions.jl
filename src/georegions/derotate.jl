@@ -191,7 +191,7 @@ function derotatepoint(
 
     Xc,Yc = geo.geometry.centroid
     ir = haversine((pnt[1],pnt[2]),(Xc,Yc))
-    iθ = atand(pnt[1]-Yc,pnt[2]-Xc) - (geo.θ - rotation)
+    iθ = atand(pnt[2]-Yc,pnt[1]-Xc) - (geo.θ - rotation)
 
     return ir * cosd(iθ),ir * sind(iθ)
 
