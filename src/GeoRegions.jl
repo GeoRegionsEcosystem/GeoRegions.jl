@@ -21,7 +21,7 @@ export
 
         setupGeoRegions, loadGeoRegions, addGeoRegions, deleteGeoRegions, tableGeoRegions,
 
-        in, on, coordinates, unrotatedcartesian, centroid,
+        in, on, coordinates, derotatecoordinates, derotatecoordinates!, derotatepoint,
         Point, Point2, Polygon
 
 ## Abstract types
@@ -124,6 +124,7 @@ include("georegions/list.jl")
 include("georegions/project.jl")
 include("georegions/remove.jl")
 include("georegions/shape.jl")
+include("georegions/derotate.jl")
 include("georegions/show.jl")
 include("georegions/tables.jl")
 

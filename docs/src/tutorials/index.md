@@ -20,6 +20,12 @@ const using = [
     src: "images/isequal.png",
     caption: "Equivalence in GeoRegions.jl",
     desc: "Retrieving the Shape of a GeoRegion"
+  },
+  {
+    href: "using/derotate",
+    src: "images/derotate.png",
+    caption: "Derotation",
+    desc: "Derotating shapes and coordinates around GeoRegions"
   }
 ];
 
