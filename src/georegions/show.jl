@@ -2,12 +2,13 @@ function show(io::IO, geo::GeoRegion)
 	shape = geo.geometry.shape
     print(io,
 		"The GeoRegion $(geo.ID) has the following properties:\n",
-		"    Region ID         (ID) : ", geo.ID, 	'\n',
-		"    Parent ID        (pID) : ", geo.pID, 	'\n',
-		"    Name            (name) : ", geo.name, '\n',
-		"    Bounds       (N,S,E,W) : ", geo.N, ", ", geo.S, ", ", geo.E, ", ", geo.W, '\n',
-		"    Rotation           (θ) : ", geo.θ, 	'\n',
-		"    Shape (geometry.shape) : ", typeof(shape), "($(length(shape)))", '\n',
-		"    File Path       (path) : ", geo.path, '\n',
+		"    Region ID     (ID) : ", geo.ID, 	'\n',
+		"    Parent ID    (pID) : ", geo.pID, 	'\n',
+		"    Name        (name) : ", geo.name, '\n',
+		"    Bounds   (N,S,E,W) : ", geo.N, ", ", geo.S, ", ", geo.E, ", ", geo.W, '\n',
+		"    Rotation       (θ) : ", geo.θ, 	'\n',
+		"    File Path   (path) : ", geo.path, '\n',
+		"    Centroid (geometry.centroid) : ", geo.geometry.centroid, '\n',
+		"    Shape       (geometry.shape) : ", typeof(shape), "($(length(shape)))", '\n',
 	)
 end

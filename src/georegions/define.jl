@@ -41,10 +41,11 @@ function GeoRegion(
     lon = FT.(geo.geometry.longitude)
     lat = FT.(geo.geometry.latitude)
     shape = Point.(lon,lat)
+    polygon = Polygon(shape)
     N,S,E,W = checkbounds(lon,lat)
     return GeoRegion{ST,FT}(
         geo.ID, geo.pID, geo.name, fID, N, S, E, W, geo.rotation,
-        Geometry{FT}(shape, Polygon(shape))
+        Geometry{FT}(shape, centroid(polygon), polygon)
     )
 
 end
@@ -120,6 +121,7 @@ function GeoRegion(
     N,S,E,W = checkbounds(lon,lat)
     gpath = geopath(path)
     shape = Point.(lon,lat)
+    polygon = Polygon(shape)
     
     if save
 
@@ -158,7 +160,7 @@ function GeoRegion(
 
     return GeoRegion{ST,FT}(
         ID, pID, name, joinpath(gpath,"$ID.json"), N, S, E, W, rotation,
-        Geometry{FT}(shape, Polygon(shape))
+        Geometry{FT}(shape, centroid(polygon), polygon)
     )
 
 end
