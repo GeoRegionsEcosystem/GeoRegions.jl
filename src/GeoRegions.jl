@@ -60,20 +60,20 @@ abstract type AbstractJSONRegion end
     Geometry
 
 Struct containing the geometry/shape properties of a GeoRegion. All `Geometry` types contain the following fields:
-* `level` - An `Int` type that determines the nested-level of this particular shape/polygon geometry within the GeoRegion.
 * `shape` - A vector of `Point2` (see [GeometryBasics.jl](https://github.com/JuliaGeometry/GeometryBasics.jl)) Types, defining a non-rectilinear shape of the GeoRegion.
+* `centroid` - A `Point2` Type, defining the centroid of the GeoRegion.
 * `polygon` - A `Polygon` Type (see [GeometryBasics.jl](https://github.com/JuliaGeometry/GeometryBasics.jl)), which is useful when doing checks on polygons using [GeometryOps.jl](https://github.com/JuliaGeo/GeometryOps.jl).
 """
 struct Geometry{FT<:Real}
-    shape   :: Vector{Point2{FT}}
-    polygon :: Polygon
+    shape    :: Vector{Point2{FT}}
+    centroid :: Point2{FT}
+    polygon  :: Polygon
 end
 
 """
     JSONGeometry
 
 Struct containing the geometry/shape properties of a GeoRegion that are needed to be saved into JSON files. All `JSONGeometry` types contain the following fields:
-* `level` - An `Int` type that determines the nested-level of this particular shape/polygon geometry within the GeoRegion.
 * `longitude` - A vector of `Float`s that contain the longitudes.
 * `latitude` - A vector of `Float`s that contain the latitudes.
 """
@@ -120,7 +120,6 @@ ar6dir  = joinpath(geopredefined,"AR6")
 # Including other files in the module
 include("georegions/define.jl")
 include("georegions/add.jl")
-include("georegions/is.jl")
 include("georegions/list.jl")
 include("georegions/project.jl")
 include("georegions/remove.jl")
@@ -128,8 +127,11 @@ include("georegions/shape.jl")
 include("georegions/show.jl")
 include("georegions/tables.jl")
 
-include("isin/isin.jl")
-include("isin/ison.jl")
-# include("isin/extrastuff.jl")
+include("is/isequal.jl")
+include("is/isgeo.jl")
+include("is/isgeoshape.jl")
+include("is/isiD.jl")
+include("is/isin.jl")
+include("is/ison.jl")
 
 end # module
