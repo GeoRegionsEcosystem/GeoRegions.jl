@@ -110,28 +110,6 @@ struct JSONRegion{ST<:AbstractString, FT<:Real} <: AbstractGeoRegion
     geometry :: JSONGeometry{FT}
 end
 
-struct MultiGeoRegion{ST<:AbstractString, FT<:Real} <: AbstractGeoRegion
-      ID :: ST
-     pID :: ST
-    name :: ST
-    path :: ST
-       N :: FT
-       S :: FT
-       E :: FT
-       W :: FT
-       θ :: FT
-    geometry :: Vector{Geometry{FT}}
-end
-
-struct JSONMultiRegion{ST<:AbstractString, FT<:Real} <: AbstractGeoRegion
-    ID       :: ST
-    pID      :: ST
-    name     :: ST
-    path     :: ST
-    rotation :: FT
-    geometry :: Vector{JSONGeometry{FT}}
-end
-
 modulelog() = "$(now()) - GeoRegions.jl"
 geopath(path) = splitpath(path)[end] !== ".georegions" ? joinpath(path,".georegions") : path
 
