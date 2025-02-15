@@ -18,7 +18,7 @@ export
         ==, !==, isequal, isgeo, isgeoshape, isID,
         add, rm, rmID, overwrite,
 
-        setupGeoRegions, readGeoRegions, addGeoRegions, deleteGeoRegions, tableGeoRegions,
+        setupGeoRegions, loadGeoRegions, addGeoRegions, deleteGeoRegions, tableGeoRegions,
 
         in, on, coordinates,
         Point, Point2, Polygon

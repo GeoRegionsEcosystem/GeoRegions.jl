@@ -52,6 +52,7 @@ function loadGeoRegions(;
     giorgi :: Bool = false,
     srex   :: Bool = false,
     ar6    :: Bool = false,
+    warn   :: Bool = true
 )
 
     IDs    = []
@@ -66,8 +67,8 @@ function loadGeoRegions(;
 
     ngeo = length(IDs)
     geovec = Vector{GeoRegion}(undef,ngeo)
-    for iID in 1 : nID
-        geovec[iID] = GeoRegion(IDs[iID],gpaths[iID])
+    for iID in 1 : ngeo
+        geovec[iID] = GeoRegion(IDs[iID],path=gpaths[iID])
     end
     
     return geovec
