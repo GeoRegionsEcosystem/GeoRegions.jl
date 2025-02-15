@@ -7,7 +7,6 @@ function show(io::IO, geo::GeoRegion)
 		"    Name            (name) : ", geo.name, '\n',
 		"    Bounds       (N,S,E,W) : ", geo.N, ", ", geo.S, ", ", geo.E, ", ", geo.W, '\n',
 		"    Rotation           (θ) : ", geo.θ, 	'\n',
-		"    Level (geometry.level) : ", geo.geometry.level, '\n',
 		"    Shape (geometry.shape) : ", typeof(shape), "($(length(shape)))", '\n',
 		"    File Path       (path) : ", geo.path, '\n',
 	)

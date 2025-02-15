@@ -64,7 +64,6 @@ Struct containing the geometry/shape properties of a GeoRegion. All `Geometry` t
 * `polygon` - A `Polygon` Type (see [GeometryBasics.jl](https://github.com/JuliaGeometry/GeometryBasics.jl)), which is useful when doing checks on polygons using [GeometryOps.jl](https://github.com/JuliaGeo/GeometryOps.jl).
 """
 struct Geometry{FT<:Real}
-    level   :: Int
     shape   :: Vector{Point2{FT}}
     polygon :: Polygon
 end
@@ -78,7 +77,6 @@ Struct containing the geometry/shape properties of a GeoRegion that are needed t
 * `latitude` - A vector of `Float`s that contain the latitudes.
 """
 struct JSONGeometry{FT<:Real}
-    level     :: Int
     longitude :: Vector{FT}
     latitude  :: Vector{FT}
 end

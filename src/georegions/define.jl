@@ -44,7 +44,7 @@ function GeoRegion(
     N,S,E,W = checkbounds(lon,lat)
     return GeoRegion{ST,FT}(
         geo.ID, geo.pID, geo.name, fID, N, S, E, W, geo.rotation,
-        Geometry{FT}(geo.geometry.level, shape, Polygon(shape))
+        Geometry{FT}(shape, Polygon(shape))
     )
 
 end
@@ -144,7 +144,7 @@ function GeoRegion(
         !isdir(gpath) ? mkpath(gpath) : nothing
         open(joinpath(gpath,"$ID.json"), "w") do io
             JSON3.write(io,JSONRegion{ST,FT}(
-                ID, pID, name, rotation, JSONGeometry{FT}(1, lon, lat)
+                ID, pID, name, rotation, JSONGeometry{FT}(lon, lat)
             ))
         end
 
@@ -158,7 +158,7 @@ function GeoRegion(
 
     return GeoRegion{ST,FT}(
         ID, pID, name, joinpath(gpath,"$ID.json"), N, S, E, W, rotation,
-        Geometry{FT}(1, shape, Polygon(shape))
+        Geometry{FT}(shape, Polygon(shape))
     )
 
 end
