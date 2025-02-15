@@ -10,7 +10,7 @@ Extracts information of the GeoRegion with the ID `ID`.  If no GeoRegion with th
 Arguments
 =========
 - `ID` : The ID that will be used to identify the GeoRegion.
-            If the ID is not valid (i.e. not being used), then an error will be thrown.
+         If the ID is not valid (i.e. not being used), then an error will be thrown.
 
 Keyword Arguments
 =================
@@ -65,7 +65,7 @@ end
         FT = Float64
     ) -> geo :: GeoRegion{ST,FT}
 
-Creates a polygonal GeoRegion.
+Creates a GeoRegion.
 
 Arguments
 =========
@@ -75,7 +75,7 @@ Arguments
 Keyword Arguments
 =========
 - `ID` : The keyword ID that will be used to identify the GeoRegion.
-            If the ID is already in use, then an error will be thrown.
+         If the ID is already in use, then an error will be thrown.
 - `pID` : The ID of the parent GeoRegion where information can be extracted from.
 - `name` : A name for the GeoRegion (meta information, can be used in Logging).
 - `rotation` : Rotation of GeoRegion from longitude/latitude in **degrees**.

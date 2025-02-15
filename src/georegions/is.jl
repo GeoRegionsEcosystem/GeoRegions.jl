@@ -278,9 +278,9 @@ function isIDinlist(
 
     if sum(IDvec.==ID) == 0
         if throw
-            error("$(modulelog()) - $(ID) is not a valid GeoRegion identifier, use RectRegion(), TiltRegion() or PolyRegion() to add this GeoRegion to the list.")
+            error("$(modulelog()) - $(ID) is not a valid GeoRegion identifier, use GeoRegion() to add this GeoRegion to the list.")
         else
-            verbose ? (@warn "$(modulelog()) - $(ID) is not a valid GeoRegion identifier, use RectRegion(), TiltRegion() or PolyRegion() to add this GeoRegion to the list.") : nothing
+            verbose ? (@warn "$(modulelog()) - $(ID) is not a valid GeoRegion identifier, use GeoRegion() to add this GeoRegion to the list.") : nothing
             return false
         end
     else

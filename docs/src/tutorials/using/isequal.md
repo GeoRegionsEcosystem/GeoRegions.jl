@@ -22,7 +22,7 @@ lon,lat = coordinates(geo)
 nothing
 ```
 
-We define `RectRegion`s that are of the same shape (note that because `save = false` that the same `ID` can be used to define these GeoRegions):
+We define `GeoRegion`s that are of the same shape (note that because `save = false` that the same `ID` can be used to define these GeoRegions):
 ```@example equivalence
 geo2 = GeoRegion(lon,     lat,ID="AR6_NWS",pID="GLB",name="TSTNWS") # Different name
 geo3 = GeoRegion(lon,     lat,ID="TST_NWS",pID="GLB",name=geo.name) # Different ID
