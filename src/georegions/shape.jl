@@ -3,7 +3,7 @@
         geo :: GeoRegion;
         n   :: Int = 1,
         derotate :: Bool = false,
-        rotation :: Real = geo.θ
+        rotation :: Real = 0
     ) -> lon :: Vector{<:Real}, lat :: Vector{<:Real}
 
 For a given GeoRegion, create longitude and latitude vectors of the shape.
@@ -16,7 +16,7 @@ Keyword Arguments
 =================
 - `n` : The number of segments on each side of the shape.
 - `derotate` : If `true`, perform a "derotation" on the shape.
-- `rotation` : Angle (in degrees) at which to "derotate" the shape about the GeoRegion centroid and project into the X-Y cartesian coordinate system (in meters). A positive value will turn the shape in the clockwise direction. Default is `geo.θ`.
+- `rotation` : Angle (in degrees) of rotation for the final "derotated" shape about the GeoRegion centroid and projected into the X-Y cartesian coordinate system (in meters). A positive value relative to `geo.θ` will turn the final values about the centroid in the anti-clockwise direction. Default is 0.
 
 Returns
 =======

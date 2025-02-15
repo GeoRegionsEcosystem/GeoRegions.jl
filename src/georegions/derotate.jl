@@ -3,7 +3,7 @@
         lon :: Vector{<:Real},
         lat :: Vector{<:Real},
         geo :: GeoRegion;
-        rotation :: Real = geo.θ
+        rotation :: Real = 0
     ) -> X :: Vector{<:Real}, Y :: Vector{<:Real}
 
 Derotate coordinates given by the vectors of longitude and latitude, around the centroid of the GeoRegion, and return their X and Y cartesian positions in meters.
@@ -16,7 +16,7 @@ Arguments
 
 Keyword Arguments
 =================
-- `rotation` : Angle (in degrees) at which to "unrotate" the shape about the GeoRegion centroid and project into the X-Y cartesian coordinate system (in meters). A positive value will turn the shape in the clockwise direction. Default is `geo.θ`.
+- `rotation` : Angle (in degrees) of rotation for the final "derotated" coordinates about the GeoRegion centroid and projected into the X-Y cartesian coordinate system (in meters). A positive value relative to `geo.θ` will turn the final values about the centroid in the anti-clockwise direction. Default is 0.
 
 Returns
 =======
@@ -47,7 +47,7 @@ end
         lon :: Vector{<:Real},
         lat :: Vector{<:Real},
         geo :: GeoRegion;
-        rotation :: Real = geo.θ
+        rotation :: Real = 0
     ) -> nothing
 
 In-place mutation of the `lon` and `lat` vectors. Derotate coordinates given by the vectors of longitude and latitude, around the centroid of the GeoRegion, and return their X and Y cartesian positions in meters.
@@ -60,7 +60,7 @@ Arguments
 
 Keyword Arguments
 =================
-- `rotation` : Angle (in degrees) at which to "unrotate" the shape about the GeoRegion centroid and project into the X-Y cartesian coordinate system (in meters). A positive value will turn the shape in the clockwise direction. Default is `geo.θ`.
+- `rotation` : Angle (in degrees) of rotation for the final "derotated" coordinates about the GeoRegion centroid and projected into the X-Y cartesian coordinate system (in meters). A positive value relative to `geo.θ` will turn the final values about the centroid in the anti-clockwise direction. Default is 0.
 """
 function derotatecoordinates!(
     lon :: Vector{<:Real},
@@ -83,7 +83,7 @@ end
     derotatecoordinates(
         pnts :: Vector{<:Real},
         geo  :: GeoRegion;
-        rotation :: Real = geo.θ
+        rotation :: Real = 0
     ) -> X :: Vector{<:Real}, Y :: Vector{<:Real}
 
 Derotate coordinates given by a vector of `Point2` Type, around the centroid of the GeoRegion `geo`, and return their X and Y cartesian positions in meters.
@@ -95,7 +95,7 @@ Arguments
 
 Keyword Arguments
 =================
-- `rotation` : Angle (in degrees) at which to "unrotate" the shape about the GeoRegion centroid and project into the X-Y cartesian coordinate system (in meters). A positive value will turn the shape in the clockwise direction. Default is `geo.θ`.
+- `rotation` : Angle (in degrees) of rotation for the final "derotated" coordinates about the GeoRegion centroid and projected into the X-Y cartesian coordinate system (in meters). A positive value relative to `geo.θ` will turn the final values about the centroid in the anti-clockwise direction. Default is 0.
 
 Returns
 =======
@@ -125,7 +125,7 @@ end
         lon :: Real,
         lat :: Real,
         geo :: GeoRegion;
-        rotation :: Real = geo.θ
+        rotation :: Real = 0
     ) -> X :: Real, Y :: Real
 
 Derotate a coordinate point given by (lon,lat), around the centroid of the GeoRegion `geo`, and return its X and Y cartesian positions in meters.
@@ -138,7 +138,7 @@ Arguments
 
 Keyword Arguments
 =================
-- `rotation` : Angle (in degrees) at which to "unrotate" the shape about the GeoRegion centroid and project into the X-Y cartesian coordinate system (in meters). A positive value will turn the shape in the clockwise direction. Default is `geo.θ`.
+- `rotation` : Angle (in degrees) of rotation for the final "derotated" point about the GeoRegion centroid and projected into the X-Y cartesian coordinate system (in meters). A positive value relative to `geo.θ` will turn the final values about the centroid in the anti-clockwise direction. Default is 0.
 
 Returns
 =======
@@ -176,7 +176,7 @@ Arguments
 
 Keyword Arguments
 =================
-- `rotation` : Angle (in degrees) at which to "unrotate" the shape about the GeoRegion centroid and project into the X-Y cartesian coordinate system (in meters). A positive value will turn the shape in the clockwise direction. Default is `geo.θ`.
+- `rotation` : Angle (in degrees) of rotation for the final "derotated" point about the GeoRegion centroid and projected into the X-Y cartesian coordinate system (in meters). A positive value relative to `geo.θ` will turn the final values about the centroid in the anti-clockwise direction. Default is 0.
 
 Returns
 =======
