@@ -1,7 +1,7 @@
 name = "GeoRegions"
 uuid = "b001f823-fa75-4bff-bf55-6610c8f3688a"
 authors = ["natgeo-wong <natgeo.wong@outlook.com>"]
-version = "8.0.1"
+version = "8.1.0"
 
 [deps]
 Dates = "ade2ca70-3891-5945-98fb-dc099432e06a"
@@ -12,6 +12,7 @@ Glob = "c27321d9-0574-5035-807b-f59d2c89b15c"
 JSON3 = "0f8b85d8-7281-11e9-16c2-39a750bddbf1"
 Logging = "56ddb016-857b-54e1-b83d-db4d58db5568"
 PrettyTables = "08abe8d2-0d0c-5749-adfa-8a2ac140af0d"
+Shapefile = "8e980c4a-a4fe-5da2-b3a7-4b4b0353a2f4"
 
 [compat]
 Dates = "1"
@@ -22,6 +23,7 @@ Glob = "1"
 JSON3 = "1"
 Logging = "1"
 PrettyTables = "2"
+Shapefile = "0.13"
 julia = "^1.9"
 
 [extras]

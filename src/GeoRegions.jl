@@ -8,6 +8,7 @@ using Glob
 using JSON3
 using Logging
 using PrettyTables
+using Shapefile
 
 import Base: show, rm, in, ==, !==, isequal
 import GeometryOps: within, touches, centroid
@@ -22,7 +23,9 @@ export
         setupGeoRegions, loadGeoRegions, addGeoRegions, deleteGeoRegions, tableGeoRegions,
 
         in, on, coordinates, derotatecoordinates, derotatecoordinates!, derotatepoint,
-        Point, Point2, Polygon
+        Point, Point2, Polygon,
+
+        shp2georegion
 
 ## Abstract types
 """
@@ -134,5 +137,7 @@ include("is/isgeoshape.jl")
 include("is/isID.jl")
 include("is/isin.jl")
 include("is/ison.jl")
+
+include("extras/shapefiles.jl")
 
 end # module
