@@ -35,7 +35,8 @@ function shp2georegion(
         !isdir(gpath) ? mkpath(gpath) : nothing
         open(joinpath(gpath,"$(IDvec[ishp]).json"), "w") do io
             JSON3.write(io,JSONRegion{ST,FT}(
-                IDvec[ishp], pIDvec[ishp], namevec[ishp], 0, JSONGeometry{FT}(lon, lat)
+                string(IDvec[ishp]), string(pIDvec[ishp]), string(namevec[ishp]), 0,
+                JSONGeometry{FT}(lon, lat)
             ))
         end
 
