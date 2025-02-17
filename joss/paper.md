@@ -21,14 +21,15 @@ bibliography: paper.bib
 
 The GeoRegions Ecosystem is a lightweight ecosystem of three Julia libraries that aids in the analysis and extraction of gridded data in Earth Observation. They are:
 
-* GeoRegions.jl: Defining geographic regions of interest
-* RegionGrids.jl: Extracting gridded data for geographic regions of interest
-* LandSea.jl: Defining Land-Sea masks for various datasets
+  * GeoRegions.jl: Defining geographic regions of interest
+  * RegionGrids.jl: Extracting gridded data for geographic regions of interest
+  * LandSea.jl: Defining Land-Sea masks for various datasets
 
 The goal of the GeoRegions ecosystem is to simplify data extraction, and the basic steps are as follows:
-1. Obtain gridded/raster data, with the longitude/latitude grids
-2. Define a geographic region (GeoRegion) of interest using GeoRegions.jl, with 
-3. Perform data extraction for the GeoRegion using RegionGrids.jl
+
+  1. Obtain gridded/raster data, with the longitude/latitude grids
+  2. Define a geographic region (GeoRegion) of interest using GeoRegions.jl, with 
+  3. Perform data extraction for the GeoRegion using RegionGrids.jl
 
 This package was inspired by the python package [regionmask](https://github.com/regionmask/regionmask) [@mathias_hauser_2024_10849860] and is possibly its closest equivalent in the Julia programming language.
 
