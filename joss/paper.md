@@ -57,6 +57,7 @@ Pkg.add("GeoRegions")
 ```
 
 This will automatically install all dependencies of GeoRegions.jl, which include:
+
 * Distances.jl - Calculation of haversine (great-circle) distance between two (lon,lat) points
 * GeometryBasics.jl - Defines geometries (e.g., polygons) based on given shapes that are compatible with the JuliaGeometry ecosystem
 * GeometryOps.jl - For basic polygonal operations (e.g., is a point in a polygon)
