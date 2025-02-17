@@ -4,7 +4,11 @@ on:
     branches:
       - main
     tags: ['*']
-  pull_request:
+    paths:
+      - src/**
+      - test/**
+      - .github/**
+      - Project.toml
   workflow_dispatch:
 concurrency:
   # Skip intermediate builds: always.
