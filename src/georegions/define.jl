@@ -61,7 +61,8 @@ end
         join :: Bool = true,
         save :: Bool = false,
         path :: AbstractString = homedir(),
-        verbose :: Bool = false,
+        checkshape :: Bool = true,
+        verbose    :: Bool = false,
         ST = String,
         FT = Float64
     ) -> geo :: GeoRegion{ST,FT}
@@ -84,6 +85,7 @@ Keyword Arguments
 - `save` : If `true`, save the GeoRegion into the list of custom GeoRegions in the path specified by `path`.
 - `path` : The path where the list of custom GeoRegions will be retrieved from.
            Defaults to the user's home directory `homedir()`.
+- `checkshape` : If `true`, then run `isgeoshape()` to check if the same shape already exists in the current project and predefined lists. Default is true.
 - `verbose` : If `true`, verbose logging for ease of monitoring. Default is `false`.
 
 Returns
@@ -100,7 +102,8 @@ function GeoRegion(
     join :: Bool = true,
     save :: Bool = false,
     path :: AbstractString = homedir(),
-    verbose :: Bool = false,
+    checkshape :: Bool = true,
+    verbose    :: Bool = false,
     ST = String,
     FT = Float64
 )
@@ -129,9 +132,9 @@ function GeoRegion(
 
         isID(ID,path=gpath,throw=false) ? error("$(modulelog()) - The GeoRegion $(ID) has already been defined.  Please use another identifier.") : nothing
 
-        if isgeoshape(lon,lat,path=gpath)
+        if checkshape && isgeoshape(lon,lat,path=gpath)
             oID = isgeoshape(lon,lat,path=gpath,returnID=true)
-            error("$(modulelog()) - The GeoRegion $(oID) in $path has the same shape. Use it instead.")
+            error("$(modulelog()) - The GeoRegion $(oID) in $path has the same shape, use it instead.")
         end
 
         if pID != "GLB"
