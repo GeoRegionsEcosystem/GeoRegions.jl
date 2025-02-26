@@ -180,11 +180,10 @@ function checkbounds(
 
     (S>90) || (S<-90) ? error("$(modulelog()) - The latitude of the GeoRegion's southern bound at $S is not valid.") : nothing
 
-    (E>360) || (E<-180) ? error("$(modulelog()) - The longitude of the GeoRegion's eastern bound at $E is not valid.") : nothing
-
-    (W>360) || (W<-180) ? error("$(modulelog()) - The longitude of the GeoRegion's western bound at $W is not valid.") : nothing
-
     (E - W) > 360 ? error("$(modulelog()) - The GeoRegion cannot be more than 360º in Longitude.") : nothing
+
+    while W < -180; lon .+= 360; E += 360; W += 360 end
+    while E >  360; lon .-= 360; E -= 360; W -= 360 end
 
     E < W ? error("$(modulelog()) - The eastern bound of the GeoRegion cannot be west of the western bound.") : nothing
 
