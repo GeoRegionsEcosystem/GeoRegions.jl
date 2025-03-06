@@ -22,6 +22,7 @@ function fillinfo(IDs,gpaths,geopath,warn)
     nID   = length(IDvec)
 
     isempty(IDvec) && warn ? (@warn "$(modulelog()) - No custom GeoRegions are available in $geopath, please check to ensure the path specified is correct.") : nothing
+    flush(stderr)
 
     return vcat(IDs,IDvec),vcat(gpaths,fill(geopath,nID))
 

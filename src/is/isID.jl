@@ -50,10 +50,12 @@ function isIDinlist(
             error("$(modulelog()) - $(ID) is not a valid GeoRegion identifier, use GeoRegion() to add this GeoRegion to the list.")
         else
             verbose ? (@warn "$(modulelog()) - $(ID) is not a valid GeoRegion identifier, use GeoRegion() to add this GeoRegion to the list.") : nothing
+            flush(stderr)
             return false
         end
     else
         verbose ? (@info "$(modulelog()) - The ID $ID is already in use.") : nothing
+        flush(stderr)
         return true
     end
 

@@ -55,6 +55,7 @@ function rmID(
         error("$(modulelog()) - The Global GeoRegion \"GLB\" is an integral part of the GeoRegions.jl package and cannot be removed.")
     else
         @info "$(modulelog()) - Removing the GeoRegion $(ID) ..."
+        flush(stderr)
     end
 
     fgeo = joinpath(geopath(path),"$ID.json")

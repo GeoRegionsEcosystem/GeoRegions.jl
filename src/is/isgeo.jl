@@ -36,12 +36,14 @@ function isgeo(
         tgeo = GeoRegion(geo.ID,path=gpath,verbose=verbose)
         if isequal(geo,tgeo,verbose=verbose)
             verbose ? (@info "$(modulelog()) - A previously defined GeoRegion \"$(tgeo.ID)\" in $path shares the same properties as our custom GeoRegion \"$(geo.ID)\".") : nothing
+            flush(stderr)
             return true
         else
             if throw
                 error("$(modulelog()) - The custom GeoRegion \"$(tgeo.ID)\" from the lists in $path does not have the same properties as the GeoRegion \"$(geo.ID)\" we have defined despite having the same ID.")
             else
                 @warn "$(modulelog()) - The custom GeoRegion \"$(tgeo.ID)\" from the lists in $path does not have the same properties as the GeoRegion \"$(geo.ID)\" we have defined despite having the same ID."
+                flush(stderr)
                 return false
             end
         end

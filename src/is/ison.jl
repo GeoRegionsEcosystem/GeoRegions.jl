@@ -30,6 +30,7 @@ function on(
 )
 
     throw ? (@info "$(modulelog()) - Performing a check to determine if the coordinates $(point) are within the specified region boundaries.") : nothing
+    flush(stderr)
 
     plon = point[1]
     plat = round(point[2],sigdigits=sigdigits)
@@ -51,6 +52,7 @@ function on(
         throw ? error("$(modulelog()) - The requested coordinates $(Point(plon,plat)) are not on the region perimeter.") : return false
     else
         throw ? (@info "$(modulelog()) - The requested coordinates $(Point(plon,plat)) are on the region perimeter.") : nothing
+        flush(stderr)
         return true
     end
 
@@ -95,6 +97,7 @@ function on(
 )
 
     verbose ? (@info "$(modulelog()) - Performing a check to determine if the $(geo1.name) GeoRegion  \"$(geo1.ID)\" shares the same shape as GeoRegion  \"$(geo2.ID)\".") : nothing
+    flush(stderr)
 
     lon1,lat1 = coordinates(geo1,n=n)
     lon2,lat2 = coordinates(geo2,n=n)
@@ -118,6 +121,7 @@ function on(
             error("$(modulelog()) - The GeoRegion $(geo1.name) GeoRegion \"$(geo1.ID)\" does not share the same shape as GeoRegion  \"$(geo2.ID)\"")
         else
             verbose ? (@warn "$(modulelog()) - The GeoRegion $(geo1.name) GeoRegion \"$(geo1.ID)\" does not share the same shape as GeoRegion  \"$(geo2.ID)\"") : nothing
+            flush(stderr)
             return false
         end
 

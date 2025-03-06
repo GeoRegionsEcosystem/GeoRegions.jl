@@ -108,6 +108,7 @@ function addGeoRegions(
     gsrc = dogeopath ? geopath(src) : src; gdst = geopath(dst)
 
     verbose ? (@info "$(modulelog()) - Importing all user-defined GeoRegions from the folder $gsrc directly into the folder $gdst.") : nothing
+    flush(stderr)
 
     fgeo = basename.(glob("*.json",gsrc)); ngeo = length(fgeo)
     for igeo = 1 : ngeo
@@ -139,6 +140,8 @@ function deleteGeoRegions(;
 
     gpath = geopath(path)
     @warn "$(modulelog()) - Removing custom GeoRegions.jl files from $gpath, all GeoRegion information saved into these files will be permanently lost."
+    flush(stderr)
+    
     flist = glob("*.json",gpath)
     for fname in flist
         rm(joinpath(gpath,fname),force=true)

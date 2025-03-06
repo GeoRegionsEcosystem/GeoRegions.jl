@@ -30,6 +30,7 @@ function Base.in(
 )
 
     throw ? (@info "$(modulelog()) - Performing a check to determine if the coordinates $(point) are within the specified region boundaries.") : nothing
+    flush(stderr)
     
     plon = point[1]; plat = round(point[2],sigdigits=sigdigits)
 
@@ -53,6 +54,7 @@ function Base.in(
         throw ? error("$(modulelog()) - The requested coordinates $(Point(plon,plat)) are not within the specified region boundaries.") : return false
     else
         throw ? (@info "$(modulelog()) - The requested coordinates $(Point(plon,plat)) are within the specified region boundaries.") : nothing
+        flush(stderr)
         return true
     end
 
@@ -110,6 +112,7 @@ function Base.in(
     if iszero(isin)
 
         if verbose; @info "$(modulelog()) - The GeoRegion \"$(cgeo.ID)\" ($(cgeo.name)) is indeed a subset of the GeoRegion \"$(geo.ID)\" ($(geo.name))" end
+        flush(stderr)
         return true
         
     else
@@ -118,6 +121,7 @@ function Base.in(
             error("$(modulelog()) - The GeoRegion \"$(cgeo.ID)\" ($(cgeo.name)) is not a subset of the GeoRegion \"$(geo.ID)\" ($(geo.name))")
         else
             if verbose; @warn "$(modulelog()) - The GeoRegion \"$(cgeo.ID)\" ($(cgeo.name)) is not a subset of the GeoRegion \"$(geo.ID)\" ($(geo.name))" end
+            flush(stderr)
             return false
         end
 

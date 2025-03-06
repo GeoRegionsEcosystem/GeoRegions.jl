@@ -36,6 +36,7 @@ function GeoRegion(
     fID = joinpath(gpaths[ind],"$ID.json")
 
     verbose ? (@info "$(modulelog()) - Retrieving information for the GeoRegion defined by the ID \"$ID\".") : nothing
+    flush(stderr)
 
     geo = JSON3.read(read(fID,String))
     lon = FT.(geo.geometry.longitude)
