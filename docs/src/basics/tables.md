@@ -7,7 +7,7 @@ tableGeoRegions(predefined = true/false, custom = true/false)
 ```
 
 !!! tip "Additional Functionality for `tableGeoRegions()`"
-    It is possible to use `tableGeoRegions()` to list user-defined `GeoRegion`s in specific paths/directories. By default, it will list user-defined `GeoRegion`s saved into the path `joinpath(homedir(),".georegions")`. For more on user-defined GeoRegions and saving them as part of a larger project, refer to how to [setup](/tutorials/projects) GeoRegions.jl for a project.
+    It is possible to use `tableGeoRegions()` to list user-defined `GeoRegion`s in specific paths/directories. By default, it will list user-defined `GeoRegion`s saved into the path `joinpath(homedir(),".georegions")`. For more on user-defined GeoRegions and saving them as part of a larger project, refer to how to [setup](/tutorials/projects/setup) GeoRegions.jl for a project.
 
 ## Use Case Examples
 

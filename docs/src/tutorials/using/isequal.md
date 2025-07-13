@@ -12,7 +12,7 @@ If you want to check that two GeoRegions are equivalent, we can use the `==` or 
 
 For `==` or `isequal()` to return true, the following conditions must be satisfied:
 * The `ID` and `pID` fields are the same
-* The `shape` fields define exactly the same geographic region as per the function [`on()`](/basics/using/ison)
+* The `shape` fields define exactly the same geographic region as per the function [`on()`](/using/ison)
 
 Let us consider the following example. First, we load a `GeoRegion` and extract its `lon` and `lat` coordinates
 
@@ -54,7 +54,7 @@ See the API [here](/api/isinonequal#Equivalence-of-GeoRegions)
 
 ## 2. Does there already exist a GeoRegion?
 
-Sometimes, we want to figure out if there exists a `GeoRegion` `geo` in a project we have defined (for more information on how to use GeoRegions.jl in projects, see [here](/tutorials/projects)). We can use the function `isgeo()` to determine if this is the case. For `isgeo()` to be true, there must exist another `GeoRegion` `ogeo` such that `isequal(geo,ogeo) = true`.
+Sometimes, we want to figure out if there exists a `GeoRegion` `geo` in a project we have defined (for more information on how to use GeoRegions.jl in projects, see [here](/tutorials/projects/setup) and [here](/tutorials/projects/addreadrm)). We can use the function `isgeo()` to determine if this is the case. For `isgeo()` to be true, there must exist another `GeoRegion` `ogeo` such that `isequal(geo,ogeo) = true`.
 
 ```@example equivalence
 geo_NWS = GeoRegion(lon,lat,ID="AR6_NWS",pID="GLB",name="New Southeast Asia")
