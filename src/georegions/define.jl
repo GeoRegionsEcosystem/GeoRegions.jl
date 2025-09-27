@@ -142,7 +142,7 @@ function GeoRegion(
             if !isID(pID,path=gpath)
                 error("$(modulelog()) - The GeoRegion $(pID) was defined to be the parent GeoRegion of $(ID), but the GeoRegion $(pID) is not defined.  Please define the GeoRegion $(pID) and its properties.")
             else
-                pgeo = GeoRegion(pID,path=gpath); in(geo,pgeo,throw=true)
+                pgeo = GeoRegion(pID,path=gpath); in(GeoRegion(lon,lat),pgeo,throw=true)
             end
         end
 
