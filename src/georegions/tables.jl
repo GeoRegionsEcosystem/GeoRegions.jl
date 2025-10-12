@@ -67,18 +67,17 @@ function tableGeoRegions(;
 
     if !crop || rows < 15
         pretty_table(
-            fmat,header=head,
-            alignment=[:c,:l,:c,:c,:c,:c],
-            # alignment=[:c,:c,:l,:c,:c,:c,:c],
-            crop = :none, tf = tf_compact
+            fmat, column_labels = head, backend = :text,
+            alignment = [:c,:l,:c,:c,:c,:c],
+            display_size = (-1,-1),
+            table_format = TextTableFormat(borders = text_table_borders__compact)
         );
     else
         pretty_table(
-            fmat,header=head,
-            alignment=[:c,:l,:c,:c,:c,:c],
-            # alignment=[:c,:c,:l,:c,:c,:c,:c],
-            crop = :vertical, tf = tf_compact,
-            vcrop_mode = :middle, display_size = (rows,-1)
+            fmat, column_labels = head, backend = :text,
+            alignment = [:c,:l,:c,:c,:c,:c],
+            display_size = (rows,-1), vertical_crop_mode = :middle,
+            table_format = TextTableFormat(borders = text_table_borders__compact)
         );
     end
 
