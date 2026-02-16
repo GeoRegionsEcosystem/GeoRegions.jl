@@ -287,3 +287,7 @@ mjx-container > svg {
 .vp-doc li + li {
   margin-top: 0; /* Adjust value as needed, e.g., 0 for no space */
 }
+
+.vp-doc li > p {
+  margin: 0;
+}
