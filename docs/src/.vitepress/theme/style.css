@@ -282,3 +282,8 @@ mjx-container > svg {
   user-select: none;
   margin: 0 0 8px;
 }
+
+/* Tighten spacing between list items */
+.vp-doc li + li {
+  margin-top: 0; /* Adjust value as needed, e.g., 0 for no space */
+}
