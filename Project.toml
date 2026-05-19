@@ -1,7 +1,7 @@
 name = "GeoRegions"
 uuid = "b001f823-fa75-4bff-bf55-6610c8f3688a"
+version = "8.0.8"
 authors = ["natgeo-wong <natgeo.wong@outlook.com>"]
-version = "8.0.7"
 
 [deps]
 Dates = "ade2ca70-3891-5945-98fb-dc099432e06a"
@@ -9,7 +9,7 @@ Distances = "b4f34e82-e78d-54a5-968a-f98e89d6e8f7"
 GeometryBasics = "5c1252a2-5f33-56bf-86c9-59e7332b4326"
 GeometryOps = "3251bfac-6a57-4b6d-aa61-ac1fef2975ab"
 Glob = "c27321d9-0574-5035-807b-f59d2c89b15c"
-JSON3 = "0f8b85d8-7281-11e9-16c2-39a750bddbf1"
+JSON = "682c06a0-de6a-54ab-a142-c8b1cf79cde6"
 Logging = "56ddb016-857b-54e1-b83d-db4d58db5568"
 PrettyTables = "08abe8d2-0d0c-5749-adfa-8a2ac140af0d"
 
@@ -19,7 +19,7 @@ Distances = "0.10"
 GeometryBasics = "0.5"
 GeometryOps = "0.1"
 Glob = "1"
-JSON3 = "1"
+JSON = "1"
 Logging = "1"
 PrettyTables = "3"
 julia = "^1.9"
